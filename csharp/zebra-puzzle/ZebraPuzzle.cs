@@ -1,323 +1,210 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Xml.Schema;
+using Xunit.Sdk;
 
-public enum Color { Red , Green , Ivory , Yellow , Blue }
-public enum Nationality { Englishman , Spaniard , Ukranian , Japanese , Norwegian }
-public enum Pet { Dog , Snails , Fox , Horse , Zebra }
-public enum Drink { Coffee , Tea , Milk , OrangeJuice , Water }
-public enum Smoke { OldGold , Kools , Chesterfields , LuckyStrike , Parliaments }
+internal struct Color {public const byte Red = 1 << 0, Green = 1 << 1, Ivory = 1 << 2, Yellow = 1 << 3, Blue = 1 << 4, All = 0x1f;}
+internal struct Nationality {public const byte Englishman = 1 << 0, Spaniard = 1 << 1, Ukranian = 1 << 2, Japanese = 1 << 3, Norwegian = 1 << 4, All = 0x1f;}
+internal struct Pet {public const byte Dog = 1 << 0, Snails = 1 << 1, Fox = 1 << 2, Horse = 1 << 3, Zebra = 1 << 4, All = 0x1f;}
+internal struct Drink {public const byte Coffee = 1 << 0, Tea = 1 << 1, Milk = 1 << 2, OrangeJuice = 1 << 3, Water = 1 << 4, All = 0x1f;}
+internal struct Smoke {public const byte OldGold = 1 << 0, Kools = 1 << 1, Chesterfields = 1 << 2, LuckyStrike = 1 << 3, Parliaments = 1 << 4, All = 0x1f;}
+internal struct Position {public const byte One = 1 << 0, Two = 1 << 1, Three = 1 << 2, Four = 1 << 3, Five = 1 << 4, All = 0x1f;}
+internal struct AttributeType {public const byte Color = 0, Nationality = 1, Pet = 2, Drink = 3, Smoke = 4, Position = 5;}
+
+
 internal enum Relation {Direct, ToRightOf, NextTo, Position}
-internal enum Position {One, Two, Three, Four, Five}
-internal enum AttributeType {Color = 0, Nationality = 1, Pet = 2, Drink = 3, Smoke = 4, Position = 5}
-
-internal class Attribute
-{
-    public static readonly IReadOnlyDictionary<AttributeType, Attribute[]> AvailableAttributes
-        = new Dictionary<AttributeType, Attribute[]>
-        {
-            {AttributeType.Color, MakeAttributeArray<Color>(t => new Attribute(t))},
-            {AttributeType.Nationality, MakeAttributeArray<Nationality>(t => new Attribute(t))},
-            {AttributeType.Pet, MakeAttributeArray<Pet>(t => new Attribute(t))},
-            {AttributeType.Drink, MakeAttributeArray<Drink>(t => new Attribute(t))},
-            {AttributeType.Smoke, MakeAttributeArray<Smoke>(t => new Attribute(t))},
-            {AttributeType.Position, MakeAttributeArray<Position>(t => new Attribute(t))},
-        };
-
-    static Attribute()
-    {
-        MyDebug.Assert(
-            Enum.GetValues(typeof(Color)).Length == Enum.GetValues(typeof(Nationality)).Length
-              && Enum.GetValues(typeof(Color)).Length == Enum.GetValues(typeof(Pet)).Length
-              && Enum.GetValues(typeof(Color)).Length == Enum.GetValues(typeof(Drink)).Length
-              && Enum.GetValues(typeof(Color)).Length == Enum.GetValues(typeof(Smoke)).Length
-              && Enum.GetValues(typeof(Color)).Length == Enum.GetValues(typeof(Position)).Length
-            );
-    }
-    static Attribute[] MakeAttributeArray<T>(Func<T, Attribute> makeAttribute)
-    {
-        var arr = new Attribute[(int) global::Position.Five + 1];
-        foreach (var at in Enum.GetValues(typeof(T)))
-        {
-            arr[(int)at] = makeAttribute((T)at);
-        }
-
-        return arr;
-    }
-    
-    public Color? Color { get; }
-    public Nationality? Nationality { get; }
-    public Pet? Pet { get; }
-    public Drink? Drink { get; }
-    public Smoke? Smoke { get; }
-    public Position? Position { get; }
-
-    public AttributeType AttributeType =>
-        this.Color.HasValue ? AttributeType.Color 
-        : this.Nationality.HasValue ? AttributeType.Nationality
-        : this.Pet.HasValue ? AttributeType.Pet
-        : this.Drink.HasValue ? AttributeType.Drink
-        : this.Smoke.HasValue ? AttributeType.Smoke
-        : this.Position.HasValue ? AttributeType.Position
-        : throw new Exception($"Unknown attribute type encountered")
-        ;
-    
-    public Attribute(Color Color) {this.Color = Color;}
-    public Attribute(Nationality Nationality) {this.Nationality = Nationality;}
-    public Attribute(Pet Pet) {this.Pet = Pet;}
-    public Attribute(Drink Drink) {this.Drink = Drink;}
-    public Attribute(Smoke Smoke) {this.Smoke = Smoke;}
-    public Attribute(Position Position) {this.Position = Position;}
-
-    protected bool Equals(Attribute other)
-    {
-        Array aa = Enum.GetValues(typeof(Color));
-        foreach (var a in aa)
-        {
-            
-        }
-        return Color == other.Color && Nationality == other.Nationality && Pet == other.Pet && Drink == other.Drink && Smoke == other.Smoke && Position == other.Position;
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals((Attribute) obj);
-    }
-
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            var hashCode = Color.GetHashCode();
-            hashCode = (hashCode * 397) ^ Nationality.GetHashCode();
-            hashCode = (hashCode * 397) ^ Pet.GetHashCode();
-            hashCode = (hashCode * 397) ^ Drink.GetHashCode();
-            hashCode = (hashCode * 397) ^ Smoke.GetHashCode();
-            hashCode = (hashCode * 397) ^ Position.GetHashCode();
-            return hashCode;
-        }
-    }
-}
 
 internal class Clue
 {
-    public Attribute Principal { get; } 
-    public Relation Relation { get; } 
-    public Attribute Other { get; }
-
-    public Clue(Attribute Prinicipal, Relation Relation, Attribute Other)
-    {
-        this.Principal = Prinicipal;
-        this.Relation = Relation;
-        this.Other = Other;
-    }
-
-    protected bool Equals(Clue other)
-    {
-        return Equals(Principal, other.Principal) && Relation == other.Relation && Equals(Other, other.Other);
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals((Clue) obj);
-    }
-
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            var hashCode = (Principal != null ? Principal.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (int) Relation;
-            hashCode = (hashCode * 397) ^ (Other != null ? Other.GetHashCode() : 0);
-            return hashCode;
-        }
-    }
+    public byte[] attributes = new byte[AttributeType.Position + 1];
+    public Relation relation;
+    
 }
 
-internal class House
-{
-    public ISet<Attribute> Attributes = new HashSet<Attribute>();
-}
 
 
 public static class ZebraPuzzle
 {
+    private static ISet<Clue> initialClues = new HashSet<Clue>
+    {
+        new Clue{attributes = new byte[]{Color.Red, Nationality.Englishman, Pet.All, Drink.All, Smoke.All, Position.All}, relation = Relation.Direct},
+        new Clue{attributes = new byte[]{Color.All, Nationality.Spaniard, Pet.Dog, Drink.All, Smoke.All, Position.All}, relation = Relation.Direct},
+        new Clue{attributes = new byte[]{Color.Green, Nationality.All, Pet.All, Drink.Coffee, Smoke.All, Position.All}, relation = Relation.Direct},
+        new Clue{attributes = new byte[]{Color.All, Nationality.Ukranian, Pet.All, Drink.Tea, Smoke.All, Position.All}, relation = Relation.Direct},
+        new Clue{attributes = new byte[]{Color.All, Nationality.All, Pet.Snails, Drink.All, Smoke.OldGold, Position.All}, relation = Relation.Direct},
+        new Clue{attributes = new byte[]{Color.Yellow, Nationality.All, Pet.All, Drink.All, Smoke.Kools, Position.All}, relation = Relation.Direct},
+        new Clue{attributes = new byte[]{Color.All, Nationality.All, Pet.All, Drink.Milk, Smoke.All, Position.Three}, relation = Relation.Direct},
+        new Clue{attributes = new byte[]{Color.All, Nationality.Norwegian, Pet.All, Drink.All, Smoke.All, Position.One}, relation = Relation.Direct},
+//        new Clue{attributes = new byte[]{Color.All, Nationality.All, Pet.Fox, Drink.All, Smoke.Chesterfields, Position.All}, relation = Relation.NextTo},
+//        new Clue{attributes = new byte[]{Color.All, Nationality.All, Pet.Horse, Drink.All, Smoke.Kools, Position.All}, relation = Relation.NextTo},
+        new Clue{attributes = new byte[]{Color.All, Nationality.All, Pet.All, Drink.OrangeJuice, Smoke.LuckyStrike, Position.All}, relation = Relation.Direct},
+        new Clue{attributes = new byte[]{Color.All, Nationality.Japanese, Pet.All, Drink.All, Smoke.Parliaments, Position.All}, relation = Relation.Direct},
+//        new Clue{attributes = new byte[]{Color.Blue, Nationality.Norwegian, Pet.All, Drink.All, Smoke.All, Position.All}, relation = Relation.NextTo},
+    };
+    
     static ZebraPuzzle()
     {
-        var clueMap = InitClueMap();
-        IList<House> houses = BuildHouses(clueMap);
-        FixMissingDirectRelations(clueMap, houses);
+        MyDebug.Assert(
+          Color.All == Nationality.All
+          && Color.All == Pet.All
+          && Color.All == Drink.All
+          && Color.All == Smoke.All
+          && Color.All == Position.All
+            );
     }
 
-    /// <summary>
-    /// To the extent possible assigns attributes to the houses based on direct relationships
-    /// </summary>
-    /// <param name="clueMap">All the clues previded in the question</param>
-    /// <returns>incomplete houses.  Attributes are assigned for direct relationships only.
-    /// Neighbour relationships are ignored so far</returns>
-    private static IList<House> BuildHouses(IReadOnlyDictionary<Attribute, ISet<Clue>> clueMap)
+
+    public static byte DrinksWater()
     {
-        IList<House> houses = new List<House>();
-        var uniquer = new HashSet<Attribute>();
-        House house = null;
-        foreach (var houseClues in clueMap)
-        {
-            if (!uniquer.Contains(houseClues.Key))
-            {
-                house = new House();
-                houses.Add(house);
-            }
-
-            uniquer.Add(houseClues.Key);
-            foreach (var clue in houseClues.Value)
-            {
-                if (clue.Relation != Relation.Direct)
-                {
-                    continue;
-                }
-                house.Attributes.Add(clue.Principal);
-                house.Attributes.Add(clue.Other);
-                GatherAttributes(
-                  houseClues.Key.Equals(clue.Principal) ? clue.Other : clue.Principal
-                  ,uniquer, clueMap, house);
-            }
-        }
-
-        return houses;
-    }
-
-    private static void GatherAttributes(Attribute attribute, HashSet<Attribute> uniquer
-      ,IReadOnlyDictionary<Attribute, ISet<Clue>> clueMap, House house)
-    {
-        if (uniquer.Contains(attribute))
-            return;
-        uniquer.Add(attribute);
-        if (clueMap.ContainsKey(attribute))
-        {
-            foreach (var clue in clueMap[attribute])
-            {
-                house.Attributes.Add(clue.Principal);
-                house.Attributes.Add(clue.Other);
-                GatherAttributes(
-                  attribute.Equals(clue.Principal) ? clue.Other : clue.Principal
-                  ,uniquer, clueMap, house);
-            }
-        }
-    }
-
-    private static void FixMissingDirectRelations(IReadOnlyDictionary<Attribute, ISet<Clue>> clueMap, IList<House> houses)
-    {
-        var directClueWrappers = clueMap.Where(kv => kv.Value.Any(clue => clue.Relation == Relation.Direct));
-        var attributeCounts = directClueWrappers
-            .GroupBy(kv => kv.Key.AttributeType).Select(kv => new { attributeType = kv.Key, count = kv.Count()})
-            .Where(kv => kv.count == (int)Position.Five).ToArray();
-                    // ie. if there 5 avaiable values for an attribute we want those that have 4 accounted for
-                    // and one missing
-        foreach (var ac in attributeCounts)
-        {
-            AssignAttributeToHouse(houses, directClueWrappers, ac.attributeType);
-        }
-        
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="houses">all the houses in the system</param>
-    /// <param name="clueWrappers">wrappers round clues which involve a direct relation - approx 20 of themt</param>
-    /// <param name="attributeType">Color, Nationality etc. whichever one is
-    ///  under consideration</param>
-    private static void AssignAttributeToHouse(IList<House> houses
-      ,IEnumerable<KeyValuePair<Attribute, ISet<Clue>>> clueWrappers, AttributeType attributeType)
-    {
-        var clueAttributes = clueWrappers.Select(kv => kv.Key)
-            .Where(att => att.AttributeType == attributeType);
-        var availableAttributes = Attribute.AvailableAttributes[attributeType];
-        var missingAttribute = availableAttributes.Except(clueAttributes).First();
-        var houseWithMissingAttribute = houses.Where(h => h.Attributes.All(att => att != missingAttribute)).First();
-        houseWithMissingAttribute.Attributes.Add(missingAttribute);
-    }
-
-    private static IReadOnlyDictionary<Attribute, ISet<Clue>> InitClueMap()
-    {
-        Clue[] clues =
-        {
-            new Clue(new Attribute(Nationality.Englishman), Relation.Direct, new Attribute(Color.Red)),
-            
-            new Clue(new Attribute(Nationality.Spaniard), Relation.Direct, new Attribute(Pet.Dog)),
-            new Clue(new Attribute(Drink.Coffee), Relation.Direct, new Attribute(Color.Green)),
-            // green house not in position 1 (because it is to the right of something)
-            // green house not in position 2 because the blue house is
-            // green house not in position 3 because Milk is drunk there
-            // green house is in position 4 or 5  (next to the fox and to right of ivory)
-            // ukranian is not in position 3
-            // japanese/parliaments or englishman/red could be at position 3
-            // japanese drinks either milk or water
-            // spaniard smokes Chesterfields
-            // norwegian is in position 2
-            // blue house is in position 2
-            // kools are smoked in 1 or 2
-            new Clue(new Attribute(Nationality.Ukranian), Relation.Direct, new Attribute(Drink.Tea)),          
-            new Clue(new Attribute(Color.Green), Relation.ToRightOf, new Attribute(Color.Ivory)),
-            new Clue(new Attribute(Smoke.OldGold), Relation.Direct, new Attribute(Pet.Snails)),            
-            new Clue(new Attribute(Smoke.Kools), Relation.Direct, new Attribute(Color.Yellow)),            
-            new Clue(new Attribute(Drink.Milk), Relation.Position, new Attribute(Position.Three)),
-            new Clue(new Attribute(Nationality.Norwegian), Relation.NextTo, new Attribute(Position.One)),            
-            new Clue(new Attribute(Smoke.Chesterfields), Relation.NextTo, new Attribute(Pet.Fox)),
-            new Clue(new Attribute(Smoke.Kools), Relation.NextTo, new Attribute(Pet.Horse)),            
-            new Clue(new Attribute(Smoke.LuckyStrike), Relation.Direct, new Attribute(Drink.OrangeJuice)),            
-            new Clue(new Attribute(Nationality.Japanese), Relation.Direct, new Attribute(Smoke.Parliaments)),            
-            new Clue(new Attribute(Nationality.Norwegian), Relation.NextTo, new Attribute(Color.Blue)),
-        };
-        Dictionary<Attribute, ISet<Clue>> clueMap = new Dictionary<Attribute, ISet<Clue>>();
-            // clue map should end up with approx 11 sets of clues (consisting of 1 or 2 entries)
-            // pointed to by a
-            // couple of dozen keys (attributes)
-        foreach (var clue in clues)
-        {
-            if (clueMap.ContainsKey(clue.Principal) && clueMap.ContainsKey(clue.Other))
-            {
-                // just in case this happens - they could have different relationships
-                clueMap[clue.Principal].Add(clue);
-            }
-            else if (!clueMap.ContainsKey(clue.Principal) && !clueMap.ContainsKey(clue.Other))
-            {
-                var houseClues = new HashSet<Clue> {clue};
-                clueMap[clue.Principal] = houseClues;
-                clueMap[clue.Other] = houseClues;
-            }
-            else if (clueMap.ContainsKey(clue.Other))
-            {
-                var houseClues = clueMap[clue.Other];
-                houseClues.Add(clue);
-                clueMap[clue.Principal] = houseClues;
-            }
-            else // clue.Other has not been previously encountered
-            {
-                var houseClues = clueMap[clue.Principal];
-                houseClues.Add(clue);
-                clueMap[clue.Other] = houseClues;
-            }
-        }
-
-        return clueMap;
-    }
-
-    public static Nationality DrinksWater()
-    {
+        Infer(initialClues);
         return Nationality.Englishman;
     }
 
-    public static Nationality OwnsZebra()
+    enum Change {Enhanced, Combined, None}
+    private static void Infer(ISet<Clue> clues)
+    {
+        ISet<Clue> cluesIn = clues;
+        ISet<Clue> cluesOut = new HashSet<Clue>();
+        ISet<Clue> combined = new HashSet<Clue>();
+        bool somethingGoodHappened = true;
+
+        while (somethingGoodHappened)
+        {
+            somethingGoodHappened = false;
+            combined.Clear();
+            cluesOut.Clear();
+            foreach (Clue clueA in cluesIn)
+            {
+                if (clueA.relation != Relation.Direct || combined.Contains(clueA))
+                {
+                    continue;
+                }
+
+                Clue resultClue = new Clue();
+                foreach (var clueB in cluesIn)
+                {
+                    if (clueB.relation != Relation.Direct || combined.Contains(clueB))
+                    {
+                        continue;
+                    }
+                    Change modified;
+                    (modified, resultClue) = MakeDirectInference(clueA, clueB);
+                    if (modified != Change.None)
+                    {
+                        if (modified == Change.Combined)
+                        {
+                            combined.Add(clueB);
+                        }
+                        somethingGoodHappened = true;
+                        break;
+                    }
+                }
+                cluesOut.Add(resultClue);
+                // we allow this to be updated twice with the same clue
+                // we rely on the commutative property of MakeDirectInference
+            }
+
+            cluesIn = new HashSet<Clue>(cluesOut);
+        }
+    }
+
+    private static int CountAttributeBits(byte b) => (b & 0x1) + (b >> 1 & 0x1) + (b >> 2 & 0x1) + (b >> 3 & 0x1) + (b >> 4 & 0x1);
+    /// <summary>
+    /// This relies on the commutative property of this operation.
+    /// clueA, clueB must have the same effect as clueB, clueA
+    /// </summary>
+    /// <param name="clueA">kind of the principal clue</param>
+    /// <param name="clueB">kind of the secondary clue - although I suspect there is no real difference</param>
+    /// <returns></returns>
+    private static (Change, Clue) MakeDirectInference(Clue clueA, Clue clueB)
+    {
+        bool IsConfirmed(byte b) => CountAttributeBits(b) == 1;
+        if (clueA == clueB)
+        {
+            return (Change.None, clueA);
+        }
+
+        for (int ii = 0; ii < clueA.attributes.Length; ii++)
+        {
+            bool AreIncompatibleClues(Clue a, Clue b)
+            {
+                foreach (int idx in new[]
+                {
+                    AttributeType.Color, AttributeType.Nationality, AttributeType.Pet, AttributeType.Drink,
+                    AttributeType.Smoke, AttributeType.Position
+                })
+                {
+                    if (IsConfirmed(a.attributes[idx]) && IsConfirmed(b.attributes[idx])
+                                                       && a.attributes[idx] != b.attributes[idx])
+                        return true;
+                }
+
+                return false;
+            }
+
+            if (IsConfirmed(clueA.attributes[ii]) && clueA.attributes[ii] == clueB.attributes[ii])
+            {
+                continue;
+                return (Change.Combined, CombineClues(clueA, clueB));
+            }
+
+            if (IsConfirmed(clueA.attributes[ii]) && IsConfirmed(clueB.attributes[ii]))
+            {
+                continue;    // two houses with different attributes which we have identified
+            }
+            else if ( IsConfirmed(clueB.attributes[ii]) && AreIncompatibleClues(clueA, clueB))
+            {
+                // one of the attributes is confirmed so we can eliminate that from the other clue
+                (bool modified, Clue resultClue) = CombineAttributes(clueA, clueB, ii);
+                if (modified)
+                {
+                    return (Change.Enhanced, resultClue);
+                }
+            }
+        }
+
+        return (Change.None, clueA);
+    }
+
+    private static (bool, Clue) CombineAttributes(Clue clueA, Clue clueB, int idx)
+    {
+        Clue enhancedClue = new Clue();
+        enhancedClue.relation = clueA.relation;
+        for (int ii = 0; ii < clueA.attributes.Length; ii++)
+        {
+            enhancedClue.attributes[ii] = clueA.attributes[ii];
+        }
+        
+        enhancedClue.attributes[idx] = (byte)(clueA.attributes[idx] ^ (clueA.attributes[idx] & clueB.attributes[idx]));
+        return (enhancedClue.attributes[idx] != clueA.attributes[idx], enhancedClue);
+    }
+
+    /// <summary>
+    /// there is a precondition that at least on attribute in clueA
+    /// will be equal to the corresponding attribute in clueB
+    /// i.e. these two clues relate to the same house
+    /// </summary>
+    /// <param name="clueA">relates to the same house as clueB</param>
+    /// <param name="clueB"></param>
+    /// <returns>a newly minted clue combining the best of the two inputs</returns>
+    private static Clue CombineClues(Clue clueA, Clue clueB)
+    {
+        bool HasNoClue(byte b) => b == Color.All;
+        Clue combinedClue = new Clue{relation = Relation.Direct, attributes = new byte[AttributeType.Position + 1]};
+        for (int ii = 0; ii < clueA.attributes.Length; ii++)
+        {
+            combinedClue.attributes[ii]
+                = CountAttributeBits(clueA.attributes[ii])
+                  < CountAttributeBits(clueB.attributes[ii])
+                    ? clueA.attributes[ii]
+                    : clueB.attributes[ii];
+        }
+
+        return combinedClue;
+    }
+
+    public static byte OwnsZebra()
     {
         return Nationality.Englishman;
     }
