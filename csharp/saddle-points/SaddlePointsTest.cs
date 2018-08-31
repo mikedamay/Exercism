@@ -1,6 +1,8 @@
 // This file was auto-generated based on version 1.1.0 of the canonical data.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Xunit;
 
 public class SaddlePointsTest
@@ -30,6 +32,7 @@ public class SaddlePointsTest
     }
 
     [Fact]
+
     public void Can_identify_lack_of_saddle_points_when_there_are_none()
     {
         var matrix = new[,]
@@ -54,6 +57,25 @@ public class SaddlePointsTest
         };
         var sut = new SaddlePoints(matrix);
         var actual = sut.Calculate();
+        var expected = new[] { (0, 1), (1, 1), (2, 1) };
+        Assert.Equal(expected, actual);
+    }
+    [Fact]
+    public void Can_identify_multiple_saddle_points_lots()
+    {
+        var matrix = new[,]
+        {
+             { 4, 5, 4 },
+             { 3, 5, 5 },
+             { 1, 5, 4 }
+        };
+        var sut = new SaddlePoints(matrix);
+        IEnumerable<(int, int)> actual = null;
+        for (int ii = 0; ii < 500_000; ii++)
+        {
+            actual = sut.Calculate();
+        }
+
         var expected = new[] { (0, 1), (1, 1), (2, 1) };
         Assert.Equal(expected, actual);
     }

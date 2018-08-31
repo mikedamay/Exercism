@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Principal;
 
+/// <summary>
+/// This is rather sad, compared to maia13's linq solution.
+/// Having seen that I could not be bothered to optimise this further
+/// </summary>
 public class SaddlePoints
 {
     const byte ROW_DIM = 0;
