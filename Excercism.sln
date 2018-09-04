@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SumOfMultiples", "csharp\su
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZebraPuzzle", "csharp\zebra-puzzle\ZebraPuzzle.csproj", "{00A3E201-9E51-4B88-9772-FB5366408912}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Allergies", "csharp\allergies\Allergies.csproj", "{63D67CF2-EFBB-4B12-ABA8-A5385B1619E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,5 +110,9 @@ Global
 		{00A3E201-9E51-4B88-9772-FB5366408912}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00A3E201-9E51-4B88-9772-FB5366408912}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00A3E201-9E51-4B88-9772-FB5366408912}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63D67CF2-EFBB-4B12-ABA8-A5385B1619E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63D67CF2-EFBB-4B12-ABA8-A5385B1619E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63D67CF2-EFBB-4B12-ABA8-A5385B1619E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63D67CF2-EFBB-4B12-ABA8-A5385B1619E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
