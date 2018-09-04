@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public enum Allergen
 {
@@ -15,28 +16,21 @@ public enum Allergen
 
 public class Allergies
 {
-    private Allergen mask;
-    public Allergies(int mask)
+    private static Allergen[] allergies =
     {
-        this.mask = (Allergen)mask;
+        Allergen.Eggs, Allergen.Peanuts, Allergen.Shellfish, Allergen.Strawberries, Allergen.Tomatoes,
+        Allergen.Chocolate, Allergen.Pollen, Allergen.Cats
+    };
+    private Allergen[] mask;
+    public Allergies(int maskArg)
+    {
+        mask = allergies.Where(a => ((int)a & maskArg) > 0).ToArray();
     }
 
     public bool IsAllergicTo(Allergen allergen)
     {
-        return ((int)allergen & (int)mask) == (int)allergen;
+        return mask.Any(a => a == allergen);
     }
 
-    public Allergen[] List()
-    {
-        var list = new List<Allergen>();
-        foreach (var a in Enum.GetValues(typeof(Allergen)))
-        {
-            if (((int) a & (int) mask) == (int) a)
-            {
-                list.Add((Allergen)a);
-            }
-        }
-
-        return list.ToArray();
-    }
+    public Allergen[] List() => mask;
 }
