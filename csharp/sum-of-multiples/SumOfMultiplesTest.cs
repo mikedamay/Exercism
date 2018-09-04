@@ -10,6 +10,12 @@ public class SumOfMultiplesTest
     {
         Assert.Equal(0, SumOfMultiples.Sum(new[] { 3, 5 }, 1));
     }
+    
+    [Fact]
+    public void Multiples_of_3_up_to_20()
+    {
+        Assert.Equal(63, SumOfMultiples.Sum(new[] { 3 }, 20));
+    }
 
     [Fact]
     public void Multiples_of_3_or_5_up_to_4()
