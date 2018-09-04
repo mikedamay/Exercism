@@ -24,7 +24,7 @@ public class SumOfMultiplesTest
     }
 
     [Fact]
-    public void Multiples_of_3_up_to_7()
+    public void Multiples_of_1999999999_up_to_2billion()
     {
         Assert.Equal(1_999_999_999, SumOfMultiples.Sum(new[] { 1_999_999_999 }, 2_000_000_000));
     }
