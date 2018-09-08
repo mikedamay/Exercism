@@ -53,6 +53,7 @@ public static class ZebraPuzzle
  
     
     private static int CountAttributeBits(byte b) => (b & 0x1) + (b >> 1 & 0x1) + (b >> 2 & 0x1) + (b >> 3 & 0x1) + (b >> 4 & 0x1);
+    private static bool IsConfirmedAttribute(byte b) => CountAttributeBits(b) == 1;
     
     static ZebraPuzzle()
     {
@@ -75,7 +76,34 @@ public static class ZebraPuzzle
 
     private static ISet<Clue> FillInBlankClues(ISet<Clue> givenClues)
     {
-        return givenClues;
+        var initialClues = new HashSet<Clue>(givenClues);
+        byte[] blankAttributes = {Color.All, Nationality.All, Pet.All, Drink.All, Smoke.All, Position.All};
+        byte[] cumulativeAttributes = {Color.All, Nationality.All, Pet.All, Drink.All, Smoke.All, Position.All};
+        foreach (var clue in givenClues)
+        {
+            for (int ii = 0; ii <= AttributeType.Position; ii++)
+            {
+                if (IsConfirmedAttribute(clue.attributes[ii]))
+                {
+                    cumulativeAttributes[ii] -= clue.attributes[ii];                    
+                }
+            }
+        }
+
+        for (int jj = 0; jj <= AttributeType.Position; jj++)
+        {
+            for (int kk = 0; kk < CountAttributeBits(Color.All); kk++)
+            {
+                if (((cumulativeAttributes[jj] >> kk) & 0x1) == 0x1)
+                {
+                    var clueAttributes = new byte[AttributeType.Position + 1];
+                    Array.Copy(blankAttributes, clueAttributes, blankAttributes.Length);
+                    clueAttributes[jj] = (byte)(0x1 << kk);
+                    initialClues.Add(new Clue {attributes = clueAttributes});
+                }
+            }
+        }
+        return initialClues;
     }
 
     enum Change {Enhanced, Combined, None}
@@ -126,7 +154,6 @@ public static class ZebraPuzzle
     /// <returns></returns>
     private static (Change, Clue) MakeDirectInference(Clue clueA, Clue clueB)
     {
-        bool IsConfirmedAttribute(byte b) => CountAttributeBits(b) == 1;
         bool AreIncompatibleClues(Clue a, Clue b)
         {
             foreach (int idx in new[]
@@ -152,7 +179,7 @@ public static class ZebraPuzzle
         {
             if (IsConfirmedAttribute(clueA.attributes[ii]) && clueA.attributes[ii] == clueB.attributes[ii])
             {    // hurah! 2 different clues with the same attribute
-                continue;
+//                continue;
                 return (Change.Combined, CombineClues(clueA, clueB));
             }
 
