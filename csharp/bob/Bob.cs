@@ -14,8 +14,8 @@ public static class Bob
         
         if (string.IsNullOrWhiteSpace(statement))
             return "Fine. Be that way!";
-        
-        var nonSpaceStatement = Regex.Replace(statement, @"\s+", string.Empty);
+
+        var nonSpaceStatement = statement.Trim();
         var isQuestion = nonSpaceStatement.EndsWith('?');
         
         (var upperCasePresent, var lowerCasePresent) = Analyse(nonSpaceStatement);
