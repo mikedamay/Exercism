@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Xunit.Sdk;
 
 internal struct Color {public const byte Red = 1 << 0, Green = 1 << 1, Ivory = 1 << 2, Yellow = 1 << 3, Blue = 1 << 4, All = 0x1f;}
@@ -15,9 +16,9 @@ internal struct Position {public const byte One = 1 << 0, Two = 1 << 1, Three = 
 internal struct AttributeType {public const byte Color = 0, Nationality = 1, Pet = 2, Drink = 3, Smoke = 4, Position = 5;}
 
 
-internal enum Relation {Direct, ToRightOf, NextTo, Position}
+internal enum Relation {Direct, ToRightOf, NextTo}
 
-internal class Clue
+internal class Clue : IComparable
 {
     public byte[] attributes = new byte[AttributeType.Position + 1];
 
@@ -27,7 +28,62 @@ internal class Clue
         Array.Copy(this.attributes, other.attributes, this.attributes.Length);
         return other;
     }
-    
+
+    public int CompareTo(object obj)
+    {
+        if (obj == null)
+        {
+            return 1;
+        }
+
+        Clue other = obj as Clue;
+        MyDebug.Assert(this.attributes.Length == other.attributes.Length);
+        for (int ii = 0; ii < this.attributes.Length; ii++)
+        {
+            if (this.attributes[ii] < other.attributes[ii])
+            {
+                return -1;
+            }
+            else if (this.attributes[ii] > other.attributes[ii])
+            {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    protected bool Equals(Clue other)
+    {
+        MyDebug.Assert(this.attributes.Length == other.attributes.Length);
+        for (int ii = 0; ii < this.attributes.Length; ii++)
+        {
+            if (this.attributes[ii] != other.attributes[ii])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((Clue) obj);
+    }
+
+    public override int GetHashCode()
+    {
+        int hashCode = this.attributes[0];
+        for (int ii = 1; ii < this.attributes.Length; ii++)
+        {
+            hashCode = (hashCode * 397) ^ this.attributes[ii];
+        }
+
+        return hashCode;
+    }
 }
 
 internal class Neighbour
@@ -99,6 +155,7 @@ public static class ZebraPuzzle
     public static byte DrinksWater()
     {
         ISet<Clue> initialClues = FillInBlankClues(GivenClues);
+//        CombineMatchingClues(initialClues);
         var initialClues2 = EliminateNeighbours(initialClues);
         Infer(initialClues2);
         return Nationality.Englishman;
@@ -224,7 +281,7 @@ public static class ZebraPuzzle
             }
 
             if (IsResolvedAttribute(clueA.attributes[ii]) && IsResolvedAttribute(clueB.attributes[ii]))
-            {    // 2 different clues where each has already confirmed this attribute
+            {    // 2 different clues where each has already resolved this attribute
                 continue;
             }
             else if ( IsResolvedAttribute(clueB.attributes[ii]) && AreIncompatibleClues(clueA, clueB))
@@ -388,6 +445,30 @@ public static class ZebraPuzzle
         return (enhancedClue.attributes[idx] != clueA.attributes[idx], enhancedClue);
     }
 
+
+    private static (bool, ISet<Clue>) CombineMatchingClues(ISet<Clue> clues)
+    {
+        var clueCombos = clues.SelectMany(
+          (c, idx) => clues.Select((c2, idx2) => ((c, idx), (c2, idx2))))
+          .Where(grp => grp.Item1.Item2 > grp.Item2.Item2).OrderBy(grp => grp.Item1.Item2).ThenBy(grp => grp.Item2.Item2)
+          .Select(grp => (grp.Item1.Item1, grp.Item2.Item1)).ToList();
+        ISet<Clue> cluesOut = new HashSet<Clue>();
+        foreach ((Clue clueA, Clue clueB) in clueCombos)
+        {
+            cluesOut.Add(clueA);
+            for (int ii = 0; ii < clueA.attributes.Length; ii++)
+            {
+                if (IsResolvedAttribute(clueA.attributes[ii]) && clueA.attributes[ii] == clueB.attributes[ii])
+                {    // hurah! 2 different clues with the same attribute
+                    CombineClues(clueA, clueB);
+                    break;
+                }
+            }
+        }
+        
+        return (false, clues);
+    }
+    
     /// <summary>
     /// there is a precondition that at least on attribute in clueA
     /// will be equal to the corresponding attribute in clueB
