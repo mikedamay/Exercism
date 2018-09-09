@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -19,14 +20,39 @@ internal enum Relation {Direct, ToRightOf, NextTo, Position}
 internal class Clue
 {
     public byte[] attributes = new byte[AttributeType.Position + 1];
+
+    public Clue Clone()
+    {
+        Clue other = new Clue();
+        Array.Copy(this.attributes, other.attributes, this.attributes.Length);
+        return other;
+    }
     
 }
 
 internal class Neighbour
 {
-    public Clue ClueA { get; set; }
-    public Clue ClueB { get; set; }
+    public byte attributeTypeA;
+    public byte attrivubuteValueA;
+    public byte attributeTypeB;
+    public byte attrivubuteValueB;
     public Relation Relation { get; set; }
+
+    public static ISet<Neighbour> neighbours = new HashSet<Neighbour>
+    {
+        new Neighbour{attributeTypeA = AttributeType.Color, attrivubuteValueA = Color.Green
+          ,attributeTypeB = AttributeType.Color, attrivubuteValueB = Color.Ivory
+          ,Relation = global::Relation.ToRightOf},
+        new Neighbour{attributeTypeA = AttributeType.Pet, attrivubuteValueA = Pet.Fox
+          ,attributeTypeB = AttributeType.Smoke, attrivubuteValueB = Smoke.Chesterfields
+          ,Relation = global::Relation.NextTo},
+        new Neighbour{attributeTypeA = AttributeType.Pet, attrivubuteValueA = Pet.Horse
+          ,attributeTypeB = AttributeType.Smoke, attrivubuteValueB = Smoke.Kools
+          ,Relation = global::Relation.NextTo},
+        new Neighbour{attributeTypeA = AttributeType.Color, attrivubuteValueA = Color.Blue
+          ,attributeTypeB = AttributeType.Nationality, attrivubuteValueB = Nationality.Norwegian
+          ,Relation = global::Relation.NextTo},
+    };
 }
 
 public static class ZebraPuzzle
@@ -37,8 +63,8 @@ public static class ZebraPuzzle
         new Clue{attributes = new byte[]{Color.All, Nationality.Spaniard, Pet.Dog, Drink.All, Smoke.All, Position.All}},
         new Clue{attributes = new byte[]{Color.Green, Nationality.All, Pet.All, Drink.Coffee, Smoke.All, Position.All}},
         // green house is to the right of the ivory house
-        // the green house cannot be in position 5
-        // the ivory house cannot be in position 1
+        // the ivory house cannot be in position 5
+        // the green house cannot be in position 1
         new Clue{attributes = new byte[]{Color.All, Nationality.Ukranian, Pet.All, Drink.Tea, Smoke.All, Position.All}},
         new Clue{attributes = new byte[]{Color.All, Nationality.All, Pet.Snails, Drink.All, Smoke.OldGold, Position.All}},
         new Clue{attributes = new byte[]{Color.Yellow, Nationality.All, Pet.All, Drink.All, Smoke.Kools, Position.All}},
@@ -53,7 +79,10 @@ public static class ZebraPuzzle
  
     
     private static int CountAttributeBits(byte b) => (b & 0x1) + (b >> 1 & 0x1) + (b >> 2 & 0x1) + (b >> 3 & 0x1) + (b >> 4 & 0x1);
-    private static bool IsConfirmedAttribute(byte b) => CountAttributeBits(b) == 1;
+    private static bool IsResolvedAttribute(byte b) => CountAttributeBits(b) == 1;
+
+    private static byte TurnOffBit(byte bitmap, byte bit ) =>
+        (byte) (bitmap & ~bit);
     
     static ZebraPuzzle()
     {
@@ -70,7 +99,8 @@ public static class ZebraPuzzle
     public static byte DrinksWater()
     {
         ISet<Clue> initialClues = FillInBlankClues(GivenClues);
-        Infer(initialClues);
+        var initialClues2 = EliminateNeighbours(initialClues);
+        Infer(initialClues2);
         return Nationality.Englishman;
     }
 
@@ -83,7 +113,7 @@ public static class ZebraPuzzle
         {
             for (int ii = 0; ii <= AttributeType.Position; ii++)
             {
-                if (IsConfirmedAttribute(clue.attributes[ii]))
+                if (IsResolvedAttribute(clue.attributes[ii]))
                 {
                     cumulativeAttributes[ii] -= clue.attributes[ii];                    
                 }
@@ -121,6 +151,10 @@ public static class ZebraPuzzle
             cluesOut.Clear();
             foreach (Clue clueA in cluesIn)
             {
+/*
+                if (combined.Contains(clueA))
+                    break;
+*/
                 Clue resultClue = new Clue();
                 foreach (var clueB in cluesIn)
                 {
@@ -141,6 +175,12 @@ public static class ZebraPuzzle
                 // we rely on the commutative property of MakeDirectInference
             }
 
+            bool modifiedn = false;
+            (modifiedn, cluesOut) = InferNeighbours(cluesOut);
+            if (modifiedn)
+            {
+                somethingGoodHappened = true;
+            }
             cluesIn = new HashSet<Clue>(cluesOut);
         }
     }
@@ -162,7 +202,7 @@ public static class ZebraPuzzle
                 AttributeType.Smoke, AttributeType.Position
             })
             {
-                if (IsConfirmedAttribute(a.attributes[idx]) && IsConfirmedAttribute(b.attributes[idx])
+                if (IsResolvedAttribute(a.attributes[idx]) && IsResolvedAttribute(b.attributes[idx])
                                                             && a.attributes[idx] != b.attributes[idx])
                     return true;
             }
@@ -177,17 +217,17 @@ public static class ZebraPuzzle
 
         for (int ii = 0; ii < clueA.attributes.Length; ii++)
         {
-            if (IsConfirmedAttribute(clueA.attributes[ii]) && clueA.attributes[ii] == clueB.attributes[ii])
+            if (IsResolvedAttribute(clueA.attributes[ii]) && clueA.attributes[ii] == clueB.attributes[ii])
             {    // hurah! 2 different clues with the same attribute
-//                continue;
+                continue;
                 return (Change.Combined, CombineClues(clueA, clueB));
             }
 
-            if (IsConfirmedAttribute(clueA.attributes[ii]) && IsConfirmedAttribute(clueB.attributes[ii]))
+            if (IsResolvedAttribute(clueA.attributes[ii]) && IsResolvedAttribute(clueB.attributes[ii]))
             {    // 2 different clues where each has already confirmed this attribute
                 continue;
             }
-            else if ( IsConfirmedAttribute(clueB.attributes[ii]) && AreIncompatibleClues(clueA, clueB))
+            else if ( IsResolvedAttribute(clueB.attributes[ii]) && AreIncompatibleClues(clueA, clueB))
             {
                 // one of the attributes is confirmed so we can eliminate that from the other clue
                 (bool modified, Clue resultClue) = CombineAttributes(clueA, clueB, ii);
@@ -201,6 +241,138 @@ public static class ZebraPuzzle
         return (Change.None, clueA);
     }
 
+    /// <summary>
+    /// Leverage the logic that a clue cannot have its neighbour's attribute
+    /// and eliminate that attribute from the clue.
+    /// </summary>
+    /// <param name="clues">initial set of clues</param>
+    /// <returns>a newly generated set of clues</returns>
+    private static ISet<Clue> EliminateNeighbours(ISet<Clue> clues)
+    {
+        var cluesOut = new HashSet<Clue>();
+        foreach (var clue in clues)
+        {
+            var clueOut = clue.Clone();
+            cluesOut.Add(clueOut);
+            foreach (var neighbour in Neighbour.neighbours)
+            {
+                if (IsResolvedAttribute(clue.attributes[neighbour.attributeTypeA] )
+                  && clue.attributes[neighbour.attributeTypeA] == neighbour.attrivubuteValueA)
+                {
+                    clueOut.attributes[neighbour.attributeTypeB] = TurnOffBit(
+                        clueOut.attributes[neighbour.attributeTypeB],
+                        neighbour.attrivubuteValueB);
+                }
+                if (IsResolvedAttribute(clue.attributes[neighbour.attributeTypeB])
+                  && clue.attributes[neighbour.attributeTypeB] == neighbour.attrivubuteValueB)
+                {
+                    clueOut.attributes[neighbour.attributeTypeA] = TurnOffBit(
+                        clueOut.attributes[neighbour.attributeTypeA],
+                        neighbour.attrivubuteValueA);
+                }
+                // TODO edge case where both A and B apply to same clue - presumably an error
+            }
+        }
+
+        return cluesOut;
+    }
+
+    /// <summary>
+    /// Two cases:
+    ///   1) ToRightOf.  we can exclude the known left hand attribute from house 5 and the right hand attribute from house 1
+    ///   2) NextTo.  If we get lucky and one of the neighbours has a known house we can fix the other
+    /// TODO: ToRightOf should take advantage of similar logic to NextTo.
+    /// </summary>
+    /// <param name="clues">this will change if the method is called multiple times</param>
+    /// <returns>a new cloned list of clues</returns>
+    private static (bool, ISet<Clue>) InferNeighbours(ISet<Clue> clues)
+    {
+        var cluesOut = new HashSet<Clue>();
+        bool modified = false;
+        foreach (var clue in clues)
+        {
+            var clueOut = clue.Clone();
+            cluesOut.Add(clueOut);
+        }
+        foreach (var neighbour in Neighbour.neighbours)
+        {
+            // assert there are clues for all attributes
+            // assert that setter is accustomed to a left-to-right culture
+            var clueA = cluesOut.First(c => c.attributes[neighbour.attributeTypeA] == neighbour.attrivubuteValueA);
+            var clueB = cluesOut.First(c => c.attributes[neighbour.attributeTypeB] == neighbour.attrivubuteValueB);
+            if (neighbour.Relation == Relation.ToRightOf)
+            {
+                var clueC = cluesOut.FirstOrDefault(c => c.attributes[AttributeType.Position] == Position.One);
+                                    // left most house is to the right of nothing
+                var clueD = cluesOut.FirstOrDefault(c => c.attributes[AttributeType.Position] == Position.Five);
+                                    // right most house is to the left of nothing
+                byte? oldC = clueC?.attributes[neighbour.attributeTypeA], oldD = clueD?.attributes[neighbour.attributeTypeB];
+                if (clueC != null)
+                {
+                    clueC.attributes[neighbour.attributeTypeA]
+                        = TurnOffBit(clueC.attributes[neighbour.attributeTypeA], neighbour.attrivubuteValueA);
+                }
+
+                if (clueD != null)
+                {
+                    clueD.attributes[neighbour.attributeTypeB]
+                        = TurnOffBit(clueD.attributes[neighbour.attributeTypeB], neighbour.attrivubuteValueB); 
+                }
+                modified = oldC != clueC?.attributes[neighbour.attributeTypeA] || oldD != clueD?.attributes[neighbour.attributeTypeB];
+
+            }
+            else if (neighbour.Relation == Relation.NextTo)
+            {
+                if (IsResolvedAttribute(clueA.attributes[AttributeType.Position]))
+                {
+                    // we know the position of clue A we may be able to infer the position of clue B
+                    if (clueA.attributes[AttributeType.Position] == Position.One)
+                    {
+                        if (clueB.attributes[AttributeType.Position] != Position.Two)
+                        {
+                            MyDebug.Assert(!IsResolvedAttribute(clueB.attributes[AttributeType.Position]));
+                            clueB.attributes[AttributeType.Position] = Position.Two;
+                            modified = true;
+                        }
+                    }
+                    else if (clueA.attributes[AttributeType.Position] == Position.Five)
+                    {
+                        if (clueB.attributes[AttributeType.Position] != Position.Four)
+                        {
+                            MyDebug.Assert(!IsResolvedAttribute(clueB.attributes[AttributeType.Position]));
+                            clueB.attributes[AttributeType.Position] = Position.Four;
+                            modified = true;
+                        }
+                    }
+                }
+                if (IsResolvedAttribute(clueB.attributes[AttributeType.Position]))
+                {
+                    // we know the position of clue B we may be able to infer the position of clue B
+                    if (clueB.attributes[AttributeType.Position] == Position.One)
+                    {
+                        if (clueA.attributes[AttributeType.Position] != Position.Two)
+                        {
+                            MyDebug.Assert(!IsResolvedAttribute(clueA.attributes[AttributeType.Position]));
+                            clueA.attributes[AttributeType.Position] = Position.Two;
+                            modified = true;
+                        }
+                    }
+                    else if (clueB.attributes[AttributeType.Position] == Position.Five)
+                    {
+                        if (clueA.attributes[AttributeType.Position] != Position.Four)
+                        {
+                            MyDebug.Assert(!IsResolvedAttribute(clueA.attributes[AttributeType.Position]));
+                            clueA.attributes[AttributeType.Position] = Position.Four;
+                            modified = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return (modified, cluesOut);
+    }
+    
     /// <summary>
     /// 
     /// </summary>
