@@ -155,7 +155,6 @@ public static class ZebraPuzzle
     public static byte DrinksWater()
     {
         ISet<Clue> initialClues = FillInBlankClues(GivenClues);
-//        CombineMatchingClues(initialClues);
         var initialClues2 = EliminateNeighbours(initialClues);
         Infer(initialClues2);
         return Nationality.Englishman;
@@ -238,6 +237,8 @@ public static class ZebraPuzzle
             {
                 somethingGoodHappened = true;
             }
+
+            (_, cluesOut) = CombineMatchingClues(cluesOut);
             cluesIn = new HashSet<Clue>(cluesOut);
         }
     }
@@ -277,7 +278,6 @@ public static class ZebraPuzzle
             if (IsResolvedAttribute(clueA.attributes[ii]) && clueA.attributes[ii] == clueB.attributes[ii])
             {    // hurah! 2 different clues with the same attribute
                 continue;
-                return (Change.Combined, CombineClues(clueA, clueB));
             }
 
             if (IsResolvedAttribute(clueA.attributes[ii]) && IsResolvedAttribute(clueB.attributes[ii]))
@@ -355,8 +355,16 @@ public static class ZebraPuzzle
         {
             // assert there are clues for all attributes
             // assert that setter is accustomed to a left-to-right culture
-            var clueA = cluesOut.First(c => c.attributes[neighbour.attributeTypeA] == neighbour.attrivubuteValueA);
-            var clueB = cluesOut.First(c => c.attributes[neighbour.attributeTypeB] == neighbour.attrivubuteValueB);
+            Clue clueA, clueB;
+            try
+            {
+                clueA = cluesOut.First(c => c.attributes[neighbour.attributeTypeA] == neighbour.attrivubuteValueA);
+                clueB = cluesOut.First(c => c.attributes[neighbour.attributeTypeB] == neighbour.attrivubuteValueB);
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
             if (neighbour.Relation == Relation.ToRightOf)
             {
                 var clueC = cluesOut.FirstOrDefault(c => c.attributes[AttributeType.Position] == Position.One);
@@ -448,25 +456,39 @@ public static class ZebraPuzzle
 
     private static (bool, ISet<Clue>) CombineMatchingClues(ISet<Clue> clues)
     {
-        var clueCombos = clues.SelectMany(
-          (c, idx) => clues.Select((c2, idx2) => ((c, idx), (c2, idx2))))
-          .Where(grp => grp.Item1.Item2 > grp.Item2.Item2).OrderBy(grp => grp.Item1.Item2).ThenBy(grp => grp.Item2.Item2)
-          .Select(grp => (grp.Item1.Item1, grp.Item2.Item1)).ToList();
-        ISet<Clue> cluesOut = new HashSet<Clue>();
-        foreach ((Clue clueA, Clue clueB) in clueCombos)
+        var clueCombos = clues.OrderBy(c => c).SelectMany(
+                c => clues.OrderBy(c3 => c3).Select(c2 => (c, c2)))
+            .Where(grp => grp.Item1.CompareTo(grp.Item2) < 0) //.OrderBy(grp => grp.Item1).ThenBy(grp => grp.Item2)
+            .ToList();
+        var grouped = clueCombos.GroupBy(grp => grp.Item1).ToList();
+        
+        var cluesOut = new HashSet<Clue>();
+        var modified = false;
+        foreach (var grp in grouped.Append(grouped.Last().Select(grp => (grp.Item2, grp.Item1))))
         {
-            cluesOut.Add(clueA);
-            for (int ii = 0; ii < clueA.attributes.Length; ii++)
+            bool matched = false;
+            foreach ((var clueA, var clueB) in grp)
             {
-                if (IsResolvedAttribute(clueA.attributes[ii]) && clueA.attributes[ii] == clueB.attributes[ii])
-                {    // hurah! 2 different clues with the same attribute
-                    CombineClues(clueA, clueB);
-                    break;
+                for (int ii = 0; ii < clueA.attributes.Length; ii++)
+                {
+                    if (IsResolvedAttribute(clueA.attributes[ii]) && clueA.attributes[ii] == clueB.attributes[ii])
+                    {    // hurah! 2 different clues with the same attribute
+                        var clueResult = CombineClues(clueA, clueB);
+                        cluesOut.Add(clueResult);
+                        matched = true;
+                        modified = true;
+                        goto outer;
+                    }
                 }
             }
+outer:
+            if (!matched)
+            {
+                cluesOut.Add(grp.First().Item1);             
+            }
         }
-        
-        return (false, clues);
+         
+        return (modified, cluesOut);
     }
     
     /// <summary>
