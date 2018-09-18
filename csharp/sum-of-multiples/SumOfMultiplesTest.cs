@@ -5,7 +5,7 @@ using Xunit;
 
 public class SumOfMultiplesTest
 {
-    [Fact]
+    [Fact(Skip="true")]
     public void Multiple_3_300_000()
     {
         Assert.Equal(0, SumOfMultiples.Sum(new [] {3}, 300_000));
