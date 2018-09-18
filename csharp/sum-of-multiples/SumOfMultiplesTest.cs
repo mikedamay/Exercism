@@ -6,6 +6,11 @@ using Xunit;
 public class SumOfMultiplesTest
 {
     [Fact]
+    public void Multiple_3_300_000()
+    {
+        Assert.Equal(0, SumOfMultiples.Sum(new [] {3}, 300_000));
+    }
+    [Fact]
     public void Multiples_of_3_or_5_up_to_1()
     {
         Assert.Equal(0, SumOfMultiples.Sum(new[] { 3, 5 }, 1));
