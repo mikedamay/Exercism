@@ -16,7 +16,7 @@ public enum Allergen
 
 public class Allergies
 {
-    private Allergen mask;
+    private readonly Allergen mask;
     public Allergies(int maskArg)
     {
         mask = (Allergen)maskArg;
