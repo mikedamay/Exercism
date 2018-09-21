@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
+[Flags]
 public enum Allergen
 {
     Eggs = 1 << 0,
@@ -16,21 +16,16 @@ public enum Allergen
 
 public class Allergies
 {
-    private static Allergen[] allergies =
-    {
-        Allergen.Eggs, Allergen.Peanuts, Allergen.Shellfish, Allergen.Strawberries, Allergen.Tomatoes,
-        Allergen.Chocolate, Allergen.Pollen, Allergen.Cats
-    };
-    private Allergen[] mask;
+    private Allergen mask;
     public Allergies(int maskArg)
     {
-        mask = allergies.Where(a => ((int)a & maskArg) > 0).ToArray();
+        mask = (Allergen)maskArg;
     }
 
     public bool IsAllergicTo(Allergen allergen)
     {
-        return mask.Any(a => a == allergen);
+        return mask.HasFlag(allergen);
     }
 
-    public Allergen[] List() => mask;
+    public Allergen[] List() => Enum.GetValues(typeof(Allergen)).Cast<Allergen>().Where(a => mask.HasFlag(a)).ToArray();
 }
