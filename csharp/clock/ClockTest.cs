@@ -353,4 +353,12 @@ public class ClockTest
         var sut = new Clock(-54, -11513);
         Assert.Equal(new Clock(18, 7), sut);
     }
+
+    [Fact]
+    public void Excercise_Equals()
+    {
+        var a = new Clock(1, 2);
+        object b = new Clock(1, 2);
+        Assert.True(a.Equals(b));
+    }
 }
