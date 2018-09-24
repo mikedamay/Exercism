@@ -1,18 +1,16 @@
 public class Clock
 {
     private readonly int timeInMinutes;
+    
     public Clock(int hours, int minutes)
     {
-        this.timeInMinutes = AdjustClock(hours * 60 + minutes, 0);
+        timeInMinutes = AdjustClock(hours * 60 + minutes, 0);
     }
-
-    private Clock(int timeInMinutes) => this.timeInMinutes = timeInMinutes;
 
     public int Hours => timeInMinutes / 60;
     public int Minutes => timeInMinutes % 60;
     
-    public Clock Add(int minutesToAdd)
-        => new Clock(AdjustClock(timeInMinutes, minutesToAdd));
+    public Clock Add(int minutesToAdd) => new Clock(Hours, Minutes + minutesToAdd);
 
     public Clock Subtract(int minutesToSubtract) => Add(-minutesToSubtract);
 
