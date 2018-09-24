@@ -1,37 +1,34 @@
-using System;
-
 public class Clock
 {
-    private readonly int hours;
-    private readonly int minutes;
+    private readonly int timeInMinutes;
     public Clock(int hours, int minutes)
     {
-        (this.hours, this.minutes) = AdjustClock(hours, minutes, 0);
+        this.timeInMinutes = AdjustClock(hours * 60 + minutes, 0);
     }
 
-    private Clock((int hours, int minutes) time) => (hours, minutes) = time;
+    private Clock(int timeInMinutes) => this.timeInMinutes = timeInMinutes;
 
+    public int Hours => timeInMinutes / 60;
+    public int Minutes => timeInMinutes % 60;
+    
     public Clock Add(int minutesToAdd)
-        => new Clock(AdjustClock(hours, minutes, minutesToAdd));
+        => new Clock(AdjustClock(timeInMinutes, minutesToAdd));
 
     public Clock Subtract(int minutesToSubtract) => Add(-minutesToSubtract);
 
     public override string ToString()
     {
-        var aa = $"{hours:D2}:{minutes:D2}";
-        return aa;
+        return $"{Hours:D2}:{Minutes:D2}";
     }
 
-    private (int hoursOut, int minutesOut) AdjustClock(int hoursIn, int minutesIn, int adjustmenttMinutes)
+    private int AdjustClock(int minutesIn, int adjustmenttMinutes)
     {
-        const long FOR_EVER = 1_000_000_000_000 * 24 * 60;
-        long baseTime = FOR_EVER + hoursIn * 60 + minutesIn + adjustmenttMinutes;
-        return ((int)(baseTime % (24 * 60)/ 60), (int)(baseTime % 60));
+        return (24 * 60 + ( minutesIn + adjustmenttMinutes) % (24 * 60)) % (24 * 60);
     }
 
     private bool Equals(Clock other)
     {
-        return hours == other.hours && minutes == other.minutes;
+        return timeInMinutes == other.timeInMinutes;
     }
 
     public override bool Equals(object obj)
@@ -44,9 +41,6 @@ public class Clock
 
     public override int GetHashCode()
     {
-        unchecked
-        {
-            return (hours * 397) ^ minutes;
-        }
+        return timeInMinutes;
     }
 }
