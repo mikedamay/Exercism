@@ -20,7 +20,7 @@ public class NucleotideCountTest
         Assert.Equal(expected, sut.NucleotideCounts);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Can_count_one_nucleotide_in_single_character_input()
     {
         var sut = new NucleotideCount("G");
@@ -34,7 +34,7 @@ public class NucleotideCountTest
         Assert.Equal(expected, sut.NucleotideCounts);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Strand_with_repeated_nucleotide()
     {
         var sut = new NucleotideCount("GGGGGGG");
@@ -48,7 +48,7 @@ public class NucleotideCountTest
         Assert.Equal(expected, sut.NucleotideCounts);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Strand_with_multiple_nucleotides()
     {
         var sut = new NucleotideCount("AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC");
@@ -62,7 +62,7 @@ public class NucleotideCountTest
         Assert.Equal(expected, sut.NucleotideCounts);
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Strand_with_invalid_nucleotides()
     {
         Assert.Throws<ArgumentException>(() => new NucleotideCount("AGXXACT"));
