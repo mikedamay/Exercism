@@ -42,3 +42,9 @@ public class Clock
         return timeInMinutes;
     }
 }
+/*
+ 1. You need the Equals(object) in order for your object to honour its contracts. In inheriting from object you assert that you can be passed an object for comparison so you had better handle it correctly.
+ 2. The first ReferenceEquals is null protection.
+ 3. The second ReferenceEquals is for performance
+ 4. GetHashCode() and the need for consistency with Equals are a bit more hazy. The hashcode is used, in particular, by dictionaries and sets and the bumping with a random number apparently spreads out the distribution in whatever tree structure they use. I suspect 5 moinutes of introspection or web search would reveal the importance of equality in this mix.
+*/
