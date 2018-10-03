@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 public class NucleotideCountTest
@@ -66,5 +67,19 @@ public class NucleotideCountTest
     public void Strand_with_invalid_nucleotides()
     {
         Assert.Throws<ArgumentException>(() => new NucleotideCount("AGXXACT"));
+    }
+
+    [Fact]
+    public void Long_Strand()
+    {
+        var strand = new string(Enumerable.Repeat('A', 100_000_000).ToArray());
+        var expected = new Dictionary<char, int>
+        {
+            ['A'] = 100_000_000,
+            ['C'] = 0,
+            ['G'] = 0,
+            ['T'] = 0
+        };
+        Assert.Equal(expected, new NucleotideCount(strand).NucleotideCounts);
     }
 }
