@@ -29,7 +29,14 @@ public static class Bob
             return "Sure.";
 
         return "Whatever.";
-
+/*
+There are only 4 characteristics of the stament that you care about:
+* Does it contain an uppercase letter?
+* Does it contain a lower case letter?
+* Is it entirely made up of whitespace?
+* Is the last non-space character a '?'?
+Not sure about the exlamation mark, '!' the tests don't push it.
+ */
       
     }
 }
