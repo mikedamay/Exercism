@@ -9,11 +9,14 @@ public class ArrayBased
             {
                 dropSounds += drop.sound;
             }
-        }        
+        }
+
         if (string.IsNullOrEmpty(dropSounds))
         {
             dropSounds = number.ToString();
         }
+
         return dropSounds;
-    
+    }
+
 }
