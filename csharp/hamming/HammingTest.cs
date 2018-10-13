@@ -99,7 +99,7 @@ public class HammingTest
     [Fact(Skip = "")]
     public void Long_Strand()
     {
-        string strand = new string(Enumerable.Repeat('A', 100_000_000).ToArray());
+        string strand = new string(Enumerable.Repeat('A', 1_000_000_000).ToArray());
         Assert.Equal(0, Hamming.Distance(strand, strand));
     }
 }
