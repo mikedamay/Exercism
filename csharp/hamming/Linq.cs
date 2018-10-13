@@ -10,15 +10,8 @@ public static class Hamming
         {
             throw new ArgumentException();
         }
-       
-        return GetStrandPairs(firstStrand, secondStrand).Where(p => p.first != p.second).Count();
+
+        return firstStrand.Zip(secondStrand, (a, b) => (a, b)).Count(p => p.Item1 != p.Item2);
     }
 
-    private static IEnumerable<(char first, char second)> GetStrandPairs(string firstStrand, string secondStrand)
-    {
-        for (int ii = 0; ii < firstStrand.Length; ii++)
-        {
-            yield return (firstStrand[ii], secondStrand[ii]);
-        }
-    }
 }
