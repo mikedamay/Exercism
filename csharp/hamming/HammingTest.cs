@@ -96,7 +96,7 @@ public class HammingTest
         Assert.Throws<ArgumentException>(() => Hamming.Distance("ATA", "AGTG"));
     }
     
-    [Fact(Skip = "")]
+    [Fact(Skip = "true")]
     public void Long_Strand()
     {
         string strand = new string(Enumerable.Repeat('A', 1_000_000_000).ToArray());

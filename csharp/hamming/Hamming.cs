@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using Newtonsoft.Json.Serialization;
 
-public static class Hamming_First
+public static class Hamming
 {   public static int Distance(string firstStrand, string secondStrand)
     {
 

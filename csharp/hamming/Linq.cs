@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public static class Hamming
+public static class Hamming_Linq
 {
     public static int Distance(string firstStrand, string secondStrand)
     {
