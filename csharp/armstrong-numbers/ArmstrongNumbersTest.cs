@@ -5,6 +5,11 @@ using Xunit;
 public class ArmstrongNumbersTest
 {
     [Fact]
+    public void Huge()
+    {
+        Assert.True(ArmstrongNumbers.IsArmstrongNumber(1_999_999_999));
+    }
+    [Fact]
     public void Single_digit_numbers_are_armstrong_numbers()
     {
         Assert.True(ArmstrongNumbers.IsArmstrongNumber(5));
