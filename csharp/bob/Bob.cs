@@ -35,7 +35,16 @@ There are only 4 characteristics of the stament that you care about:
 * Does it contain a lower case letter?
 * Is it entirely made up of whitespace?
 * Is the last non-space character a '?'?
+
 Not sure about the exlamation mark, '!' the tests don't push it.
+
+The following may be useful:
+
+    `string.Any(Char.IsUpper)`
+    `string.Any(Char.IsLower)`
+    `string.IsNullOrWhiteSpace()`
+
+
  */
       
     }
