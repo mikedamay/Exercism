@@ -40,9 +40,9 @@ Not sure about the exlamation mark, '!' the tests don't push it.
 
 The following may be useful:
 
-    `string.Any(Char.IsUpper)`
-    `string.Any(Char.IsLower)`
-    `string.IsNullOrWhiteSpace()`
+*    `string.Any(Char.IsUpper)`
+*    `string.Any(Char.IsLower)`
+*    `string.IsNullOrWhiteSpace()`
 
 
  */
