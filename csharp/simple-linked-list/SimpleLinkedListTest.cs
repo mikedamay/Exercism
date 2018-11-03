@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Xunit;
+using Xunit.Sdk;
 
 public class SimpleLinkedListTest
 {
@@ -67,6 +68,14 @@ public class SimpleLinkedListTest
         var list = new SimpleLinkedList<int>(values);
         var reversed = list.Reverse();
         Assert.Equal(values.Reverse(), reversed);
+    }
+    [Fact(Skip="stack overflow")]
+    public void ReverseAMillion()
+    {
+        var values = Enumerable.Range(1, 10_000).ToArray();
+        var list = new SimpleLinkedList<int>(values);
+//        var reversed = list.Reverse();
+//        Assert.True(true);
     }
 
     [Theory]
