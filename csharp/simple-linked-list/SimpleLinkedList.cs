@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;using System.Dynamic;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Dynamic;
 using System.Linq;
 
 public class SimpleLinkedList<T> : IEnumerable<T>
@@ -59,21 +61,37 @@ public class SimpleLinkedList<T> : IEnumerable<T>
             Next = new SimpleLinkedList<T>(iter);
         }
     }
+    private SimpleLinkedList()
+    {
+        
+    }
     public SimpleLinkedList(IEnumerable<T> values)
     {
-/*
+#if RECURSIVE_IENUMERATOR
         var iter = values.GetEnumerator();
         iter.MoveNext();
         Value = iter.Current;
         if (iter.MoveNext())
             Next = new SimpleLinkedList<T>(iter);
-*/
-        Value = values.First();
+#elif RECURSIIVE_IENUMERABLE
+    Value = values.First();
         if (values.Count() > 1)
             Next = new SimpleLinkedList<T>(values.Skip(1));
+#else
+        SimpleLinkedList<T> prev;
+        prev = this;
+        this.Value = values.First();
+        foreach (var v in values.Skip(1))
+        {
+            var sll = new SimpleLinkedList<T>();
+            sll.Value = v;
+            prev.Next = sll;
+            prev = sll;
+        }
+#endif
     }
 
-    public T Value { get; }
+    public T Value { get; private set; }
 
     public SimpleLinkedList<T> Next { get; private set; }
 
