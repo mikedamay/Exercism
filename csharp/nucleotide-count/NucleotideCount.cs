@@ -16,7 +16,7 @@ public static class NucleotideCount
     public IDictionary<char, int> NucleotideCounts => _counts;
 */
 
-    public static Dictionary<char, int> Count(string sequence)
+    public static IReadOnlyDictionary<char, int> Count(string sequence)
     {
         if (sequence.ToUpper().Except("ACGT").Any())
         {
