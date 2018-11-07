@@ -2,19 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class NucleotideCount
+public static class NucleotideCount
 {
     
+/*
     private Dictionary<char, int> _counts {get;}
     public NucleotideCount(string sequence)
     {
         if (sequence == null) { throw new ArgumentException(nameof(sequence)); }
-        _counts = MyCount(sequence);
+//        _counts = MyCount(sequence);
    }
 
     public IDictionary<char, int> NucleotideCounts => _counts;
+*/
 
-    private static Dictionary<char, int> MyCount(string sequence)
+    public static Dictionary<char, int> Count(string sequence)
     {
         if (sequence.ToUpper().Except("ACGT").Any())
         {
