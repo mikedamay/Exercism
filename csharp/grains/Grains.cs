@@ -1,14 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 public static class Grains
 {
+    private const int MIN = 1, MAX = 64;
+    
     public static ulong Square(int n)
-        => n <= 0 || n > 64 ? throw new ArgumentOutOfRangeException("invalid input of 0") : 1UL << (n - 1);
+        => n < MIN || n > MAX ? ThrowInvalid() : TwoToThe(n - 1);
     public static ulong Total()
-    {
-        return Enumerable.Range(1, 64).Select(n => Square(n)).Aggregate((m, n) => m + n);
-    }
+        => Enumerable
+            .Range(MIN, MAX)
+            .Select(n => Square(n))
+            .Aggregate((allSquares, square) => allSquares + square);
 
+    private static ulong ThrowInvalid() => throw new ArgumentOutOfRangeException("invalid input of 0");
+    private static ulong TwoToThe(int n) => 1UL << n;
 }
