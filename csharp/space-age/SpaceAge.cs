@@ -2,47 +2,58 @@ using System;
 
 public class SpaceAge
 {
+
+    private const double EarthSeconds = 31557600;
+    private const double MercurySeconds = EarthSeconds * 0.2408467;
+    private const double VenusSeconds = EarthSeconds * 0.61519726;
+    private const double MarsSeconds = EarthSeconds * 1.8808158;
+    private const double JupiterSeconds = EarthSeconds * 11.862615;
+    private const double SaturnSeconds = EarthSeconds * 29.447498;
+    private const double UranusSeconds = EarthSeconds * 84.016846;
+    private const double NeptuneSeconds = EarthSeconds * 164.79132;
+    private readonly double seconds;
     public SpaceAge(long seconds)
     {
+        this.seconds = seconds;
     }
 
     public double OnEarth()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        return seconds / EarthSeconds;
     }
 
     public double OnMercury()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        return seconds / MercurySeconds;
     }
 
     public double OnVenus()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        return seconds / VenusSeconds;
     }
 
     public double OnMars()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        return seconds / MarsSeconds;
     }
 
     public double OnJupiter()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        return seconds / JupiterSeconds;
     }
 
     public double OnSaturn()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        return seconds / SaturnSeconds;
     }
 
     public double OnUranus()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        return seconds / UranusSeconds;
     }
 
     public double OnNeptune()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        return seconds / NeptuneSeconds;
     }
 }
