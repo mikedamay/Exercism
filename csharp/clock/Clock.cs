@@ -1,6 +1,8 @@
 public class Clock
 {
     private readonly int timeInMinutes;
+    private int hours;
+    private int minutes;
     
     public Clock(int hours, int minutes)
     {
@@ -43,12 +45,34 @@ public class Clock
     }
 }
 /*
+protected bool Equals(Clock other)
+{
+    return hours == other.hours && minutes == other.minutes;
+}
+
+public override bool Equals(object obj)
+{
+    if (ReferenceEquals(null, obj)) return false;
+    if (ReferenceEquals(this, obj)) return true;
+    if (obj.GetType() != this.GetType()) return false;
+    return Equals((Clock) obj);
+}
+
+public override int GetHashCode()
+{
+    unchecked
+    {
+        return (hours * 397) ^ minutes;
+    }
+}
+
  1. You need the Equals(object) in order for your object to honour its contracts. In inheriting from object you assert that you can be passed an object for comparison so you had better handle it correctly.
  2. The first ReferenceEquals is null protection.
  3. The second ReferenceEquals is for performance
  4. GetHashCode() and the need for consistency with Equals are a bit more hazy. The hashcode is used, in particular, by dictionaries and sets and the bumping with a random number apparently spreads out the distribution in whatever tree structure they use. I suspect 5 moinutes of introspection or web search would reveal the importance of equality in this mix.
 */
 /*
+`IEquatable<Clock> is a marker interface.  
 A marker interface is one that expects to be detected at runtime and that callers will change their internal behaviour depending on the presence or absence of the interface.  Tools and runtime can detect the interface and validate instances or use them in a particular way.
 
 [https://stackoverflow.com/questions/1023068/what-is-the-purpose-of-a-marker-interface](https://stackoverflow.com/questions/1023068/what-is-the-purpose-of-a-marker-interface)
