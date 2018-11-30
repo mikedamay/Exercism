@@ -90,7 +90,7 @@ The cardinal rule is that if Equals() returns true for two instances then GetHas
 
 However if two instances return the same value from GetHashCode() there is no correspoding guarantee that Equals() will return true.
 
-It addresses the case where hashcodes are used to place instances in a "bucket" (in a hashset of dictionary) where all items in the bucket have the same hashcode.  A search routine can quickly find the bucket using the hashcode and then find the exact match within the bucket by then testing for equality.
+It addresses the case where hashcodes are used to place instances in a "bucket" (in a hashset of dictionary) where all items in the bucket have the same hashcode.  A search routine can quickly find the bucket using the hashcode and then find the exact match within the bucket by then testing each item in the bucket for equality.
 
 You will doubtless be intested in what the significance of 397 is and why we XOR the values in `(Hours * 397) ^ Minute`.  Sorry I can't help here beyond saying this is obviously some way of evenly distributing values.  Hardly the soundest foundation on which to base your code.  If you come across a good explanation of what the variables are in the mechanism I should be interested. 
 */
