@@ -2,6 +2,11 @@ public static class Leap
 {
     public static bool IsLeapYear(int year)
     {
+        var aaa = 4;
+        var bbb = 4;
+
+        var ccc = aaa.Equals(2 + 2);
+        
         return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
     }
 }
@@ -14,6 +19,16 @@ Once you've got that figured out, go ahead and submit a new solution. :-)
 */
 
 /*
+Good solution.
+
+parentheses are optional in this case as operator precedence works in your favour.
+
+You could use an expresson bodied member here - also a matter of taste.
+ */
+
+/*
+There is no requirement for a conditional statement and boolean literals.
+
 Instead of having an if-statement and explicitly returning `true` or `false`, you could also just return the expression in the if-statement.
 
 Consider the following two bits of code, which are functionally equivalent:
