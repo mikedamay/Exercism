@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 public class Clock
 {
     private readonly int timeInMinutes;
@@ -93,4 +97,28 @@ However if two instances return the same value from GetHashCode() there is no co
 It addresses the case where hashcodes are used to place instances in a "bucket" (in a hashset of dictionary) where all items in the bucket have the same hashcode.  A search routine can quickly find the bucket using the hashcode and then find the exact match within the bucket by then testing each item in the bucket for equality.
 
 You will doubtless be intested in what the significance of 397 is and why we XOR the values in `(Hours * 397) ^ Minute`.  Sorry I can't help here beyond saying this is obviously some way of evenly distributing values.  Hardly the soundest foundation on which to base your code.  If you come across a good explanation of what the variables are in the mechanism I should be interested. 
+*/
+
+/*
+The GetHashCode algorithm should make use of all the values that are used in the equality test so that all objects that are equal will have the same hash code.  Beyond that, the algorithm should be designed to distribute the objects evenly across hash codes.  In your case moding with 1440 would distribute objects evenly amongst 1440 buckets.  Using 1500 would mean that a few more objects might be allocated to buckts 0 to 59 but that's not much of a problem.  
+
+In the case of my example Rider obviously doesn't know that the values are based around 24, 60 and 1440 so it plays safe and XORS hours and minutes and multiplies by the prime number 397 to distribute the objects evenly.  I don't know why 397 is the correct number but if I run the following routine I end up with 1440 items in the distinct list `l2`.
+```
+    private void DoHashes()
+    {
+        var list = new List<int>();
+        for (int hour = 0; hour < 24; hour++)
+        {
+            for (int minute = 0; minute < 60; minute++)
+            {
+                list.Add((hour * 397) ^ minute);
+            }
+        }
+
+        var l2 = list.Distinct().ToList();
+    }
+```
+If I reduce 397 to 17 then only 444 unique items are listed so in a dictionary or hash set many "buckets" would end up with 3 items.
+
+I can increase 60 to 256 and 24 to 256 and I see 65536 unique items in `l2`.  So obviously the larger the random number the less likely we are to see clashes but my grasp of mathematics is not sufficitent to work out what's going on or what the parameters are.
 */
