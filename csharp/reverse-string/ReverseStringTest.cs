@@ -13,7 +13,7 @@ public class ReverseStringTest
     [Fact]
     public void A_word()
     {
-        Assert.Equal("tobor", ReverseString2.Reverse("robot"));
+        Assert.Equal("tobor", ReverseString.Reverse("robot"));
     }
 
     [Fact]
