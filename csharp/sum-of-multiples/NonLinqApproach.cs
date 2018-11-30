@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-public static class SumOfMultiples
+public static class SumOfMultiples_NonLinq
 {
     public static int Sum(IEnumerable<int> multiples, int max)
     {
