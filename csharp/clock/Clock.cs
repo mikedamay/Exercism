@@ -90,6 +90,8 @@ So, what's the point?  The ONLY point of including `IEquatable<Clock>` in the de
 */
 
 /*
+https://blogs.msdn.microsoft.com/csharpfaq/2004/03/29/when-should-i-use-and-when-should-i-use-equals/ 
+ 
 The cardinal rule is that if Equals() returns true for two instances then GetHashCode() must return the same value for each of them.
 
 However if two instances return the same value from GetHashCode() there is no correspoding guarantee that Equals() will return true.
