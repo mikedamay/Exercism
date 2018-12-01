@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json.Serialization;
 
@@ -28,3 +29,12 @@ public static class Hamming
         return distance;
     }
 }
+/*
+var dist = s1
+    .Select((ch, idx) => new {ch, idx})
+    .Join(s2
+            .Select((ch, idx) => new {ch, idx}), first => first.idx, second => second.idx
+            , (first, second) => first.ch == second.ch ? 0 : 1)
+    .Sum();
+
+*/
