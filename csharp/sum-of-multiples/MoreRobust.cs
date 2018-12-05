@@ -22,3 +22,9 @@ public static class SumOfMultiples
         }
     }
 }
+/*
+This works well for the tests but try to broaden the range of inputs that the routine can handle e.g.
+```
+Assert.Equal(1_999_999_999, SumOfMultiples.Sum(new[] { 1_999_999_999 }, 2_000_000_000));
+```
+*/
