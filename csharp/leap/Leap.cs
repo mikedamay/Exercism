@@ -1,14 +1,7 @@
 public static class Leap
 {
-    public static bool IsLeapYear(int year)
-    {
-        var aaa = 4;
-        var bbb = 4;
-
-        var ccc = aaa.Equals(2 + 2);
-        
-        return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
-    }
+    public static bool IsLeapYear(int year) 
+      => year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
 }
 /*
 Exercises in exercism are designed to be run by unit tests. Pay close attention to the instructions 
@@ -23,7 +16,7 @@ Good solution.
 
 parentheses are optional in this case as operator precedence works in your favour.
 
-You could use an expresson bodied member here - also a matter of taste.
+You could use an expression bodied member here - also a matter of taste.
  */
 
 /*
