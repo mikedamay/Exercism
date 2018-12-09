@@ -28,3 +28,15 @@ This works well for the tests but try to broaden the range of inputs that the ro
 Assert.Equal(1_999_999_999, SumOfMultiples.Sum(new[] { 1_999_999_999 }, 2_000_000_000));
 ```
 */
+
+/*
+This is a case where you have to consider the algorithm you are using.
+
+The problem is that you are doing a moderately heavy task (iterating over the multiples) for every number between 1 and max.  In the above case this is 2 biillion operations.
+
+One approach is to put the multiples in the "outer loop" and then you can be more economical about the processing for that particular multiple.
+
+Have a look at `Enumerable.SelectMany()` which can help combine each multiple with testing each use of the multiple.
+
+If all else fails then use explicit `for` loops as a starting point.
+*/
