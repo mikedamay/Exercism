@@ -8,7 +8,7 @@ public static class ArmstrongNumbers
 
         string ns = number.ToString();
         uint exponent = (uint)ns.Length;
-        return number == ns.Select(c => IntPow(c - 0x30, exponent)).Aggregate((m, n) => m + n);
+        return number == ns.Select(c => IntPow(c - '0', exponent)).Aggregate((m, n) => m + n);
     }
     private static int IntPow(int x, uint pow)
     {
