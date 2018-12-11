@@ -14,7 +14,8 @@ Once you've got that figured out, go ahead and submit a new solution. :-)
 /*
 Good solution.
 
-parentheses are optional in this case as operator precedence works in your favour.
+parentheses are optional in this case as operator precedence works in your favour.  You may prefer
+to keep them for readability
 
 You could use an expression bodied member here - also a matter of taste.
  */
