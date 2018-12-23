@@ -27,5 +27,9 @@ public class Allergies
         return mask.HasFlag(allergen);
     }
 
-    public Allergen[] List() => Enum.GetValues(typeof(Allergen)).Cast<Allergen>().Where(a => mask.HasFlag(a)).ToArray();
+    public Allergen[] List() 
+        => Enum.GetValues(typeof(Allergen))
+            .Cast<Allergen>()
+            .Where(a => mask.HasFlag(a))
+            .ToArray();
 }
