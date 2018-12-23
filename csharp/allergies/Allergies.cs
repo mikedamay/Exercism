@@ -36,3 +36,12 @@ public class Allergies
 }
 
 }
+/*
+Both `IsAllergicTo()` and `List()` can be reduced to fairly short methods.
+
+As you suggest you can use the bitwise __and__ operator `&` to implement `IsAlergicTo()`.
+
+for `List()` you can loop through all the possible allergens and again use the __and__ operator to decide whether to add them to the array.
+
+There is a lot to learn from the Allergies exercise including fairly advanced LINQ and use of enum `[Flags]` but it is probably best to start with an implementation based on bitwise operators and build up from there.
+*/
