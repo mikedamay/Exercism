@@ -1,8 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace xx {
-[Flags]
 public enum Allergen
 {
     Eggs = 1 << 0,
@@ -25,14 +24,20 @@ public class Allergies
 
     public bool IsAllergicTo(Allergen allergen)
     {
-        return mask.HasFlag(allergen);
+        return ((int)mask & (int)allergen) > 0;
     }
 
-    public Allergen[] List() 
-        => Enum.GetValues(typeof(Allergen))
-            .Cast<Allergen>()
-            .Where(a => mask.HasFlag(a))
-            .ToArray();
-}
+    public Allergen[] List()
+    {
+        var list = new List<Allergen>();
+        for (int ii = 0; ii <= 7; ii++)
+        {
+            if (((int)mask & (1 << ii)) > 0)
+            {
+                list.Add((Allergen)(1<<ii));
+            }
+        }
 
+        return list.ToArray();
+    }
 }
