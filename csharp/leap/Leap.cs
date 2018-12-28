@@ -12,6 +12,17 @@ Once you've got that figured out, go ahead and submit a new solution. :-)
 */
 
 /*
+You care about 3 things
+* is the year divisible by 4
+* is the year divisible by 100
+* is the year divisible by 400
+
+You can combine these in a single expression using _and_ `&&`, _or_ `||` and _not_ `!`.
+
+give it a try
+ */
+
+/*
 Good solution.
 
 parentheses are optional in this case as operator precedence works in your favour.  You may prefer
