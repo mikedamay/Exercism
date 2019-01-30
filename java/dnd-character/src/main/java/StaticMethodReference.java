@@ -2,22 +2,21 @@ import java.util.List;
 
 public class StaticMethodReference {
 
-    public static  void doneWith() {
+    public static  void doneWith(int ii) {
         System.out.println("done!");
     }
 
     @FunctionalInterface
     public interface Doer {
-        void doit();
+        void doit(int ii);
     }
     public static void mainer() {
         var dd = new Doer() {
-            public void doit() {
-                StaticMethodReference.doneWith();
+            public void doit(int ii) {
+                StaticMethodReference.doneWith(ii);
             }
         };
-        dd.doit();
-
+        dd.doit(8);
     }
 
 }
