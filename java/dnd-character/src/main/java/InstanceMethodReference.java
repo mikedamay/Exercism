@@ -1,10 +1,10 @@
-public class InstanceReferenceMethod {
+public class InstanceMethodReference {
 
     @FunctionalInterface
     private interface Doer {
         void doit();
     }
-    public InstanceReferenceMethod() {
+    public InstanceMethodReference() {
         var exp = new Exploited();
 
         var dd = new Doer() {
