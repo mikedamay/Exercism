@@ -1,53 +1,63 @@
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class DnDCharacter {
+    private int constitution = 0;
+    private int strength = 0;
+    private int dexterity = 0;
+    private int intelligence = 0;
+    private int wisdom = 0;
+    private int charisma = 0;
 
     int ability() {
-        throw new UnsupportedOperationException("Delete this statement and write your own implementation.");
+        var rnd = new Random();
+        List<Integer> s1 = rnd.ints(4, 1, 7).boxed().collect(Collectors.toList());
+        Stream<Integer> s2 = s1.stream().sorted(Integer::compareTo).skip(1);
+        var sum = s2.reduce(0, (a, b) -> a + b);
+        return sum;
     }
 
     int modifier(int input) {
-        throw new UnsupportedOperationException("Delete this statement and write your own implementation.");
-    }
-
-    private int best3of4Score() {
-        List<Integer> aaa = Stream.of(1,2,3).collect(Collectors.toList());
-        int sum = 0;
-        var rnd = new Random();
-        var _4throws = rnd.ints().filter(t -> t > 0 && t < 7 ).limit(4).boxed();
-        var bbb = _4throws.collect(Collectors.toList());
-        for (int ii = 0; ii < 4; ii++ ) {
-        }
-        return 0;
+        var res = (int)Math.floor(((float)input - 10) / 2) ;
+        return res;
     }
 
     public int getStrength() {
-        return 0;
+        if (strength == 0)
+            strength = ability();
+        return strength;
     }
 
     public int getDexterity() {
-        return 0;
+        if (dexterity == 0)
+            dexterity = ability();
+        return dexterity;
     }
 
     public int getConstitution() {
-        return 0;
+        if (constitution == 0)
+            constitution = ability();
+        return constitution;
     }
     public int getIntelligence() {
-        return 0;
+        if (intelligence == 0)
+            intelligence = ability();
+        return intelligence;
     }
     public int getWisdom() {
-        return 0;
+        if (wisdom == 0)
+            wisdom = ability();
+        return wisdom;
     }
     public int getCharisma() {
-        return 0;
+        if (charisma == 0)
+            charisma = ability();
+        return charisma;
     }
 
     public int getHitpoints() {
-        return 0;
+        return 10 + modifier(getConstitution());
     }
 }
