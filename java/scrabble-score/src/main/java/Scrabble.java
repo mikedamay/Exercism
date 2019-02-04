@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 class Scrabble {
 
@@ -22,11 +23,7 @@ class Scrabble {
     }
 
     int getScore() {
-        int sum = 0;
-        for ( int ii = 0; ii < word.length(); ii++) {
-            sum = sum + letters.get(word.charAt(ii));
-        }
-        return sum;
+        return  word.chars().mapToObj(ii -> (char)ii).map(letters::get).reduce(0, (a, b) -> a + b);
     }
     private Map<Character, Integer> generateLetterMap(Map<String, Integer> rawLetters) {
         var map = new HashMap<Character, Integer>();
