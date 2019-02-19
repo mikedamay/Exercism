@@ -7,3 +7,10 @@ public static class Gigasecond
         return birthDate.AddSeconds(1_000_000_000);
     }
 }
+
+/*
+Good solution
+
+You should be aware of the csharp comma separator _ as in `int num = 1_000_000_000;`
+
+*/
