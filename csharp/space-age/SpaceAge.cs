@@ -57,3 +57,6 @@ public class SpaceAge
         return seconds / NeptuneSeconds;
     }
 }
+/*
+This solution is more complex than I would expect in a commercial situation.  However I guess that this is because you are investigating the highways and byways of the language and ecosystem.  If not, let me know and we can discuss.
+*/
