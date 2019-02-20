@@ -46,3 +46,9 @@ Have a look at `Enum.Parse()` and `Enum.GetValues()` and decide whether you woul
 
 I would expect LINQ to be slower but you can't always tell.
 */
+
+/*
+Effective solution
+
+Rebuilding the color array for each call to `ColorCode()` seems a little excessive.  What do you think?
+*/
