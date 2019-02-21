@@ -75,4 +75,5 @@ Enumerable.ToList()
 ```
 This exercise is useful as a gentle introduction to LINQ.  In particular use of LINQ methods avoids mutating the list.  Mutability is very much out of fashion at present.
 
-Make whatever changes you want, ask questions, argue as you see fit.
+Make whatever changes you want, ask questions, argue as you see fit and I will sign off.
+*/
