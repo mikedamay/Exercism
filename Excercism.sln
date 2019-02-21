@@ -68,6 +68,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResistorColor", "csharp\res
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceAge", "csharp\space-age\SpaceAge.csproj", "{0122C54B-EF2A-4F87-9F10-3EFE36916595}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gneral", "Gneral", "{44301C47-3121-47F7-AE0A-B15C0242FD34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighScores", "csharp\high-scores\HighScores.csproj", "{C11B62D7-20CE-49D5-8924-7CCDA3F5A424}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -210,5 +214,9 @@ Global
 		{0122C54B-EF2A-4F87-9F10-3EFE36916595}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0122C54B-EF2A-4F87-9F10-3EFE36916595}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0122C54B-EF2A-4F87-9F10-3EFE36916595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C11B62D7-20CE-49D5-8924-7CCDA3F5A424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C11B62D7-20CE-49D5-8924-7CCDA3F5A424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C11B62D7-20CE-49D5-8924-7CCDA3F5A424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C11B62D7-20CE-49D5-8924-7CCDA3F5A424}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
