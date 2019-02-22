@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text;
 
 public static class RotationalCipher
@@ -6,20 +7,11 @@ public static class RotationalCipher
     private const string codeLine = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
     public static string Rotate(string text, int shiftKey)
     {
-        var sb = new StringBuilder();
-        foreach (var ch in text)
-        {
-            bool uppser = Char.IsUpper(ch);
-            var chLower = Char.ToLower(ch);
-            if (chLower < 'a' || chLower > 'z')
-                sb.Append(ch);
-            else
-            {
-                var chOut = codeLine[chLower - 'a' + shiftKey];
-                sb.Append(uppser ? Char.ToUpper(chOut) : chOut);
-            }
-        }
-
-        return sb.ToString();
+        var expr = text
+            .Select(c => ((char ch, bool upper))(Char.ToLower(c), Char.IsUpper(c)))
+            .Select(p => ((char ch, bool upper))(Char.IsLower(p.ch) ? codeLine[p.ch - 'a' + shiftKey] : p.ch, p.upper))
+            .Select(p => p.upper ? Char.ToUpper(p.ch) : p.ch).ToArray();
+        
+        return new string(expr);
     }
 }
