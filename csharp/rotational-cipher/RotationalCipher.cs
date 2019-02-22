@@ -1,9 +1,25 @@
 using System;
+using System.Text;
 
 public static class RotationalCipher
 {
+    private const string codeLine = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
     public static string Rotate(string text, int shiftKey)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var sb = new StringBuilder();
+        foreach (var ch in text)
+        {
+            bool uppser = Char.IsUpper(ch);
+            var chLower = Char.ToLower(ch);
+            if (chLower < 'a' || chLower > 'z')
+                sb.Append(ch);
+            else
+            {
+                var chOut = codeLine[chLower - 'a' + shiftKey];
+                sb.Append(uppser ? Char.ToUpper(chOut) : chOut);
+            }
+        }
+
+        return sb.ToString();
     }
 }
