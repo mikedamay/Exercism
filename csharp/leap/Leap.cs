@@ -52,4 +52,5 @@ and
 ```
 return x > 1;
 ```
+You can combine the epxressions with "and", `&&` and "or", `!!` to avoid conditional statements.
 */
