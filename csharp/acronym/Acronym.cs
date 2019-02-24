@@ -1,20 +1,38 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 public static class Acronym
 {
+    enum State
+    {
+        AfterSeparator,
+        AfterStartOfWord,
+        LetterEncountered
+    }
     public static string Abbreviate(string phrase)
     {
-        /* assumes that ' will never occur before an abbreviatable word */
-        bool IsWordSeparator(char c) => !(char.IsLetter(c) || c == '\'');
+        bool IsContinuationChar(char c) => Char.IsLetter(c) || c == '\'';
+        bool IsInitialChar(char c) => Char.IsLetter(c);
         var sb = new StringBuilder();
-        if (char.IsLetter(phrase[0]))
-            sb.Append(char.ToUpper(phrase[0]));
-        for (int ii = 1; ii < phrase.Length; ii++)
+        var state = State.AfterSeparator;
+        foreach (var c in phrase)
         {
-            if (char.IsLetter(phrase[ii]) && IsWordSeparator(phrase[ii - 1]))
-                sb.Append(char.ToUpper(phrase[ii]));
+            switch (state)
+            {
+                case State.AfterSeparator:
+                    if (IsInitialChar(c))
+                    {
+                        sb.Append(Char.ToUpper(c));
+                        state = State.AfterStartOfWord;
+                    }
+                    // else still a separator
+                    break;
+                case State.AfterStartOfWord:
+                    if (!IsContinuationChar(c))
+                        state = State.AfterSeparator;
+                    break;
+            }
         }
-
         return sb.ToString();
     }
 }
