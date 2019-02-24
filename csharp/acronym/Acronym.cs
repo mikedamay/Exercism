@@ -4,6 +4,7 @@ public static class Acronym
 {
     public static string Abbreviate(string phrase)
     {
+        /* assumes that ' will never occur before an abbreviatable word */
         bool IsWordSeparator(char c) => !(char.IsLetter(c) || c == '\'');
         var sb = new StringBuilder();
         if (char.IsLetter(phrase[0]))
