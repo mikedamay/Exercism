@@ -7,7 +7,6 @@ public static class Acronym
     {
         AfterSeparator,
         AfterStartOfWord,
-        LetterEncountered
     }
     public static string Abbreviate(string phrase)
     {
@@ -30,6 +29,7 @@ public static class Acronym
                 case State.AfterStartOfWord:
                     if (!IsContinuationChar(c))
                         state = State.AfterSeparator;
+                    // else still part of the word
                     break;
             }
         }
