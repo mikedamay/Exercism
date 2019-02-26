@@ -35,6 +35,8 @@ You could use an expression bodied member here - also a matter of taste.
  */
 
 /*
+An effective solution
+
 There is no requirement for a conditional statement and boolean literals.
 
 Instead of having an if-statement and explicitly returning `true` or `false`, you could also just return the expression in the if-statement.
@@ -52,5 +54,5 @@ and
 ```
 return x > 1;
 ```
-You can combine the epxressions with "and", `&&` and "or", `!!` to avoid conditional statements.
+You can combine the expressions with "and", `&&` and "or", `!!` to avoid conditional statements.
 */
