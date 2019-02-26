@@ -11,6 +11,6 @@ public static class Gigasecond
 /*
 Good solution
 
-You should be aware of the csharp comma separator _ as in `int num = 1_000_000_000;`
+It could be useful for you to know about the csharp comma separator _ as in `int num = 1_000_000_000;`
 
 */
