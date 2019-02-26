@@ -79,3 +79,4 @@ I see that this directly clashes with the open-close principle.  I must re-read 
 For me it's important that the code communicates the maximum amount about what it does and what else it might effect.  Code is generally written/modified a few times and read many more.
 
 All this just because some people want to bring Pluto back as a planet.
+*/
