@@ -38,6 +38,19 @@ I like the `ReadOnlyDictionary` with initializers.
 As an alternative you could have used en Enum of colors.  I think the choice depends on how the values will be used in the program which is not obvious from the exercise notes.
 
 */
+/*
+The color array could be cloned as a defensive measure.
+ */
+
+/*
+You could make the dictionary read only in addition to the dictionary field.
+Making the field read only simply makes it clear that a new dictionary will 
+not be assigned to this field and that the field could never be null whereas 
+making the dictionary itself read only will signal that items in the collection 
+will not be added to, deleted or replaced.
+
+
+ */
 
 /*
 An effective solution.
