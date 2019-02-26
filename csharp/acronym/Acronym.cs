@@ -36,3 +36,9 @@ public static class Acronym
         return sb.ToString();
     }
 }
+
+/*
+2. For performance reasons, in almost all cases (and I'm sure it applies here) you should use a `StringBuilder` object to build up the output.
+
+3. Also regarding performance use of strings with LINQ `Any()` rather than lists of chars would make a slight improvement (of the order of 5%).  However using string+intrinsic methods (`IndexOf()`) makes a 10x improvement compared to LINQ
+*/
