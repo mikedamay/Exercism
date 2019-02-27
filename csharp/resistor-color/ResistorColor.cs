@@ -38,6 +38,11 @@ I like the `ReadOnlyDictionary` with initializers.
 As an alternative you could have used en Enum of colors.  I think the choice depends on how the values will be used in the program which is not obvious from the exercise notes.
 
 */
+
+/*
+The array is exposed without cloning.
+*/
+
 /*
 The color array could be cloned as a defensive measure.
  */
