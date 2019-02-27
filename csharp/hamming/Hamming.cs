@@ -38,3 +38,17 @@ var dist = s1
     .Sum();
 
 */
+
+/*
+An alternative approach with LINQ is to use Enumerable.Zip. 
+This seems a touch more expressive given the LINQ idiom.
+
+I did a timing comparison on an i7 Windows 10 machine 
+repeating one test a billion times:
+
+LINQ Zip - 36 seconds
+
+LINQ Range - 15 seconds
+
+non-LINQ - 10 seconds
+*/
