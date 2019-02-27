@@ -70,3 +70,12 @@ Effective solution
 
 Rebuilding the color array for each call to `ColorCode()` seems a little excessive.  What do you think?
 */
+/*
+One interesting thing to be aware of here is that through the array
+of colors you are exposing the internal data of the class.
+A foolish maintainer might call `Colors()` and then modify 
+the returned array causing problems for later calls on the class.
+
+Think about how you might address this problem (and to what extent
+ / under what circumstances) such "defensive coding" is appropriate.
+*/
