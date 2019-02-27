@@ -32,3 +32,9 @@ public static class NucleotideCount
           .ToDictionary(kv => kv.nucleotide, kv => kv.count);
     }
  }
+
+/*
+You should consider returning a read only version 
+of the dictionary to the caller.  This will guide 
+maintainers in how you expect the dictionary to be used.
+*/
