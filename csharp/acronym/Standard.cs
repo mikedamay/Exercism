@@ -6,7 +6,6 @@ public static class Standard
     public static string Abbreviate(string phrase)
     {
         int[] aa = { 1, 2};
-        Array.Ind
         /* assumes that ' will never occur before an abbreviatable word */
         bool IsWordSeparator(char c) => !(char.IsLetter(c) || c == '\'');
         var sb = new StringBuilder();
