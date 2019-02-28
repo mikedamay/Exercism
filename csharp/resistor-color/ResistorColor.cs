@@ -32,17 +32,17 @@ Good solution.
 
 I like the `ReadOnlyDictionary` with initializers.
 
-As an alternative you could have used en Enum of colors.  I think the choice depends on how the values will be used in the program which is not obvious from the exercise notes.
+As an alternative you could have used en Enum of colors.
+I think the choice depends on how the values will be 
+used in the program which is not obvious from the exercise notes.
 
 */
 
 /*
-The array is exposed without cloning.
+consider cloning the array on return from `Colors()` as
+a defensive measure.  This will prevent a user of the class from
+accidentally overwriting the values.
 */
-
-/*
-The color array could be cloned as a defensive measure.
- */
 
 /*
 You could make the dictionary read only in addition to the dictionary field.
