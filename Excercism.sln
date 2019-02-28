@@ -82,6 +82,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BracketPush", "csharp\brack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acronym", "csharp\acronym\Acronym.csproj", "{39AC67E8-A0E2-4881-A692-55E66E936920}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tournament", "csharp\tournament\Tournament.csproj", "{6AD4EE07-58EE-4384-BF81-3E8344B8BE3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -248,5 +250,9 @@ Global
 		{39AC67E8-A0E2-4881-A692-55E66E936920}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39AC67E8-A0E2-4881-A692-55E66E936920}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39AC67E8-A0E2-4881-A692-55E66E936920}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AD4EE07-58EE-4384-BF81-3E8344B8BE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AD4EE07-58EE-4384-BF81-3E8344B8BE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AD4EE07-58EE-4384-BF81-3E8344B8BE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AD4EE07-58EE-4384-BF81-3E8344B8BE3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
