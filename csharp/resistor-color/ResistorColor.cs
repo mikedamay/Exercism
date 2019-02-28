@@ -79,6 +79,8 @@ Think about how you might address this problem (and to what extent
 /*
 Your confusion over the return value from IndexOf() is utterly justified.  What a mediocre piece of documentation that particular MSDN article is!  Incidentally make sure you use the latest documentation at [docs.microsoft.com](http://docs.microsoft.com).
 
+Actually in the docs.microsoft.com version of the documentation the text you quote is from the overload that takes an `Array` rather than a conventional array.  Other overloads of `IndexOf()` do mention -1.  But none the less poor guidance unless the reader happens to be looking for bear traps.
+
 The short answer is that in 99.9999% of cases the return values in a C# program is -1 and the following code would be expected in your solution:
 ```
 var cc = Array.IndexOf(colorCodeArr, color);
@@ -88,7 +90,7 @@ So why can't the docs just say that?
 
 There is a different sort of array (an instance of the class `System.Array`) which allows the lower bound of the array to be set by the caller see [http://csharphelper.com/blog/2015/05/make-arrays-with-non-zero-lower-bounds-in-c/](http://csharphelper.com/blog/2015/05/make-arrays-with-non-zero-lower-bounds-in-c/).  It is unfortunate the example in the article is for a 2 dimensional array.
 
-`Array`'s static methods have to operate on both traditional arrays and instances of `Array`.
+`Array`'s static methods have to operate on both traditional arrays (e.g. `new int[10]`) and instances of `Array`.
 
 You will see from the article above that if you create an array say with the bounds 2000 to 2009 (`Array.CreateInstance(typeof(string), new int[] {10}, new int[] {2000})`) then a call to `arr.GetValue(0)` will cause an out-of-bounds exception where as a call to say `arr.GetValue(2003)` will return 0 (or whatever is subsequently stored there.  Presumable `IndexOf` returns 1999.  - I've certainly never used any of this stuff.
 
