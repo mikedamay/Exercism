@@ -62,9 +62,8 @@ public static class VariableLengthQuantity
 
     private static uint MakeUint(ulong bitValue, int numBytes)
     {
-        var intParts = numBytes >= 4 ? 4 : numBytes;
-        var shortFall = 4 - intParts;
-        var shift = (shortFall + 4) * 8 + numBytes * 1;
+        var byteShift = 4 - numBytes;
+        var shift = (byteShift + 4) * 8 + numBytes * 1;
 
         return Convert.ToUInt32(bitValue >> shift);
     }
