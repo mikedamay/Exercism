@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 public static class VariableLengthQuantity
@@ -17,19 +16,22 @@ public static class VariableLengthQuantity
 
         while (byteIdx < bytes.Length)
         {
-            results.Add(DecodeBytes(bytes, ref byteIdx));
+            results.Add(DecodeBytesFromUint(bytes, ref byteIdx));
         }
 
         return results.ToArray();
 
     }
 
-
-    private static uint DecodeBytes(uint[] bytes, ref int byteIdx)
+    /// <param name="bytes">the one and only encoded array of bytes</param>
+    /// <param name="byteIdx">next position within bytes to be processed </param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    private static uint DecodeBytesFromUint(uint[] bytes, ref int byteIdx)
     {
-        ulong temp = 0;
+        ulong outBits = 0;
         int bitIdx = 6;
-        int tempIdx = 63;
+        int outIdx = 63;
         int numBytes = 0;
 
         while (true)
@@ -40,7 +42,7 @@ public static class VariableLengthQuantity
                 if ((bytes[byteIdx] & 0x80) == 0)
                 {
                     numBytes++;
-                    var result = MakeUint(temp, numBytes); 
+                    var result = MakeUintFromBits(outBits, numBytes); 
                     byteIdx++;
                     return result;
                 }
@@ -53,14 +55,17 @@ public static class VariableLengthQuantity
                 }
             }
 
-            temp |= ((bytes[byteIdx] & (1 << bitIdx)) > 0 ? 1ul : 0) << tempIdx;
-            tempIdx--;
+            outBits |= ((bytes[byteIdx] & (1 << bitIdx)) > 0 ? 1ul : 0) << outIdx;
+            outIdx--;
             bitIdx--;
         }
         throw new InvalidOperationException();
     }
 
-    private static uint MakeUint(ulong bitValue, int numBytes)
+    /// <param name="bitValue">64 bits with the decoded bits at the far left end</param>
+    /// <param name="numBytes">the number of encoded bytes that were used to build bitValue</param>
+    /// <returns>a fully decoded integer</returns>
+    private static uint MakeUintFromBits(ulong bitValue, int numBytes)
     {
         var byteShift = 4 - numBytes;
         var shift = (byteShift + 4) * 8 + numBytes * 1;
@@ -68,12 +73,8 @@ public static class VariableLengthQuantity
         return Convert.ToUInt32(bitValue >> shift);
     }
 
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="num">an uncoded integer</param>
-    /// <returns>an array of 1 to 5 bytes</returns>
+    /// <param name="num">an unecoded integer</param>
+    /// <returns>an array of 1 to 5 bytes fully encoded and in the correct order</returns>
     private static uint[] EncodeInteger(uint num)
     {
         IList<byte> output = new List<byte>();
@@ -81,7 +82,7 @@ public static class VariableLengthQuantity
         int outBit = 0;
         long temp = 0;
 
-        void AddByte()
+        void AddByteToOutput()
         {
             if (outByte != 0)
             {
@@ -96,13 +97,13 @@ public static class VariableLengthQuantity
         {
             if (outBit == 7)
             {
-                AddByte();
+                AddByteToOutput();
             }
 
             temp |= ((num & (1 << ii)) > 0 ? 1 : 0) << outBit;
             outBit++;
         }
-        AddByte();
+        AddByteToOutput();
         return output.Reverse().SkipWhile(by => by == 0x80u).Select(by => (uint)by).ToArray();
     }
 }
