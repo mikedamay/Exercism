@@ -27,15 +27,16 @@ public static class BookStore
     private static void AddBookToPile(int book, IList<ISet<int>> piles)
     {
         var pile = piles.Where(p => !p.Contains(book))
-            .FirstOrDefault(p => IncrementalCost(p) 
-                                 == piles.Where(p2 => !p2.Contains(book)).Min(p2 => IncrementalCost(p2)));
+            .FirstOrDefault(p => MarginalCost(p) 
+                                 == piles.Where(p2 => !p2.Contains(book))
+                                     .Min(p2 => MarginalCost(p2)));
         if (pile == null)
             piles.Add(new HashSet<int>{book});
         else
             pile.Add(book);
     }
 
-    private static decimal IncrementalCost(ISet<int> pile) =>
+    private static decimal MarginalCost(ISet<int> pile) =>
         SeriesCost(pile.Count + 1) - SeriesCost(pile.Count);
     
     private static decimal SeriesCost(int numBooks) =>
