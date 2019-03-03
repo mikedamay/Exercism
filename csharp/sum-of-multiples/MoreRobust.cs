@@ -40,3 +40,10 @@ Have a look at `Enumerable.SelectMany()` which can help combine each multiple wi
 
 If all else fails then use explicit `for` loops as a starting point.
 */
+/*
+The exercise is slightly unsatisfactory in that a 
+performant bullet proof solution is not possible 
+without changing the signature of `Sum`to return a 
+long and a radical change to the algorithm to pre-
+calculate where results would be duplicated.
+*/
