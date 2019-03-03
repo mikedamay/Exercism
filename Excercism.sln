@@ -86,6 +86,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tournament", "csharp\tourna
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VariableLengthQuantity", "csharp\variable-length-quantity\VariableLengthQuantity.csproj", "{4C081673-2130-4754-AB07-4F216C1C1C9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connect", "csharp\connect\Connect.csproj", "{9561DC30-211D-4DA4-9DDF-3AFC88C273C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -260,5 +262,9 @@ Global
 		{4C081673-2130-4754-AB07-4F216C1C1C9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C081673-2130-4754-AB07-4F216C1C1C9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C081673-2130-4754-AB07-4F216C1C1C9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9561DC30-211D-4DA4-9DDF-3AFC88C273C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9561DC30-211D-4DA4-9DDF-3AFC88C273C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9561DC30-211D-4DA4-9DDF-3AFC88C273C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9561DC30-211D-4DA4-9DDF-3AFC88C273C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
