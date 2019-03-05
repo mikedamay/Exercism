@@ -9,6 +9,9 @@ using System.Reflection;
 using System.Text;
 using Xunit;
 
+
+
+
 public enum ConnectWinner
 {
     White,
@@ -35,18 +38,18 @@ public class Connect
 
     private class CellId : ICloneable
     {
-        public readonly int x;
-        public readonly int y;
+        public readonly int row;
+        public readonly int col;
 
-        public CellId(int x, int y)
+        public CellId(int row, int col)
         {
-            this.x = x;
-            this.y = y;
+            this.row = row;
+            this.col = col;
         }
 
         public Object Clone()
         {
-            return new CellId(this.x, this.y);
+            return new CellId(this.row, this.col);
         }
     }
     private class Cell
@@ -82,30 +85,52 @@ public class Connect
 
     private const int X_MARGIN = 2;
     private const int Y_MARGIN = 1;
-    
+
+    /**
+      The essential mechanism in the program is the grid created within the game.
+      cells are mapped from the "game matrix" to the grid.  as you see below
+      the grid contains the shape of the rhombus.  It contains a margin
+      such that connections to neighbouring cells from anywhere in the game area
+      will result in a non-null cell being found
+      
+        ^^^^^^^^^^^^^^^
+        ^^.|O|.|.    ^^
+        ^^ O|X|X|X   ^^
+        ^^  O|X|O|.  ^^
+        ^^   X|X|O|X ^^
+        ^^    .|O|X|.^^
+        ^^^^^^^^^^^^^^^
+        
+      The grid concept is almost completely encapsulated within Game (there is a
+      slight leak in the CellStatus enum).  However within Game the relationship
+      between game matrix and grid is distributed
+      between MapCellFromGameToGrid() and other methods such as CalculateSide(),
+      CalculateCellStatus() and CalculateGridSize()
+     */
     private class Game
     {
         public readonly Side WhiteSide;
         public readonly Side BlackSide;
-        public readonly Cell[,] board;
         public readonly int GameRows;
         public readonly int GameCols;
 
-        public Game(Side whiteSide, Side blackSide, int width, int height)
+        private readonly Cell[,] grid;
+        
+        public Game(Side whiteSide, Side blackSide, int cols, int rows)
         {
-            GameCols = width;
-            GameRows = height;
+            GameCols = cols;
+            GameRows = rows;
             WhiteSide = whiteSide;
             BlackSide = blackSide;
-            board = GenerateEmptyBoard(width, height);
+            grid = GenerateEmptyGrid(cols, rows);
         }
 
         public Cell this[int gameCellX, int gameCellY]
         {
             get
             {
-                (int boardCellX, int boardCellY) = MapCellFromGameToBoard(gameCellX, gameCellY);
-                return this.board[boardCellX, boardCellY];
+                (int gridCellX, int gridCellY) = MapCellFromGameToGrid(gameCellX, gameCellY);
+                return this.grid[gridCellX, gridCellY];
             }
         }
 
@@ -116,7 +141,7 @@ public class Connect
         {
             foreach (CellId connectionId in cellArg.Connections)
             {
-                Cell cell = board[connectionId.x, connectionId.y];
+                Cell cell = grid[connectionId.row, connectionId.col];
                 CellStatus playerStatus = player == ConnectWinner.White ? CellStatus.White : CellStatus.Black;
                 if (cell.Status == playerStatus)
                 {
@@ -124,44 +149,52 @@ public class Connect
                 }
             }
         }
-        private (int, int) MapCellFromGameToBoard(int gameCellX, int gameCellY)
+        private (int gridCellX, int gridCellY) MapCellFromGameToGrid(int gameCellX, int gameCellY)
         {
             var rhombusOffset = gameCellY + X_MARGIN;
-            return ((gameCellX) * 2 + rhombusOffset, gameCellY + Y_MARGIN);
+            return (gameCellX * 2 + rhombusOffset, gameCellY + Y_MARGIN);
         }
 
-        /// </summary>
         /// <param name="gameCellsAcross">(number of game cells across * 2 - 1) * 2 + 2</param>
         /// <param name="gameCellsDown">number of game cells down * 2 + 2</param>
         /// <returns></returns>
-        private Cell[,] GenerateEmptyBoard(int gameCellsAcross, int gameCellsDown)
+        private Cell[,] GenerateEmptyGrid(int gameCellsAcross, int gameCellsDown)
         {
-            (int cellsAcross, int cellsDown) = CalculateBoardSize(gameCellsAcross, gameCellsDown); 
-            var board = new Cell[cellsAcross, cellsDown];
-            for (int xx = 0; xx < cellsAcross; xx++)
+            (int gridCellsAcross, int gridCellsDown) = CalculateGridSize(gameCellsAcross, gameCellsDown); 
+            var grid = new Cell[gridCellsAcross, gridCellsDown];
+            for (int col = 0; col < gridCellsAcross; col++)
             {
-                for (int yy = 0; yy < cellsDown; yy++)
+                for (int row = 0; row < gridCellsDown; row++)
                 {
-                    var cellStatus = CalculateCellStatus(xx, yy, cellsAcross, cellsDown);
-                    var side = CalculateSide(xx, yy, cellsAcross, cellsDown);
+                    var cellStatus = CalculateCellStatus(col, row, gridCellsAcross, gridCellsDown);
+                    var side = CalculateSide(col, row, gridCellsAcross, gridCellsDown);
                     
-                    board[xx,yy] = new Cell(new CellId(xx, yy), cellStatus, side
-                      , GetConnections(xx, yy, cellsAcross, cellsDown, cellStatus));
+                    grid[col,row] = new Cell(new CellId(col, row), cellStatus, side
+                      , GetConnections(col, row, cellStatus));
                 }
             }
-            return board;
+            return grid;
         }
 
-        private Side CalculateSide(int xx, int yy, int cellsAcross, int cellsDown)
+        /// <summary>
+        /// if the cell lies on one or more sides of the game matrix then
+        /// these sides are returned as a bit mask.
+        /// NOote that the actual calculation is done on the grid matrix rather than the game matrix
+        /// </summary>
+        /// <param name="col">grid co-ordinates</param>
+        /// <param name="row">grid co-ordinates</param>
+        /// <returns>a mask that comprises Side.None or a combination of the
+        /// 4 substantive side enums</returns>
+        private Side CalculateSide(int col, int row, int cellsAcross, int cellsDown)
         {
             Side side = Side.None;
-            if (xx == X_MARGIN)
+            if (col == X_MARGIN)
                 side |= Side.Top;
-            if (yy == Y_MARGIN)
+            if (row == Y_MARGIN)
                 side |= Side.Left;
-            if (xx == cellsAcross - cellsDown - Y_MARGIN + yy)
+            if (col == cellsAcross - cellsDown - Y_MARGIN + row)
                 side |= Side.Right;
-            if (yy == cellsDown - Y_MARGIN - 1)
+            if (row == cellsDown - Y_MARGIN - 1)
                 side |= Side.Bottom;
             return side;
         }
@@ -192,34 +225,43 @@ public class Connect
         /// <summary>
         /// x-dim accounts for separators (accross * 2 - 1), the right shift (down - 1) and end guards (+4)  
         /// </summary>
-        private (int, int) CalculateBoardSize(int gameCellsAcross, int gameCellsDown)
+        private (int, int) CalculateGridSize(int gameCellsAcross, int gameCellsDown)
         {
             return (gameCellsAcross * 2 - 1 + gameCellsDown - 1 + X_MARGIN * 2, gameCellsDown + Y_MARGIN * 2);
         }
 
-        private CellId[] GetConnections(int xx, int yy, int width, int height, CellStatus cellStatus)
+        /// <summary>
+        /// Each cell in the playing area will end up with 6 connections albeit that
+        /// some of the connections for edge and corner cells will be to cells that
+        /// are outside the playing area.  This will make it easy to test where
+        /// edges have been reached.
+        /// </summary>
+        /// <param name="col">grid position</param>
+        /// <param name="row">grid position</param>
+        /// <returns>0 - 6 neighbour cells</returns>
+        private CellId[] GetConnections(int col, int row, CellStatus cellStatus)
         {
             var connections = new List<CellId>();
             if (cellStatus == CellStatus.Free)
             {
-                connections.Add(new CellId(xx - 2, yy));
-                connections.Add(new CellId(xx + 2, yy));
-                connections.Add(new CellId(xx + 1, yy + 1));
-                connections.Add(new CellId(xx - 1, yy + 1));
-                connections.Add(new CellId(xx + 1, yy - 1));
-                connections.Add(new CellId(xx - 1, yy - 1));
+                connections.Add(new CellId(col - 2, row));
+                connections.Add(new CellId(col + 2, row));
+                connections.Add(new CellId(col + 1, row + 1));
+                connections.Add(new CellId(col - 1, row + 1));
+                connections.Add(new CellId(col + 1, row - 1));
+                connections.Add(new CellId(col - 1, row - 1));
             }
             return connections.ToArray();
         }
 
-        public string ToString()
+        public override string ToString()
         {
             var sb = new StringBuilder();
-            for (int ii = 0; ii <= board.GetUpperBound((int)Dim.Y); ii++)
+            for (int ii = 0; ii <= grid.GetUpperBound((int)Dim.Y); ii++)
             {
-                for (int jj = 0; jj <= board.GetUpperBound((int)Dim.X); jj++)
+                for (int jj = 0; jj <= grid.GetUpperBound((int)Dim.X); jj++)
                 {
-                    sb.Append((char)board[jj, ii].Status);
+                    sb.Append((char)grid[jj, ii].Status);
                 }
 
                 sb.Append('\n');
@@ -238,6 +280,7 @@ public class Connect
 
     private Game MakeGame(string[] input)
     {
+        ValidateInput(input);
         int gameCellsDown = input.Length;
         int gameCellsAcross = input[0].Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
         Game game = new Game(Side.Top, Side.Left, gameCellsAcross, gameCellsDown);
@@ -295,6 +338,7 @@ public class Connect
         return false;
     }
 
+    /// <returns>an array of cell coordinates including the 2 corners for the specified edge</returns>
     private (int col, int row)[] GetStartingCellPositions(Side side)
     {
         if (side == Side.Top)
@@ -307,7 +351,7 @@ public class Connect
 
             return list.ToArray();
         }
-        else
+        else if (side == Side.Left)
         {
             IList<(int, int)> list = new List<(int, int)>();
             for (int ii = 0; ii < game.GameRows; ii++)
@@ -317,6 +361,8 @@ public class Connect
 
             return list.ToArray();
         }
+        MyDebug.Assert(false);    // only top and left are supported
+        return new (int col, int row)[0];
     }
 
     private bool IsCellConnectedTo(Cell cellArg, ConnectWinner player, Side targetSide)
@@ -340,6 +386,29 @@ public class Connect
         }
 
         return IsCellConnected(cellArg);
+    }
+    private void ValidateInput(string[] input)
+    {
+        if (input == null || input.Length == 0)
+            throw new ArgumentException();
+        var len = input[0].Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
+        foreach (var line in input)
+        {
+            var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (len != parts.Length
+                || line.Replace(" ", string.Empty)
+                    .Except(GetValidCellContent()).Any())
+            {
+                throw new ArgumentException();
+            }
+        }
+    }
+
+    private IEnumerable<char> GetValidCellContent()
+    {
+        yield return (char)CellStatus.Free;
+        yield return (char)CellStatus.White;
+        yield return (char) CellStatus.Black;
     }
 }
 
