@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
+using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Xunit;
@@ -49,11 +53,11 @@ public class Connect
     {
         public readonly CellId Id;
         public readonly CellId[] Connections;
-        public readonly Side Side;
-        public CellStatus Status { get; set; }
-        public bool VisitedByWhite { get; set; }
-        public bool VisiteyBlack { get; set; }
 
+        public CellStatus Status { get; set; }
+
+        private readonly Side Side;
+        
         public Cell(CellId id, CellStatus cellStatus, Side side, CellId[] connections)
         {
             Id = id;
@@ -61,6 +65,9 @@ public class Connect
             this.Side = side;
             this.Status = cellStatus;
         }
+
+        public bool IsOnSide(Side side) => this.Side.HasFlag(side);
+
     }
 
     [Flags]
@@ -82,11 +89,11 @@ public class Connect
         public readonly Side BlackSide;
         public readonly Cell[,] board;
         public readonly int GameRows;
-        public readonly int gameCols;
+        public readonly int GameCols;
 
         public Game(Side whiteSide, Side blackSide, int width, int height)
         {
-            gameCols = width;
+            GameCols = width;
             GameRows = height;
             WhiteSide = whiteSide;
             BlackSide = blackSide;
@@ -105,6 +112,18 @@ public class Connect
         public Cell this[(int col, int row) cellSpec]
           => this[cellSpec.col, cellSpec.row];
 
+        public IEnumerable<Cell> GetNeighbours(Cell cellArg, ConnectWinner player)
+        {
+            foreach (CellId connectionId in cellArg.Connections)
+            {
+                Cell cell = board[connectionId.x, connectionId.y];
+                CellStatus playerStatus = player == ConnectWinner.White ? CellStatus.White : CellStatus.Black;
+                if (cell.Status == playerStatus)
+                {
+                    yield return cell;
+                }
+            }
+        }
         private (int, int) MapCellFromGameToBoard(int gameCellX, int gameCellY)
         {
             var rhombusOffset = gameCellY + X_MARGIN;
@@ -126,7 +145,7 @@ public class Connect
                     var cellStatus = CalculateCellStatus(xx, yy, cellsAcross, cellsDown);
                     var side = CalculateSide(xx, yy, cellsAcross, cellsDown);
                     
-                    board[xx,yy] = new Cell(new CellId(xx, yy), cellStatus, side`
+                    board[xx,yy] = new Cell(new CellId(xx, yy), cellStatus, side
                       , GetConnections(xx, yy, cellsAcross, cellsDown, cellStatus));
                 }
             }
@@ -222,17 +241,19 @@ public class Connect
         int gameCellsDown = input.Length;
         int gameCellsAcross = input[0].Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
         Game game = new Game(Side.Top, Side.Left, gameCellsAcross, gameCellsDown);
-        for (int ii = 0; ii < input.Length; ii++)
+        for (int row = 0; row < input.Length; row++)
         {
-            for (int jj = 0; jj < input[ii].Split(' ',StringSplitOptions.RemoveEmptyEntries).Length; jj++)
+            var cols = input[row].Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            for (int col = 0; col < cols.Length; col++)
             {
-                Cell cell = game[jj, ii];
+                Cell cell = game[col, row];
                 MyDebug.Assert(cell.Status == CellStatus.Free);
-                cell.Status = Enum.Parse<CellStatus>(((int)input[ii][0]).ToString());
+                cell.Status = Enum.Parse<CellStatus>(((int)cols[col][0]).ToString());
+                MyDebug.Assert(cell.Status == CellStatus.Free
+                               || cell.Status == CellStatus.White
+                               || cell.Status == CellStatus.Black);
             }                            
         }
-                         
-        var xxx = game.ToString();
         return game;
     }
 
@@ -240,7 +261,7 @@ public class Connect
     {
         if (IsWinner(ConnectWinner.White))
         {
-            return ConnectWinner.White
+            return ConnectWinner.White;
         }
         else if (IsWinner(ConnectWinner.Black))
         {
@@ -255,27 +276,58 @@ public class Connect
     private bool IsWinner(ConnectWinner player)
     {
         (int col, int row)[] starts 
-          = GetStartingCellsPositions(
+          = GetStartingCellPositions(
             player == ConnectWinner.White ? Side.Top : Side.Left);
         foreach ((int, int) start in starts)
         {
             Cell cell = game[start];
-            if (IsCellConnectedTo(cell, player, player == ConnectWinner.White ? Side.Bottom : Side.Right))
-                return true;
+            MyDebug.Assert(cell.Status == CellStatus.Free 
+                           || cell.Status == CellStatus.Black 
+                           || cell.Status == CellStatus.White);
+            CellStatus requiredStatus = player == ConnectWinner.Black ? CellStatus.Black : CellStatus.White;
+            if (cell.Status == requiredStatus)
+            {
+                if (IsCellConnectedTo(cell, player, player == ConnectWinner.White ? Side.Bottom : Side.Right))
+                    return true;
+            }
         }
 
         return false;
     }
 
-    private bool IsCellConnectedTo(Cell cellArg, ConnectWinner player, Side side)
+    private (int col, int row)[] GetStartingCellPositions(Side side)
+    {
+        if (side == Side.Top)
+        {
+            IList<(int, int)> list = new List<(int, int)>();
+            for (int ii = 0; ii < game.GameCols; ii++)
+            {
+                list.Add((ii, 0));
+            }
+
+            return list.ToArray();
+        }
+        else
+        {
+            IList<(int, int)> list = new List<(int, int)>();
+            for (int ii = 0; ii < game.GameRows; ii++)
+            {
+                list.Add((0, ii));
+            }
+
+            return list.ToArray();
+        }
+    }
+
+    private bool IsCellConnectedTo(Cell cellArg, ConnectWinner player, Side targetSide)
     {
         ISet<Cell> visited = new HashSet<Cell>();
 
         bool IsCellConnected(Cell cell)
         {
-            if (cell.HasSide(side))
+            if (cell.IsOnSide(targetSide))
                 return true;
-            foreach (Cell neighbour in cell.GetNeighbours(player))
+            foreach (Cell neighbour in game.GetNeighbours(cell, player))
             {
                 if (visited.Contains(neighbour))
                     continue;
