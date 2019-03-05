@@ -8,7 +8,7 @@ public enum ConnectWinner
 {
     White = 'O',
     Black = 'X',
-    None = '.'
+    None = 'X' + 1
 }
 public class Connect
 {
@@ -28,36 +28,38 @@ public class Connect
         }
     }
 
+    private List<(int, int)>[] debugCoords
+        = new List<(int, int)>[] { new List<(int, int)>(), new List<(int, int)>() };
     private readonly ReadOnlyDictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>
         board = new ReadOnlyDictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>(
             new Dictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>
             {
-                {new Location(true, true, true, true), cc => new (int, int)[0]},
-                {new Location(true, true, true, false), cc => throw new Exception()},
-                {new Location(true, true, false, true), cc => throw new Exception()},
-                {new Location(true, false, true, true), cc => throw new Exception()},
-                {new Location(false, true, true, true), cc => throw new Exception()},
-                {new Location(false, true, false, true), cc => throw new Exception()},
-                {new Location(false, true, true, true), cc => throw new Exception()},
-                {new Location(false, false, false, false), cc => FullHouse(cc)},
+                {new Location(left :true, top: true, right: true, bottom: true), cc => new (int, int)[0]},
+                {new Location(left :true, top: true, right: true, bottom: false), cc => throw new Exception()},
+                {new Location(left :true, top: true, right: false, bottom: true), cc => throw new Exception()},
+                {new Location(left :true, top: false, right: true, bottom: false), cc => throw new Exception()},
+                {new Location(left :true, top: false, right: true, bottom: true), cc => throw new Exception()},
+                {new Location(left :false, top: true, right: false, bottom: true), cc => throw new Exception()},
+                {new Location(left :false, top: true, right: true, bottom: true), cc => throw new Exception()},
+                {new Location(left :false, top: false, right: false, bottom: false), cc => FullHouse(cc)},
                 {
-                    new Location(true, true, false, false),
+                    new Location(left :true, top: true, right: false, bottom: false),
                     cc => new (int, int)[] {(cc.col + 2, cc.row), (cc.col + 1, cc.row + 1)}
                 },
                 {
-                    new Location(false, false, true, true),
+                    new Location(left :false, top: false, right: true, bottom: true),
                     cc => new (int, int)[] {(cc.col - 2, cc.row), (cc.col - 1, cc.row - 1)}
                 },
                 {
-                    new Location(false, true, true, false),
+                    new Location(left :false, top: true, right: true, bottom: false),
                     cc => new (int, int)[] {(cc.col - 2, cc.row), (cc.col - 1, cc.row + 1), (cc.col + 1, cc.row + 1)}
                 },
                 {
-                    new Location(true, false, false, true),
+                    new Location(left :true, top: false, right: false, bottom: true),
                     cc => new (int, int)[] {(cc.col + 2, cc.row), (cc.col - 1, cc.row - 1), (cc.col + 1, cc.row - 1)}
                 },
                 {
-                    new Location(true, false, false, false),
+                    new Location(left :true, top: false, right: false, bottom: false),
                     cc => new (int, int)[]
                     {
                         (cc.col + 2, cc.row), (cc.col + 1, cc.row + 1), (cc.col - 1, cc.row - 1),
@@ -65,12 +67,12 @@ public class Connect
                     }
                 },
                 {
-                    new Location(false, true, false, false),
+                    new Location(left :false, top: true, right: false, bottom: false),
                     cc => new (int, int)[]
                         {(cc.col + 2, cc.row), (cc.col - 2, cc.row), (cc.col - 1, cc.row + 1), (cc.col + 1, cc.row + 1)}
                 },
                 {
-                    new Location(false, false, true, false),
+                    new Location(left :false, top: false, right: true, bottom: false),
                     cc => new (int, int)[]
                     {
                         (cc.col - 2, cc.row), (cc.col - 1, cc.row - 1), (cc.col - 1, cc.row + 1),
@@ -78,7 +80,7 @@ public class Connect
                     }
                 },
                 {
-                    new Location(false, false, false, true),
+                    new Location(left :false, top: false, right: false, bottom: true),
                     cc => new (int, int)[]
                         {(cc.col + 2, cc.row), (cc.col - 2, cc.row), (cc.col - 1, cc.row - 1), (cc.col + 1, cc.row - 1)}
                 },
@@ -88,15 +90,15 @@ public class Connect
     {
         ISet<(int, int)> visited = new HashSet<(int, int)>();            
         winner = input
-            .First()
+            .LeftColumn()
             .Select((c, idx) => new {stone = c, idx})
             .Where(p => p.stone == (char)ConnectWinner.Black)
-            .Any(p => IsWinner(p.stone, (p.idx, 0), input, visited)) 
+            .Any(p => IsWinner(p.stone, (p.idx, p.idx), input, visited)) 
               ? ConnectWinner.Black 
               : ConnectWinner.None;
         if (winner == ConnectWinner.None)
             winner = input
-                .LeftColumn()
+                .First()
                 .Select((c, idx) => new {stone = c, idx})
                 .Where(p => p.stone == (char)ConnectWinner.White)
                 .Any(p => IsWinner(p.stone, (p.idx, 0), input, visited)) 
@@ -113,31 +115,32 @@ public class Connect
     
     private bool IsWinner(char stone, (int col, int row) coords, string[] input, ISet<(int, int)> visited)
     {
+        MyDebug.Assert(input[coords.row][coords.col] == stone);
+        debugCoords[stone == (char)ConnectWinner.Black ? 0 : 1].Add(coords);
         visited.Add(coords);
         if (IsTargetEdge(stone, coords, input))
             return true;
-        return Neighbours(stone,  coords, input ).Where(cc => input[cc.row][cc.col] == stone)
+        return Neighbours(coords, input).Where(cc => input[cc.row][cc.col] == stone)
             .Where(n => !visited.Contains(n))
-            .Any(cc => IsWinner(stone, cc, input, visited))
+            .Any(cc => IsWinner(stone, cc, input, visited));
     }
 
-    private IEnumerable<(int col, int row)> Neighbours(
-      char stone, (int col, int row) coords, string[] input)
+    private IEnumerable<(int col, int row)> Neighbours((int col, int row) coords, string[] input)
     {
-        if (IsLeftEdge(coords, input)
-            && IsTopEdge(coords, input))
-            return new (int col, int row)[] {(1, 1), (2, 1)};
+        var location = new Location(IsLeftEdge(coords, input), IsTopEdge(coords, input)
+            , IsRightEdge(coords, input), IsBottomEdge(coords, input));
+        return this.board[location](coords);
     }
 
     private bool IsTargetEdge(char stone, (int col, int row) coords, string[] input)
     {
         if (stone == (char) ConnectWinner.Black)
         {
-            return coords.row == input.Length;
+            return IsRightEdge(coords, input);
         }
         else
         {
-            return IsRightEdge(coords, input);
+            return IsBottomEdge(coords, input);
         }
     }
 
@@ -146,7 +149,7 @@ public class Connect
     /// </summary>
     private static IEnumerable<(int col, int row)> FullHouse((int col, int row) coord)
     {
-        yield return (coord.col - 1, coord.row - 1)
+        yield return (coord.col - 1, coord.row - 1);
         yield return (coord.col + 1, coord.row - 1);
         yield return (coord.col - 2, coord.row);
         yield return (coord.col + 2, coord.row);
@@ -155,7 +158,7 @@ public class Connect
     }
     
     private bool IsRightEdge((int col, int row) coords, string[] input)
-      => coords.col == AdjustedWidth(input) + coords.row;
+      => coords.col == BoardWidth(input) + coords.row - 1;
 
     private bool IsLeftEdge((int col, int row) coords, string[] input)
       => coords.col == coords.row;
@@ -166,7 +169,8 @@ public class Connect
     private bool IsBottomEdge((int col, int row) coords, string[] input)
         => coords.row == input.Length - 1;
     
-    private int AdjustedWidth(string[] input) => input.Length * 2 - 1;
+    private int BoardWidth(string[] input) => input[0].Length;
+
 }
 
 public static class Extension
@@ -176,7 +180,15 @@ public static class Extension
         int row = 0;
         foreach (var line in input)
         {
-            yield return line[row];    // the offset in chars of the rhombus matches the row number
+            yield return line[row++];    // the offset in chars of the rhombus matches the row number
         }
+    }
+}
+
+internal class MyDebug
+{
+    public static void Assert(bool b)
+    {
+        if (!b) throw new Exception();
     }
 }
