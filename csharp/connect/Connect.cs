@@ -13,6 +13,28 @@ public enum ConnectWinner
 }
 public class Connect
 {
+    private class SafeSet
+    {
+        private ImmutableHashSet<(int col, int row)> set;
+
+        private SafeSet(ImmutableHashSet<(int col, int row)> set)
+        {
+            this.set = set;
+        }
+
+        public SafeSet Add((int col, int row) coords)
+        {
+            return new SafeSet(set.Add(coords));
+        }
+
+        public bool Contains((int col, int row) coords)
+        {
+            return set.Contains(coords);
+        }
+
+        public static SafeSet Empty => new SafeSet(ImmutableHashSet<(int col, int row)>.Empty);
+    }
+    
     private struct Location
     {
         public bool Left { get; }
@@ -87,7 +109,6 @@ public class Connect
     private ConnectWinner winner;
     public Connect(string[] input)
     {
-        ISet<(int, int)> visited = new HashSet<(int, int)>();
         winner = FindWinner(input
             .LeftColumn()
             .Select((c, idx) => new {stone = c, idx})
@@ -113,11 +134,11 @@ public class Connect
     private bool FindWinner(IEnumerable< (int col, int row)> startCoordsVectorArg, char playerStoneArg, string[] inputArg)
     {
         bool FindWinner(IEnumerator<(int col, int row)> startCoordsVector,
-            char playerStone, string[] input, ImmutableHashSet<(int col, int row)> visited )        
+            char playerStone, string[] input, SafeSet visited )        
         {
             if (startCoordsVector.MoveNext())
             {
-                (bool result, ImmutableHashSet<(int col, int row)>) candidate =
+                (bool result, SafeSet visited) candidate =
                     IsWinner(playerStone, startCoordsVector.Current, input, visited);
                 if (candidate.result)
                 {
@@ -125,7 +146,7 @@ public class Connect
                 }
                 else
                 {
-                    return FindWinner(startCoordsVector, playerStone, input, candidate.Item2);
+                    return FindWinner(startCoordsVector, playerStone, input, candidate.visited);
                 }
             }
 
@@ -133,27 +154,27 @@ public class Connect
         }
 
         return FindWinner(startCoordsVectorArg.GetEnumerator(), playerStoneArg, inputArg,
-            ImmutableHashSet<(int col, int row)>.Empty);
+            SafeSet.Empty);
     }
 
-    private (bool, ImmutableHashSet<(int col, int row)>) 
+    private (bool, SafeSet) 
         IsWinner(char stone, (int col, int row) coords, string[] input
-            , ImmutableHashSet<(int, int)> visited)
+            , SafeSet visited)
     {
         MyDebug.Assert(input[coords.row][coords.col] == stone);
-        ImmutableHashSet<(int col, int row)> visited2 = visited.Add(coords);
+        SafeSet visited2 = visited.Add(coords);
         if (IsTargetEdge(stone, coords, input))
             return (true, visited2);
         IEnumerable<(int, int)> GetNeighbours() => Neighbours(coords, input).Where(cc => input[cc.row][cc.col] == stone)
             .Where(n => !visited.Contains(n));
         return IsWinnerGroup(GetNeighbours().GetEnumerator(), visited2);
         
-        (bool, ImmutableHashSet<(int col, int row)>) 
-          IsWinnerGroup(IEnumerator<(int col, int row)> neighbours, ImmutableHashSet<(int, int)> visited3)
+        (bool, SafeSet) 
+          IsWinnerGroup(IEnumerator<(int col, int row)> neighbours, SafeSet visited3)
         {
             if (!neighbours.MoveNext())
                 return (false, visited3);
-            (bool success, ImmutableHashSet<(int col, int row)>) candidate 
+            (bool success, SafeSet visited) candidate 
                 = IsWinner(stone, neighbours.Current, input, visited3);
             if (candidate.success)
             {
