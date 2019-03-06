@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 public enum ConnectWinner
 {
@@ -134,23 +135,15 @@ public class Connect
     private bool FindWinner(IEnumerable< (int col, int row)> startCoordsVectorArg, char playerStoneArg, string[] inputArg)
     {
         bool FindWinner(IEnumerator<(int col, int row)> startCoordsVector,
-            char playerStone, string[] input, SafeSet visited )        
+            char playerStone, string[] input, SafeSet visited )
         {
-            if (startCoordsVector.MoveNext())
+            bool Find()
             {
                 (bool result, SafeSet visited) candidate =
                     IsWinner(playerStone, startCoordsVector.Current, input, visited);
-                if (candidate.result)
-                {
-                    return true;
-                }
-                else
-                {
-                    return FindWinner(startCoordsVector, playerStone, input, candidate.visited);
-                }
+                return candidate.result || FindWinner(startCoordsVector, playerStone, input, candidate.visited);
             }
-
-            return false;
+            return startCoordsVector.MoveNext() && Find();
         }
 
         return FindWinner(startCoordsVectorArg.GetEnumerator(), playerStoneArg, inputArg,
@@ -161,27 +154,22 @@ public class Connect
         IsWinner(char stone, (int col, int row) coords, string[] input
             , SafeSet visited)
     {
-        MyDebug.Assert(input[coords.row][coords.col] == stone);
-        SafeSet visited2 = visited.Add(coords);
-        if (IsTargetEdge(stone, coords, input))
-            return (true, visited2);
         IEnumerable<(int, int)> GetNeighbours() => Neighbours(coords, input).Where(cc => input[cc.row][cc.col] == stone)
             .Where(n => !visited.Contains(n));
-        return IsWinnerGroup(GetNeighbours().GetEnumerator(), visited2);
-        
-        (bool, SafeSet) 
-          IsWinnerGroup(IEnumerator<(int col, int row)> neighbours, SafeSet visited3)
+        (bool, SafeSet) IsWinnerGroup(IEnumerator<(int col, int row)> neighbours, SafeSet visited3)
         {
-            if (!neighbours.MoveNext())
-                return (false, visited3);
-            (bool success, SafeSet visited) candidate 
-                = IsWinner(stone, neighbours.Current, input, visited3);
-            if (candidate.success)
+            (bool success, SafeSet visited) DoIsWinner()
             {
-                return candidate;
+                var candidate = IsWinner(stone, neighbours.Current, input, visited3);
+                return candidate.Item1 ? candidate : IsWinnerGroup(neighbours, visited3);
             }
-            return IsWinnerGroup(neighbours, visited3);
+
+            return neighbours.MoveNext() ? DoIsWinner() : (false, visited3);
         }
+        
+        return IsTargetEdge(stone, coords, input) ?
+            (true, visited.Add(coords)) :
+            IsWinnerGroup(GetNeighbours().GetEnumerator(), visited.Add(coords));        
     }
 
     private IEnumerable<(int col, int row)> Neighbours((int col, int row) coords, string[] input)
