@@ -1,4 +1,6 @@
-
+namespace Published
+{
+    
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -29,7 +31,7 @@ public class Connect
         }
     }
 
-    private static readonly ReadOnlyDictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>
+    private readonly ReadOnlyDictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>
         board = new ReadOnlyDictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>(
             new Dictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>
             {
@@ -88,19 +90,18 @@ public class Connect
     public Connect(string[] input)
     {
         ISet<(int, int)> visited = new HashSet<(int, int)>();
-        winner = FindWinner(input
+        ImmutableHashSet<(int, int)> visit = ImmutableHashSet<(int, int)>.Empty;
+        winner = input
             .LeftColumn()
             .Select((c, idx) => new {stone = c, idx})
             .Where(p => p.stone == (char) ConnectWinner.Black)
-            .Select(p => (p.idx, p.idx))
-            , (char)ConnectWinner.Black, input)
+            .Any(p => IsWinner(p.stone, (p.idx, p.idx), input, visited))
             ? ConnectWinner.Black
-            : FindWinner(input
+            : input
                 .First()
                 .Select((c, idx) => new {stone = c, idx})
                 .Where(p => p.stone == (char) ConnectWinner.White)
-                .Select(p => (p.idx, 0))
-                , (char)ConnectWinner.White, input)
+                .Any(p => IsWinner(p.stone, (p.idx, 0), input, visited))
                 ? ConnectWinner.White
                 : ConnectWinner.None;            
     }
@@ -110,64 +111,23 @@ public class Connect
         return winner;
     }
 
-    private bool FindWinner(IEnumerable< (int col, int row)> startCoordsVectorArg, char playerStoneArg, string[] inputArg)
-    {
-        bool FindWinner(IEnumerator<(int col, int row)> startCoordsVector,
-            char playerStone, string[] input, ImmutableHashSet<(int col, int row)> visited )        
-        {
-            if (startCoordsVector.MoveNext())
-            {
-                (bool result, ImmutableHashSet<(int col, int row)>) candidate =
-                    IsWinner(playerStone, startCoordsVector.Current, input, visited);
-                if (candidate.result)
-                {
-                    return true;
-                }
-                else
-                {
-                    return FindWinner(startCoordsVector, playerStone, input, candidate.Item2);
-                }
-            }
-
-            return false;
-        }
-
-        return FindWinner(startCoordsVectorArg.GetEnumerator(), playerStoneArg, inputArg,
-            ImmutableHashSet<(int col, int row)>.Empty);
-    }
-
-    private (bool, ImmutableHashSet<(int col, int row)>) 
-        IsWinner(char stone, (int col, int row) coords, string[] input
-            , ImmutableHashSet<(int, int)> visited)
+    
+    private bool IsWinner(char stone, (int col, int row) coords, string[] input, ISet<(int, int)> visited)
     {
         MyDebug.Assert(input[coords.row][coords.col] == stone);
-        ImmutableHashSet<(int col, int row)> visited2 = visited.Add(coords);
+        visited.Add(coords);
         if (IsTargetEdge(stone, coords, input))
-            return (true, visited2);
-        IEnumerable<(int, int)> GetNeighbours() => Neighbours(coords, input).Where(cc => input[cc.row][cc.col] == stone)
-            .Where(n => !visited.Contains(n));
-        return IsWinnerGroup(GetNeighbours().GetEnumerator(), visited2);
-        
-        (bool, ImmutableHashSet<(int col, int row)>) 
-          IsWinnerGroup(IEnumerator<(int col, int row)> neighbours, ImmutableHashSet<(int, int)> visited3)
-        {
-            if (!neighbours.MoveNext())
-                return (false, visited3);
-            (bool success, ImmutableHashSet<(int col, int row)>) candidate 
-                = IsWinner(stone, neighbours.Current, input, visited3);
-            if (candidate.success)
-            {
-                return candidate;
-            }
-            return IsWinnerGroup(neighbours, visited3);
-        }
+            return true;
+        return Neighbours(coords, input).Where(cc => input[cc.row][cc.col] == stone)
+            .Where(n => !visited.Contains(n))
+            .Any(cc => IsWinner(stone, cc, input, visited));
     }
 
     private IEnumerable<(int col, int row)> Neighbours((int col, int row) coords, string[] input)
     {
         var location = new Location(IsLeftEdge(coords, input), IsTopEdge(coords, input)
             , IsRightEdge(coords, input), IsBottomEdge(coords, input));
-        return board[location](coords);
+        return this.board[location](coords);
     }
 
     private bool IsTargetEdge(char stone, (int col, int row) coords, string[] input)
@@ -214,7 +174,6 @@ public static class Extension
             yield return line[row++];    // the offset in chars of the rhombus matches the row number
         }
     }
-    
 }
 
 internal class MyDebug
@@ -223,4 +182,6 @@ internal class MyDebug
     {
         if (!b) throw new Exception();
     }
+}
+
 }
