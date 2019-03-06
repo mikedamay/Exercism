@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -28,8 +29,6 @@ public class Connect
         }
     }
 
-    private List<(int, int)>[] debugCoords
-        = new List<(int, int)>[] { new List<(int, int)>(), new List<(int, int)>() };
     private readonly ReadOnlyDictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>
         board = new ReadOnlyDictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>(
             new Dictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>
@@ -88,23 +87,21 @@ public class Connect
     private ConnectWinner winner;
     public Connect(string[] input)
     {
-        ISet<(int, int)> visited = new HashSet<(int, int)>();            
+        ISet<(int, int)> visited = new HashSet<(int, int)>();
+        ImmutableHashSet<(int, int)> visit = ImmutableHashSet<(int, int)>.Empty;
         winner = input
             .LeftColumn()
             .Select((c, idx) => new {stone = c, idx})
-            .Where(p => p.stone == (char)ConnectWinner.Black)
-            .Any(p => IsWinner(p.stone, (p.idx, p.idx), input, visited)) 
-              ? ConnectWinner.Black 
-              : ConnectWinner.None;
-        if (winner == ConnectWinner.None)
-            winner = input
+            .Where(p => p.stone == (char) ConnectWinner.Black)
+            .Any(p => IsWinner(p.stone, (p.idx, p.idx), input, visited))
+            ? ConnectWinner.Black
+            : input
                 .First()
                 .Select((c, idx) => new {stone = c, idx})
-                .Where(p => p.stone == (char)ConnectWinner.White)
-                .Any(p => IsWinner(p.stone, (p.idx, 0), input, visited)) 
-                ? ConnectWinner.White 
-                : ConnectWinner.None;
-            
+                .Where(p => p.stone == (char) ConnectWinner.White)
+                .Any(p => IsWinner(p.stone, (p.idx, 0), input, visited))
+                ? ConnectWinner.White
+                : ConnectWinner.None;            
     }
 
     public ConnectWinner Result()
@@ -116,7 +113,6 @@ public class Connect
     private bool IsWinner(char stone, (int col, int row) coords, string[] input, ISet<(int, int)> visited)
     {
         MyDebug.Assert(input[coords.row][coords.col] == stone);
-        debugCoords[stone == (char)ConnectWinner.Black ? 0 : 1].Add(coords);
         visited.Add(coords);
         if (IsTargetEdge(stone, coords, input))
             return true;
@@ -133,16 +129,9 @@ public class Connect
     }
 
     private bool IsTargetEdge(char stone, (int col, int row) coords, string[] input)
-    {
-        if (stone == (char) ConnectWinner.Black)
-        {
-            return IsRightEdge(coords, input);
-        }
-        else
-        {
-            return IsBottomEdge(coords, input);
-        }
-    }
+      => stone == (char) ConnectWinner.Black
+            ? IsRightEdge(coords, input)
+            : IsBottomEdge(coords, input);
 
     /// <summary>
     /// returns neighbours for a non-edge stone 
