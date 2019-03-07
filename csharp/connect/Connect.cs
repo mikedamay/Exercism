@@ -5,6 +5,7 @@ using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.VisualBasic.CompilerServices;
 
 public enum ConnectWinner
 {
@@ -18,96 +19,60 @@ public class Connect
     {
         private ImmutableHashSet<(int col, int row)> set;
 
-        private SafeSet(ImmutableHashSet<(int col, int row)> set)
-        {
-            this.set = set;
-        }
+        private SafeSet(ImmutableHashSet<(int col, int row)> set) => this.set = set;
 
-        public SafeSet Add((int col, int row) coords)
-        {
-            return new SafeSet(set.Add(coords));
-        }
+        public SafeSet Add((int col, int row) coords) => new SafeSet(set.Add(coords));
 
-        public bool Contains((int col, int row) coords)
-        {
-            return set.Contains(coords);
-        }
+        public bool Contains((int col, int row) coords) => set.Contains(coords);
 
         public static SafeSet Empty => new SafeSet(ImmutableHashSet<(int col, int row)>.Empty);
     }
-    
-    private struct Location
-    {
-        public bool Left { get; }
-        public bool Top { get; }
-        public bool Right { get; }
-        public bool Bottom { get; }
 
-        public Location(bool left, bool top, bool right, bool bottom)
+    private class SequenceResult<T>
+    {
+        public bool Succeeded { get; }
+        private readonly T value;
+
+        public SequenceResult(T value, bool succeeded)
         {
-            Left = left;
-            Top = top;
-            Right = right;
-            Bottom = bottom;
+            this.value = value;
+            Succeeded = succeeded;
         }
+
+        public static implicit operator T(SequenceResult<T> _this) => _this.value;
+    }
+    
+    private class Sequence<T>
+    {
+        protected readonly IEnumerator<T> enumor;
+        protected bool nextSucceeded;
+
+        public Sequence(IEnumerator<T> enumor)
+        {
+            this.enumor = enumor;
+            nextSucceeded = enumor.MoveNext();
+        }
+
+        public Sequence<T> Next() => new Sequence<T>(enumor);
+
+        public SequenceResult<T> Value() => new SequenceResult<T>(enumor.Current, nextSucceeded);
     }
 
-    private static readonly ReadOnlyDictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>
-        board = new ReadOnlyDictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>(
-            new Dictionary<Location, Func<(int col, int row), IEnumerable<(int col, int row)>>>
-            {
-                {new Location(left :true, top: true, right: true, bottom: true), cc => new (int, int)[0]},
-                {new Location(left :true, top: true, right: true, bottom: false), cc => throw new Exception()},
-                {new Location(left :true, top: true, right: false, bottom: true), cc => throw new Exception()},
-                {new Location(left :true, top: false, right: true, bottom: false), cc => throw new Exception()},
-                {new Location(left :true, top: false, right: true, bottom: true), cc => throw new Exception()},
-                {new Location(left :false, top: true, right: false, bottom: true), cc => throw new Exception()},
-                {new Location(left :false, top: true, right: true, bottom: true), cc => throw new Exception()},
-                {new Location(left :false, top: false, right: false, bottom: false), cc => FullHouse(cc)},
-                {
-                    new Location(left :true, top: true, right: false, bottom: false),
-                    cc => new (int, int)[] {(cc.col + 2, cc.row), (cc.col + 1, cc.row + 1)}
-                },
-                {
-                    new Location(left :false, top: false, right: true, bottom: true),
-                    cc => new (int, int)[] {(cc.col - 2, cc.row), (cc.col - 1, cc.row - 1)}
-                },
-                {
-                    new Location(left :false, top: true, right: true, bottom: false),
-                    cc => new (int, int)[] {(cc.col - 2, cc.row), (cc.col - 1, cc.row + 1), (cc.col + 1, cc.row + 1)}
-                },
-                {
-                    new Location(left :true, top: false, right: false, bottom: true),
-                    cc => new (int, int)[] {(cc.col + 2, cc.row), (cc.col - 1, cc.row - 1), (cc.col + 1, cc.row - 1)}
-                },
-                {
-                    new Location(left :true, top: false, right: false, bottom: false),
-                    cc => new (int, int)[]
-                    {
-                        (cc.col + 2, cc.row), (cc.col + 1, cc.row + 1), (cc.col - 1, cc.row - 1),
-                        (cc.col + 1, cc.row - 1)
-                    }
-                },
-                {
-                    new Location(left :false, top: true, right: false, bottom: false),
-                    cc => new (int, int)[]
-                        {(cc.col + 2, cc.row), (cc.col - 2, cc.row), (cc.col - 1, cc.row + 1), (cc.col + 1, cc.row + 1)}
-                },
-                {
-                    new Location(left :false, top: false, right: true, bottom: false),
-                    cc => new (int, int)[]
-                    {
-                        (cc.col - 2, cc.row), (cc.col - 1, cc.row - 1), (cc.col - 1, cc.row + 1),
-                        (cc.col + 1, cc.row + 1)
-                    }
-                },
-                {
-                    new Location(left :false, top: false, right: false, bottom: true),
-                    cc => new (int, int)[]
-                        {(cc.col + 2, cc.row), (cc.col - 2, cc.row), (cc.col - 1, cc.row - 1), (cc.col + 1, cc.row - 1)}
-                },
-            });
+    private class CoordSequence : Sequence<(int col, int row)>
+    {
+        public CoordSequence(IEnumerator<(int col, int row)> enumor) : base(enumor)
+        {
+        }
+        
+        public CoordSequence Next => new CoordSequence(enumor);
+
+        public SequenceResult<(int col, int row)> Value 
+            => new SequenceResult<(int col, int row)>(enumor.Current, nextSucceeded);
+        
+    }
+    
     private ConnectWinner winner;
+
     public Connect(string[] input)
     {
         winner = FindWinner(input
@@ -134,49 +99,57 @@ public class Connect
 
     private bool FindWinner(IEnumerable< (int col, int row)> startCoordsVectorArg, char playerStoneArg, string[] inputArg)
     {
-        bool FindWinner(IEnumerator<(int col, int row)> startCoordsVector,
+        bool FindWinner(CoordSequence head,
             char playerStone, string[] input, SafeSet visited )
         {
             bool Find()
             {
-                (bool result, SafeSet visited) candidate =
-                    IsWinner(playerStone, startCoordsVector.Current, input, visited);
-                return candidate.result || FindWinner(startCoordsVector, playerStone, input, candidate.visited);
+                (bool succeeded, SafeSet visited, CoordSequence coords) candidate =
+                    IsWinner(playerStone, head.Value(), input, visited);
+                return candidate.succeeded || FindWinner(head.Next, playerStone, input, candidate.visited);
             }
-            return startCoordsVector.MoveNext() && Find();
+            return head.Value().Succeeded && Find();
         }
 
-        return FindWinner(startCoordsVectorArg.GetEnumerator(), playerStoneArg, inputArg,
+        return FindWinner(new CoordSequence(startCoordsVectorArg.GetEnumerator()), playerStoneArg, inputArg,
             SafeSet.Empty);
     }
 
-    private (bool, SafeSet) 
-        IsWinner(char stone, (int col, int row) coords, string[] input
+    private (bool succeeded, SafeSet visited, CoordSequence head) 
+        IsWinner(char stone, SequenceResult<(int col, int row)> coords, string[] input
             , SafeSet visited)
     {
         IEnumerable<(int, int)> GetNeighbours() => Neighbours(coords, input).Where(cc => input[cc.row][cc.col] == stone)
             .Where(n => !visited.Contains(n));
-        (bool, SafeSet) IsWinnerGroup(IEnumerator<(int col, int row)> neighbours, SafeSet visited3)
+        (bool, SafeSet, CoordSequence) IsWinnerGroup(CoordSequence head, SafeSet visited3)
         {
-            (bool success, SafeSet visited) DoIsWinner()
+            (bool success, SafeSet visited, CoordSequence head) DoIsWinner()
             {
-                var candidate = IsWinner(stone, neighbours.Current, input, visited3);
-                return candidate.Item1 ? candidate : IsWinnerGroup(neighbours, visited3);
+                var candidate = IsWinner(stone, head.Value(), input, visited3);
+                return candidate.succeeded ? candidate : IsWinnerGroup(head.Next, visited3);
             }
 
-            return neighbours.MoveNext() ? DoIsWinner() : (false, visited3);
+            return head.Value().Succeeded ? DoIsWinner() : (false, visited3, head.Next);
         }
         
         return IsTargetEdge(stone, coords, input) ?
-            (true, visited.Add(coords)) :
-            IsWinnerGroup(GetNeighbours().GetEnumerator(), visited.Add(coords));        
+            (true, null, null) :
+            IsWinnerGroup(new CoordSequence(GetNeighbours().GetEnumerator()), visited.Add(coords));        
     }
 
     private IEnumerable<(int col, int row)> Neighbours((int col, int row) coords, string[] input)
+      => AllAdjacentCoords(coords).Where(cc => IsValidCoord(cc, input));
+    
+
+    private bool IsValidCoord((int col, int row) cc, string[] input)
     {
-        var location = new Location(IsLeftEdge(coords, input), IsTopEdge(coords, input)
-            , IsRightEdge(coords, input), IsBottomEdge(coords, input));
-        return board[location](coords);
+        int TopEdge() => 0;
+        int LeftEdge() => cc.row;
+        int BottomEdge() => input.Length - 1;
+        int RightEdge() => BoardWidth(input) + cc.row - 1;
+
+        return cc.col >= LeftEdge() && cc.col <= RightEdge()
+                                    && cc.row >= TopEdge() && cc.row <= BottomEdge();
     }
 
     private bool IsTargetEdge(char stone, (int col, int row) coords, string[] input)
@@ -187,7 +160,7 @@ public class Connect
     /// <summary>
     /// returns neighbours for a non-edge stone 
     /// </summary>
-    private static IEnumerable<(int col, int row)> FullHouse((int col, int row) coord)
+    private static IEnumerable<(int col, int row)> AllAdjacentCoords((int col, int row) coord)
     {
         yield return (coord.col - 1, coord.row - 1);
         yield return (coord.col + 1, coord.row - 1);
