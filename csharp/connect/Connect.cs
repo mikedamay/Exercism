@@ -1,11 +1,7 @@
-
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using Microsoft.VisualBasic.CompilerServices;
 
 public enum ConnectWinner
 {
@@ -42,7 +38,7 @@ public class Connect
         public static implicit operator T(SequenceResult<T> _this) => _this.value;
     }
     
-    private class Sequence<T>
+    private abstract class Sequence<T, U>
     {
         protected readonly IEnumerator<T> enumor;
         protected bool nextSucceeded;
@@ -53,20 +49,20 @@ public class Connect
             nextSucceeded = enumor.MoveNext();
         }
 
-        public Sequence<T> Next() => new Sequence<T>(enumor);
+        public abstract U Next { get; }
 
-        public SequenceResult<T> Value() => new SequenceResult<T>(enumor.Current, nextSucceeded);
+        public abstract SequenceResult<T> Value { get; }
     }
 
-    private class CoordSequence : Sequence<(int col, int row)>
+    private class CoordSequence : Sequence<(int col, int row), CoordSequence>
     {
         public CoordSequence(IEnumerator<(int col, int row)> enumor) : base(enumor)
         {
         }
         
-        public CoordSequence Next => new CoordSequence(enumor);
+        public override CoordSequence Next => new CoordSequence(enumor);
 
-        public SequenceResult<(int col, int row)> Value 
+        public override SequenceResult<(int col, int row)> Value 
             => new SequenceResult<(int col, int row)>(enumor.Current, nextSucceeded);
         
     }
@@ -104,11 +100,16 @@ public class Connect
         {
             bool Find()
             {
+/*
+                var head2 = head.Next;
+                var head3 = head2.Next;
+                var head4 = head3.Next;
+*/
                 (bool succeeded, SafeSet visited, CoordSequence coords) candidate =
-                    IsWinner(playerStone, head.Value(), input, visited);
+                    IsWinner(playerStone, head.Value, input, visited);                
                 return candidate.succeeded || FindWinner(head.Next, playerStone, input, candidate.visited);
             }
-            return head.Value().Succeeded && Find();
+            return head.Value.Succeeded && Find();
         }
 
         return FindWinner(new CoordSequence(startCoordsVectorArg.GetEnumerator()), playerStoneArg, inputArg,
@@ -125,11 +126,11 @@ public class Connect
         {
             (bool success, SafeSet visited, CoordSequence head) DoIsWinner()
             {
-                var candidate = IsWinner(stone, head.Value(), input, visited3);
+                var candidate = IsWinner(stone, head.Value, input, visited3);
                 return candidate.succeeded ? candidate : IsWinnerGroup(head.Next, visited3);
             }
 
-            return head.Value().Succeeded ? DoIsWinner() : (false, visited3, head.Next);
+            return head.Value.Succeeded ? DoIsWinner() : (false, visited3, head.Next);
         }
         
         return IsTargetEdge(stone, coords, input) ?
