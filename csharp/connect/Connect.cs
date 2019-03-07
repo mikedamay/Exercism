@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
 
 public enum ConnectWinner
 {
@@ -43,14 +40,14 @@ public class Connect
     
     private abstract class Sequence<T, U>
     {
-        protected readonly T[] enumor;
+        protected readonly T[] values;
         protected int idx;
 
         public Sequence(IEnumerable<T> enumx) : this(enumx.ToArray(), -1) {}
 
         protected Sequence(T[] enumx, int idx)
         {
-            this.enumor = enumx;
+            this.values = enumx;
             this.idx = idx + 1;            
         }
 
@@ -65,11 +62,11 @@ public class Connect
         
         private CoordSequence((int col, int row)[] enumx,  int idx) : base(enumx, idx) {}
         
-        public override CoordSequence Next => new CoordSequence(enumor, idx);
+        public override CoordSequence Next => new CoordSequence(values, idx);
 
         public override SequenceResult<(int col, int row)> Value 
-            => idx >= enumor.Length ? new SequenceResult<(int col, int row)>((0, 0), false)
-              : new SequenceResult<(int col, int row)>(enumor[idx] , true);        
+            => idx >= values.Length ? new SequenceResult<(int col, int row)>((0, 0), false)
+              : new SequenceResult<(int col, int row)>(values[idx] , true);        
     }
     
     private ConnectWinner winner;
