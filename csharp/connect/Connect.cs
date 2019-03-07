@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
 
 public enum ConnectWinner
 {
@@ -40,13 +43,15 @@ public class Connect
     
     private abstract class Sequence<T, U>
     {
-        protected readonly IEnumerator<T> enumor;
-        protected bool nextSucceeded;
+        protected readonly T[] enumor;
+        protected int idx;
 
-        public Sequence(IEnumerator<T> enumor)
+        public Sequence(IEnumerable<T> enumx) : this(enumx.ToArray(), -1) {}
+
+        protected Sequence(T[] enumx, int idx)
         {
-            this.enumor = enumor;
-            nextSucceeded = enumor.MoveNext();
+            this.enumor = enumx;
+            this.idx = idx + 1;            
         }
 
         public abstract U Next { get; }
@@ -56,15 +61,15 @@ public class Connect
 
     private class CoordSequence : Sequence<(int col, int row), CoordSequence>
     {
-        public CoordSequence(IEnumerator<(int col, int row)> enumor) : base(enumor)
-        {
-        }
+        public CoordSequence(IEnumerable<(int col, int row)> enumor) : base(enumor) {}
         
-        public override CoordSequence Next => new CoordSequence(enumor);
+        private CoordSequence((int col, int row)[] enumx,  int idx) : base(enumx, idx) {}
+        
+        public override CoordSequence Next => new CoordSequence(enumor, idx);
 
         public override SequenceResult<(int col, int row)> Value 
-            => new SequenceResult<(int col, int row)>(enumor.Current, nextSucceeded);
-        
+            => idx >= enumor.Length ? new SequenceResult<(int col, int row)>((0, 0), false)
+              : new SequenceResult<(int col, int row)>(enumor[idx] , true);        
     }
     
     private ConnectWinner winner;
@@ -100,11 +105,6 @@ public class Connect
         {
             bool Find()
             {
-/*
-                var head2 = head.Next;
-                var head3 = head2.Next;
-                var head4 = head3.Next;
-*/
                 (bool succeeded, SafeSet visited, CoordSequence coords) candidate =
                     IsWinner(playerStone, head.Value, input, visited);                
                 return candidate.succeeded || FindWinner(head.Next, playerStone, input, candidate.visited);
@@ -112,7 +112,7 @@ public class Connect
             return head.Value.Succeeded && Find();
         }
 
-        return FindWinner(new CoordSequence(startCoordsVectorArg.GetEnumerator()), playerStoneArg, inputArg,
+        return FindWinner(new CoordSequence(startCoordsVectorArg), playerStoneArg, inputArg,
             SafeSet.Empty);
     }
 
@@ -135,7 +135,7 @@ public class Connect
         
         return IsTargetEdge(stone, coords, input) ?
             (true, null, null) :
-            IsWinnerGroup(new CoordSequence(GetNeighbours().GetEnumerator()), visited.Add(coords));        
+            IsWinnerGroup(new CoordSequence(GetNeighbours()), visited.Add(coords));        
     }
 
     private IEnumerable<(int col, int row)> Neighbours((int col, int row) coords, string[] input)
