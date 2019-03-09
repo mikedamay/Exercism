@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
+/*
+ * This is PURE functional with 2 1/2 exceptions.
+ * Obviously built on non-functional foundations but then all van neumann-architecture based
+ * implementations are.
+ */
+
 public enum ConnectWinner
 {
     White = 'O',
@@ -41,7 +47,7 @@ public class Connect
     private abstract class Sequence<T, U>
     {
         protected readonly T[] values;
-        protected int idx;
+        protected int idx;    // NOT PURE - conversion from LINQ to fp. 
 
         public Sequence(IEnumerable<T> enumx) : this(enumx.ToArray(), -1) {}
 
@@ -102,9 +108,9 @@ public class Connect
         {
             bool Find()
             {
-                (bool succeeded, SafeSet visited, CoordSequence coords) candidate =
+                (bool succeeded, SafeSet visited, CoordSequence coords) candidate() =>
                     IsWinner(playerStone, head.Value, input, visited);                
-                return candidate.succeeded || FindWinner(head.Next, playerStone, input, candidate.visited);
+                return candidate().succeeded || FindWinner(head.Next, playerStone, input, candidate().visited);
             }
             return head.Value.Succeeded && Find();
         }
@@ -124,6 +130,9 @@ public class Connect
             (bool success, SafeSet visited, CoordSequence head) DoIsWinner()
             {
                 var candidate = IsWinner(stone, head.Value, input, visited3);
+                    // NOT PURE - the runtime does not cache function results and
+                    // repeating this causes an unacceptable performance hti - althoug
+                    // I don't know why
                 return candidate.succeeded ? candidate : IsWinnerGroup(head.Next, visited3);
             }
 
@@ -160,6 +169,7 @@ public class Connect
     /// </summary>
     private static IEnumerable<(int col, int row)> AllAdjacentCoords((int col, int row) coord)
     {
+        // PURE - this is not a conventional function - it is a sequence in functional clothing
         yield return (coord.col - 1, coord.row - 1);
         yield return (coord.col + 1, coord.row - 1);
         yield return (coord.col - 2, coord.row);
