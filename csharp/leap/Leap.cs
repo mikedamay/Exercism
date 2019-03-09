@@ -26,7 +26,11 @@ give it a try
  */
 
 /*
+Review Points:
+
 Good solution.
+
+Discussion Points:
 
 parentheses are optional in this case as operator precedence works in your favour.  You may prefer
 to keep them for readability
@@ -35,7 +39,11 @@ You could use an expression bodied member here - also a matter of taste.
  */
 
 /*
+Review Points:
+
 An effective solution
+
+Discussion Points:
 
 There is no requirement for a conditional statement and boolean literals.
 
