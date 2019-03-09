@@ -7,8 +7,12 @@ public static class TwoFer
   }
 }
 /*
-An effective solution
- 
+Review Points:
+
+Effective Solution
+
+Discussion Points
+
 There are a few idioms could be useful for you to know about:
 * null coalescence operator `var expr = "something or nothing"; var default_val = "nothing"; var foo = expr ?? default_val;`
 * string interpolation `var expr = "abc"; var foo = $"this is {expr}";`
