@@ -100,3 +100,37 @@ Why all this nonsense?
 
 .NET libraries support the CLR (Common Language Runtime) rather than a particular language.  One CLR language, VB.NET, had to keep faith with its ancestor Visual Basic.  In Visual Basic these non-zero bounded arrays were first class citizens and had the same form as conventional arrays.
 */
+
+/*
+Review Points:
+
+This is a good solution
+
+`ColorCode()` causes the color array to be instantiated each time it is called.  This is not optimally performant.
+
+A bit of defensive programming would be to clone the color array before returning it from `Colors()` to prevent maintainers from inadvertently modifying the `ResistorColor` data.
+
+Discussion Points:
+
+Arguably the most maintainable solution would be a dictionary mapping string color names to explicit enums. This would apply if both color names and color values are mapped outside of this code, for example in a design document or a spec. Implicit mappings are less maintainable. As a bonus it's easier to mentally map the dictionary to the spec file.
+*/
+
+/*
+Review Points:
+
+Good solution.
+
+You could make `resistorcolorcodes` a `ReadOnlyDictionary` as a strong guide to maintainers.
+
+Discussion Points:
+
+Something else to consider is the user of enums.  It all depends on how the data structures will be used in the wider program.
+*/
+
+/*
+You usually catch this sort of thing in beginner tutorials or language updates.
+
+You might reasonably expect to find a language spec but this does not seem to be maintained.  The latest is a draft for C# 6 followed by language updates for 7.0, 7.1, 7.2 and 7.3 (current).
+
+You can find a lot of this at https://docs.microsoft.com/en-gb/dotnet/csharp/language-reference/
+*/
