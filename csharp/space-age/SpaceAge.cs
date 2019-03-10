@@ -80,3 +80,25 @@ For me it's important that the code communicates the maximum amount about what i
 
 All this just because some people want to bring Pluto back as a planet.
 */
+
+/*
+Good solution
+
+If you make the dictionary a ReadOnlyDictionary then this will provide the clearest guidance to maintainers
+*/  
+
+/*
+Review Points:
+
+Good solution
+ 
+Discussion Points:
+ 
+Arguably it is helpful to gather the year values together in one place say as a bunch of constants or a dictionary of some sort.  This helps when reasoning about the validity of the values (as they are easy to compare) amongst other things.
+*/
+
+/*
+I find the const names slightly overwhelming.  
+Given that the maintainer is aware of the context 
+I think something more abbreviated might work.  Thoughts?
+*/
