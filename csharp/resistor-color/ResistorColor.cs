@@ -120,7 +120,7 @@ Review Points:
 
 Good solution.
 
-You could make `resistorcolorcodes` a `ReadOnlyDictionary` as a strong guide to maintainers.
+You could make the color mapping a `ReadOnlyDictionary` as a strong guide to maintainers.
 
 Discussion Points:
 
