@@ -84,6 +84,8 @@ All this just because some people want to bring Pluto back as a planet.
 /*
 Good solution
 
+Good use of expression bodied members
+
 If you make the dictionary a ReadOnlyDictionary then this will provide the clearest guidance to maintainers
 */  
 
@@ -102,3 +104,4 @@ I find the const names slightly overwhelming.
 Given that the maintainer is aware of the context 
 I think something more abbreviated might work.  Thoughts?
 */
+
