@@ -45,3 +45,17 @@ for `List()` you can loop through all the possible allergens and again use the _
 
 There is a lot to learn from the Allergies exercise including fairly advanced LINQ and use of enum `[Flags]` but it is probably best to start with an implementation based on bitwise operators and build up from there.
 */
+
+/*
+`Enum.HasFlag` is slightly more readable in the `IsAllergicTo` implementation.
+*/
+
+/*
+Review Points:
+
+Good solution
+
+Discussion Points:
+
+Have a look in the community solutions for those that use the `[flags]` attribute on the enum.  I will be happy to discuss.
+*/
