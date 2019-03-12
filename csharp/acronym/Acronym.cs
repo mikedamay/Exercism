@@ -42,3 +42,7 @@ public static class Acronym
 
 3. Also regarding performance use of strings with LINQ `Any()` rather than lists of chars would make a slight improvement (of the order of 5%).  However using string+intrinsic methods (`IndexOf()`) makes a 10x improvement compared to LINQ
 */
+
+/*
+Poorly framed Guidance - add better business rules about what constitutes a word
+*/
