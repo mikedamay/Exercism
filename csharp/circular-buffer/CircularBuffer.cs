@@ -76,3 +76,13 @@ public class CircularBuffer<T>
     }
 
 }
+
+/*
+Review Points:
+
+Good solution
+
+Discussion Points:
+
+Have a look at the starred community solutions where different underlying collections are used.
+*/
