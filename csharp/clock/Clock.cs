@@ -49,6 +49,7 @@ public class Clock
     }
 }
 /*
+```
 protected bool Equals(Clock other)
 {
     return hours == other.hours && minutes == other.minutes;
@@ -69,7 +70,7 @@ public override int GetHashCode()
         return (hours * 397) ^ minutes;
     }
 }
-
+```
  1. You need the Equals(object) in order for your object to honour its contracts. In inheriting from object you assert that you can be passed an object for comparison so you had better handle it correctly.
  2. The first ReferenceEquals is null protection.
  3. The second ReferenceEquals is for performance
