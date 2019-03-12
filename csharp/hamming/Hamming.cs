@@ -52,3 +52,24 @@ LINQ Range - 15 seconds
 
 non-LINQ - 10 seconds
 */
+/*
+Review Points:
+
+Good solution
+
+Discussion Points:
+
+I'm happy to discus a LINQ based solution with you if that is of interest.
+ */
+
+/*
+Review Points:
+
+Good solution
+
+Discussion Points:
+
+A Zip based LINQ solution takes 3 times as long as a typical non-LINQ solution.
+
+A Range based LINQ solution only takes 50% longer than a typical non-LINQ solution
+*/
