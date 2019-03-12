@@ -134,3 +134,17 @@ You might reasonably expect to find a language spec but this does not seem to be
 
 You can find a lot of this at https://docs.microsoft.com/en-gb/dotnet/csharp/language-reference/
 */
+/*
+Be careful - others may consider some of my views unorthodox.
+
+The issue for me is not whether identifiers can
+be abbreviated or not but what code provides the 
+best experience for a maintainer (subject to meeting 
+non-functional requirements such as performance,
+ operational robustness and resilience).
+
+The experience for maintainers relates to: 
+code-readabilty, how easy is it to reason 
+about the code and whether or not there 
+are gotchas (defensive coding)
+*/
