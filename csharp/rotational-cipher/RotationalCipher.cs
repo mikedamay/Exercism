@@ -16,3 +16,13 @@ public static class RotationalCipher
         return new string(chars);
     }
 }
+
+/*
+Review Points:
+
+That is a cool solution
+
+Discussion Points:
+
+If you're interested in discussing a more functional/LINQ-based solution then look at the community solutions and/or I would be happy to participate.
+*/
