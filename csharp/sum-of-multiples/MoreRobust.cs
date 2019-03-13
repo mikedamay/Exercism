@@ -47,3 +47,14 @@ without changing the signature of `Sum`to return a
 long and a radical change to the algorithm to pre-
 calculate where results would be duplicated.
 */
+/*
+I imagine you would be happier without the `foreach`.  The key LINQ construct for this is `SelectMany`. 
+
+''`
+multiples.SelectMany(collection, (item-from-collection, mulitple) => do something with the two values)
+``` 
+can provide a non-unique enumerable of values based on the multiples.
+
+The first parameter to `SelectMany` is a collection.  The second parameter is a function which is handed (by SelectMany) each item from the collection together with the current item from the original object on which `SelectMany` was called.  in this case every muultiple is paired up with every item from "collection".
+
+*/
