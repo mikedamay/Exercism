@@ -16,3 +16,13 @@ public static class Grains
     private static ulong ThrowInvalid() => throw new ArgumentOutOfRangeException("invalid input of 0");
     private static ulong TwoToThe(int n) => 1UL << n;
 }
+
+/*
+Review Points:
+
+Good solution
+
+Discussion Points:
+
+Bit shifting is a performant alternative to `Math.Pow()`
+*/
