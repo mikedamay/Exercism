@@ -148,3 +148,13 @@ code-readabilty, how easy is it to reason
 about the code and whether or not there 
 are gotchas (defensive coding)
 */
+/*
+I like this
+
+I usually comment on the use of `Colors()` in `ColorCode()`
+being non-performant but the ubiquitous use of expression
+bodied members makes the case "for" compelling.  As long
+as you understand that the color array will be instantiated
+each time `Colors()` is called.  There is no concept
+of pure functions in C#.
+*/
