@@ -96,7 +96,13 @@ Good solution
  
 Discussion Points:
  
-Arguably it is helpful to gather the year values together in one place say as a bunch of constants or a dictionary of some sort.  This helps when reasoning about the validity of the values (as they are easy to compare) amongst other things.
+Arguably it is helpful to gather the year values 
+together in one place say as a bunch of constants 
+or a dictionary of some sort.  This helps when 
+reasoning about the validity of the values (as 
+they are easy to compare) amongst other things.
+The downside is that you have to make multiple
+code changes when you add or remove a planet.
 */
 
 /*
