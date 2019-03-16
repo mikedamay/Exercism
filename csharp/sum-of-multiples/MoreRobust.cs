@@ -58,3 +58,14 @@ can provide a non-unique enumerable of values based on the multiples.
 The first parameter to `SelectMany` is a collection.  The second parameter is a function which is handed (by SelectMany) each item from the collection together with the current item from the original object on which `SelectMany` was called.  in this case every muultiple is paired up with every item from "collection".
 
 */
+
+/*
+This exercise suffers from the problem that a simple solution such as looping through all possible numbers less than max and testing against each multiple passed in will either cause overflow exceptions or be unnecessarily slow for very many scenarios. 
+
+The case I provided is one such instance.  But this case can be easily accommodated by avoiding examining each number between 1 and max (after all you only care about numbers are a multiple of "multiple").
+
+Other cases such as having max of `1_999_999_999` and an array of multiples comprising every number between 1 and one billion would throw an out-of-memory exception long before it would throw the inevitable integer overflow exception.
+
+Because of the above my comment is necessarily vague.  I can't say "fix it" because there isn't really a fix but I can encourage students to be aware that the simple solution is a very partial solution and that there is sometimes a very significant trade-off between the elegance and readability provided by simple LINQ solution and performance.
+
+*/
