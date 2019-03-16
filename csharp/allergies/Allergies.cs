@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace xx {
@@ -57,5 +58,12 @@ Good solution
 
 Discussion Points:
 
-Have a look in the community solutions for those that use the `[flags]` attribute on the enum.  I will be happy to discuss.
+Have a look in the community solutions for those that use the `[flags]` attribute on the enum and `Enum.HasFlag()`.  I will be happy to discuss.
+
+A more gotcha-proof way of initializing the enum is with shifted integers, e.g.:
+```
+Shellfish = 1 << 2,
+Strawberries = 1 << 3,
+```
+
 */
