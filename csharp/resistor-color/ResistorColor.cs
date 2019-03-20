@@ -158,3 +158,20 @@ as you understand that the color array will be instantiated
 each time `Colors()` is called.  There is no concept
 of pure functions in C#.
 */
+
+/*
+The API for `ReadOnlyDictionary` is not straight forward.  I think the developers were feeling a bit lazy that day.
+
+The easiest approach and, arguably, the most appropriate here is to expose the dictionary as a `IReadOnlyDictionary` as follows:
+```
+static IReadOnlyDictionary<string, int> CodeConversion = new Dictionary<...> {...}
+```
+
+This is simple but it does allow users of the object to cast it back to a dictionary and circumvent your read only mechanism.
+
+To avoid read only circumvention you can create a non-castable `ReadOnlyDictionary` as follows:
+```
+static Dictionary<string, int> CodeConversionWritable = new Dictionary<stirng, int> { {"black, 0}...};
+static ReadOnlyDictionary<string, int> CodeConversion = new ReadOnlyDictionary(CodeConversionWriteable);
+```
+*/
