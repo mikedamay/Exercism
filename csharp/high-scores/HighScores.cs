@@ -99,3 +99,17 @@ Personally, I don't think this advice should be taken too far otherwise, as you 
 
 Finally, if you are developing a general purpose library then performance should be given greater consideration as you don't know how the library will be used.
 */
+
+/*
+Review Points:
+
+Effective solution
+
+Discussion Points:
+
+If you prefer a solution with a more functional feel for `PersonalTop3()` then `OrderByDescending()` and `Take()` are available in `IEnumerable`
+*/
+
+/*
+`Take()` works well with fewer items in the list than the number taken.
+*/
