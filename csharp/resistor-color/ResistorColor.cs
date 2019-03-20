@@ -175,3 +175,6 @@ static Dictionary<string, int> CodeConversionWritable = new Dictionary<stirng, i
 static ReadOnlyDictionary<string, int> CodeConversion = new ReadOnlyDictionary(CodeConversionWriteable);
 ```
 */
+/*
+Consider using a `ReadOnlyDictionary` to emphasise the collection's role here.
+*/
