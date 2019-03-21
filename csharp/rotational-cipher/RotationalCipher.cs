@@ -99,3 +99,13 @@ If you look at my community solution you will see that I gave a couple of tweaks
 
 Sorry, for the earlier sloppy mentoring.
 */
+
+/*
+Review Points:
+
+Good solution
+
+Discussion Points:
+
+It is debatable whether `Char.IsLetter()` is the appropriate test here.  It would cause non-english-alphabet letters to be shifted with undetermined results.
+*/
