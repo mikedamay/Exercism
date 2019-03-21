@@ -178,3 +178,67 @@ static ReadOnlyDictionary<string, int> CodeConversion = new ReadOnlyDictionary(C
 /*
 Consider using a `ReadOnlyDictionary` to emphasise the collection's role here.
 */
+
+/*
+My comments relate to programming in general rather than C#.
+
+Design Document / Spec(ification)
+
+Before code is written generally a written record is made of of the requirements, a description of what the software should look like and how it should behave.  This might be called a Requirements Document, Business Rules Document (BRD) or, it it is provided in sufficient detail, a program specification.  In the case of Exercism this takes the form of the Instructions tab.  In the modern agile environment these often take the form of "User Stories".
+
+These documents are readable by both the commissioners of the software and the programmers and are used by the latter to ensure they stay on the right track during development.
+
+Where a program is sufficiently complex there may also be a design document which maps high level concepts to more concrete   objects such as data structures and algorithms.  Although it is not very fashionable it might be worth looking at UML (Universal Modelling Language) to get the idea.
+
+Explicit Mapping
+
+A mapping is explicit where the key or symbol and the value that it translates to are both manifest in the code.  Below are 3 examples:
+```
+// Example 1 - Dictionary
+var map = new Dictionary<string, int> {
+  { "black", 0},
+  { "brown", 1}.
+...
+};
+
+// Example 2 - enum
+enum Color
+{
+  black = 0,
+  brown = 1,
+...
+}
+
+// Example 3 - switch statement
+int MapColor(string colorName)
+{
+    switch (colorName)
+    {
+        case "black": return 0;
+        case "brown": return 1;
+    ...
+    }
+}
+```
+Implicit Mapping
+
+A mapping is implicit where the key or symbol is visible in the code but the mapped value is not directly shown.  Examples blow:
+```
+// Example 1 - Array 
+var colors = new string[] { "black", "brown"...};
+
+// Example 2 - enum
+enum Color
+{
+    black,
+    brown,
+...
+}
+```
+
+Why does it matter?
+
+If mappings are implicit it is far easier for a maintainer to make a mistake because they are not aware that the position of a value within an array or enum is crucial.  They may come along and, with a tidy mind, put things in alphabetical order.
+
+Additionally, if the requirements or the design changes then it is much easier for the maintainer to identify the significant pieces of code and what needs changing with an explicit mapping.
+*/
