@@ -98,4 +98,4 @@ public static class RotationalCipher
 If you look at my community solution you will see that I gave a couple of tweaks to the algorithm that arguably make things simpler.
 
 Sorry, for the earlier sloppy mentoring.
-/
+*/
