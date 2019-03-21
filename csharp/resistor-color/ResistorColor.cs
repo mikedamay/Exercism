@@ -242,3 +242,13 @@ If mappings are implicit it is far easier for a maintainer to make a mistake bec
 
 Additionally, if the requirements or the design changes then it is much easier for the maintainer to identify the significant pieces of code and what needs changing with an explicit mapping.
 */
+/*
+As it happens your observation goes to the heart of one of the pillars of LINQ - extension methods.
+
+The designers have deliberately separated out LINQ methods from the objects (which implement IEnumerable) to which they apply.  They are provided by other modules.  In fact, you can add to the LINQ methods that you write, yourself as long as the users include your namespace and reference your library.  This is just one of the advantages of using extension methods.  Have a look at how they are implemented and the "this" modifier to the first parameter of extension methods.
+
+Another advantage of extension methods is that they can be applied effectively to interfaces.  In the case of LINQ extension methods are applied to `IEnumerable<T>`.  There is no need to implement separate methods for `string`, `List`, `Array` and all the other classes that implement `IEnumerable<T>`.
+
+The downside as you discovered is that you have to include an extra namespace/library and that the intellisense and, more annoyingly, the documentation does not help you.
+
+*/
