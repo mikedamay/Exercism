@@ -24,8 +24,9 @@ public class SpiralMatrix
     {
         int NextRow() => col == dims.Min && row != dims.Min ? row - 1 : col == dims.Max - 1 && row != dims.Max - 1 ? row + 1 : row;
         int NextCol() => row == dims.Min && col != dims.Max - 1 ? col + 1 : row == dims.Max - 1 && col != dims.Min ? col - 1 : col;
-
-        if (dims.IsEmpty())
+        bool IsSingleCell() => dims.Min == dims.Max - 1;
+        
+        if (dims.IsEmpty() || IsSingleCell() && !atStart)
         {
             return ImmutableList<(int, int, int)>.Empty;
         }
