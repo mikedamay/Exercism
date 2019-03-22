@@ -52,3 +52,15 @@ internal static class SpiralMatrixExtensions
         return vals;
     }
 }
+
+/*
+As you have discovered simple loops don't do it.
+a
+I think you have to walk round the grid incrementing the value each time and working out which is the next "cell" based on the current coordinates.  
+
+For instance if you are at the top right cell then you know that you have to add 1 to the row and and zero to the column to start down the end column.
+
+When you get back to the starting point on each circuit you know that you have to reduce the "circuit" by 2 in each direction.
+
+Think about it and we can discuss.
+*/
