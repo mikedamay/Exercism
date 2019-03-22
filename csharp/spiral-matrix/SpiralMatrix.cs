@@ -16,7 +16,7 @@ public class SpiralMatrix
     }
     public static int[,] GetMatrix(int size)
     {
-        var list = WalkSpiral(0, 0, 1, new Dims(0, size), true);
+        var list = WalkSpiral(row: 0, col: 0, val: 1, dims: new Dims(min: 0, max: size), atStart: true);
         return list.ToSquareArray(size);
     }
 
@@ -32,9 +32,9 @@ public class SpiralMatrix
         }
         if (NextRow() == dims.Min && NextCol() == dims.Min && !atStart)
         {
-            var dims2 = new Dims(dims.Min + 1, dims.Max - 1);
+            var innerDims = new Dims(dims.Min + 1, dims.Max - 1);
 
-            return WalkSpiral(dims2.Min, dims2.Min, val + 1, dims2, atStart: true).Add((row, col, val));
+            return WalkSpiral(innerDims.Min, innerDims.Min, val + 1, innerDims, atStart: true).Add((row, col, val));
         }
 
         return WalkSpiral(NextRow(), NextCol(), val + 1, dims, atStart: false).Add((row, col, val));
