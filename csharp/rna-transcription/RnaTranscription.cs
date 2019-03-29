@@ -5,7 +5,7 @@ public static class RnaTranscription
 {
     public static string ToRna(string nucleotide)
     {
-        return new string(nucleotide.Select(c => map[c]));
+        return new string(nucleotide.Select(c => map[c]).ToArray());
     }
 
     private static IReadOnlyDictionary<char, char> map = new Dictionary<char, char>
