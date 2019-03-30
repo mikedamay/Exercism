@@ -14,40 +14,19 @@ public static class Dominoes
     private static bool PlayStone(ImmutableList<(int, int)> bag, ImmutableList<(int, int)> hand) =>
          bag.IsEmpty ? hand.First().Item1 == hand.Last().Item2 :
             GetCandidates(hand.Last(), bag).Any() 
-               && HandleCandidate(ImmutableList<(int, int)>.Empty.AddRange(GetCandidates(hand.Last(), bag)), bag, hand);
+               && HandleCandidate(ImmutableList<(int, int)>.Empty
+                .AddRange(GetCandidates(hand.Last(), bag)), bag, hand);
 
-    private static bool HandleCandidate(ImmutableList<(int, int)> candidates, ImmutableList<(int, int)> bag, ImmutableList<(int, int)> hand)
+    private static bool HandleCandidate(ImmutableList<(int, int)> candidates
+        , ImmutableList<(int, int)> bag, ImmutableList<(int, int)> hand)
     {
         (int, int) candidateStone() => candidates.First();
         (int, int) reverseStone() 
             => candidateStone().Item2 == hand.Last().Item2 ? (candidateStone().Item2, candidateStone().Item1) :
             candidateStone();
-        bool DoPlayStone((int, int) stone) => PlayStone(bag.Remove(stone), hand.Add(stone));
         
-        if (!candidates.Any())
-            return false;
-/*
-        return candidateStone().Item2 == hand.Last().Item2
-            ? DoPlayStone((candidateStone().Item2, candidateStone().Item1)) ||
-              HandleCandidate(candidates.RemoveAt(0), bag, hand)
-            : DoPlayStone(candidateStone()) || HandleCandidate(candidates.RemoveAt(0), bag, hand);
-*/
-
-        return PlayStone(bag.Remove(candidateStone()), hand.Add(reverseStone())) || HandleCandidate(candidates.RemoveAt(0), bag, hand);
-/*
-        if (candidateStone().Item2 == hand.Last().Item2)
-        {
-            if (PlayStone(bag.Remove(candidateStone()), hand.Add((candidateStone().Item2, candidateStone().Item1))))
-                return true;            
-        }
-        else
-        {
-            if (PlayStone(bag.Remove(candidateStone()), hand.Add(candidateStone())))
-                return true;
-        }
-
-        return HandleCandidate(candidates.RemoveAt(0), bag, hand);
-*/
+        return candidates.Any() && (PlayStone(bag.Remove(candidateStone())
+          , hand.Add(reverseStone())) || HandleCandidate(candidates.RemoveAt(0), bag, hand));
     }
 
     private static IEnumerable<(int, int)> GetCandidates((int, int) stoneToMatch, ImmutableList<(int, int)> bag)
