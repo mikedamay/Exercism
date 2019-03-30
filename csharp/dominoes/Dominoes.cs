@@ -30,7 +30,6 @@ public static class Dominoes
     }
 
     private static IEnumerable<(int, int)> GetCandidates((int, int) stoneToMatch, ImmutableList<(int, int)> bag)
-    {
-        return bag.Where(st => st.Item1 == stoneToMatch.Item2 || st.Item2 == stoneToMatch.Item2);
-    }
+      => bag.Where(st => st.Item1 == stoneToMatch.Item2 || st.Item2 == stoneToMatch.Item2);
+    
 }
