@@ -6,6 +6,25 @@ using Xunit;
 public class DominoesTest
 {
     [Fact]
+    public void multiple()
+    {
+        for (int ii = 0; ii < 100_000; ii++)
+        {
+            Empty_input_empty_output();
+            Singleton_input_singleton_output();
+            Singleton_that_cant_be_chained();
+            Three_elements();
+            Can_reverse_dominoes();
+            Cant_be_chained();
+            Disconnected_simple();
+            Disconnected_double_loop();
+            Disconnected_single_isolated();
+            Need_backtrack();
+            Separate_loops();
+            Nine_elements();
+        }
+    }
+    [Fact]
     public void Empty_input_empty_output()
     {
         var dominoes = Array.Empty<(int, int)>();
