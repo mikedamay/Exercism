@@ -95,6 +95,14 @@ public class DominoesTest
     }
 
     [Fact(Skip = "")]
+    public void Need_backtrack_modified()
+    {
+        var dominoes = new[] { (1, 2), (3, 1), (2, 4), (2, 4), (2, 3) };
+        Assert.True(Dominoes.CanChain(dominoes));
+    }
+    
+    
+    [Fact(Skip = "")]
     public void Separate_loops()
     {
         var dominoes = new[] { (1, 2), (2, 3), (3, 1), (1, 1), (2, 2), (3, 3) };
