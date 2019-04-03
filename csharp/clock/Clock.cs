@@ -30,9 +30,9 @@ public class Clock
         return (24 * 60 + ( minutesIn + adjustmentMinutes) % (24 * 60)) % (24 * 60);
     }
 
-    private bool Equals(Clock other)
+    protected bool Equals(Clock other)
     {
-        return timeInMinutes == other.timeInMinutes;
+        return hours == other.hours && minutes == other.minutes;
     }
 
     public override bool Equals(object obj)
@@ -45,7 +45,10 @@ public class Clock
 
     public override int GetHashCode()
     {
-        return timeInMinutes;
+        unchecked
+        {
+            return (hours * 397) ^ minutes;
+        }
     }
 }
 /*
@@ -75,6 +78,7 @@ public override int GetHashCode()
  2. The first ReferenceEquals is null protection.
  3. The second ReferenceEquals is for performance
  4. GetHashCode() and the need for consistency with Equals are a bit more hazy. The hashcode is used, in particular, by dictionaries and sets and the bumping with a random number apparently spreads out the distribution in whatever tree structure they use. I suspect 5 moinutes of introspection or web search would reveal the importance of equality in this mix.
+ 5. `protected...Equals(...)` is for performance
 */
 /*
 `IEquatable<Clock> is a marker interface.  
