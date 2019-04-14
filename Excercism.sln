@@ -96,6 +96,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCipher", "csharp\simp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollatzConjecture", "csharp\collatz-conjecture\CollatzConjecture.csproj", "{1DEAA812-892E-48C2-B35E-E3DDDB4F818C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccount", "csharp\bank-account\BankAccount.csproj", "{B4359930-D7F8-45DF-A242-35224B0C63C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -290,5 +292,9 @@ Global
 		{1DEAA812-892E-48C2-B35E-E3DDDB4F818C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DEAA812-892E-48C2-B35E-E3DDDB4F818C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DEAA812-892E-48C2-B35E-E3DDDB4F818C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4359930-D7F8-45DF-A242-35224B0C63C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4359930-D7F8-45DF-A242-35224B0C63C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4359930-D7F8-45DF-A242-35224B0C63C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4359930-D7F8-45DF-A242-35224B0C63C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
