@@ -98,6 +98,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollatzConjecture", "csharp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccount", "csharp\bank-account\BankAccount.csproj", "{B4359930-D7F8-45DF-A242-35224B0C63C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerfectNumbers", "csharp\perfect-numbers\PerfectNumbers.csproj", "{FD93B413-53E7-46CC-9C69-7957E2E6813A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -296,5 +298,9 @@ Global
 		{B4359930-D7F8-45DF-A242-35224B0C63C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4359930-D7F8-45DF-A242-35224B0C63C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4359930-D7F8-45DF-A242-35224B0C63C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD93B413-53E7-46CC-9C69-7957E2E6813A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD93B413-53E7-46CC-9C69-7957E2E6813A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD93B413-53E7-46CC-9C69-7957E2E6813A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD93B413-53E7-46CC-9C69-7957E2E6813A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
