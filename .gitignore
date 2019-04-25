@@ -231,3 +231,6 @@ source/DasBlog.Web.UI/logs
 
 # Maven - Java
 target/
+
+# Haskell
+.stack-work/
