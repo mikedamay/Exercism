@@ -1,0 +1,36 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.1.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 5fed3219d4ffe6530bce5b635e0f5d523c463c75694c43bd8c702b2f4d98a6ab
+
+name:           strain
+version:        0.1.0.3
+build-type:     Simple
+
+library
+  exposed-modules:
+      Strain
+  other-modules:
+      Paths_strain
+  hs-source-dirs:
+      src
+  ghc-options: -Wall
+  build-depends:
+      base
+  default-language: Haskell2010
+
+test-suite test
+  type: exitcode-stdio-1.0
+  main-is: Tests.hs
+  other-modules:
+      Paths_strain
+  hs-source-dirs:
+      test
+  build-depends:
+      base
+    , hspec
+    , strain
+  default-language: Haskell2010

@@ -1,27 +1,12 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
-public class SumOfMultiples
+
+public static class SumOfMultiples
 {
-    public static int Sum(IEnumerable<int> multiples, int max)
-    {
-        multiples = multiples.Where(f => f != 0);
-
-        HashSet<int> sumFactors = new HashSet<int>();
-
-        foreach(var multiple in multiples)
-        {
-            for (int i = (max / multiple); i > 0; i--)
-            {
-                int number = multiple * i;
-                if (number < max)
-                {
-                    sumFactors.Add(number);
-                }
-            }
-        }
-
-        return sumFactors.Sum();
-    }
+    public static int Sum(IEnumerable<int> multiples, int max) => Enumerable
+        .Range(1, max - 1)
+        .Where(i => multiples.Any(multiple => (multiple > 0) && (i % multiple == 0)))
+        .Sum();
 }
