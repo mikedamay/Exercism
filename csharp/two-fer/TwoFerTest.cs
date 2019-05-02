@@ -13,7 +13,7 @@ public class TwoFerTest
     [Fact(Skip = "")]
     public void A_name_given()
     {
-        Assert.Equal("One for Alice, one for me.", TwoFer.Name(null));
+        Assert.Equal("One for Alice, one for me.", TwoFer.Name("Alice"));
     }
 
     [Fact(Skip = "")]
