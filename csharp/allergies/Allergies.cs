@@ -34,6 +34,12 @@ public class Allergies
             .Cast<Allergen>()
             .Where(a => mask.HasFlag(a))
             .ToArray();
+
+    public void Stuff()
+    {
+        var aaa = Enum.GetValues(typeof(Allergen));
+        var bbb = aaa.
+    }
 }
 
 }
