@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Xunit;
 
 
 internal enum TokenType /* or stateType */ { Root, Para, Strong, Italic, Text, Newline
