@@ -54,6 +54,24 @@ namespace MyTests
                     var sut = new HighScores(new List<int> { }).PersonalBest();
                 });
         }
+
+        private struct Person
+        {
+            public int Num;
+            public string Name;
+
+        }
+        [Fact]
+        public void Copy_List()
+        {
+            var p = new Person();
+            p.Name = "mike";
+            p.Num = 1;
+            var list = new List<Person>();
+            list.Add(p);
+            p.Num = 2;
+            p.Name = "bob";
+        }
     }
     
 }
