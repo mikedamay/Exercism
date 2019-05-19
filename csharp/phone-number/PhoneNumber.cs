@@ -9,7 +9,6 @@ public class PhoneNumber
             .Where(Char.IsDigit)
             .Where((c, idx) => !(idx == 0 && c == '1'))
             .Select((c, idx) => (idx == 0 || idx == 3)  && (c == '0' || c == '1') ? throw new ArgumentException() : c )
-            .Select(c => !Char.IsDigit(c) ? throw new ArgumentException() : c )
         );
         return str.Length == 10 ? str : throw new ArgumentException();
     }
