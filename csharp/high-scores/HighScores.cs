@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 public class HighScores
 {
@@ -10,9 +12,9 @@ public class HighScores
         this.list = list;
     }
 
-    public List<int> Scores()
+    public IList<int> Scores()
     {
-        return list;
+        return list.AsReadOnly();
     }
 
     public int Latest()
@@ -71,6 +73,18 @@ namespace MyTests
             list.Add(p);
             p.Num = 2;
             p.Name = "bob";
+        }
+
+        [Fact]
+        public void WriteToList_Should_Fail()
+        {
+            Assert.Throws<NotSupportedException>(
+                () =>
+                {
+                    var scores = new HighScores(new List<int> {1, 2, 3}).Scores();
+                    scores.Add(42);
+                }
+            );
         }
     }
     
