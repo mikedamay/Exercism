@@ -1,13 +1,13 @@
-module CryptoSquare (encode, dims, clean, padTo, getKey, fmt) where
+module CryptoSquare (encode, dims, clean, padTo) where
 
 import Data.List (sortBy)
-import Data.Char (toLower, isLetter, isAlphaNum)
+import Data.Char (toLower, isAlphaNum)
 
 encode :: String -> String
 encode plainText = (encodeEx plainText)
 
 encodeEx :: String -> [Char]
-encodeEx plainText = fmt (sortBy getKey (concat $ addCoordinates squareStr numCols 0 0)) numCols numCols
+encodeEx plainText = makeChunks (sortBy colThenRow (concat $ addCoordinates squareStr numCols 0 0)) numCols numCols
     where
         squareStr = padTo squareSize (clean plainText)
         squareSize = numCols * numRows
@@ -30,32 +30,20 @@ grab (x:xs) numCols col row
     | col == numCols = []
     | otherwise = [(row, col, x)] ++ (grab xs numCols (col + 1) row)
 
-fmt :: [(Int, Int, Char)] -> Int -> Int -> String
-fmt [] _ _ = []
-fmt (x:xs) chunkSize ctr
-    | ctr == 0 = ' ' : (fmt (x:xs) chunkSize chunkSize)
-    | otherwise = (extract x) : (fmt xs chunkSize (ctr - 1))
+makeChunks :: [(Int, Int, Char)] -> Int -> Int -> String
+makeChunks [] _ _ = []
+makeChunks (x:xs) chunkSize ctr
+    | ctr == 0 = ' ' : (makeChunks (x:xs) chunkSize chunkSize)
+    | otherwise = (extractText x) : (makeChunks xs chunkSize (ctr - 1))
 
-extract :: (Int, Int, Char) -> Char
-extract (r,c,s) = s
+extractText :: (Int, Int, Char) -> Char
+extractText (_,_,s) = s
 
-getKey :: (Int, Int, Char) -> (Int, Int, Char) -> Ordering
-getKey (row, col, ch) (orow, ocol, och) = compare (col, row) (ocol, orow)
+colThenRow :: (Int, Int, Char) -> (Int, Int, Char) -> Ordering
+colThenRow (row, col, _) (orow, ocol, _) = compare (col, row) (ocol, orow)
 
 padTo :: Int -> String -> String
 padTo n str = str ++ (replicate (n - (length str)) ' ')
 
 clean :: String -> String
 clean xs = [ toLower x | x <- xs, isAlphaNum x]
-
-{-
-tt :: String -> [String]
-tt [] = []
-tt (x:xs) = [[x]] ++ [(grab xs 2 2)]
--}
-
--- square root of length
--- round up for cols, round down for rows
--- pad with spaces
--- build list of strings
---
