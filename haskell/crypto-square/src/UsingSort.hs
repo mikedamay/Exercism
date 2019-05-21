@@ -1,14 +1,13 @@
-module CryptoSquare (encode, dims, clean, padTo, colsToRows, gatherRow) where
+module UsingSort (encode2) where
 
 import Data.List (sortBy)
 import Data.Char (toLower, isAlphaNum)
 
-encode :: String -> String
-encode plainText = (encodeEx plainText)
+encode2 :: String -> String
+encode2 plainText = (encodeEx plainText)
 
 encodeEx :: String -> [Char]
-encodeEx plainText = makeChunks (colsToRows squareStr numCols numRows) numCols numCols
--- encodeEx plainText = makeChunks (sortBy colThenRow (concat $ addCoordinates squareStr numCols 0 0)) numCols numCols
+encodeEx plainText = makeChunks (sortBy colThenRow (concat $ addCoordinates squareStr numCols 0 0)) numCols numCols
     where
         squareStr = padTo squareSize (clean plainText)
         squareSize = numCols * numRows
@@ -31,11 +30,11 @@ grab (x:xs) numCols col row
     | col == numCols = []
     | otherwise = [(row, col, x)] ++ (grab xs numCols (col + 1) row)
 
-makeChunks :: [Char] -> Int -> Int -> String
+makeChunks :: [(Int, Int, Char)] -> Int -> Int -> String
 makeChunks [] _ _ = []
 makeChunks (x:xs) chunkSize ctr
     | ctr == 0 = ' ' : (makeChunks (x:xs) chunkSize chunkSize)
-    | otherwise = x : (makeChunks xs chunkSize (ctr - 1))
+    | otherwise = (extractText x) : (makeChunks xs chunkSize (ctr - 1))
 
 extractText :: (Int, Int, Char) -> Char
 extractText (_,_,s) = s
@@ -49,12 +48,3 @@ padTo n str = str ++ (replicate (n - (length str)) ' ')
 clean :: String -> String
 clean xs = [ toLower x | x <- xs, isAlphaNum x]
 
-colsToRows :: String -> Int -> Int -> String
-colsToRows xs numCols rows = concat $ map gather [0..(rows - 1)]
-    where gather = gatherRow xs numCols 0
-
-gatherRow :: String -> Int -> Int -> Int -> String
-gatherRow [] _ _ _ = []
-gatherRow (x:xs) numCols ctr row
-    | (ctr - row) `mod` numCols == 0 = [x] ++ (gatherRow xs numCols (ctr + 1) row)
-    | otherwise = gatherRow xs numCols (ctr + 1) row
