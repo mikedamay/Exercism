@@ -1,29 +1,28 @@
-module CryptoSquare (encode, dims, strip, clean, padTo, getKey, fmt) where
+module CryptoSquare (encode, dims, clean, padTo, getKey, fmt) where
 
 import Data.List (sortBy)
 import Data.Char (toLower, isLetter, isAlphaNum)
 
 encode :: String -> String
-encode xs = (stripper xs)
+encode plainText = (encodeEx plainText)
+
+encodeEx :: String -> [Char]
+encodeEx plainText = fmt (sortBy getKey (concat $ addCoordinates squareStr numCols 0 0)) numCols numCols
+    where
+        squareStr = padTo squareSize (clean plainText)
+        squareSize = numCols * numRows
+        (numCols, numRows) = dims (clean plainText)
 
 dims :: String -> (Int, Int)
 dims s = ((ceiling len), (ceiling len))
     where len = sqrt (fromIntegral (length s))
 
-stripper :: String -> [Char]
--- stripper :: String -> [(Int, Int, Char)]
-stripper xs = fmt (sortBy getKey (concat $ strip rectStr numCols 0 0)) numCols numCols
-    where
-        rectStr = padTo rectSize (clean xs)
-        rectSize = numCols * numRows
-        (numCols, numRows) = dims (clean xs)
-
-strip :: String -> Int -> Int -> Int -> [[(Int, Int, Char)]]
-strip [] _ _ _ = []
-strip (x:xs) cols col row
-    | col == cols = strip (x:xs) cols 0 (row + 1)
-    | col == 0 = [(grab (x:xs) cols 0 row)] ++ (strip xs cols (col + 1) row)
-    | otherwise = strip xs cols (col + 1) row
+addCoordinates :: String -> Int -> Int -> Int -> [[(Int, Int, Char)]]
+addCoordinates [] _ _ _ = []
+addCoordinates (x:xs) cols col row
+    | col == cols = addCoordinates (x:xs) cols 0 (row + 1)
+    | col == 0 = [(grab (x:xs) cols 0 row)] ++ (addCoordinates xs cols (col + 1) row)
+    | otherwise = addCoordinates xs cols (col + 1) row
 
 grab :: String -> Int -> Int -> Int -> [(Int, Int, Char)]
 grab [] _ _ _ = []
