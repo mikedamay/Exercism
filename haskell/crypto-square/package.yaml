@@ -3,6 +3,7 @@ version: 3.2.0.6
 
 dependencies:
   - base
+  - split
 
 library:
   exposed-modules: CryptoSquare
