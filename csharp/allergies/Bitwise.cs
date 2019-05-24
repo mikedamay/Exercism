@@ -1,43 +1,46 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
+[Flags]
 public enum Allergen
 {
-    Eggs = 1 << 0,
-    Peanuts = 1 << 1,
-    Shellfish = 1 << 2,
-    Strawberries = 1 << 3,
-    Tomatoes = 1 << 4,
-    Chocolate = 1 << 5,
-    Pollen = 1 << 6,
-    Cats = 1 << 7
+    Eggs = 1,
+    Peanuts = 2,
+    Shellfish = 4,
+    Strawberries = 9,
+    Tomatoes = 16,
+    Chocolate = 32,
+    Pollen = 64,
+    Cats = 128
 }
 
 public class Allergies
 {
-    private readonly Allergen mask;
-    public Allergies(int maskArg)
+    public Allergen Mask { get; set; }
+
+    public Allergies(int mask)
     {
-        mask = (Allergen)maskArg;
+        Mask = (Allergen)mask;
     }
 
     public bool IsAllergicTo(Allergen allergen)
     {
-        return ((int)mask & (int)allergen) > 0;
+        return Mask.HasFlag(allergen);
     }
 
     public Allergen[] List()
     {
-        var list = new List<Allergen>();
-        for (int ii = 0; ii <= 7; ii++)
+        var allergen = Enum.GetValues(typeof(Allergen));
+        var result = new List<Allergen>();
+
+        foreach (Allergen a in allergen)
         {
-            if (((int)mask & (1 << ii)) > 0)
+            if (IsAllergicTo(a) == true)
             {
-                list.Add((Allergen)(1<<ii));
+                result.Add(a);
             }
         }
 
-        return list.ToArray();
+        return result.ToArray();
     }
 }
