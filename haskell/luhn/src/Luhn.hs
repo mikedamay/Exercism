@@ -1,4 +1,4 @@
-module Luhn (isValid, towardsLuhn, luhnify) where
+module Luhn (isValid, towardsLuhn) where
 
 import Data.Char (isDigit, digitToInt)
 
