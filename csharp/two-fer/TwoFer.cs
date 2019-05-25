@@ -1,11 +1,64 @@
 ﻿
+using System;
+using Microsoft.VisualBasic.CompilerServices;
+
 public static class TwoFer
 {
   public static string Name(string input = "you")
   {
     return $"One for {input}, one for me.";
   }
+
+  class MyClass
+  {
+    public MyClass(int val)
+    {
+      this.val = val;
+    }
+    private int val;
+
+    public override bool Equals(object other)
+    {
+      return (other as MyClass).val == val;
+    }
+
+    protected bool Equals(MyClass other)
+    {
+      return other.val == val;
+    }
+    public static bool operator==(MyClass m1, MyClass m2)
+    {
+      return m1.Equals(m2);
+    }
+    public static bool operator!=(MyClass m1, MyClass m2)
+    {
+      return !m1.Equals(m2);
+    }
+  }
+  public static bool AreEqual()
+  {
+     var m1 = new MyClass(42);
+     var m2 = new MyClass(val: 42);
+     return (object)m1 == (object)m2;
+//     return m1.Equals(m2);
+  }
+  
 }
+
+namespace MyTests
+{
+  using Xunit;
+  
+  public class Tests
+  {
+    [Fact]
+    public void TestOne()
+    {
+      Assert.True(TwoFer.AreEqual());    
+    }
+  }
+}
+
 /*
 An effective solution
  
