@@ -108,6 +108,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneNumber", "csharp\phone
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedList", "csharp\linked-list\LinkedList.csproj", "{FA9B7871-3845-46BB-A395-AB41A8A33DC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DifferenceOfSquares", "csharp\difference-of-squares\DifferenceOfSquares.csproj", "{C54D0E97-8A12-4A15-AB25-8E94D8EB0ED0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -326,5 +328,9 @@ Global
 		{FA9B7871-3845-46BB-A395-AB41A8A33DC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA9B7871-3845-46BB-A395-AB41A8A33DC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA9B7871-3845-46BB-A395-AB41A8A33DC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C54D0E97-8A12-4A15-AB25-8E94D8EB0ED0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C54D0E97-8A12-4A15-AB25-8E94D8EB0ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C54D0E97-8A12-4A15-AB25-8E94D8EB0ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C54D0E97-8A12-4A15-AB25-8E94D8EB0ED0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
