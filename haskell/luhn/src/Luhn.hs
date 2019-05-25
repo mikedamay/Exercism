@@ -1,9 +1,9 @@
-module Luhn (isValid, towardsLuhn) where
+module Luhn (isValid, towardsLuhn, convertEveryOtherDigit) where
 
-import Data.Char (isDigit, digitToInt)
+import Data.Char (isDigit, digitToInt, isSpace)
 
 isValid :: String -> Bool
-isValid n = (sum $ towardsLuhn n) `mod` 10 == 0
+isValid n = if (removeSpaces n) == "0" then False else (sum $ towardsLuhn n) `mod` 10 == 0
 
 towardsLuhn :: String -> [Integer]
 towardsLuhn numStr = convertEveryOtherDigit cleaned
@@ -22,3 +22,6 @@ convertEveryOtherDigit' ctr (x:xs)
 makeLuhnDigit :: Integer -> Integer
 makeLuhnDigit n = if dub > 9 then dub - 9 else dub
     where dub = n * 2
+
+removeSpaces :: String -> String
+removeSpaces s = [c | c <- s, not (isSpace c)]
