@@ -3,7 +3,9 @@ module Luhn (isValid, towardsLuhn, luhnify) where
 import Data.Char (isDigit, digitToInt, isSpace)
 
 isValid :: String -> Bool
-isValid n = if (removeSpaces n) == "0" then False else (sum $ towardsLuhn n) `mod` 10 == 0
+isValid n
+    | removeSpaces n == "0" = False
+    | otherwise = (sum $ towardsLuhn n) `mod` 10 == 0
 
 towardsLuhn :: String -> [Integer]
 towardsLuhn numStr = [ luhnify x | x <- (zip (map (toInteger . digitToInt) cleaned) [0..])]
