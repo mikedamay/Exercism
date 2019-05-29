@@ -5,11 +5,9 @@ data Classification = Deficient | Perfect | Abundant deriving (Eq, Show)
 classify :: Int -> Maybe Classification
 classify n
     | n <= 0 = Nothing
-    | otherwise = if result == n then Just Perfect
-         else if result > n then Just Abundant
-         else Just Deficient
-        where result = sum [x | x <- [1..n`div`2], n `mod` x == 0]
+    | n == 1 = Just Deficient
+    | result == n = Just Perfect
+    | result > n = Just Abundant
+    | otherwise = Just Deficient
+         where result = 1 + (sum [if idx `mod` 2 == 0 then x else if n `div` x == x then 0 else n `div` x | x <- [2..(fromIntegral (floor (sqrt (fromIntegral n))))], idx <- [0..1], n `mod` x == 0])
 
-
--- classify :: Int -> Maybe Classification
--- classify n = if (floor (sqrt (fromIntegral n ))) > 10 then Nothing else Nothing
