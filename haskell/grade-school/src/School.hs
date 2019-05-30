@@ -1,15 +1,28 @@
-module School (School, add, empty, grade, sorted) where
+module School (School, add, empty, grade, sorted, mysort) where
 
-data School = Dummy
+import Data.List (nub, sort)
+
+data Entry = Entry {gradenum :: Int, student :: String} deriving (Eq, Ord, Show)
+
+type School = [Entry]
 
 add :: Int -> String -> School -> School
-add gradeNum student school = error "You need to implement this function."
+add gn st school = Entry {gradenum = gn, student = st} : school
 
 empty :: School
-empty = error "You need to implement this function."
+empty = []
 
 grade :: Int -> School -> [String]
-grade gradeNum school = error "You need to implement this function."
+grade gn school = [(student x) | x <- (mysort [x | x <- school, (gradenum x) == gn])]
 
 sorted :: School -> [(Int, [String])]
-sorted school = error "You need to implement this function."
+sorted school = [(grade, [(student e) | e <- sorted_school, (gradenum e) == grade])  | grade <- grades]
+    where sorted_school = mysort [x | x <- school]
+          grades = nub [(gradenum x) | x <- sorted_school]
+
+mysort :: [Entry] -> [Entry]
+mysort [] = []
+mysort (x:xs) =
+    mysort [x2 | x2 <- xs, (lesser x2 x)] ++ [x] ++ [x2 | x2 <- xs, (greater x2 x)]
+    where lesser cand pivot = (gradenum cand) < (gradenum pivot) || (gradenum cand) == (gradenum pivot) && (student cand) < (student pivot)
+          greater cand pivot = (gradenum cand) > (gradenum pivot) || (gradenum cand) == (gradenum pivot) && (student cand) >= (student pivot)
