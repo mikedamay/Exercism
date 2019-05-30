@@ -1,6 +1,6 @@
 module School (School, add, empty, grade, sorted, mysort) where
 
-import Data.List (nub, sort)
+import Data.List (nub)
 
 data Entry = Entry {gradenum :: Int, student :: String} deriving (Eq, Ord, Show)
 
@@ -16,7 +16,7 @@ grade :: Int -> School -> [String]
 grade gn school = [(student x) | x <- (mysort [x | x <- school, (gradenum x) == gn])]
 
 sorted :: School -> [(Int, [String])]
-sorted school = [(grade, [(student e) | e <- sorted_school, (gradenum e) == grade])  | grade <- grades]
+sorted school = [(g, [(student e) | e <- sorted_school, (gradenum e) == g])  | g <- grades]
     where sorted_school = mysort [x | x <- school]
           grades = nub [(gradenum x) | x <- sorted_school]
 
