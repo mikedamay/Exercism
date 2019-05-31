@@ -8,7 +8,14 @@ data Entry = Entry {gradenum :: Int, student :: String} deriving (Eq, Ord, Show)
 type School = Map.Map Int [String]
 
 add :: Int -> String -> School -> School
-add gn st school = Map.fromList (merge (gn,st) (Map.toList school))
+add gn st school
+    | school_list `contains` gn =  Map.fromList (merge (gn,st) school_list)
+    | otherwise = Map.fromList ((gn,[st]) : school_list)
+    where school_list = Map.toList school
+
+contains :: [(Int,[String])] -> Int-> Bool
+contains [] gn = False
+contains (x:xs) gn = (gn == (fst x)) || (contains xs gn)
 
 merge :: (Int, String) -> [(Int, [String])] -> [(Int, [String])]
 merge y [] = [((fst y), [(snd y)])] :: [(Int, [String])]
