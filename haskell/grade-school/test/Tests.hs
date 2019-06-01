@@ -3,7 +3,7 @@
 import Test.Hspec        (Spec, it, shouldBe)
 import Test.Hspec.Runner (configFastFail, defaultConfig, hspecWith)
 
-import School (add, empty, grade, sorted)
+import SchoolWithLists (add, empty, grade, sorted)
 
 main :: IO ()
 main = hspecWith defaultConfig {configFastFail = True} specs

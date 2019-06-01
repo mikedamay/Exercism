@@ -13,11 +13,15 @@ empty :: School
 empty = []
 
 grade :: Int -> School -> [String]
-grade gn school = [(student x) | x <- (sortBy (\x y -> compare ((gradenum x), (student x)) ((gradenum y), (student y))) [x | x <- school, (gradenum x) == gn])]
+grade gn school = [(student x) | x <- (sortByEntry [x | x <- school, (gradenum x) == gn])]
 
 sorted :: School -> [(Int, [String])]
 sorted school = [(g, [(student e) | e <- sorted_school, (gradenum e) == g])  | g <- grades]
-    where sorted_school = sortBy (\x y -> compare ((gradenum x), (student x)) ((gradenum y), (student y))) [x | x <- school]
+    where sorted_school = sortByEntry [x | x <- school]
           grades = nub [(gradenum x) | x <- sorted_school]
 
+compareGradeAndStudent :: Entry -> Entry -> Ordering
+compareGradeAndStudent x y = compare ((gradenum x), (student x)) ((gradenum y), (student y))
 
+sortByEntry :: [Entry] -> [Entry]
+sortByEntry = sortBy compareGradeAndStudent

@@ -6,7 +6,7 @@ dependencies:
   - containers
 
 library:
-  exposed-modules: School
+  exposed-modules: SchoolWithLists
   source-dirs: src
   ghc-options: -Wall
   # dependencies:
