@@ -11,7 +11,7 @@ main = hspecWith defaultConfig {configFastFail = True} specs
 specs :: Spec
 specs = do
 
-          let fromList = Data.List.foldr (uncurry add) School.empty
+          let fromList = foldr (uncurry add) empty
           let fromGrade g = fromList . zip (repeat g)
 
           it "add student" $
