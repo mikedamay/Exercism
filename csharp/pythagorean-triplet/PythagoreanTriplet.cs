@@ -1,25 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public static class PythagoreanTriplet
 {
     public static IEnumerable<(int a, int b, int c)> TripletsWithSum(int sum)
     {
-        for (int aa = 3; aa <= sum; aa++)
-        {
-            for (int bb = aa + 1; bb <= sum - aa; bb++)
-            {
-                if (aa * bb % 12 != 0)
-                    continue;
-                for (int cc = bb + 1; cc <= sum - aa - bb; cc++)
-                {
-                    if (aa + bb + cc == sum &&
-                        
-                        aa < bb && bb < cc 
-                                && aa * aa + bb * bb == cc * cc)
-                        yield return (aa, bb, cc);
-                }
-            }
-        }
+        var maxA = sum / 3;
+        var maxB = sum / 2;
+
+        return Enumerable.Range(1, maxA)
+            .SelectMany(a => Enumerable.Range(a, maxB)
+                .Select(b => (a, b, sum - a - b))
+                .Where(IsPythagorean));
     }
+
+    private static Func<(int a, int b, int c), bool> IsPythagorean = t => (t.a * t.a) + (t.b * t.b) == (t.c * t.c);
 }
