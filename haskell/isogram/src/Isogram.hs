@@ -1,4 +1,8 @@
 module Isogram (isIsogram) where
 
+import Data.Char (isLetter, toLower)
+import Data.List (nub)
+
 isIsogram :: String -> Bool
-isIsogram = error "You need to implement this function!"
+isIsogram str = (length $ nub clean_str) == (length clean_str)
+            where clean_str = map toLower $ filter isLetter str
