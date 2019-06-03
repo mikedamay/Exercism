@@ -9,10 +9,9 @@ generateList ch = startOfList ++ endOfList
           endOfList = tail (reverse startOfList)
 
 generateLine :: Char -> Char -> String
-generateLine targetCh = generateLine' targetCh
-generateLine' targetCh ch = padLeft ++ [ch] ++ padMid ++ secondCh ++ padRight
-    where padLeft = take (((numCols targetCh) `div` 2) - offset) (repeat ' ')
-          padMid = take ((numCols targetCh) - ((length padLeft) * 2) - 2) (repeat ' ')
+generateLine targetCh ch = padLeft ++ [ch] ++ padMid ++ secondCh ++ padRight
+    where padLeft = take (((numCols targetCh) `div` 2) - offset) $ repeat ' '
+          padMid = take ((numCols targetCh) - ((length padLeft) * 2) - 2) $ repeat ' '
           padRight = padLeft
           offset = letterIndex ch
           secondCh = if ch == 'A' then [] else [ch]
