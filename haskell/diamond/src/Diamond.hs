@@ -1,7 +1,12 @@
-module Diamond (diamond, generateLine, numCols, letterIndex) where
+module Diamond (diamond, generateLine, numCols, letterIndex, generateList) where
 
 diamond :: Char -> Maybe [String]
-diamond ch = Nothing
+diamond ch = Just $ generateList ch
+
+generateList :: Char -> [String]
+generateList ch = startOfList ++ endOfList
+    where startOfList = map (generateLine ch) ['A'..ch]
+          endOfList = tail (reverse startOfList)
 
 generateLine :: Char -> Char -> String
 generateLine targetCh = generateLine' targetCh
