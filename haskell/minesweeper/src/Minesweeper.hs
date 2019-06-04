@@ -5,7 +5,7 @@ annotate board = []
 
 sweep :: [String] -> [Int]
 -- sweep :: [String] -> [(Int, Int, Int)]
-sweep b = sum $ map (detectMine positions) positions
+sweep b = concat $ map (detectMine positions) positions
     where positions = addCoordinates b
 
 
@@ -28,3 +28,21 @@ addAdjacent cell candidate@(row, col, val) = if val == -1 then (row, col, -1) el
 isNeighbour :: (Int, Int, Int) -> (Int, Int, Int) -> Bool
 isNeighbour cell@(row, col, val) candidate@(candRow, candCol, candVal) =
     val == -1 && (candRow /= row || candCol /= col) && candVal /= -1 && abs(candRow - row) <= 1 && abs(candCol - col) <= 1
+
+-- [] [1,2,3,40,50,60]
+-- [[1]] [2,3,40,50,60]
+-- [[1,2]] [3,40,50,60]
+-- [[1,2,3]] [40,50,60]
+-- [[1,2,3],[40]] [50,60]
+-- [[1,2,3],[40,50]] [60]
+-- [[1,2,3],[40,50,60]] []
+
+
+
+shred :: [Int] -> [[Int]] -> Bool -> [[Int]]
+shred [] _ _ = []
+shred (x:[]) (z:zs) newList = if newList then [x]:z:zs else (x:z):zs
+shred (x:y:xs) [] _ = shred (y:xs) [[x]]  (x < 30 && y > 30)
+shred (x:y:xs) (z:zs) newList
+    | newList = shred (y:xs) ([x]:z:zs) (x < 30 && y > 30)
+    | otherwise = shred (y:xs) ((x:z):zs) (x < 30 && y > 30)
