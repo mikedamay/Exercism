@@ -4,9 +4,9 @@ using Microsoft.VisualBasic.CompilerServices;
 
 public static class TwoFer
 {
-  public static string Name(string input = "you")
+  public static string Name(string input = null)
   {
-    return $"One for {input}, one for me.";
+    return $"One for {(string.IsNullOrWhiteSpace(input) ? "you" : input)}, one for me.";
   }
 
   class MyClass
