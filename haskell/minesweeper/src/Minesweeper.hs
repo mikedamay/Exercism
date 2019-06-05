@@ -3,9 +3,9 @@ module Minesweeper (annotate, addCoordinates, addCoordsToLine, sweep, shred) whe
 annotate :: [String] -> [String]
 annotate board = []
 
-sweep :: [String] -> [Int]
+sweep :: [String] -> [[(Int, Int, Int)]]
 -- sweep :: [String] -> [(Int, Int, Int)]
-sweep b = concat $ map (detectMine positions) positions
+sweep b = map (detectMine positions) positions
     where positions = addCoordinates b
 
 
@@ -19,8 +19,8 @@ addCoordinates b = concat $ map addCoordsToLine $ zip b [0 :: Int ..]
 addCoordsToLine :: ([Char], Int) -> [(Int, Int, Int)]
 addCoordsToLine (line,row) = map (\x -> (row, snd x, if (fst x) == '*' then -1 else 0) ) $ zip line [0..]
 
-detectMine :: [(Int, Int, Int)] -> (Int, Int, Int) -> [Int]
-detectMine positions cell = map thrd $ map (addAdjacent cell) positions
+detectMine :: [(Int, Int, Int)] -> (Int, Int, Int) -> [(Int, Int, Int)]
+detectMine positions cell = map (addAdjacent cell) positions
 
 addAdjacent :: (Int, Int, Int) -> (Int, Int, Int) -> (Int, Int, Int)
 addAdjacent cell candidate@(row, col, val) = if val == -1 then (row, col, -1) else if isNeighbour cell candidate then (row, col, 1) else (row, col, 0)
@@ -48,3 +48,11 @@ shred (x:y:xs) (z:zs) newList
     | newList = shred (y:xs) ([x]:z:zs) (isNewList x y)
     | otherwise = shred (y:xs) ((x:z):zs) (isNewList x y)
     where isNewList x y = x < 30 && y > 30
+
+onList :: [Int] -> [[Int]] -> ([Int] -> [Int] -> [Int]) -> [Int]
+onList zs [] _ = zs
+onList [] (x:xs) f = onList x xs f
+onList zs (x:xs) f = onList (f x zs) xs f
+
+sumLists :: [Int] -> [Int] -> [Int]
+sumLists x y = [(fst p) + (snd p) | p <- (zip x y)]
