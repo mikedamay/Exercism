@@ -4,21 +4,17 @@ import Data.Char (intToDigit)
 
 annotate :: [String] -> [String]
 annotate [""] = [""]
-annotate board = reverse $ map convertListToString $ splitList [] areDifferentRows False $ sweep board
+annotate board = cellListsToText $ boardToMultipleLists $ sweep board
 
 sweep :: [String] -> [(Int, Int, Int)]
--- sweep b = (onList [] sumLists) $ locateMines positions
 sweep b = (onList [] sumSubLists) $ map (detectMine positions) positions
     where positions = addCoordinates b
 
-first :: (Int, Int, Int) -> Int
-first (x,_,_) = x
+cellListsToText :: [[(Int, Int, Int)]] -> [String]
+cellListsToText = reverse . (map convertListToString)
 
-second :: (Int, Int, Int) -> Int
-second (_,y,_) = y
-
-third :: (Int, Int, Int) -> Int
-third (_,_,z) = z
+boardToMultipleLists :: [(Int, Int, Int)] -> [[(Int, Int, Int)]]
+boardToMultipleLists = splitList [] areDifferentRows False
 
 addCoordinates :: [String] -> [(Int, Int, Int)]
 addCoordinates [] = []
@@ -55,11 +51,11 @@ onList [] f (x:xs) = onList x f xs
 onList zs f (x:xs) = onList (f x zs) f xs
 
 sumSubLists :: [(Int, Int, Int)] -> [(Int, Int, Int)] -> [(Int, Int, Int)]
-sumSubLists x y = zipWith combineCellInstances x y
+sumSubLists = zipWith mergeCellInstanes
 -- sumSubLists x y = [((first (fst p)), (second (fst p)), (third (fst p)) + (third (snd p))) | p <- (zip x y)]
 
-combineCellInstances :: (Int, Int, Int) -> (Int, Int, Int) -> (Int, Int, Int)
-combineCellInstances x@(xrow, xcol, xval) y@(_, _, yval) = (xrow, xcol, xval + yval)
+mergeCellInstanes :: (Int, Int, Int) -> (Int, Int, Int) -> (Int, Int, Int)
+mergeCellInstanes (xrow, xcol, xval) (_, _, yval) = (xrow, xcol, xval + yval)
 
 
 mineLocationToText :: (Int, Int, Int) -> Char
