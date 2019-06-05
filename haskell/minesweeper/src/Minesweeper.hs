@@ -1,4 +1,4 @@
-module Minesweeper (annotate, addCoordinates, addCoordsToLine, sweep) where
+module Minesweeper (annotate, addCoordinates, addCoordsToLine, sweep, shred) where
 
 annotate :: [String] -> [String]
 annotate board = []
@@ -42,7 +42,9 @@ isNeighbour cell@(row, col, val) candidate@(candRow, candCol, candVal) =
 shred :: [Int] -> [[Int]] -> Bool -> [[Int]]
 shred [] _ _ = []
 shred (x:[]) (z:zs) newList = if newList then [x]:z:zs else (x:z):zs
-shred (x:y:xs) [] _ = shred (y:xs) [[x]]  (x < 30 && y > 30)
+shred (x:y:xs) [] _ = shred (y:xs) [[x]]  (isNewList x y)
+    where isNewList x y = x < 30 && y > 30
 shred (x:y:xs) (z:zs) newList
-    | newList = shred (y:xs) ([x]:z:zs) (x < 30 && y > 30)
-    | otherwise = shred (y:xs) ((x:z):zs) (x < 30 && y > 30)
+    | newList = shred (y:xs) ([x]:z:zs) (isNewList x y)
+    | otherwise = shred (y:xs) ((x:z):zs) (isNewList x y)
+    where isNewList x y = x < 30 && y > 30
