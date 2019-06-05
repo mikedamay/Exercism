@@ -3,15 +3,12 @@ module Minesweeper (annotate) where
 import Data.Char (intToDigit)
 
 annotate :: [String] -> [String]
--- annotate board = map mineLocationToText $ sweep board
 annotate [""] = [""]
 annotate board = reverse $ map convertListToString $ splitList [] areDifferentRows False $ sweep board
 
 sweep :: [String] -> [(Int, Int, Int)]
--- sweep :: [String] -> [(Int, Int, Int)]
 sweep b = (onList [] sumLists) $ map (detectMine positions) positions
     where positions = addCoordinates b
-
 
 first :: (Int, Int, Int) -> Int
 first (x,_,_) = x
@@ -39,14 +36,6 @@ isNeighbour :: (Int, Int, Int) -> (Int, Int, Int) -> Bool
 isNeighbour (row, col, val) (candRow, candCol, candVal) =
     val == -1 && (candRow /= row || candCol /= col) && candVal /= -1 && abs(candRow - row) <= 1 && abs(candCol - col) <= 1
 
--- [] [1,2,3,40,50,60]
--- [[1]] [2,3,40,50,60]
--- [[1,2]] [3,40,50,60]
--- [[1,2,3]] [40,50,60]
--- [[1,2,3],[40]] [50,60]
--- [[1,2,3],[40,50]] [60]
--- [[1,2,3],[40,50,60]] []
-
 splitList :: [[a]] -> (a -> a -> Bool) -> Bool -> [a] -> [[a]]
 splitList _ _ _ [] = []
 splitList [] f _ (x:y:xs) = splitList [[x]] f (f x y) (y:xs)
@@ -55,24 +44,9 @@ splitList (z:zs) f False (x:y:xs) = splitList ((x:z):zs) f (f x y) (y:xs)
 splitList (z:zs) f True (x:y:xs) = splitList ([x]:z:zs) f (f x y) (y:xs)
 splitList (z:zs) _ False (x:[]) = (x:z):zs
 splitList (z:zs) _ True (x:[]) = [x]:z:zs
--- splitList _ _ _ _
---     | otherwise = error "Didn't see that coming!"
 
 areDifferentRows :: (Int, Int, Int) -> (Int, Int, Int) -> Bool
 areDifferentRows (a, _, _) (b, _, _) = a /= b
-
-
-{-
-shred :: [Int] -> [[Int]] -> Bool -> [[Int]]
-shred [] _ _ = []
-shred (x:[]) (z:zs) newList = if newList then [x]:z:zs else (x:z):zs
-shred (x:y:xs) [] _ = shred (y:xs) [[x]]  (isNewList x y)
-    where isNewList a b = a < 30 && b > 30
-shred (x:y:xs) (z:zs) newList
-    | newList = shred (y:xs) ([x]:z:zs) (isNewList x y)
-    | otherwise = shred (y:xs) ((x:z):zs) (isNewList x y)
-    where isNewList a b = a < 30 && b > 30
--}
 
 onList :: [a] -> ([a] -> [a] -> [a]) -> [[a]] -> [a]
 onList zs _ [] = zs
@@ -89,4 +63,4 @@ mineLocationToText (_, _, val)
     | otherwise = intToDigit val
 
 convertListToString :: [(Int, Int, Int)] -> String
-convertListToString ll = reverse $ map mineLocationToText ll
+convertListToString = reverse . map mineLocationToText
