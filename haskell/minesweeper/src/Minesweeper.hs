@@ -1,16 +1,26 @@
 module Minesweeper (annotate, addCoordinates, addCoordsToLine, sweep, shred) where
 
-annotate :: [String] -> [String]
-annotate board = []
+import Data.Char (intToDigit)
 
-sweep :: [String] -> [[(Int, Int, Int)]]
+annotate :: [String] -> [String]
+-- annotate board = map mineLocationToText $ sweep board
+annotate [""] = [""]
+annotate board = reverse $ map convertListToString $ splitList [] areDifferentRows False $ sweep board
+
+sweep :: [String] -> [(Int, Int, Int)]
 -- sweep :: [String] -> [(Int, Int, Int)]
-sweep b = map (detectMine positions) positions
+sweep b = (onList [] sumLists) $ map (detectMine positions) positions
     where positions = addCoordinates b
 
 
-thrd :: (Int, Int, Int) -> Int
-thrd (x,y,z) = z
+first :: (Int, Int, Int) -> Int
+first (x,_,_) = x
+
+second :: (Int, Int, Int) -> Int
+second (_,y,_) = y
+
+third :: (Int, Int, Int) -> Int
+third (_,_,z) = z
 
 addCoordinates :: [String] -> [(Int, Int, Int)]
 addCoordinates [] = []
@@ -37,6 +47,19 @@ isNeighbour cell@(row, col, val) candidate@(candRow, candCol, candVal) =
 -- [[1,2,3],[40,50]] [60]
 -- [[1,2,3],[40,50,60]] []
 
+splitList :: [[a]] -> (a -> a -> Bool) -> Bool -> [a] -> [[a]]
+splitList _ _ _ [] = []
+splitList [] f _ (x:y:xs) = splitList [[x]] f (f x y) (y:xs)
+splitList [] f _ (x:xs) = [[x]]
+splitList (z:zs) f False (x:y:xs) = splitList ((x:z):zs) f (f x y) (y:xs)
+splitList (z:zs) f True (x:y:xs) = splitList ([x]:z:zs) f (f x y) (y:xs)
+splitList (z:zs) f False (x:[]) = (x:z):zs
+splitList (z:zs) f True (x:[]) = [x]:z:zs
+-- splitList _ _ _ _
+--     | otherwise = error "Didn't see that coming!"
+
+areDifferentRows :: (Int, Int, Int) -> (Int, Int, Int) -> Bool
+areDifferentRows (a, _, _) (b, _, _) = a /= b
 
 
 shred :: [Int] -> [[Int]] -> Bool -> [[Int]]
@@ -49,10 +72,19 @@ shred (x:y:xs) (z:zs) newList
     | otherwise = shred (y:xs) ((x:z):zs) (isNewList x y)
     where isNewList x y = x < 30 && y > 30
 
-onList :: [Int] -> [[Int]] -> ([Int] -> [Int] -> [Int]) -> [Int]
-onList zs [] _ = zs
-onList [] (x:xs) f = onList x xs f
-onList zs (x:xs) f = onList (f x zs) xs f
+onList :: [a] -> ([a] -> [a] -> [a]) -> [[a]] -> [a]
+onList zs _ [] = zs
+onList [] f (x:xs) = onList x f xs
+onList zs f (x:xs) = onList (f x zs) f xs
 
-sumLists :: [Int] -> [Int] -> [Int]
-sumLists x y = [(fst p) + (snd p) | p <- (zip x y)]
+sumLists :: [(Int, Int, Int)] -> [(Int, Int, Int)] -> [(Int, Int, Int)]
+sumLists x y = [((first (fst p)), (second (fst p)), (third (fst p)) + (third (snd p))) | p <- (zip x y)]
+
+mineLocationToText :: (Int, Int, Int) -> Char
+mineLocationToText (_, _, val)
+    | val < 0 = '*'
+    | val == 0 = ' '
+    | otherwise = intToDigit val
+
+convertListToString :: [(Int, Int, Int)] -> String
+convertListToString ll = reverse $ map mineLocationToText ll
