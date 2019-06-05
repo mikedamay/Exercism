@@ -15,7 +15,7 @@ annotate board = cellsToText $ sweep $ textToCells board
           boardToMultipleLists = splitList [] areDifferentRows False
 
 sweep :: [(Row, Col, Val)] -> [(Row, Col, Val)]
-sweep cells = (onList [] sumSubLists) $ map (detectMine cells) cells
+sweep cells = (foldl' sumSubLists []) $ map (detectMine cells) cells
 
 textToCells :: [String] -> [(Row, Col, Val)]
 textToCells [] = []
@@ -48,17 +48,16 @@ splitList (z:zs) _ True (x:[]) = [x]:z:zs
 areDifferentRows :: (Row, Col, Val) -> (Row, Col, Val) -> Bool
 areDifferentRows (a, _, _) (b, _, _) = a /= b
 
-onList :: [a] -> ([a] -> [a] -> [a]) -> [[a]] -> [a]
-onList zs _ [] = zs
-onList [] f (x:xs) = onList x f xs
-onList zs f (x:xs) = onList (f x zs) f xs
+foldl' :: ([a] -> [a] -> [a]) -> [a] -> [[a]] -> [a]
+foldl' _ zs [] = zs
+foldl' f [] (x:xs) = foldl' f x xs
+foldl' f zs (x:xs) = foldl' f (f x zs) xs
 
 sumSubLists :: [(Row, Col, Val)] -> [(Row, Col, Val)] -> [(Row, Col, Val)]
-sumSubLists = zipWith mergeCellInstanes
--- sumSubLists x y = [((first (fst p)), (second (fst p)), (third (fst p)) + (third (snd p))) | p <- (zip x y)]
+sumSubLists = zipWith mergeCellInstances
 
-mergeCellInstanes :: (Row, Col, Val) -> (Row, Col, Val) -> (Row, Col, Val)
-mergeCellInstanes (xrow, xcol, xval) (_, _, yval) = (xrow, xcol, xval + yval)
+mergeCellInstances :: (Row, Col, Val) -> (Row, Col, Val) -> (Row, Col, Val)
+mergeCellInstances (xrow, xcol, xval) (_, _, yval) = (xrow, xcol, xval + yval)
 
 
 cellToChar :: (Row, Col, Val) -> Char
