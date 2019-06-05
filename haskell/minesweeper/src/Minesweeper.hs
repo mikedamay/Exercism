@@ -4,21 +4,17 @@ import Data.Char (intToDigit)
 
 annotate :: [String] -> [String]
 annotate [""] = [""]
-annotate board = cellListsToText $ boardToMultipleLists $ sweep board
+annotate board = cellsToText $ sweep $ textToCells board
+    where cellsToText = cellListsToText . boardToMultipleLists
+          cellListsToText = reverse . (map convertListToString)
+          boardToMultipleLists = splitList [] areDifferentRows False
 
-sweep :: [String] -> [(Int, Int, Int)]
-sweep b = (onList [] sumSubLists) $ map (detectMine positions) positions
-    where positions = addCoordinates b
+sweep :: [(Int, Int, Int)] -> [(Int, Int, Int)]
+sweep cells = (onList [] sumSubLists) $ map (detectMine cells) cells
 
-cellListsToText :: [[(Int, Int, Int)]] -> [String]
-cellListsToText = reverse . (map convertListToString)
-
-boardToMultipleLists :: [(Int, Int, Int)] -> [[(Int, Int, Int)]]
-boardToMultipleLists = splitList [] areDifferentRows False
-
-addCoordinates :: [String] -> [(Int, Int, Int)]
-addCoordinates [] = []
-addCoordinates b = concat $ map addCoordsToLine $ zip b [0 :: Int ..]
+textToCells :: [String] -> [(Int, Int, Int)]
+textToCells [] = []
+textToCells b = concat $ map addCoordsToLine $ zip b [0 :: Int ..]
 
 addCoordsToLine :: ([Char], Int) -> [(Int, Int, Int)]
 addCoordsToLine (line,row) = map (\x -> (row, snd x, if (fst x) == '*' then -1 else 0) ) $ zip line [0..]
