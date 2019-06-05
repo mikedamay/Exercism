@@ -1,4 +1,4 @@
-module Minesweeper (annotate, addCoordinates, addCoordsToLine, sweep, shred) where
+module Minesweeper (annotate) where
 
 import Data.Char (intToDigit)
 
@@ -36,7 +36,7 @@ addAdjacent :: (Int, Int, Int) -> (Int, Int, Int) -> (Int, Int, Int)
 addAdjacent cell candidate@(row, col, val) = if val == -1 then (row, col, -1) else if isNeighbour cell candidate then (row, col, 1) else (row, col, 0)
 
 isNeighbour :: (Int, Int, Int) -> (Int, Int, Int) -> Bool
-isNeighbour cell@(row, col, val) candidate@(candRow, candCol, candVal) =
+isNeighbour (row, col, val) (candRow, candCol, candVal) =
     val == -1 && (candRow /= row || candCol /= col) && candVal /= -1 && abs(candRow - row) <= 1 && abs(candCol - col) <= 1
 
 -- [] [1,2,3,40,50,60]
@@ -50,11 +50,11 @@ isNeighbour cell@(row, col, val) candidate@(candRow, candCol, candVal) =
 splitList :: [[a]] -> (a -> a -> Bool) -> Bool -> [a] -> [[a]]
 splitList _ _ _ [] = []
 splitList [] f _ (x:y:xs) = splitList [[x]] f (f x y) (y:xs)
-splitList [] f _ (x:xs) = [[x]]
+splitList [] _ _ (x:[]) = [[x]]
 splitList (z:zs) f False (x:y:xs) = splitList ((x:z):zs) f (f x y) (y:xs)
 splitList (z:zs) f True (x:y:xs) = splitList ([x]:z:zs) f (f x y) (y:xs)
-splitList (z:zs) f False (x:[]) = (x:z):zs
-splitList (z:zs) f True (x:[]) = [x]:z:zs
+splitList (z:zs) _ False (x:[]) = (x:z):zs
+splitList (z:zs) _ True (x:[]) = [x]:z:zs
 -- splitList _ _ _ _
 --     | otherwise = error "Didn't see that coming!"
 
@@ -62,15 +62,17 @@ areDifferentRows :: (Int, Int, Int) -> (Int, Int, Int) -> Bool
 areDifferentRows (a, _, _) (b, _, _) = a /= b
 
 
+{-
 shred :: [Int] -> [[Int]] -> Bool -> [[Int]]
 shred [] _ _ = []
 shred (x:[]) (z:zs) newList = if newList then [x]:z:zs else (x:z):zs
 shred (x:y:xs) [] _ = shred (y:xs) [[x]]  (isNewList x y)
-    where isNewList x y = x < 30 && y > 30
+    where isNewList a b = a < 30 && b > 30
 shred (x:y:xs) (z:zs) newList
     | newList = shred (y:xs) ([x]:z:zs) (isNewList x y)
     | otherwise = shred (y:xs) ((x:z):zs) (isNewList x y)
-    where isNewList x y = x < 30 && y > 30
+    where isNewList a b = a < 30 && b > 30
+-}
 
 onList :: [a] -> ([a] -> [a] -> [a]) -> [[a]] -> [a]
 onList zs _ [] = zs
