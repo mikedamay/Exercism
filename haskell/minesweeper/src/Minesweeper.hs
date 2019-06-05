@@ -7,7 +7,8 @@ annotate [""] = [""]
 annotate board = reverse $ map convertListToString $ splitList [] areDifferentRows False $ sweep board
 
 sweep :: [String] -> [(Int, Int, Int)]
-sweep b = (onList [] sumLists) $ map (detectMine positions) positions
+-- sweep b = (onList [] sumLists) $ locateMines positions
+sweep b = (onList [] sumSubLists) $ map (detectMine positions) positions
     where positions = addCoordinates b
 
 first :: (Int, Int, Int) -> Int
@@ -53,8 +54,13 @@ onList zs _ [] = zs
 onList [] f (x:xs) = onList x f xs
 onList zs f (x:xs) = onList (f x zs) f xs
 
-sumLists :: [(Int, Int, Int)] -> [(Int, Int, Int)] -> [(Int, Int, Int)]
-sumLists x y = [((first (fst p)), (second (fst p)), (third (fst p)) + (third (snd p))) | p <- (zip x y)]
+sumSubLists :: [(Int, Int, Int)] -> [(Int, Int, Int)] -> [(Int, Int, Int)]
+sumSubLists x y = zipWith combineCellInstances x y
+-- sumSubLists x y = [((first (fst p)), (second (fst p)), (third (fst p)) + (third (snd p))) | p <- (zip x y)]
+
+combineCellInstances :: (Int, Int, Int) -> (Int, Int, Int) -> (Int, Int, Int)
+combineCellInstances x@(xrow, xcol, xval) y@(_, _, yval) = (xrow, xcol, xval + yval)
+
 
 mineLocationToText :: (Int, Int, Int) -> Char
 mineLocationToText (_, _, val)
@@ -64,3 +70,14 @@ mineLocationToText (_, _, val)
 
 convertListToString :: [(Int, Int, Int)] -> String
 convertListToString = reverse . map mineLocationToText
+
+-- locateMines :: [(Int, Int, Int)] -> [[(Int,Int,Int)]]
+-- locateMines cells = [(first x, second x, valForXY x y) | x <- cells, y <- cells]
+--
+-- isNeighbourOf :: (Int, Int, Int) -> (Int, Int, Int) -> Bool
+-- isNeighbourOf = isNeighbour
+--
+-- valForXY :: (Int, Int, Int) -> (Int, Int, Int) -> Int
+-- valForXY x y
+--     | x `isNeighbourOf` y = 1
+--     | otherwise = 0
