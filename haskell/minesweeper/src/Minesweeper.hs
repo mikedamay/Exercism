@@ -21,8 +21,7 @@ processLine (_:zs) row col board
     | (board !! row) !! col == '*' = '*' : (processLine zs row (col + 1) board)
     | numAdjacentMines == 0 = ' ' : (processLine zs row (col + 1) board)
     | otherwise = (intToDigit $ (countMines neighbours board)) : (processLine zs row (col + 1) board)
-    where getNeighbours = [cell | cell@(r, c) <- (adjacentCells row col), r >= 0 && r < numRows && c >= 0 && c < numCols]
-          neighbours = getNeighbours
+    where neighbours = [cell | cell@(r, c) <- (adjacentCells row col), r >= 0 && r < numRows && c >= 0 && c < numCols]
           numAdjacentMines = countMines neighbours board
           numRows = length board
           numCols = length (board !! 0)
