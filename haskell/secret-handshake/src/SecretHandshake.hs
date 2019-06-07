@@ -3,17 +3,17 @@ module SecretHandshake (handshake) where
 import Data.Bits
 
 handshake :: Int -> [String]
-handshake n = forwardOrBack n $ filter (/="") $ map ($ n) signs
+handshake n = forwardOrBack n $ filter (/= "") $ map ($ n) secretSigns
 
-signs :: [(Int -> String)]
-signs = [0x1 `gives` "wink", 0x2 `gives` "double blink", 0x4 `gives` "close your eyes", 0x8 `gives` "jump"]
+secretSigns :: [(Int -> String)]
+secretSigns = [0x1 `codeToGesture` "wink", 0x2 `codeToGesture` "double blink", 0x4 `codeToGesture` "close your eyes", 0x8 `codeToGesture` "jump"]
 
 forwardOrBack :: Int -> ([a] -> [a])
 forwardOrBack n
     | n .&. 0x10 == 0x10 = reverse
     | otherwise = id
 
-gives :: Int -> String -> Int -> String
-gives val sign handshake'
-    | val .&. handshake' == val = sign
+codeToGesture :: Int -> String -> Int -> String
+codeToGesture code gesture handshake'
+    | code .&. handshake' == code = gesture
     | otherwise = ""
