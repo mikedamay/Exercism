@@ -10,14 +10,18 @@ data Planet = Mercury
             | Neptune
 
 ageOn :: Planet -> Float -> Float
-ageOn planet seconds =
-    case planet of
-    Mercury -> convert 0.2408467
-    Venus -> convert 0.61519726
-    Earth -> convert 1.0
-    Mars -> convert 1.8808158
-    Jupiter -> convert 11.862615
-    Saturn -> convert 29.447498
-    Uranus -> convert 84.016846
-    Neptune -> convert 164.79132
-    where convert py = seconds / (py * 31557600)
+ageOn planet seconds = convert planet seconds
+
+convert planet = seconds / (yearOn planet * 31557600)
+
+yearOn Mercury = 0.2408467
+yearOn Venus = 0.61519726
+yearOn Earth = 1.0
+yearOn Mars = 1.8808158
+yearOn Jupiter = 11.862615
+yearOn Saturn = 29.447498
+yearOn Uranus = 84.016846
+yearOn Neptune = 164.79132
+
+
+
