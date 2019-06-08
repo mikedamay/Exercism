@@ -10,10 +10,9 @@ data Planet = Mercury
             | Neptune
 
 ageOn :: Planet -> Float -> Float
-ageOn planet seconds = convert planet seconds
+ageOn planet seconds = seconds / (yearOn planet * 31557600)
 
-convert planet = seconds / (yearOn planet * 31557600)
-
+yearOn :: Planet -> Float
 yearOn Mercury = 0.2408467
 yearOn Venus = 0.61519726
 yearOn Earth = 1.0
