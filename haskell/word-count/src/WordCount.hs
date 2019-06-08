@@ -21,7 +21,7 @@ count (x:xs) acc@((aw, ac):remainder)
 
 mywords :: String -> [String]
 mywords [] = []
-mywords all = (mywords' (reverse all) [] False)
+mywords all = map mytrim (mywords' (reverse all) [] False)
 
 mywords' :: String -> [String] -> Bool -> [String]
 mywords' [] ys _ = ys
@@ -40,6 +40,6 @@ mywords' (x:xs) (y:ys) newLine
 isValidChar x = isAlphaNum x || x == '\'' || x == '"'
 
 mytrim :: String -> String
-mytrim = (dropWhile (== '\'') ) . (trimEnd [])
+mytrim = (dropWhile (== '\'') ) . trimEnd
 
-trimEnd = flip (foldr (\x xs -> if null xs && x == '\'' then [] else xs))
+trimEnd = foldr (\x xs -> if null xs && x == '\'' then [] else x:xs) []
