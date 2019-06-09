@@ -1,23 +1,32 @@
 module Queens (boardString, canAttack) where
 
 boardString :: Maybe (Int, Int) -> Maybe (Int, Int) -> String
-boardString Nothing Nothing = unlines emptyBoard
-boardString (Just (r, c)) Nothing = unlines $ map (substituteInRow (r, c) 'W') (zip emptyBoard [0..])
-boardString Nothing (Just (r, c)) = unlines $ map (substituteInRow (r, c) 'B') (zip emptyBoard [0..])
-boardString (Just (wr, wc)) (Just (br, bc)) = unlines $ map (substituteInRow (br, bc) 'B') $ zip (map (substituteInRow (wr, wc) 'W') (zip emptyBoard [0..])) [0..]
+boardString whiteQueen blackQueen = unlines $ board whiteQueen blackQueen
+
+board :: Maybe (Int, Int) -> Maybe (Int, Int) -> [String]
+board Nothing Nothing = emptyBoard
+board (Just queen) Nothing = pubQueenOnEmptyBoard queen 'W'
+board Nothing (Just queen) = pubQueenOnEmptyBoard queen 'B'
+board (Just whiteQueen) (Just blackQueen) = putQueenOnBoard (pubQueenOnEmptyBoard blackQueen 'B') whiteQueen 'W'
+
+putQueenOnBoard :: [String] -> (Int, Int) -> Char -> [String]
+putQueenOnBoard bboard (r, c) queenChar = map (substituteInRow (r, c) queenChar) (zip bboard [0..])
+
+pubQueenOnEmptyBoard :: (Int, Int) -> Char -> [String]
+pubQueenOnEmptyBoard = putQueenOnBoard emptyBoard
 
 emptyBoard :: [String]
 emptyBoard = replicate 8 row
     where row = "_ _ _ _ _ _ _ _"
 
 substituteInRow :: (Int, Int) -> Char -> (String, Int) -> String
-substituteInRow (r, c) queen (row, rowNum)
-    | r == rowNum = zipWith (substituteCol (c*2) queen) row [0..]
+substituteInRow (r, c) queenChar (row, rowNum)
+    | r == rowNum = zipWith (substituteCol (c*2) queenChar) row [0..]
     | otherwise = row
 
 substituteCol :: Int -> Char -> Char -> Int -> Char
-substituteCol col queen ch c
-    | col == c = queen
+substituteCol col queenChar ch c
+    | col == c = queenChar
     | otherwise = ch
 
 canAttack :: (Int, Int) -> (Int, Int) -> Bool
