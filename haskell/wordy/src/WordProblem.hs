@@ -20,7 +20,6 @@ compute ((Operand x):[]) = Just x
 compute (Err:[]) = Nothing
 compute (_:[]) = Nothing
 compute (_:_:[]) = Nothing
--- compute ((op1):(operator):(op2):xs) = compute ((binop (Operand 13) (BinOp (+)) (Operand 12)):xs)
 compute ((op1):(operator):(op2):xs) = compute ((binop op1 operator op2):xs)
 
 binop :: ParsedAs -> ParsedAs -> ParsedAs -> ParsedAs
