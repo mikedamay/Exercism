@@ -23,7 +23,8 @@ binop (Operand op1) (BinOp operator) (Operand op2) = Operand (operator op1 op2)
 
 parseToken :: String -> ParsedAs
 parseToken x
-    | ((readMaybe x) :: Maybe Int) == Nothing = Operand (read x)
+    | ((readMaybe x) :: Maybe Int) == Nothing = Err
+    | ((readMaybe x) :: Maybe Int) /= Nothing = Operand (read x)
     | x == "plus" = BinOp (+)
     | x == "divided" = BinOp div
     | x == "multiplied" = BinOp (-)
