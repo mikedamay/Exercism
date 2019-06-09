@@ -5,9 +5,9 @@ boardString whiteQueen blackQueen = unlines $ board whiteQueen blackQueen
 
 board :: Maybe (Int, Int) -> Maybe (Int, Int) -> [String]
 board Nothing Nothing = emptyBoard
-board (Just queen) Nothing = pubQueenOnEmptyBoard queen 'W'
-board Nothing (Just queen) = pubQueenOnEmptyBoard queen 'B'
-board (Just whiteQueen) (Just blackQueen) = putQueenOnBoard (pubQueenOnEmptyBoard blackQueen 'B') whiteQueen 'W'
+board (Just queenPos) Nothing = pubQueenOnEmptyBoard queenPos 'W'
+board Nothing (Just queenPos) = pubQueenOnEmptyBoard queenPos 'B'
+board (Just whiteQueenPos) (Just blackQueenPos) = putQueenOnBoard (pubQueenOnEmptyBoard blackQueenPos 'B') whiteQueenPos 'W'
 
 putQueenOnBoard :: [String] -> (Int, Int) -> Char -> [String]
 putQueenOnBoard bboard (r, c) queenChar = map (substituteInRow (r, c) queenChar) (zip bboard [0..])
