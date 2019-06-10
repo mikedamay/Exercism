@@ -12,7 +12,7 @@ module BST
 
 
 -- data BST a = BST a (Maybe (BST a)) (Maybe (BST a)) deriving (Eq, Show)
-data BST a = BST {bstValue :: Maybe a, bstLeft :: Maybe (BST a), bstRight :: Maybe (BST a) } | Empty deriving (Eq, Show)
+data BST a = Node {bstValue' :: a, bstLeft :: BST a, bstRight :: BST a } | Empty deriving (Eq, Show)
 
 -- bstLeft :: BST a -> Maybe (BST a)
 -- bstLeft (BST _ Nothing _) = Nothing
@@ -20,22 +20,28 @@ data BST a = BST {bstValue :: Maybe a, bstLeft :: Maybe (BST a), bstRight :: May
 -- bstRight :: BST a -> Maybe (BST a)
 -- bstRight tree = error "You need to implement this function."
 
--- bstValue :: BST a -> Maybe a
--- bstValue tree = error "You need to implement this function."
+bstValue :: BST a -> Maybe a
+bstValue Empty = Nothing
+bstValue tree = Just (bstValue' tree)
 
 empty :: BST a
 empty = Empty
 
 fromList :: Ord a => [a] -> BST a
 fromList [] = Empty
-fromList xs = error "You need to implement this function."
+fromList xs = foldr (\x tree -> (insert x tree)) Empty xs
 
 insert :: Ord a => a -> BST a -> BST a
-insert x tree = error "You need to implement this function."
+insert x Empty = Node x Empty Empty
+insert x tree
+    | x == bstValue' tree = Node x (bstLeft tree) (bstRight tree)
+    | x > bstValue' tree = Node (bstValue' tree) (bstLeft tree) (insert x (bstRight tree))
+    | x < bstValue' tree = Node (bstValue' tree) (insert x (bstLeft tree)) (bstRight tree)
 
 singleton :: a -> BST a
-singleton x = BST (Just x) Nothing Nothing
+singleton x = Node x Empty Empty
 
 toList :: BST a -> [a]
-toList tree = error "You need to implement this function."
+toList Empty = []
+toList tree = (toList (bstLeft tree)) ++ [(bstValue' tree)] ++ (toList (bstRight tree))
 
