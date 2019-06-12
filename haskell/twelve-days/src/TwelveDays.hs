@@ -45,7 +45,6 @@ toList xs = chunk : (toList $ (drop $ length chunk + 1) xs)
 getPresentsForDay :: Int -> String
 getPresentsForDay d = concat $ intersperse "," $ reverse $ addAnd $ reverse $ drop (12 - d) inventory
 
-
 addAnd :: [String]  -> [String]
 addAnd [] = []
 addAnd (x:[]) = [x]
