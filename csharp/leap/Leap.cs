@@ -1,8 +1,33 @@
+
 public static class Leap
 {
     public static bool IsLeapYear(int year) 
-      => year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
+      => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+            // the parens reduce the time from 16 to 13 seconds in the
+            // Perform test below
 }
+
+namespace MyTests
+{
+    using Xunit;
+    public class Performance
+    {
+        [Fact]
+        public void Perform()
+        {
+            int trues = 0;
+            for (int ii = 0; ii < 10_000_000; ii++)
+            {
+                for (int y = 1819; y < 2020; y++)
+                {
+                    trues += Leap.IsLeapYear(y) ? 1 : 0;
+                }
+            }
+        }
+    }
+}
+
+
 /*
 Exercises in Exercism are designed to be run by unit tests. Pay close attention to the instructions 
 about running the tests, and follow the link there to the C# language page if you're running into trouble. 
