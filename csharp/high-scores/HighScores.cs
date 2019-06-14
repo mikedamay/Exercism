@@ -1,19 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 public class HighScores
 {
-    private readonly List<int> list;
-    public HighScores(IEnumerable<int> list) => this.list = list.ToList();
+    public readonly IEnumerable<int> scores;
+    public HighScores(IEnumerable<int> scores) => this.scores = scores;
 
-    public IList<int> Scores() => new ReadOnlyCollection<int>(list);
+    public IEnumerable<int> Scores() => scores;
 
-    public int Latest() => list.Last();
+    public int Latest() => scores.Last();
 
-    public int PersonalBest() => list.Max();
+    public int PersonalBest() => scores.Max();
 
-    public List<int> PersonalTopThree() => list.OrderByDescending(_ => _).Take(3).ToList();
-
+    public IEnumerable<int> PersonalTopThree() => scores.OrderByDescending(i => i).Take(3);
 }
