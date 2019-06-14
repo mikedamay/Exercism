@@ -12,19 +12,26 @@ data Bearing = North
              | West
              deriving (Eq, Show, Enum, Bounded, Ord)
 
+data Robot = Robot (Integer, Integer) Bearing deriving (Show)
+
+
 right :: Robot -> Robot
-right (r, c, b) | b == West = (r, c, North)
-                | otherwise = (r, c, succ b)
+right (Robot (col, row) b)
+    | b == West = Robot (col, row) North
+    | otherwise = Robot (col, row) (succ b)
 
 left :: Robot -> Robot
-left (r, c, b) | b == North = (r, c, West)
-               | otherwise = (r, c, pred b)
+left (Robot (col, row) b)
+    | b == North = Robot (col, row) West
+    | otherwise = Robot (col, row) (pred b)
 
 advance :: Robot -> Robot
-advance (r, c, North) = (r, c + 1, North)
-advance (r, c, South) = (r, c - 1, South)
-advance (r, c, East) = (r + 1, c, East)
-advance (r, c, West) = (r - 1, c, West)
+advance (Robot (col, row) b)
+    | b == North = Robot (col, row + 1) b
+    | b == South = Robot (col, row - 1) b
+    | b == East = Robot (col + 1, row) b
+    | b == West = Robot (col - 1, row) b
+advance (Robot (_, _) _) = error "This, I do not understand - needed to avoid missing match warning"
 
 moveit :: Robot -> Char -> Robot
 moveit r 'L' = left r
@@ -35,16 +42,14 @@ moveit _ _ = error "stuff happens"
 simulate :: Robot -> [Char] -> Robot
 simulate r = foldl moveit r
 
-type Robot = (Integer, Integer, Bearing)
-
 bearing :: Robot -> Bearing
-bearing (_, _, b) = b
+bearing (Robot _ b) = b
 
 coordinates :: Robot -> (Integer, Integer)
-coordinates (r, c, _) = (r, c)
+coordinates (Robot (col, row) _) = (col, row)
 
 mkRobot :: Bearing -> (Integer, Integer) -> Robot
-mkRobot direction (r, c) = (r, c, direction)
+mkRobot direction (col, row) = Robot (col, row) direction
 
 move :: Robot -> String -> Robot
 move robot instructions = simulate robot instructions
