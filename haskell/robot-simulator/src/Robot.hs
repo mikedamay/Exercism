@@ -10,18 +10,37 @@ data Bearing = North
              | East
              | South
              | West
-             deriving (Eq, Show)
+             deriving (Eq, Show, Enum, Bounded, Ord)
 
-data Robot = Dummy
+right (r, c, b) | b == West = (r, c, North)
+                | otherwise = (r, c, succ b)
+
+left (r, c, b) | b == North = (r, c, West)
+               | otherwise = (r, c, pred b)
+
+advance (r, c, North) = (r, c + 1, North)
+advance (r, c, South) = (r, c - 1, South)
+advance (r, c, East) = (r + 1, c, East)
+advance (r, c, West) = (r - 1, c, West)
+
+moveit :: Robot -> Char -> Robot
+moveit r 'L' = left r
+moveit r 'R' = right r
+moveit r 'A' = advance r
+
+simulate :: Robot -> [Char] -> Robot
+simulate r = foldl moveit r
+
+type Robot = (Integer, Integer, Bearing)
 
 bearing :: Robot -> Bearing
-bearing robot = error "You need to implement this function."
+bearing (r, c, b) = b
 
 coordinates :: Robot -> (Integer, Integer)
-coordinates robot = error "You need to implement this function."
+coordinates (r, c, b) = (r, c)
 
 mkRobot :: Bearing -> (Integer, Integer) -> Robot
-mkRobot direction coordinates = error "You need to implement this function."
+mkRobot direction (r, c) = (r, c, direction)
 
 move :: Robot -> String -> Robot
-move robot instructions = error "You need to implement this function."
+move robot instructions = simulate robot instructions
