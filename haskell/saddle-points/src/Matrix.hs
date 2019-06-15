@@ -1,11 +1,13 @@
 module Matrix (saddlePoints) where
 
 import Data.Array (Array, listArray, elems, bounds, assocs)
-
 import Data.List (transpose)
 
 saddlePoints :: Array (Int, Int) Int -> [(Int, Int)]
-saddlePoints matrix = prepared $ getList matrix
+saddlePoints matrix = prepared $ listFromMatrix matrix
+
+abc = [([(0,1,20)],[(0,0,10)]),([(0,1,20)],[(0,1,20)]),([(1,0,40)],[(0,0,10)]),([(1,0,40)],[(0,1,20)])]
+two = [([(0,2,3),(0,0,3)],[(1,0,3),(0,0,3)]),([(0,2,3),(0,0,3)],[(0,1,1)]),([(0,2,3),(0,0,3)],[(0,2,3)]),([(1,2,4)],[(1,0,3),(0,0,3)]),([(1,2,4)],[(0,1,1)]),([(1,2,4)],[(0,2,3)])] :: [([(Int, Int, Int)],[(Int, Int, Int)])]
 
 tester :: [[Int]]
 tester2 :: [[Int]]
@@ -20,26 +22,10 @@ tester3 :: [[Int]]
 tester3 = [ [3, 1, 3]
             , [3, 2, 4] ]
 
-addCoords :: [a] -> [(Int, a)]
-addCoords = zip [0 :: Int ..]
 
-addColIds :: [(Int, [Int])] -> [(Int, [(Int, Int)])]
-addColIds = map addColId
-
-addColId :: (Int, [Int]) -> (Int, [(Int, Int)])
-addColId (r, l) = (r, zip [0..] l)
-
-coordinated :: [[Int]] -> [[(Int, Int, Int)]]
-coordinated xs = map addRowIds $ addColIds $ addCoords xs
 
 prepared :: [[(Int, Int, Int)]] -> [(Int, Int)]
 prepared xs = map (\(r, c, v) -> (r, c)) $ concat $ defs [(x, y) | x <- maxMap xs, y <- minMap $ transpose xs ]
-
-addRowIds :: (Int, [(Int, Int)]) -> [(Int, Int, Int)]
-addRowIds (r, xs) = map (addRowId r) xs
-
-addRowId :: Int -> (Int, Int) -> (Int, Int, Int)
-addRowId r (c, v) = (r, c, v)
 
 maxMap :: [[(Int, Int, Int)]] -> [[(Int, Int, Int)]]
 maxMap = map maxes
@@ -66,15 +52,11 @@ colMin acc@((racc, cacc, vacc):xs) new@(r, c, v)
     | v == vacc = new:acc
     | otherwise = acc
 
-abc = [([(0,1,20)],[(0,0,10)]),([(0,1,20)],[(0,1,20)]),([(1,0,40)],[(0,0,10)]),([(1,0,40)],[(0,1,20)])]
-
 defs :: [([(Int, Int, Int)],[(Int, Int, Int)])] -> [([(Int, Int, Int)])]
 defs = map def
 
 def :: ([(Int, Int, Int)], [(Int, Int, Int)]) -> ([(Int, Int, Int)])
 def (rows, cols) = [ r | r <- rows, c <- cols, r == c]
-
-two = [([(0,2,3),(0,0,3)],[(1,0,3),(0,0,3)]),([(0,2,3),(0,0,3)],[(0,1,1)]),([(0,2,3),(0,0,3)],[(0,2,3)]),([(1,2,4)],[(1,0,3),(0,0,3)]),([(1,2,4)],[(0,1,1)]),([(1,2,4)],[(0,2,3)])] :: [([(Int, Int, Int)],[(Int, Int, Int)])]
 
 matrixFromList xss =
     matrix
@@ -83,21 +65,16 @@ matrixFromList xss =
         columns   = length $ head xss
         matrix    = listArray ((0, 0), (rows - 1, columns - 1)) (concat xss)
 
-getNumCols :: (Array (Int, Int) Int) -> Int
-getNumCols  m = fromIntegral $ (+) 1 $ snd $ snd $ bounds m
-
-getList2 :: (Array (Int, Int) Int) -> [[Int]]
-getList2 m = myChunksOf (getNumCols m) $ elems m
-
-getList :: (Array (Int, Int) Int) -> [[(Int, Int, Int)]]
-getList n = myChunksOf (getNumCols n) $ normalise $ assocs n
-
-normalise :: [((Int, Int), Int)] -> [(Int, Int, Int)]
-normalise xs = [(r, c, v) | ((r, c), v) <- xs]
-
-myChunksOf :: Int -> [a] -> [[a]]
-myChunksOf _ [] = []
-myChunksOf n xs = (take n xs) : (myChunksOf n (drop n xs))
+listFromMatrix :: (Array (Int, Int) Int) -> [[(Int, Int, Int)]]
+listFromMatrix n = myChunksOf (getNumCols n) $ normalise $ assocs n
+    where
+        getNumCols :: (Array (Int, Int) Int) -> Int
+        getNumCols  m = (+) 1 $ snd $ snd $ bounds m
+        normalise :: [((Int, Int), Int)] -> [(Int, Int, Int)]
+        normalise xs = [(r, c, v) | ((r, c), v) <- xs]
+        myChunksOf :: Int -> [a] -> [[a]]
+        myChunksOf _ [] = []
+        myChunksOf n xs = (take n xs) : (myChunksOf n (drop n xs))
 
 
 
