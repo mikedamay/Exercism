@@ -19,13 +19,32 @@ tester3 :: [[Int]]
 tester3 = [ [3, 1, 3]
             , [3, 2, 4] ]
 
-{-
--}
 saddlePoints :: Array (Int, Int) Int -> [(Int, Int)]
 saddlePoints matrix = prepared $ listFromMatrix matrix
 
 prepared :: [[((Int, Int), Int)]] -> [(Int, Int)]
 prepared xs = map (\((r, c), v) -> (r, c)) $ concat $ defs [(x, y) | x <- maxMap xs, y <- minMap $ transpose xs ]
+
+defs :: [([((Int, Int), Int)],[((Int, Int), Int)])] -> [([((Int, Int), Int)])]
+defs = map def
+
+def :: ([((Int, Int), Int)], [((Int, Int), Int)]) -> ([((Int, Int), Int)])
+def (rows, cols) = [ r | r <- rows, c <- cols, r == c]
+
+maxMap :: [[((Int, Int), Int)]] -> [[((Int, Int), Int)]]
+maxMap = map (foldl findMax [])
+    where findMax = saddlePoint (>)
+
+minMap :: [[((Int, Int), Int)]] -> [[((Int, Int), Int)]]
+minMap = map (foldl findMin [])
+    where findMin = saddlePoint (<)
+
+saddlePoint :: (Int -> Int -> Bool) -> [((Int, Int), Int)] -> ((Int, Int), Int) -> [((Int, Int), Int)]
+saddlePoint fc [] new = [new]
+saddlePoint fc acc@(((racc, cacc), vacc):xs) new@((r, c), v)
+    | fc v vacc = [((r, c), v)]
+    | v == vacc = new:acc
+    | otherwise = acc
 
 listFromMatrix :: (Array (Int, Int) Int) -> [[((Int, Int), Int)]]
 listFromMatrix n = myChunksOf (getNumCols n) $ assocs n
@@ -35,47 +54,6 @@ listFromMatrix n = myChunksOf (getNumCols n) $ assocs n
         myChunksOf :: Int -> [a] -> [[a]]
         myChunksOf _ [] = []
         myChunksOf n xs = (take n xs) : (myChunksOf n (drop n xs))
-
-
-
-defs :: [([((Int, Int), Int)],[((Int, Int), Int)])] -> [([((Int, Int), Int)])]
-defs = map def
-
-def :: ([((Int, Int), Int)], [((Int, Int), Int)]) -> ([((Int, Int), Int)])
-def (rows, cols) = [ r | r <- rows, c <- cols, r == c]
-
-
-maxMap :: [[((Int, Int), Int)]] -> [[((Int, Int), Int)]]
-maxMap = map maxes
-
-minMap :: [[((Int, Int), Int)]] -> [[((Int, Int), Int)]]
-minMap = map mins
-
-
-{-
-saddlePoints :: Array (Int, Int) Int -> [(Int, Int)]
-saddlePoints matrix = error "abc"
-
--}
-maxes :: [((Int, Int), Int)] -> [((Int, Int), Int)]
-maxes = foldl rowMax []
-
-mins :: [((Int, Int), Int)] -> [((Int, Int), Int)]
-mins = foldl colMin []
-
-rowMax :: [((Int, Int), Int)] -> ((Int, Int), Int) -> [((Int, Int), Int)]
-rowMax [] new = [new]
-rowMax acc@(((racc, cacc), vacc):xs) new@((r, c), v)
-    | v > vacc = [((r, c), v)]
-    | v == vacc = new:acc
-    | otherwise = acc
-
-colMin :: [((Int, Int), Int)] -> ((Int, Int), Int) -> [((Int, Int), Int)]
-colMin [] new = [new]
-colMin acc@(((racc, cacc), vacc):xs) new@((r, c), v)
-    | v < vacc = [((r, c), v)]
-    | v == vacc = new:acc
-    | otherwise = acc
 
 matrixFromList xss =
     matrix
