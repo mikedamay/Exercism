@@ -3,7 +3,6 @@ module Matrix (saddlePoints) where
 import Data.Array (Array, listArray, elems, bounds)
 
 import Data.List (transpose)
-import Data.List.Split (chunksOf)
 
 saddlePoints :: Array (Int, Int) Int -> [(Int, Int)]
 saddlePoints matrix = prepared $ getList matrix
@@ -86,4 +85,8 @@ getNumCols :: (Array (Int, Int) Int) -> Int
 getNumCols  m = fromIntegral $ (+) 1 $ snd $ snd $ bounds m
 
 getList :: (Array (Int, Int) Int) -> [[Int]]
-getList m = chunksOf (getNumCols m) $ elems m
+getList m = myChunksOf (getNumCols m) $ elems m
+
+myChunksOf :: Int -> [Int] -> [[Int]]
+myChunksOf _ [] = []
+myChunksOf n xs = (take n xs) : (myChunksOf n (drop n xs))
