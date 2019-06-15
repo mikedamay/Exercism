@@ -19,17 +19,19 @@ tester3 :: [[Int]]
 tester3 = [ [3, 1, 3]
             , [3, 2, 4] ]
 
+type MatrixElement = ((Int, Int), Int)
+
 saddlePoints :: Array (Int, Int) Int -> [(Int, Int)]
-saddlePoints matrix = prepared $ listFromMatrix matrix
+saddlePoints matrix = prepare $ listFromMatrix matrix
 
-prepared :: [[((Int, Int), Int)]] -> [(Int, Int)]
-prepared xs = map (\((r, c), v) -> (r, c)) $ concat $ defs [(x, y) | x <- maxMap xs, y <- minMap $ transpose xs ]
+prepare :: [[((Int, Int), Int)]] -> [(Int, Int)]
+prepare xs = map (\((r, c), v) -> (r, c)) $ concat $ getSaddlePoints [(x, y) | x <- maxMap xs, y <- minMap $ transpose xs ]
 
-defs :: [([((Int, Int), Int)],[((Int, Int), Int)])] -> [([((Int, Int), Int)])]
-defs = map def
+getSaddlePoints :: [([((Int, Int), Int)],[((Int, Int), Int)])] -> [([((Int, Int), Int)])]
+getSaddlePoints = map getSaddlePoint
 
-def :: ([((Int, Int), Int)], [((Int, Int), Int)]) -> ([((Int, Int), Int)])
-def (rows, cols) = [ r | r <- rows, c <- cols, r == c]
+getSaddlePoint :: ([((Int, Int), Int)], [((Int, Int), Int)]) -> ([((Int, Int), Int)])
+getSaddlePoint (rows, cols) = [ r | r <- rows, c <- cols, r == c]
 
 maxMap :: [[((Int, Int), Int)]] -> [[((Int, Int), Int)]]
 maxMap = map (foldl findMax [])
