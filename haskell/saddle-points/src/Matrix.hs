@@ -24,31 +24,31 @@ type MatrixElement = ((Int, Int), Int)
 saddlePoints :: Array (Int, Int) Int -> [(Int, Int)]
 saddlePoints matrix = prepare $ listFromMatrix matrix
 
-prepare :: [[((Int, Int), Int)]] -> [(Int, Int)]
-prepare xs = map (\((r, c), v) -> (r, c)) $ concat $ getSaddlePoints [(x, y) | x <- maxMap xs, y <- minMap $ transpose xs ]
+prepare :: [[MatrixElement]] -> [(Int, Int)]
+prepare xs = map (\((r, c), v) -> (r, c)) $ concat $ getSaddlePoints [(x, y) | x <- getMaxElements xs, y <- getMinElements $ transpose xs ]
 
-getSaddlePoints :: [([((Int, Int), Int)],[((Int, Int), Int)])] -> [([((Int, Int), Int)])]
+getSaddlePoints :: [([MatrixElement],[MatrixElement])] -> [([MatrixElement])]
 getSaddlePoints = map getSaddlePoint
+    where
+        getSaddlePoint :: ([MatrixElement], [MatrixElement]) -> ([MatrixElement])
+        getSaddlePoint (rows, cols) = [ r | r <- rows, c <- cols, r == c]
 
-getSaddlePoint :: ([((Int, Int), Int)], [((Int, Int), Int)]) -> ([((Int, Int), Int)])
-getSaddlePoint (rows, cols) = [ r | r <- rows, c <- cols, r == c]
-
-maxMap :: [[((Int, Int), Int)]] -> [[((Int, Int), Int)]]
-maxMap = map (foldl findMax [])
+getMaxElements :: [[MatrixElement]] -> [[MatrixElement]]
+getMaxElements = map (foldl findMax [])
     where findMax = saddlePoint (>)
 
-minMap :: [[((Int, Int), Int)]] -> [[((Int, Int), Int)]]
-minMap = map (foldl findMin [])
+getMinElements :: [[MatrixElement]] -> [[MatrixElement]]
+getMinElements = map (foldl findMin [])
     where findMin = saddlePoint (<)
 
-saddlePoint :: (Int -> Int -> Bool) -> [((Int, Int), Int)] -> ((Int, Int), Int) -> [((Int, Int), Int)]
+saddlePoint :: (Int -> Int -> Bool) -> [MatrixElement] -> MatrixElement -> [MatrixElement]
 saddlePoint fc [] new = [new]
 saddlePoint fc acc@(((racc, cacc), vacc):xs) new@((r, c), v)
     | fc v vacc = [((r, c), v)]
     | v == vacc = new:acc
     | otherwise = acc
 
-listFromMatrix :: (Array (Int, Int) Int) -> [[((Int, Int), Int)]]
+listFromMatrix :: (Array (Int, Int) Int) -> [[MatrixElement]]
 listFromMatrix n = myChunksOf (getNumCols n) $ assocs n
     where
         getNumCols :: (Array (Int, Int) Int) -> Int
