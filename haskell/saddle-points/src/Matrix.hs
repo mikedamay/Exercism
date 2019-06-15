@@ -1,6 +1,6 @@
 module Matrix (saddlePoints) where
 
-import Data.Array (Array, listArray, elems, bounds)
+import Data.Array (Array, listArray, elems, bounds, assocs)
 
 import Data.List (transpose)
 
@@ -8,6 +8,7 @@ saddlePoints :: Array (Int, Int) Int -> [(Int, Int)]
 saddlePoints matrix = prepared $ getList matrix
 
 tester :: [[Int]]
+tester2 :: [[Int]]
 tester2 = [ [9, 8, 7]
          , [5, 3, 2]
          , [6, 6, 7] ]
@@ -31,7 +32,8 @@ addColId (r, l) = (r, zip [0..] l)
 coordinated :: [[Int]] -> [[(Int, Int, Int)]]
 coordinated xs = map addRowIds $ addColIds $ addCoords xs
 
-prepared xs = map (\(r, c, v) -> (r, c)) $ concat $ defs [(x, y) | x <- maxMap $ coordinated xs, y <- minMap $ transpose $ coordinated xs ]
+prepared :: [[(Int, Int, Int)]] -> [(Int, Int)]
+prepared xs = map (\(r, c, v) -> (r, c)) $ concat $ defs [(x, y) | x <- maxMap xs, y <- minMap $ transpose xs ]
 
 addRowIds :: (Int, [(Int, Int)]) -> [(Int, Int, Int)]
 addRowIds (r, xs) = map (addRowId r) xs
@@ -84,9 +86,18 @@ matrixFromList xss =
 getNumCols :: (Array (Int, Int) Int) -> Int
 getNumCols  m = fromIntegral $ (+) 1 $ snd $ snd $ bounds m
 
-getList :: (Array (Int, Int) Int) -> [[Int]]
-getList m = myChunksOf (getNumCols m) $ elems m
+getList2 :: (Array (Int, Int) Int) -> [[Int]]
+getList2 m = myChunksOf (getNumCols m) $ elems m
 
-myChunksOf :: Int -> [Int] -> [[Int]]
+getList :: (Array (Int, Int) Int) -> [[(Int, Int, Int)]]
+getList n = myChunksOf (getNumCols n) $ normalise $ assocs n
+
+normalise :: [((Int, Int), Int)] -> [(Int, Int, Int)]
+normalise xs = [(r, c, v) | ((r, c), v) <- xs]
+
+myChunksOf :: Int -> [a] -> [[a]]
 myChunksOf _ [] = []
 myChunksOf n xs = (take n xs) : (myChunksOf n (drop n xs))
+
+
+
