@@ -5,7 +5,7 @@ import Data.Array (Array)
 import Data.List (transpose)
 
 saddlePoints :: Array i e -> [i]
-saddlePoints matrix = error "You need to implement this function."
+saddlePoints matrix = error "not implemented"
 
 tester :: [[Int]]
 tester2 = [ [9, 8, 7]
@@ -31,7 +31,7 @@ addColId (r, l) = (r, zip [0..] l)
 coordinated :: [[Int]] -> [[(Int, Int, Int)]]
 coordinated xs = map addRowIds $ addColIds $ addCoords xs
 
-prepared xs = prepared [(x, y) | x <- maxMap $ coordinated xs, y <- minMap $ transpose $ coordinated xs ]
+prepared xs = map (\(r, c, v) -> (r, c)) $ concat $ defs [(x, y) | x <- maxMap $ coordinated xs, y <- minMap $ transpose $ coordinated xs ]
 
 addRowIds :: (Int, [(Int, Int)]) -> [(Int, Int, Int)]
 addRowIds (r, xs) = map (addRowId r) xs
