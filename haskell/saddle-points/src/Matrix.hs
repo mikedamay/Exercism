@@ -1,11 +1,12 @@
 module Matrix (saddlePoints) where
 
-import Data.Array (Array)
+import Data.Array (Array, listArray, elems, bounds)
 
 import Data.List (transpose)
+import Data.List.Split (chunksOf)
 
-saddlePoints :: Array i e -> [i]
-saddlePoints matrix = error "not implemented"
+saddlePoints :: Array (Int, Int) Int -> [(Int, Int)]
+saddlePoints matrix = prepared $ getList matrix
 
 tester :: [[Int]]
 tester2 = [ [9, 8, 7]
@@ -73,3 +74,16 @@ def :: ([(Int, Int, Int)], [(Int, Int, Int)]) -> ([(Int, Int, Int)])
 def (rows, cols) = [ r | r <- rows, c <- cols, r == c]
 
 two = [([(0,2,3),(0,0,3)],[(1,0,3),(0,0,3)]),([(0,2,3),(0,0,3)],[(0,1,1)]),([(0,2,3),(0,0,3)],[(0,2,3)]),([(1,2,4)],[(1,0,3),(0,0,3)]),([(1,2,4)],[(0,1,1)]),([(1,2,4)],[(0,2,3)])] :: [([(Int, Int, Int)],[(Int, Int, Int)])]
+
+matrixFromList xss =
+    matrix
+    where
+        rows      = length xss
+        columns   = length $ head xss
+        matrix    = listArray ((0, 0), (rows - 1, columns - 1)) (concat xss)
+
+getNumCols :: (Array (Int, Int) Int) -> Int
+getNumCols  m = fromIntegral $ (+) 1 $ snd $ snd $ bounds m
+
+getList :: (Array (Int, Int) Int) -> [[Int]]
+getList m = chunksOf (getNumCols m) $ elems m
