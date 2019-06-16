@@ -1,13 +1,9 @@
 module Pangram (isPangram) where
 
-import Data.List (sort, nub)
-import Data.Char (isLetter, toLower)
+import Data.Set as Set (fromList, isSubsetOf)
+import Data.Char (toLower)
 
 isPangram :: String -> Bool
-isPangram text = (prepare text) == alphabet
+isPangram text = Set.fromList alphabet `Set.isSubsetOf` (Set.fromList $ map toLower text)
+    where alphabet = ['a'..'z']
 
-alphabet :: String
-alphabet = ['a'..'z']
-
-prepare :: String -> String
-prepare = (nub . sort . map toLower . filter isLetter )
