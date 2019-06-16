@@ -19,13 +19,13 @@ tester3 :: [[Int]]
 tester3 = [ [3, 1, 3]
             , [3, 2, 4] ]
 
-type MatrixElement = ((Int, Int), Int)
+data MatrixElement = MatrixElement ((Int, Int), Int) deriving (Eq)
 
 saddlePoints :: Array (Int, Int) Int -> [(Int, Int)]
 saddlePoints matrix = prepare $ listFromMatrix matrix
 
 prepare :: [[MatrixElement]] -> [(Int, Int)]
-prepare xs = map (\((r, c), v) -> (r, c)) $ concat $ getSaddlePoints [(x, y) | x <- getMaxElements xs, y <- getMinElements $ transpose xs ]
+prepare xs = map (\(MatrixElement ((r, c), v)) -> (r, c)) $ concat $ getSaddlePoints [(x, y) | x <- getMaxElements xs, y <- getMinElements $ transpose xs ]
 
 getSaddlePoints :: [([MatrixElement],[MatrixElement])] -> [([MatrixElement])]
 getSaddlePoints = map getSaddlePoint
@@ -43,19 +43,22 @@ getMinElements = map (foldl findMin [])
 
 saddlePoint :: (Int -> Int -> Bool) -> [MatrixElement] -> MatrixElement -> [MatrixElement]
 saddlePoint fc [] new = [new]
-saddlePoint fc acc@(((racc, cacc), vacc):xs) new@((r, c), v)
-    | fc v vacc = [((r, c), v)]
+saddlePoint fc acc@((MatrixElement ((racc, cacc), vacc)):xs) new@(MatrixElement((r, c), v))
+    | fc v vacc = [MatrixElement ((r, c), v)]
     | v == vacc = new:acc
     | otherwise = acc
 
 listFromMatrix :: (Array (Int, Int) Int) -> [[MatrixElement]]
-listFromMatrix n = myChunksOf (getNumCols n) $ assocs n
+listFromMatrix m = myChunksOf (getNumCols m) $ map elementFromMatrix $ assocs m
     where
         getNumCols :: (Array (Int, Int) Int) -> Int
         getNumCols  m = (+) 1 $ snd $ snd $ bounds m
         myChunksOf :: Int -> [a] -> [[a]]
         myChunksOf _ [] = []
         myChunksOf n xs = (take n xs) : (myChunksOf n (drop n xs))
+
+elementFromMatrix :: ((Int, Int), Int) -> MatrixElement
+elementFromMatrix em = MatrixElement em
 
 matrixFromList xss =
     matrix
