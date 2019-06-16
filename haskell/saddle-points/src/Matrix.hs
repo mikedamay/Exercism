@@ -22,9 +22,9 @@ tester3 = [ [3, 1, 3]
 
 data MatrixElement e = MatrixElement ((Int, Int), e) deriving (Eq)
 
--- -- saddlePoints :: Array (Int, Int) Int -> [(Int, Int)]
--- -- saddlePoints matrix = error ""
--- --
+-- saddlePoints :: Array (Int, Int) Int -> [(Int, Int)]
+-- saddlePoints matrix = error ""
+--
 saddlePoints :: (Ord e, Eq e) => Array (Int, Int) e -> [(Int, Int)]
 saddlePoints matrix = prepare $ listFromMatrix matrix
 
@@ -80,4 +80,9 @@ vectorFromList =
 -- test ((f, s), (f2, s2)) = (f, s2)
 --
 
+caller :: a -> a
+caller x = callee x
+
+callee :: a -> a
+callee y = y
 
