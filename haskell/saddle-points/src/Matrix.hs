@@ -2,6 +2,7 @@ module Matrix (saddlePoints) where
 
 import Data.Array (Array, listArray, elems, bounds, assocs)
 import Data.List (transpose)
+import Data.Ix (rangeSize, Ix(..))
 
 abc = [([(0,1,20)],[(0,0,10)]),([(0,1,20)],[(0,1,20)]),([(1,0,40)],[(0,0,10)]),([(1,0,40)],[(0,1,20)])]
 two = [([(0,2,3),(0,0,3)],[(1,0,3),(0,0,3)]),([(0,2,3),(0,0,3)],[(0,1,1)]),([(0,2,3),(0,0,3)],[(0,2,3)]),([(1,2,4)],[(1,0,3),(0,0,3)]),([(1,2,4)],[(0,1,1)]),([(1,2,4)],[(0,2,3)])] :: [([(Int, Int, Int)],[(Int, Int, Int)])]
@@ -70,5 +71,13 @@ matrixFromList xss =
         columns   = length $ head xss
         matrix    = listArray ((0, 0), (rows - 1, columns - 1)) (concat xss)
 
+vectorFromList =
+    vector
+    where
+        vector    = listArray (0, 3) [10, 20, 30, 40]
+
+-- test :: (Ix i) => (i, i) -> i
+-- test ((f, s), (f2, s2)) = (f, s2)
+--
 
 
