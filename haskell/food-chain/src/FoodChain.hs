@@ -4,9 +4,11 @@ import qualified Data.Map as Map
 import Data.Char (toLower)
 import Data.List (intercalate)
 
+eaten :: [String]
 eaten = ["fly", "spider that wriggled and jiggled and tickled inside her", "bird", "cat", "dog", "goat", "cow", "horse"]
 
-lyrics = [
+lyricMap :: Map.Map LineRole String
+lyricMap = Map.fromList [
         (VerseStart, "I know an old lady who swallowed a {{animal}}.\n")
         ,(VerseEnd, "I don't know why she swallowed the fly. Perhaps she'll die.\n")
         ,(VerseContinuation, "She swallowed the {{eater}} to catch the {{eaten}}.\n")
@@ -18,10 +20,6 @@ lyrics = [
         ,(AnimalQuirk Goat, "Just opened her throat and swallowed a goat!\n")
         ,(AnimalQuirk Cow, "I don't know how she swallowed a cow!\n")
     ]
-
-lyricMap :: Map.Map LineRole String
-lyricMap = Map.fromList lyrics
-
 
 data Animal = Fly | Spider | Bird | Cat | Dog | Goat | Cow | Horse deriving (Show, Eq, Ord, Enum)
 
@@ -47,12 +45,6 @@ data Verse = FirstVerse LineRole LineRole
 song :: String
 song = intercalate "\n" $ structureToText songStructure
 
-eatenMap :: Map.Map Animal String
-eatenMap = Map.fromList $ zip allAnimals eaten
-
-eaterMap :: Map.Map Animal String
-eaterMap = Map.fromList $ zip allAnimals $ map (map toLower) (map show allAnimals)
-
 songStructure :: [Verse]
 songStructure = [FirstVerse VerseStart VerseEnd]
                 ++ [SecondVerse VerseStart (AnimalQuirk Spider) VerseContinuation VerseEnd]
@@ -67,52 +59,56 @@ songStructure = [FirstVerse VerseStart VerseEnd]
 replicateForEachAnimal :: Animal -> a -> [a]
 replicateForEachAnimal animal = replicate (numAnimalsInRange Spider animal)
 
-getText :: (Verse, Animal) -> String
-getText ((FirstVerse a b), animal) = (replace "{{animal}}" (animalToText animal) $ lookupLyric a) ++ (lookupLyric b)
-getText ((SecondVerse a b c d), animal) = (replace "{{animal}}" (animalToText animal) $ lookupLyric a) ++ (lookupLyric b) ++ (showLyric2 (animal, c)) ++ (lookupLyric d)
-getText ((MainVerse a b c d), animal) = generateMainVerse a b c d animal
-getText ((LastVerse a b), animal) = (replace "{{animal}}" (animalToText animal) $ lookupLyric a) ++ (lookupLyric b)
-
-
-replace _ _ [] = []
-replace pattern substitute xs
-    | (take len xs) == pattern = substitute ++ (replace pattern substitute $ drop len xs)
-    | otherwise = head xs : (replace pattern substitute (tail xs))
-    where len = length pattern
+applyLyric :: (Verse, Animal) -> String
+applyLyric ((FirstVerse startLine endLine), animal) = (resolveAnimal animal $ lookupLyric startLine) ++ (lookupLyric endLine)
+applyLyric ((SecondVerse startLine quirkLine contLine endLine), animal)
+    = (resolveAnimal animal $ lookupLyric startLine) ++ (lookupLyric quirkLine) ++ (showLyricForSpider (animal, contLine)) ++ (lookupLyric endLine)
+applyLyric ((MainVerse startLine quirkLine contLine endLine), animal) = generateMainVerse startLine quirkLine contLine endLine animal
+applyLyric ((LastVerse startLine endOfSong), animal) = (resolveAnimal animal $ lookupLyric startLine) ++ (lookupLyric endOfSong)
 
 structureToText :: [Verse] -> [String]
-structureToText structure = map getText $ zip structure allAnimals
+structureToText structure = map applyLyric $ zip structure allAnimals
 
 generateMainVerse :: LineRole -> LineRole -> [LineRole] -> LineRole -> Animal -> String
 generateMainVerse start quirk continuations end animal =
-    (replace "{{animal}}" (animalToText animal) $ lookupLyric start) ++ (lookupLyric quirk) ++ (generateContinuationLines continuations animal) ++ (lookupLyric end)
+    (resolveAnimal animal $ lookupLyric start) ++ (lookupLyric quirk) ++ (generateContinuationLines continuations animal) ++ (lookupLyric end)
 
 generateContinuationLines :: [LineRole] -> Animal -> String
 generateContinuationLines continuations animal =
-    concat $ map showLyric lines
-    where lines = zip (iterate pred animal) continuations
+    concat $ map showLyric ll
+    where ll = zip (iterate pred animal) continuations
 
 showLyric :: (Animal, LineRole) -> String
 showLyric (a, l) = (replace "{{eater}}" (lookupEater a)) $ (replace "{{eaten}}" $ lookupEaten $ pred a) $ (lookupLyric l)
 
-showLyric2 :: (Animal, LineRole) -> String
-showLyric2 (a, l) = (replace "{{eater}}" (lookupEater a)) $ (replace "{{eaten}}" $ (map toLower $ show $ pred a)) $ (lookupLyric l)
+showLyricForSpider :: (Animal, LineRole) -> String
+showLyricForSpider (a, l) = (replace "{{eater}}" (lookupEater a)) $ (replace "{{eaten}}" $ (map toLower $ show $ pred a)) $ (lookupLyric l)
 
 lookupLyric :: LineRole -> String
 lookupLyric lr = dropit (Map.lookup lr lyricMap)
 
 lookupEaten :: Animal -> String
 lookupEaten a = dropit (Map.lookup a eatenMap )
+    where eatenMap = Map.fromList $ zip allAnimals eaten
 
 lookupEater :: Animal -> String
 lookupEater a = dropit (Map.lookup a eaterMap )
+    where eaterMap = Map.fromList $ zip allAnimals $ map (map toLower) (map show allAnimals)
 
 dropit :: Maybe String -> String
 dropit (Just x) = x
 dropit Nothing = error "corrupt embedded data"
 
-animalToText :: Animal -> String
-animalToText a = map toLower $ show a
+resolveAnimal :: Animal -> String -> String
+resolveAnimal animal = replace "{{animal}}" (animalToText animal)
+    where animalToText = (map toLower . show)
+
+replace :: (Eq a) => [a] -> [a] -> [a] -> [a]
+replace _ _ [] = []
+replace pattern substitute xs
+        | (take len xs) == pattern = substitute ++ (replace pattern substitute $ drop len xs)
+        | otherwise = head xs : (replace pattern substitute (tail xs))
+        where len = length pattern
 
 
 
