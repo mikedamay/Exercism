@@ -7,7 +7,10 @@ import Data.List (intercalate)
 prey = ["fly", "spider that wriggled and jiggled and tickled inside her", "bird", "cat", "dog", "goat", "cow", "horse"]
 
 data Animal = Fly | Spider | Bird | Cat | Dog | Goat | Cow | Horse deriving (Show, Eq, Ord, Enum)
-data LineRole = VerseStart | VerseEnd | VerseContinuation | SongEnd1 | SongEnd2 | FirstSpider
+
+numAllAnimals = numAnimals Fly Horse
+
+data LineRole = VerseStart | VerseEnd | VerseContinuation | SongEnd | FirstSpider
      | AnimalQuirk Animal deriving (Show, Eq, Ord)
 data Verse = FirstVerse LineRole LineRole
             | SecondVerse LineRole LineRole LineRole LineRole
@@ -15,12 +18,15 @@ data Verse = FirstVerse LineRole LineRole
             | LastVerse LineRole LineRole
             deriving (Show)
 
+song :: String
+song = intercalate "\n" $ structureToText songStructure
+
 eatenMap :: Map.Map Animal String
-eatenMap = Map.fromList $ zip (take ((fromEnum Horse) - (fromEnum Fly) + 1) $ iterate succ Fly) prey
+eatenMap = Map.fromList $ zip (take numAllAnimals $ iterate succ Fly) prey
 
 eaterMap :: Map.Map Animal String
 eaterMap = Map.fromList $ zip animals $ map (map toLower) (map show animals)
-    where animals = take (numAnimals Horse Fly) $ iterate succ Fly
+    where animals = take numAllAnimals $ iterate succ Fly
 
 firstVerse :: (Verse, Animal)
 firstVerse = (FirstVerse VerseStart VerseEnd, Fly)
@@ -29,14 +35,11 @@ secondVerse :: (Verse, Animal)
 secondVerse = (SecondVerse VerseStart (AnimalQuirk Spider) VerseContinuation VerseEnd, Spider)
 
 lastVerse :: (Verse, Animal)
-lastVerse = (LastVerse SongEnd1 SongEnd2, Horse)
+lastVerse = (LastVerse VerseStart SongEnd, Horse)
 
 middleVerses :: [(Verse, Animal)]
 middleVerses = map hydrate $ take 5 $ iterate succ Bird
-    where hydrate a = (MainVerse VerseStart (AnimalQuirk a) (replicate (numAnimals a Spider) VerseContinuation) VerseEnd, a)
-
-lyricMap :: Map.Map LineRole String
-lyricMap = Map.fromList lyrics
+    where hydrate a = (MainVerse VerseStart (AnimalQuirk a) (replicate (numAnimals Spider a) VerseContinuation) VerseEnd, a)
 
 songStructure = [firstVerse, secondVerse] ++ middleVerses ++ [lastVerse]
 
@@ -46,19 +49,6 @@ getText ((SecondVerse a b c d), animal) = (replace "{{animal}}" (animalToText an
 getText ((MainVerse a b c d), animal) = generateMainVerse a b c d animal
 getText ((LastVerse a b), animal) = (replace "{{animal}}" (animalToText animal) $ lookupLyric a) ++ (lookupLyric b)
 
-lyrics = [
-        (VerseStart, "I know an old lady who swallowed a {{animal}}.\n")
-        ,(VerseEnd, "I don't know why she swallowed the fly. Perhaps she'll die.\n")
-        ,(VerseContinuation, "She swallowed the {{eater}} to catch the {{eaten}}.\n")
-        ,(SongEnd1, "I know an old lady who swallowed a horse.\n")
-        ,(SongEnd2, "She's dead, of course!\n")
-        ,(AnimalQuirk Spider, "It wriggled and jiggled and tickled inside her.\n")
-        ,(AnimalQuirk Bird, "How absurd to swallow a bird!\n")
-        ,(AnimalQuirk Cat, "Imagine that, to swallow a cat!\n")
-        ,(AnimalQuirk Dog, "What a hog, to swallow a dog!\n")
-        ,(AnimalQuirk Goat, "Just opened her throat and swallowed a goat!\n")
-        ,(AnimalQuirk Cow, "I don't know how she swallowed a cow!\n")
-    ]
 
 replace _ _ [] = []
 replace pattern substitute xs
@@ -85,7 +75,7 @@ showLyric2 :: (Animal, LineRole) -> String
 showLyric2 (a, l) = (replace "{{eater}}" (lookupEater a)) $ (replace "{{eaten}}" $ (map toLower $ show $ pred a)) $ (lookupLyric l)
 
 numAnimals :: Animal -> Animal -> Int
-numAnimals g l = (fromEnum g) - (fromEnum l) + 1
+numAnimals l u = (fromEnum u) - (fromEnum l) + 1
 
 lookupLyric :: LineRole -> String
 lookupLyric lr = dropit (Map.lookup lr lyricMap)
@@ -103,60 +93,20 @@ dropit Nothing = error "corrupt embedded data"
 animalToText :: Animal -> String
 animalToText a = map toLower $ show a
 
-song :: String
-song = intercalate "\n" $ structureToText songStructure
 
+lyrics = [
+        (VerseStart, "I know an old lady who swallowed a {{animal}}.\n")
+        ,(VerseEnd, "I don't know why she swallowed the fly. Perhaps she'll die.\n")
+        ,(VerseContinuation, "She swallowed the {{eater}} to catch the {{eaten}}.\n")
+        ,(SongEnd, "She's dead, of course!\n")
+        ,(AnimalQuirk Spider, "It wriggled and jiggled and tickled inside her.\n")
+        ,(AnimalQuirk Bird, "How absurd to swallow a bird!\n")
+        ,(AnimalQuirk Cat, "Imagine that, to swallow a cat!\n")
+        ,(AnimalQuirk Dog, "What a hog, to swallow a dog!\n")
+        ,(AnimalQuirk Goat, "Just opened her throat and swallowed a goat!\n")
+        ,(AnimalQuirk Cow, "I don't know how she swallowed a cow!\n")
+    ]
 
-songx =
-    "I know an old lady who swallowed a fly.\n\
-    \I don't know why she swallowed the fly. Perhaps she'll die.\n\
-    \\n\
-    \I know an old lady who swallowed a spider.\n\
-    \It wriggled and jiggled and tickled inside her.\n\
-    \She swallowed the spider to catch the fly.\n\
-    \I don't know why she swallowed the fly. Perhaps she'll die.\n\
-    \\n\
-    \I know an old lady who swallowed a bird.\n\
-    \How absurd to swallow a bird!\n\
-    \She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.\n\
-    \She swallowed the spider to catch the fly.\n\
-    \I don't know why she swallowed the fly. Perhaps she'll die.\n\
-    \\n\
-    \I know an old lady who swallowed a cat.\n\
-    \Imagine that, to swallow a cat!\n\
-    \She swallowed the cat to catch the bird.\n\
-    \She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.\n\
-    \She swallowed the spider to catch the fly.\n\
-    \I don't know why she swallowed the fly. Perhaps she'll die.\n\
-    \\n\
-    \I know an old lady who swallowed a dog.\n\
-    \What a hog, to swallow a dog!\n\
-    \She swallowed the dog to catch the cat.\n\
-    \She swallowed the cat to catch the bird.\n\
-    \She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.\n\
-    \She swallowed the spider to catch the fly.\n\
-    \I don't know why she swallowed the fly. Perhaps she'll die.\n\
-    \\n\
-    \I know an old lady who swallowed a goat.\n\
-    \Just opened her throat and swallowed a goat!\n\
-    \She swallowed the goat to catch the dog.\n\
-    \She swallowed the dog to catch the cat.\n\
-    \She swallowed the cat to catch the bird.\n\
-    \She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.\n\
-    \She swallowed the spider to catch the fly.\n\
-    \I don't know why she swallowed the fly. Perhaps she'll die.\n\
-    \\n\
-    \I know an old lady who swallowed a cow.\n\
-    \I don't know how she swallowed a cow!\n\
-    \She swallowed the cow to catch the goat.\n\
-    \She swallowed the goat to catch the dog.\n\
-    \She swallowed the dog to catch the cat.\n\
-    \She swallowed the cat to catch the bird.\n\
-    \She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.\n\
-    \She swallowed the spider to catch the fly.\n\
-    \I don't know why she swallowed the fly. Perhaps she'll die.\n\
-    \\n\
-    \I know an old lady who swallowed a horse.\n\
-    \She's dead, of course!\n"
-
+lyricMap :: Map.Map LineRole String
+lyricMap = Map.fromList lyrics
 
