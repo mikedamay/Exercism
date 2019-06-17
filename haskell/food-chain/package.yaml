@@ -8,6 +8,8 @@ library:
   exposed-modules: FoodChain
   source-dirs: src
   ghc-options: -Wall
+  dependencies:
+    - containers
   # dependencies:
   # - foo       # List here the packages you
   # - bar       # want to use in your solution.

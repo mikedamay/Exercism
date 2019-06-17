@@ -2,6 +2,7 @@ module FoodChain (song) where
 
 import qualified Data.Map as Map
 import Data.Char (toLower)
+import Data.List (intercalate)
 
 prey = ["fly", "spider that wriggled and jiggled and tickled inside her", "bird", "cat", "dog", "goat", "cow", "horse"]
 
@@ -103,7 +104,7 @@ animalToText :: Animal -> String
 animalToText a = map toLower $ show a
 
 song :: String
-song = concat $ structureToText songStructure
+song = intercalate "\n" $ structureToText songStructure
 
 
 songx =
