@@ -1,6 +1,7 @@
 module FoodChain (song) where
 
 import qualified Data.Map as Map
+import Data.Char (toLower)
 
 prey = ["fly", "spider that wriggled and jiggled and tickled inside her", "bird", "cat", "dog", "goat", "cow", "horse"]
 
@@ -34,16 +35,11 @@ lyricMap = Map.fromList lyrics
 
 songStructure = [firstVerse, secondVerse] ++ middleVerses ++ [lastVerse]
 
-getText :: (Verse, Animal) -> Maybe String
-getText ((FirstVerse a b), _) = (Map.lookup a lyricMap) `myJoin` (Map.lookup b lyricMap)
-getText ((SecondVerse a b c d), _) = (Map.lookup a lyricMap) `myJoin` (Map.lookup a lyricMap) `myJoin` (Map.lookup c lyricMap) `myJoin` (Map.lookup d lyricMap)
+getText :: (Verse, Animal) -> String
+getText ((FirstVerse a b), animal) = (replace "{{animal}}" (animalToText animal) $ lookupLyric a) ++ (lookupLyric b)
+getText ((SecondVerse a b c d), animal) = (replace "{{animal}}" (animalToText animal) $ lookupLyric a) ++ (lookupLyric b) ++ (showLyric2 (animal, c)) ++ (lookupLyric d)
 getText ((MainVerse a b c d), animal) = generateMainVerse a b c d animal
-getText ((LastVerse a b), _) = (Map.lookup a lyricMap) `myJoin` (Map.lookup b lyricMap)
-
-myJoin :: Maybe String -> Maybe String -> Maybe String
-myJoin Nothing _ = Nothing
-myJoin _ Nothing = Nothing
-myJoin (Just a) (Just b) = Just (a ++ b)
+getText ((LastVerse a b), animal) = (replace "{{animal}}" (animalToText animal) $ lookupLyric a) ++ (lookupLyric b)
 
 lyrics = [
         (VerseStart, "I know an old lady who swallowed a {{animal}}.\n")
@@ -65,20 +61,23 @@ replace pattern substitute xs
     | otherwise = head xs : (replace pattern substitute (tail xs))
     where len = length pattern
 
-structureToText :: [(Verse, Animal)] -> [Maybe String]
+structureToText :: [(Verse, Animal)] -> [String]
 structureToText = map getText
 
-generateMainVerse :: LineRole -> LineRole -> [LineRole] -> LineRole -> Animal -> Maybe String
+generateMainVerse :: LineRole -> LineRole -> [LineRole] -> LineRole -> Animal -> String
 generateMainVerse start quirk continuations end animal =
-    (Map.lookup start lyricMap) `myJoin` (Map.lookup quirk lyricMap) `myJoin` (generateContinuationLines continuations animal) `myJoin` (Map.lookup end lyricMap)
+    (replace "{{animal}}" (animalToText animal) $ lookupLyric start) ++ (lookupLyric quirk) ++ (generateContinuationLines continuations animal) ++ (lookupLyric end)
 
-generateContinuationLines :: [LineRole] -> Animal -> Maybe String
+generateContinuationLines :: [LineRole] -> Animal -> String
 generateContinuationLines continuations animal =
-    Just (concat $ map showLyric lines)
-    where lines = zip (reverse $ iterate succ Bird) continuations
+    concat $ map showLyric lines
+    where lines = zip (iterate pred animal) continuations
 
 showLyric :: (Animal, LineRole) -> String
 showLyric (a, l) = (replace "{{eater}}" (lookupEaten a)) $ (replace "{{eaten}}" $ lookupEaten $ pred a) $ (lookupLyric l)
+
+showLyric2 :: (Animal, LineRole) -> String
+showLyric2 (a, l) = (replace "{{eater}}" (lookupEaten a)) $ (replace "{{eaten}}" $ (map toLower $ show $ pred a)) $ (lookupLyric l)
 
 numAnimals :: Animal -> Animal -> Int
 numAnimals g l = (fromEnum g) - (fromEnum l) + 1
@@ -93,6 +92,8 @@ dropit :: Maybe String -> String
 dropit (Just x) = x
 dropit Nothing = error "corrupt embedded data"
 
+animalToText :: Animal -> String
+animalToText a = map toLower $ show a
 
 song :: String
 song =
