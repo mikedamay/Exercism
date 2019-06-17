@@ -18,6 +18,8 @@ data Verse = FirstVerse LineRole LineRole
             | LastVerse LineRole LineRole
             deriving (Show)
 
+allAnimals = take numAllAnimals $ iterate succ Fly
+
 song :: String
 song = intercalate "\n" $ structureToText songStructure
 
@@ -28,20 +30,19 @@ eaterMap :: Map.Map Animal String
 eaterMap = Map.fromList $ zip animals $ map (map toLower) (map show animals)
     where animals = take numAllAnimals $ iterate succ Fly
 
-firstVerse :: (Verse, Animal)
-firstVerse = (FirstVerse VerseStart VerseEnd, Fly)
+songStructure :: [Verse]
+songStructure = [FirstVerse VerseStart VerseEnd]
+                ++ [SecondVerse VerseStart (AnimalQuirk Spider) VerseContinuation VerseEnd]
+                ++  [
+                    (MainVerse
+                        VerseStart
+                        (AnimalQuirk a)
+                        (replicateForEachAnimal a VerseContinuation)
+                        VerseEnd) | a <- [Bird, Cat, Dog, Goat, Cow]]
+                ++ [LastVerse VerseStart SongEnd]
 
-secondVerse :: (Verse, Animal)
-secondVerse = (SecondVerse VerseStart (AnimalQuirk Spider) VerseContinuation VerseEnd, Spider)
-
-lastVerse :: (Verse, Animal)
-lastVerse = (LastVerse VerseStart SongEnd, Horse)
-
-middleVerses :: [(Verse, Animal)]
-middleVerses = map hydrate $ take 5 $ iterate succ Bird
-    where hydrate a = (MainVerse VerseStart (AnimalQuirk a) (replicate (numAnimals Spider a) VerseContinuation) VerseEnd, a)
-
-songStructure = [firstVerse, secondVerse] ++ middleVerses ++ [lastVerse]
+replicateForEachAnimal :: Animal -> a -> [a]
+replicateForEachAnimal animal = replicate (numAnimals Spider animal)
 
 getText :: (Verse, Animal) -> String
 getText ((FirstVerse a b), animal) = (replace "{{animal}}" (animalToText animal) $ lookupLyric a) ++ (lookupLyric b)
@@ -56,8 +57,8 @@ replace pattern substitute xs
     | otherwise = head xs : (replace pattern substitute (tail xs))
     where len = length pattern
 
-structureToText :: [(Verse, Animal)] -> [String]
-structureToText = map getText
+structureToText :: [Verse] -> [String]
+structureToText structure = map getText $ zip structure allAnimals
 
 generateMainVerse :: LineRole -> LineRole -> [LineRole] -> LineRole -> Animal -> String
 generateMainVerse start quirk continuations end animal =
