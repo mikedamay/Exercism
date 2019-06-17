@@ -4,31 +4,54 @@ import qualified Data.Map as Map
 import Data.Char (toLower)
 import Data.List (intercalate)
 
-prey = ["fly", "spider that wriggled and jiggled and tickled inside her", "bird", "cat", "dog", "goat", "cow", "horse"]
+eaten = ["fly", "spider that wriggled and jiggled and tickled inside her", "bird", "cat", "dog", "goat", "cow", "horse"]
+
+lyrics = [
+        (VerseStart, "I know an old lady who swallowed a {{animal}}.\n")
+        ,(VerseEnd, "I don't know why she swallowed the fly. Perhaps she'll die.\n")
+        ,(VerseContinuation, "She swallowed the {{eater}} to catch the {{eaten}}.\n")
+        ,(SongEnd, "She's dead, of course!\n")
+        ,(AnimalQuirk Spider, "It wriggled and jiggled and tickled inside her.\n")
+        ,(AnimalQuirk Bird, "How absurd to swallow a bird!\n")
+        ,(AnimalQuirk Cat, "Imagine that, to swallow a cat!\n")
+        ,(AnimalQuirk Dog, "What a hog, to swallow a dog!\n")
+        ,(AnimalQuirk Goat, "Just opened her throat and swallowed a goat!\n")
+        ,(AnimalQuirk Cow, "I don't know how she swallowed a cow!\n")
+    ]
+
+lyricMap :: Map.Map LineRole String
+lyricMap = Map.fromList lyrics
+
 
 data Animal = Fly | Spider | Bird | Cat | Dog | Goat | Cow | Horse deriving (Show, Eq, Ord, Enum)
 
-numAllAnimals = numAnimals Fly Horse
+allAnimals :: [Animal]
+allAnimals = take numAllAnimals $ iterate succ Fly
+
+numAnimalsInRange :: Animal -> Animal -> Int
+numAnimalsInRange from to = (fromEnum to) - (fromEnum from) + 1
+
+numAllAnimals :: Int
+numAllAnimals = numAnimalsInRange Fly Horse
 
 data LineRole = VerseStart | VerseEnd | VerseContinuation | SongEnd | FirstSpider
      | AnimalQuirk Animal deriving (Show, Eq, Ord)
+
 data Verse = FirstVerse LineRole LineRole
             | SecondVerse LineRole LineRole LineRole LineRole
             | MainVerse LineRole LineRole [LineRole] LineRole
             | LastVerse LineRole LineRole
             deriving (Show)
 
-allAnimals = take numAllAnimals $ iterate succ Fly
 
 song :: String
 song = intercalate "\n" $ structureToText songStructure
 
 eatenMap :: Map.Map Animal String
-eatenMap = Map.fromList $ zip (take numAllAnimals $ iterate succ Fly) prey
+eatenMap = Map.fromList $ zip allAnimals eaten
 
 eaterMap :: Map.Map Animal String
-eaterMap = Map.fromList $ zip animals $ map (map toLower) (map show animals)
-    where animals = take numAllAnimals $ iterate succ Fly
+eaterMap = Map.fromList $ zip allAnimals $ map (map toLower) (map show allAnimals)
 
 songStructure :: [Verse]
 songStructure = [FirstVerse VerseStart VerseEnd]
@@ -42,7 +65,7 @@ songStructure = [FirstVerse VerseStart VerseEnd]
                 ++ [LastVerse VerseStart SongEnd]
 
 replicateForEachAnimal :: Animal -> a -> [a]
-replicateForEachAnimal animal = replicate (numAnimals Spider animal)
+replicateForEachAnimal animal = replicate (numAnimalsInRange Spider animal)
 
 getText :: (Verse, Animal) -> String
 getText ((FirstVerse a b), animal) = (replace "{{animal}}" (animalToText animal) $ lookupLyric a) ++ (lookupLyric b)
@@ -75,9 +98,6 @@ showLyric (a, l) = (replace "{{eater}}" (lookupEater a)) $ (replace "{{eaten}}" 
 showLyric2 :: (Animal, LineRole) -> String
 showLyric2 (a, l) = (replace "{{eater}}" (lookupEater a)) $ (replace "{{eaten}}" $ (map toLower $ show $ pred a)) $ (lookupLyric l)
 
-numAnimals :: Animal -> Animal -> Int
-numAnimals l u = (fromEnum u) - (fromEnum l) + 1
-
 lookupLyric :: LineRole -> String
 lookupLyric lr = dropit (Map.lookup lr lyricMap)
 
@@ -95,19 +115,4 @@ animalToText :: Animal -> String
 animalToText a = map toLower $ show a
 
 
-lyrics = [
-        (VerseStart, "I know an old lady who swallowed a {{animal}}.\n")
-        ,(VerseEnd, "I don't know why she swallowed the fly. Perhaps she'll die.\n")
-        ,(VerseContinuation, "She swallowed the {{eater}} to catch the {{eaten}}.\n")
-        ,(SongEnd, "She's dead, of course!\n")
-        ,(AnimalQuirk Spider, "It wriggled and jiggled and tickled inside her.\n")
-        ,(AnimalQuirk Bird, "How absurd to swallow a bird!\n")
-        ,(AnimalQuirk Cat, "Imagine that, to swallow a cat!\n")
-        ,(AnimalQuirk Dog, "What a hog, to swallow a dog!\n")
-        ,(AnimalQuirk Goat, "Just opened her throat and swallowed a goat!\n")
-        ,(AnimalQuirk Cow, "I don't know how she swallowed a cow!\n")
-    ]
-
-lyricMap :: Map.Map LineRole String
-lyricMap = Map.fromList lyrics
 
