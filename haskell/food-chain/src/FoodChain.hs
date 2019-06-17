@@ -17,6 +17,10 @@ data Verse = FirstVerse LineRole LineRole
 eatenMap :: Map.Map Animal String
 eatenMap = Map.fromList $ zip (take ((fromEnum Horse) - (fromEnum Fly) + 1) $ iterate succ Fly) prey
 
+eaterMap :: Map.Map Animal String
+eaterMap = Map.fromList $ zip animals $ map (map toLower) (map show animals)
+    where animals = take (numAnimals Horse Fly) $ iterate succ Fly
+
 firstVerse :: (Verse, Animal)
 firstVerse = (FirstVerse VerseStart VerseEnd, Fly)
 
@@ -28,7 +32,7 @@ lastVerse = (LastVerse SongEnd1 SongEnd2, Horse)
 
 middleVerses :: [(Verse, Animal)]
 middleVerses = map hydrate $ take 5 $ iterate succ Bird
-    where hydrate a = (MainVerse VerseStart (AnimalQuirk a) (replicate ((fromEnum a) - (fromEnum Bird) + 1) VerseContinuation) VerseEnd, a)
+    where hydrate a = (MainVerse VerseStart (AnimalQuirk a) (replicate (numAnimals a Spider) VerseContinuation) VerseEnd, a)
 
 lyricMap :: Map.Map LineRole String
 lyricMap = Map.fromList lyrics
@@ -74,10 +78,10 @@ generateContinuationLines continuations animal =
     where lines = zip (iterate pred animal) continuations
 
 showLyric :: (Animal, LineRole) -> String
-showLyric (a, l) = (replace "{{eater}}" (lookupEaten a)) $ (replace "{{eaten}}" $ lookupEaten $ pred a) $ (lookupLyric l)
+showLyric (a, l) = (replace "{{eater}}" (lookupEater a)) $ (replace "{{eaten}}" $ lookupEaten $ pred a) $ (lookupLyric l)
 
 showLyric2 :: (Animal, LineRole) -> String
-showLyric2 (a, l) = (replace "{{eater}}" (lookupEaten a)) $ (replace "{{eaten}}" $ (map toLower $ show $ pred a)) $ (lookupLyric l)
+showLyric2 (a, l) = (replace "{{eater}}" (lookupEater a)) $ (replace "{{eaten}}" $ (map toLower $ show $ pred a)) $ (lookupLyric l)
 
 numAnimals :: Animal -> Animal -> Int
 numAnimals g l = (fromEnum g) - (fromEnum l) + 1
@@ -88,6 +92,9 @@ lookupLyric lr = dropit (Map.lookup lr lyricMap)
 lookupEaten :: Animal -> String
 lookupEaten a = dropit (Map.lookup a eatenMap )
 
+lookupEater :: Animal -> String
+lookupEater a = dropit (Map.lookup a eaterMap )
+
 dropit :: Maybe String -> String
 dropit (Just x) = x
 dropit Nothing = error "corrupt embedded data"
@@ -96,7 +103,10 @@ animalToText :: Animal -> String
 animalToText a = map toLower $ show a
 
 song :: String
-song =
+song = concat $ structureToText songStructure
+
+
+songx =
     "I know an old lady who swallowed a fly.\n\
     \I don't know why she swallowed the fly. Perhaps she'll die.\n\
     \\n\
