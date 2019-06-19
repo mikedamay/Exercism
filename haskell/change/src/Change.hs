@@ -9,9 +9,7 @@ findFewestCoins target denoms = if null used then Nothing else Just used
 
 forEachDenom :: Integer -> [Integer] -> [[Integer]]
 forEachDenom _ [] = []
-forEachDenom target denoms = map' target [] (makeChange target) (id $ setsOf denoms)
-
-mapper = map'
+forEachDenom target denoms = map' target [] (makeChange target) (setsOf denoms)
 
 makeChange :: Integer -> [Integer] -> [Integer]
 makeChange _ [] = []
@@ -34,24 +32,17 @@ doMax target xss =
     getMax target filtered
     where filtered = filter (\xs -> (sum xs) == target) xss
 
-winnow :: [[Integer]] -> [[Integer]]
-winnow [] = []
-winnow (h@(x:xs):xss) = (winnow $ filter (keepIn x) xss)
-
-keepIn :: Integer -> [Integer] -> Bool
-keepIn x (y:ys) = x `rem` y /= 0
-
 map' :: Integer -> [Integer] -> ([Integer] -> [Integer]) -> [[Integer]] -> [[Integer]]
 map' _ _ _ [] = []
 map' target wins f (xs:xss)
-    | (head xs) `factorOf` wins = map' target wins' f xss
+    | (head xs) `isFactorOf` wins = map' target wins' f xss
     | otherwise = result:(map' target wins' f xss)
     where result = (f xs )
           success = sum result == target
           wins' = if success then (result ++ wins) else wins
 
-factorOf :: Integer -> [Integer] -> Bool
-factorOf el coll = any (\c -> c `rem` el == 0) coll
+isFactorOf :: Integer -> [Integer] -> Bool
+isFactorOf el coll = any (\c -> c `rem` el == 0) coll
 
 areAllFactorsOf :: [Integer] -> Integer -> Bool
 areAllFactorsOf denoms denom = all (\x -> denom `rem` x == 0) denoms
