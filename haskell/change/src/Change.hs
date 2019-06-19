@@ -5,7 +5,7 @@ import Data.List (sort, foldl1)
 findFewestCoins :: Integer -> [Integer] -> Maybe [Integer]
 findFewestCoins 0 _ = Just []
 findFewestCoins target denoms = if null used then Nothing else Just used
-    where used = doMax target $ forEachDenom target (reverse $ sort denoms)
+    where used = findFewest target $ forEachDenom target (reverse $ sort denoms)
 
 forEachDenom :: Integer -> [Integer] -> [[Integer]]
 forEachDenom _ [] = []
@@ -15,22 +15,22 @@ makeChange :: Integer -> [Integer] -> [Integer]
 makeChange _ [] = []
 makeChange target (denom:denoms)
     | target == denom = [denom]
-    | target < denom = doMax target $ forEachDenom target denoms
+    | target < denom = findFewest target $ forEachDenom target denoms
     | target > denom * 3 && denoms `areAllFactorsOf` denom = denom:(makeChange (target - denom) (denom:denoms))
-    | otherwise = denom:(doMax (target - denom) $ forEachDenom (target - denom) (denom:denoms))
+    | otherwise = denom:(findFewest (target - denom) $ forEachDenom (target - denom) (denom:denoms))
 
-getMax :: Integer -> [[Integer]] -> [Integer]
-getMax _ [] = []
-getMax target xss = foldl1 (\acc x -> if length x < length acc then x else acc ) $ xss
+fewest :: [[Integer]] -> [Integer]
+fewest [] = []
+fewest xss = foldl1 (\acc x -> if length x < length acc then x else acc ) $ xss
+
+findFewest :: Integer -> [[Integer]] -> [Integer]
+findFewest target xss =
+    fewest filtered
+    where filtered = filter (\xs -> (sum xs) == target) xss
 
 setsOf :: [Integer] -> [[Integer]]
 setsOf [] = []
 setsOf (x:xs) = (x:xs):(setsOf xs)
-
-doMax :: Integer -> [[Integer]] -> [Integer]
-doMax target xss =
-    getMax target filtered
-    where filtered = filter (\xs -> (sum xs) == target) xss
 
 map' :: Integer -> [Integer] -> ([Integer] -> [Integer]) -> [[Integer]] -> [[Integer]]
 map' _ _ _ [] = []
