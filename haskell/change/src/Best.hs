@@ -1,4 +1,4 @@
-(findFewestCoins) where
+module Best (findFewestCoins) where
 
 import Data.Array.IArray ((!), Array, array)
 import Data.Function (on)
