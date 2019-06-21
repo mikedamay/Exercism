@@ -118,6 +118,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythagoreanTriplet", "cshar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LargestSeriesProduct", "csharp\largest-series-product\LargestSeriesProduct.csproj", "{039A7E36-0BF7-452B-99CE-DC7B7264DCA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelLetterFrequency", "csharp\parallel-letter-frequency\ParallelLetterFrequency.csproj", "{022F8F80-312F-49DD-9327-2BAFB1B11152}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -356,5 +358,9 @@ Global
 		{039A7E36-0BF7-452B-99CE-DC7B7264DCA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{039A7E36-0BF7-452B-99CE-DC7B7264DCA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{039A7E36-0BF7-452B-99CE-DC7B7264DCA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{022F8F80-312F-49DD-9327-2BAFB1B11152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{022F8F80-312F-49DD-9327-2BAFB1B11152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{022F8F80-312F-49DD-9327-2BAFB1B11152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{022F8F80-312F-49DD-9327-2BAFB1B11152}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
