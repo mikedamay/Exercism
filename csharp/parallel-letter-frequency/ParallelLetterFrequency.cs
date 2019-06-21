@@ -57,8 +57,6 @@ namespace MyTests
     using Xunit;
     public class MyTests
     {
-        // Parallel: 2.7 secs on 2016 fully loaded IMac
-        // Sequential 2.6 secs
         [Fact(Skip = "")]
         public void CalculateTest()
         {
@@ -68,8 +66,6 @@ namespace MyTests
             Assert.Equal(560000, actual['t']);
             Assert.Equal(20000, actual['ü']);
         }
-        // Parallel: 0.56 secs
-        // Sequential: 2.2 secs
         [Fact(Skip = "")]
         public void CalculateSlowerTest()
         {
