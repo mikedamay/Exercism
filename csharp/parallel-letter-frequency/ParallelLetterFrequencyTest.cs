@@ -83,7 +83,7 @@ public class ParallelLetterFrequencyTest
     public void Many_times_the_same_text_gives_a_predictable_result()
     {
         var input = Enumerable.Repeat("abc", 1000);
-        var actual = ParallelLetterFrequency.CalculateSlower(input);
+        var actual = ParallelLetterFrequency.Calculate(input);
         var expected = new Dictionary<char, int>
         {
             { 'a', 1000 },
