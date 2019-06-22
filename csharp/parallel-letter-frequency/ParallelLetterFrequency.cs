@@ -2,41 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using System;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
+
 public static class ParallelLetterFrequency
 {
     public static Dictionary<char, int> Calculate(IEnumerable<string> texts)
     {
-        // slower
-        return texts
-            .AsParallel()
-            .Select(t => t.ToLower())
-            .SelectMany(t => t, (t, c) => c)
-            .Where(Char.IsLetter)
-            .OrderBy(_ => _)
-            .GroupBy(c => c)
-            .ToDictionary(g => g.Key, g => g.Count());
-    }
-    public static Dictionary<char, int> CalculateSlower(IEnumerable<string> texts)
-    {
-        // both solutions here are slower as PARALLEL for the test cases
-        // but faster for larger data sets
-        // this solution is restricted to ascii 8 text
-        var combinedText = texts.SelectMany(t => t.ToLower());
-        var alphabet = Enumerable.Range(0, 255)
-            .Select(c => (char)c)
-            .Where(Char.IsLetter)
-            .Intersect(combinedText);
-        return alphabet
-            .AsParallel()
-            .SelectMany(c => combinedText
-                    .Where(Char.IsLetter)
-                , (c, x) => (c, c == x ? 1 : 0))
-            .Where(p => p.Item2 != 0)
-            .BuildDictionary(alphabet);
-    }
-    
-}
+        var freq = new ConcurrentDictionary<char, int>();
+        Parallel.ForEach(texts, (s) => {
+            Parallel.ForEach (s, (c) =>
+            {
+                if(char.IsLetter(c)) 
+                {
+                    freq.AddOrUpdate(char.ToLower(c), (cKey) => 1, (cKey, cVal) => ++cVal);
+                }
+            });
+        });
 
+        return new Dictionary<char, int>(freq);
+    }
+}
 internal static class Exts
 {
     public static Dictionary<char, int> BuildDictionary(this IEnumerable<(char, int)> source,
@@ -67,13 +55,17 @@ namespace MyTests
             Assert.Equal(20000, actual['ü']);
         }
         [Fact(Skip = "")]
-        public void CalculateSlowerTest()
+        public void ShortTexts()
         {
-            var input = Enumerable.Repeat(new[] { OdeAnDieFreude, Wilhelmus, StarSpangledBanner }, 10_000).SelectMany(t => t);
-            var actual = ParallelLetterFrequency.CalculateSlower(input);
-            Assert.Equal(490000, actual['a']);
-            Assert.Equal(560000, actual['t']);
-            Assert.Equal(20000, actual['ü']);
+            var input = Enumerable.Repeat("abc", 10_000_000);
+            var actual = ParallelLetterFrequency.Calculate(input);
+            var expected = new Dictionary<char, int>
+            {
+                { 'a', 10_000_000 },
+                { 'b', 10_000_000 },
+                { 'c', 10_000_000 }
+            };
+            Assert.Equal(expected, actual);
         }
         private const string OdeAnDieFreude =
             "Freude schöner Götterfunken\n" +
