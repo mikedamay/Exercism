@@ -25,13 +25,10 @@ findTerritories arr = [Set.empty]
 -- polishTerritories sets
 --     | length $ nub $ filter (\(x, y, c) -> c /= None) > 1 sets =
 --
--- polishTerritory :: Set.Set (Int, Int, Color) -> (Set (Int, Int), Color)
--- polishTerritory [] = []
--- polishTerritory set
---     | numColors > 1 = ((removeColor set), color)
---   where
---     numColors = length $ nub $ filter (\(x, y, c) -> c /= None) $ Set.toList set
---     numColors = length $ nub $ filter (\(x, y, c) -> c /= None) $ Set.toList set
+polishTerritory :: Set.Set (Int, Int, Color) -> (Set.Set (Int, Int), Maybe Color)
+polishTerritory set | set == Set.empty = (Set.empty, Nothing)
+polishTerritory set =
+    (Set.fromList $ [(x, y) | (x, y, c) <- (Set.toList set)], territoryColor set)
 
 territoryColor :: Set.Set (Int, Int, Color) -> Maybe Color
 territoryColor set | set == Set.empty = Nothing
