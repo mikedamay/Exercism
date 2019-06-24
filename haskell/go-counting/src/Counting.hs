@@ -9,6 +9,13 @@ import qualified Data.Array as Array
 
 data Color = Black | White | None deriving (Eq, Ord, Show)
 type Coord = (Int, Int)
+type CoordAndColor = (Int, Int, Color)
+
+type ColorArray = Array.Array (Int, Int) Color
+data Colors = Colors {arr :: ColorArray, getColor :: Coord -> Color }
+
+type CoordAndColorSet = Set.Set (Int, Int, Color)
+type CoordSet = Set.Set (Int, Int)
 
 territories :: [String] -> [(Set.Set Coord, Maybe Color)]
 territories board = error "You need to implement this function."
@@ -17,50 +24,49 @@ territoryFor :: [String] -> Coord -> Maybe (Set.Set Coord, Maybe Color)
 territoryFor board coord = error "You need to implement this function."
 
 
-findTerritories :: Array.Array (Int, Int) Color -> [Set.Set (Int, Int, Color)] -> [(Int, Int)] -> [Set.Set (Int, Int, Color)]
+findTerritories :: ColorArray -> [CoordAndColorSet] -> [Coord] -> [CoordAndColorSet]
 findTerritories _ territories [] = territories
 findTerritories arr territories (c:coords)
     | territories `containsCoord` c = findTerritories arr territories coords
     | (arr Array.! c) /= None = findTerritories arr territories coords
     | otherwise = findTerritories arr (set:territories) coords
         where set = queryCell c arr Set.empty
+              colors = Colors {arr = arr, getColor = (arr Array.!)}
 
-queryCell :: (Int, Int) -> Array.Array (Int, Int) Color -> Set.Set (Int, Int, Color) -> Set.Set (Int, Int, Color)
+queryCell :: Coord -> ColorArray -> CoordAndColorSet -> CoordAndColorSet
 queryCell coord@(r, c) arr set
     | set `setContainsCoord` coord = set
     | color /= None = Set.insert (r, c, color) set
-    | otherwise = foldl (\acc x -> Set.insert (addColorToCoord arr x) acc) set (neighbours maxRow maxCol coord)
+    | otherwise = foldl (\acc x -> queryCell x arr (Set.insert (addColorToCoord arr x) acc)) set (neighbours maxRow maxCol coord)
   where
     color = arr Array.! coord
     (maxRow, maxCol) = snd $ Array.bounds arr
 
-addColorToCoord :: Array.Array (Int, Int) Color -> (Int, Int) -> (Int, Int, Color)
+addColorToCoord :: ColorArray -> Coord -> CoordAndColor
 addColorToCoord arr coord@(r, c) = (r, c, arr Array.! coord)
 
--- queryCell (r, c) arr set = Set.insert (r, c, None) set
-
-containsCoord :: [Set.Set (Int, Int, Color)] -> (Int, Int) -> Bool
+containsCoord :: [CoordAndColorSet] -> Coord -> Bool
 containsCoord sets (r, c) = any (\set -> Set.member (r, c, Black) set || Set.member (r, c, White) set || Set.member (r, c, None) set  ) sets
 
-setContainsCoord :: Set.Set (Int, Int, Color) -> (Int, Int) -> Bool
+setContainsCoord :: CoordAndColorSet -> Coord -> Bool
 setContainsCoord set (r, c) = Set.member (r, c, Black) set || Set.member (r, c, White) set || Set.member (r, c, None) set
 
-addCoords :: (Int, Int) -> (Int, Int) -> (Int, Int)
+addCoords :: Coord -> Coord -> Coord
 addCoords (r1, c1) (r2, c2) = (r1 + r2, c1 + c2)
 
-neighbours :: Int -> Int -> (Int, Int) -> [(Int, Int)]
-neighbours maxRow maxCol coord = filter (\(r, c) -> r >= 0 && r <= maxRow && c >= 0 && c <= maxCol) $ map (addCoords coord) [(1, 0), (0, 1), (-1, 0), (0, -1)]
+neighbours :: Int -> Int -> Coord -> [Coord]
+neighbours maxRow maxCol coord = filter (\(r, c) -> r >= 0 && r <= maxRow && c >= 0 && c <= maxCol) $ map (addCoords coord) (coord:[(1, 0), (0, 1), (-1, 0), (0, -1)])
 
-coords :: Array.Array (Int, Int) Color -> [(Int, Int)]
+coords :: ColorArray -> [Coord]
 coords arr = [(r, c) | r <- [0..maxRow], c <- [0..maxCol]]
   where
     (min, (maxRow, maxCol)) = Array.bounds arr
 
-polishTerritories :: [Set.Set (Int, Int, Color)] -> [(Set.Set (Int, Int), Maybe Color)]
+polishTerritories :: [CoordAndColorSet] -> [(CoordSet, Maybe Color)]
 polishTerritories [] = []
 polishTerritories sets = map polishTerritory sets
 
-polishTerritory :: Set.Set (Int, Int, Color) -> (Set.Set (Int, Int), Maybe Color)
+polishTerritory :: CoordAndColorSet -> (CoordSet, Maybe Color)
 polishTerritory set | set == Set.empty = (Set.empty, Nothing)
 polishTerritory set =
     (Set.fromList $ [(x, y) | (x, y, c) <- cleaned], if color == Just None then Nothing else color)
@@ -68,7 +74,7 @@ polishTerritory set =
     color = territoryColor set
     cleaned = filter (\(x, y, c) -> c == None) $ Set.toList set
 
-territoryColor :: Set.Set (Int, Int, Color) -> Maybe Color
+territoryColor :: CoordAndColorSet-> Maybe Color
 territoryColor set | set == Set.empty = Nothing
 territoryColor set = foldl (\acc (x, y, c) -> if acc == Nothing then Nothing else
                                                 if acc == Just None then Just c else
@@ -77,7 +83,7 @@ territoryColor set = foldl (\acc (x, y, c) -> if acc == Nothing then Nothing els
                                                             Nothing
                                                         ) (Just None) (Set.toList set)
 
-strToArray :: [String] -> Array.Array (Int, Int) Color
+strToArray :: [String] -> ColorArray
 strToArray lines = Array.listArray ((0, 0), (length lines - 1, lengthOfLine lines - 1))
     $ map charToColor $ concat lines
   where
@@ -91,3 +97,7 @@ strToArray lines = Array.listArray ((0, 0), (length lines - 1, lengthOfLine line
 
 filterPrimes (p:xs) =
     p : (filterPrimes [x | x <- xs, x `rem` p /= 0])
+
+jon =  ((Array.listArray ((0,0),(0,1)) [Black, Black]) Array.!)
+
+bob = Colors {arr = Array.listArray ((0,0),(0,1)) [Black, Black], getColor = jon}
