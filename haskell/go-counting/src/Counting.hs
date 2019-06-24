@@ -25,19 +25,31 @@ findTerritories arr territories (c:coords)
     | otherwise = findTerritories arr (set:territories) coords
         where set = queryCell c arr Set.empty
 
--- queryCell :: (Int, Int) -> Array.Array (Int, Int) Color -> Set.Set (Int, Int, Color) -> Set.Set (Int, Int, Color)
--- queryCell coord@(r, c) arr set
---     | set `containsCoord` coord = set
---     | color /= None = S.insert (r, c, color) set
---     | otherwise
---   where
---     color = arr Array.! coord
+queryCell :: (Int, Int) -> Array.Array (Int, Int) Color -> Set.Set (Int, Int, Color) -> Set.Set (Int, Int, Color)
+queryCell coord@(r, c) arr set
+    | set `setContainsCoord` coord = set
+    | color /= None = Set.insert (r, c, color) set
+    | otherwise = foldl (\acc x -> Set.insert (addColorToCoord arr x) acc) set (neighbours maxRow maxCol coord)
+  where
+    color = arr Array.! coord
+    (maxRow, maxCol) = snd $ Array.bounds arr
 
-queryCell (r, c) arr set = Set.insert (r, c, None) set
+addColorToCoord :: Array.Array (Int, Int) Color -> (Int, Int) -> (Int, Int, Color)
+addColorToCoord arr coord@(r, c) = (r, c, arr Array.! coord)
+
+-- queryCell (r, c) arr set = Set.insert (r, c, None) set
 
 containsCoord :: [Set.Set (Int, Int, Color)] -> (Int, Int) -> Bool
 containsCoord sets (r, c) = any (\set -> Set.member (r, c, Black) set || Set.member (r, c, White) set || Set.member (r, c, None) set  ) sets
 
+setContainsCoord :: Set.Set (Int, Int, Color) -> (Int, Int) -> Bool
+setContainsCoord set (r, c) = Set.member (r, c, Black) set || Set.member (r, c, White) set || Set.member (r, c, None) set
+
+addCoords :: (Int, Int) -> (Int, Int) -> (Int, Int)
+addCoords (r1, c1) (r2, c2) = (r1 + r2, c1 + c2)
+
+neighbours :: Int -> Int -> (Int, Int) -> [(Int, Int)]
+neighbours maxRow maxCol coord = filter (\(r, c) -> r >= 0 && r <= maxRow && c >= 0 && c <= maxCol) $ map (addCoords coord) [(1, 0), (0, 1), (-1, 0), (0, -1)]
 
 coords :: Array.Array (Int, Int) Color -> [(Int, Int)]
 coords arr = [(r, c) | r <- [0..maxRow], c <- [0..maxCol]]
