@@ -33,6 +33,15 @@ findTerritories arr territories (c:coords)
         where set = queryCell c arr Set.empty
               colors = Colors {arr = arr, getColor = (arr Array.!)}
 
+findTerritories' :: ColorArray -> [CoordAndColorSet] -> [Coord] -> [CoordAndColorSet]
+findTerritories' _ territories [] = territories
+findTerritories' arr territories (c:coords)
+    | territories `containsCoord` c = findTerritories' arr territories coords
+    | (arr Array.! c) /= None = findTerritories' arr territories coords
+    | otherwise = findTerritories' arr (set:territories) coords
+        where set = Set.empty -- queryCell c arr Set.empty
+              colors = Colors {arr = arr, getColor = (arr Array.!)}
+
 queryCell :: Coord -> ColorArray -> CoordAndColorSet -> CoordAndColorSet
 queryCell coord@(r, c) arr set
     | set `setContainsCoord` coord = set
@@ -74,7 +83,7 @@ polishTerritory set =
     color = territoryColor set
     cleaned = filter (\(x, y, c) -> c == None) $ Set.toList set
 
-territoryColor :: CoordAndColorSet-> Maybe Color
+territoryColor :: CoordAndColorSet -> Maybe Color
 territoryColor set | set == Set.empty = Nothing
 territoryColor set = foldl (\acc (x, y, c) -> if acc == Nothing then Nothing else
                                                 if acc == Just None then Just c else
