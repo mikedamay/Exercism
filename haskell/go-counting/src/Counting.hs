@@ -36,7 +36,7 @@ findTerritories arr territories (c:coords)
 setup :: (Colors, [Coord])
 setup = (colors, coo)
   where
-    arr = strToArray ["   ", "   "]
+    arr = strToArray ["B B", " B "]
     coo = coords arr
     colors = Colors {arr = arr, getColor = (arr Array.!)}
 
@@ -66,7 +66,7 @@ queryCell' :: Coord -> Colors -> CoordSet -> CoordSet
 queryCell' coord colors set
     | set `setContainsCoord'` coord = set
     | color /= None = Set.insert coord set
-    | otherwise = foldl (\acc c -> queryCell' c colors (Set.insert c acc)) (Set.insert coord set) (neighbours maxRow maxCol coord)
+    | otherwise = foldl (\acc c -> queryCell' c colors acc) (Set.insert coord set) (neighbours maxRow maxCol coord)
   where
     color = getColor colors coord
     (maxRow, maxCol) = snd $ Array.bounds (arr colors)
