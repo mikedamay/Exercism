@@ -33,14 +33,25 @@ findTerritories arr territories (c:coords)
         where set = queryCell c arr Set.empty
               colors = Colors {arr = arr, getColor = (arr Array.!)}
 
-findTerritories' :: ColorArray -> [CoordAndColorSet] -> [Coord] -> [CoordAndColorSet]
+setup :: (Colors, [Coord])
+setup = (colors, coo)
+  where
+    arr = strToArray ["   ", "   "]
+    coo = coords arr
+    colors = Colors {arr = arr, getColor = (arr Array.!)}
+
+start :: ColorArray -> [CoordAndColorSet]
+start arr = findTerritories' colors [] []
+  where
+    colors = Colors {arr = arr, getColor = (arr Array.!)}
+
+findTerritories' :: Colors -> [CoordAndColorSet] -> [Coord] -> [CoordAndColorSet]
 findTerritories' _ territories [] = territories
 findTerritories' arr territories (c:coords)
     | territories `containsCoord` c = findTerritories' arr territories coords
-    | (arr Array.! c) /= None = findTerritories' arr territories coords
+    | getColor arr c /= None = findTerritories' arr territories coords
     | otherwise = findTerritories' arr (set:territories) coords
-        where set = Set.empty -- queryCell c arr Set.empty
-              colors = Colors {arr = arr, getColor = (arr Array.!)}
+        where set = queryCell' c arr Set.empty
 
 queryCell :: Coord -> ColorArray -> CoordAndColorSet -> CoordAndColorSet
 queryCell coord@(r, c) arr set
@@ -51,8 +62,20 @@ queryCell coord@(r, c) arr set
     color = arr Array.! coord
     (maxRow, maxCol) = snd $ Array.bounds arr
 
+queryCell' :: Coord -> Colors -> CoordAndColorSet -> CoordAndColorSet
+queryCell' coord@(r, c) colors set
+    | set `setContainsCoord` coord = set
+    | color /= None = Set.insert (r, c, color) set
+    | otherwise = foldl (\acc x -> queryCell' x colors (Set.insert (addColorToCoord' colors x) acc)) (Set.insert (r, c, None) set) (neighbours maxRow maxCol coord)
+  where
+    color = getColor colors coord
+    (maxRow, maxCol) = snd $ Array.bounds (arr colors)
+
 addColorToCoord :: ColorArray -> Coord -> CoordAndColor
 addColorToCoord arr coord@(r, c) = (r, c, arr Array.! coord)
+
+addColorToCoord' :: Colors -> Coord -> CoordAndColor
+addColorToCoord' colors coord@(r, c) = (r, c, getColor colors coord)
 
 containsCoord :: [CoordAndColorSet] -> Coord -> Bool
 containsCoord sets (r, c) = any (\set -> Set.member (r, c, Black) set || Set.member (r, c, White) set || Set.member (r, c, None) set  ) sets
@@ -64,7 +87,7 @@ addCoords :: Coord -> Coord -> Coord
 addCoords (r1, c1) (r2, c2) = (r1 + r2, c1 + c2)
 
 neighbours :: Int -> Int -> Coord -> [Coord]
-neighbours maxRow maxCol coord = filter (\(r, c) -> r >= 0 && r <= maxRow && c >= 0 && c <= maxCol) $ map (addCoords coord) (coord:[(1, 0), (0, 1), (-1, 0), (0, -1)])
+neighbours maxRow maxCol coord = filter (\(r, c) -> r >= 0 && r <= maxRow && c >= 0 && c <= maxCol) $ map (addCoords coord) [(1, 0), (0, 1), (-1, 0), (0, -1)]
 
 coords :: ColorArray -> [Coord]
 coords arr = [(r, c) | r <- [0..maxRow], c <- [0..maxCol]]
