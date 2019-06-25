@@ -36,7 +36,7 @@ findTerritories arr territories (c:coords)
 setup :: (Colors, [Coord])
 setup = (colors, coo)
   where
-    arr = strToArray ["B B", " B "]
+    arr = strToArray ["B   B", "B   B"]
     coo = coords arr
     colors = Colors {arr = arr, getColor = (arr Array.!)}
 
@@ -100,24 +100,24 @@ coords arr = [(r, c) | r <- [0..maxRow], c <- [0..maxCol]]
   where
     (min, (maxRow, maxCol)) = Array.bounds arr
 
-polishTerritories :: [CoordAndColorSet] -> [(CoordSet, Maybe Color)]
-polishTerritories [] = []
-polishTerritories sets = map polishTerritory sets
+polishTerritories :: Colors -> [CoordSet] -> [(CoordSet, Maybe Color)]
+polishTerritories _ [] = []
+polishTerritories colors sets = map (polishTerritory colors) sets
 
-polishTerritory :: CoordAndColorSet -> (CoordSet, Maybe Color)
-polishTerritory set | set == Set.empty = (Set.empty, Nothing)
-polishTerritory set =
-    (Set.fromList $ [(x, y) | (x, y, c) <- cleaned], if color == Just None then Nothing else color)
+polishTerritory :: Colors -> CoordSet -> (CoordSet, Maybe Color)
+polishTerritory colors set | set == Set.empty = (Set.empty, Nothing)
+polishTerritory colors set =
+    (Set.fromList $ cleaned, if color == Just None then Nothing else color)
   where
-    color = territoryColor set
-    cleaned = filter (\(x, y, c) -> c == None) $ Set.toList set
+    color = territoryColor colors set
+    cleaned = filter (\(x, y) -> (getColor colors (x, y)) == None) $ Set.toList set
 
-territoryColor :: CoordAndColorSet -> Maybe Color
-territoryColor set | set == Set.empty = Nothing
-territoryColor set = foldl (\acc (x, y, c) -> if acc == Nothing then Nothing else
-                                                if acc == Just None then Just c else
-                                                    if c == None then acc else
-                                                        if Just c == acc then acc else
+territoryColor :: Colors -> CoordSet -> Maybe Color
+territoryColor _ set | set == Set.empty = Nothing
+territoryColor colors set = foldl (\acc coord -> if acc == Nothing then Nothing else
+                                                   if acc == Just None then Just (getColor colors coord) else
+                                                     if getColor colors coord == None then acc else
+                                                       if Just (getColor colors coord) == acc then acc else
                                                             Nothing
                                                         ) (Just None) (Set.toList set)
 
