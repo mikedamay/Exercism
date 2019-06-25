@@ -17,8 +17,18 @@ data Colors = Colors {arr :: ColorArray, getColor :: Coord -> Color }
 type CoordAndColorSet = Set.Set (Int, Int, Color)
 type CoordSet = Set.Set (Int, Int)
 
+minRow :: Int
+minRow = 1
+
+minCol :: Int
+minCol = 1
+
 territories :: [String] -> [(Set.Set Coord, Maybe Color)]
-territories board = error "You need to implement this function."
+territories board = polishTerritories colors $ findTerritories' colors [] coo
+  where
+    colorArray = strToArray board
+    coo = coords colorArray
+    colors = Colors {arr = colorArray, getColor = (colorArray Array.!)}
 
 territoryFor :: [String] -> Coord -> Maybe (Set.Set Coord, Maybe Color)
 territoryFor board coord = error "You need to implement this function."
@@ -93,10 +103,10 @@ addCoords :: Coord -> Coord -> Coord
 addCoords (r1, c1) (r2, c2) = (r1 + r2, c1 + c2)
 
 neighbours :: Int -> Int -> Coord -> [Coord]
-neighbours maxRow maxCol coord = filter (\(r, c) -> r >= 0 && r <= maxRow && c >= 0 && c <= maxCol) $ map (addCoords coord) [(1, 0), (0, 1), (-1, 0), (0, -1)]
+neighbours maxRow maxCol coord = filter (\(r, c) -> r >= minRow && r <= maxRow && c >= minCol && c <= maxCol) $ map (addCoords coord) [(1, 0), (0, 1), (-1, 0), (0, -1)]
 
 coords :: ColorArray -> [Coord]
-coords arr = [(r, c) | r <- [0..maxRow], c <- [0..maxCol]]
+coords arr = [(r, c) | r <- [minRow..maxRow], c <- [minCol..maxCol]]
   where
     (min, (maxRow, maxCol)) = Array.bounds arr
 
@@ -122,7 +132,7 @@ territoryColor colors set = foldl (\acc coord -> if acc == Nothing then Nothing 
                                                         ) (Just None) (Set.toList set)
 
 strToArray :: [String] -> ColorArray
-strToArray lines = Array.listArray ((0, 0), (length lines - 1, lengthOfLine lines - 1))
+strToArray lines = Array.listArray ((minRow, minCol), (minRow + (length lines) - 1, minCol + (lengthOfLine lines) - 1))
     $ map charToColor $ concat lines
   where
     charToColor 'B' = Black
