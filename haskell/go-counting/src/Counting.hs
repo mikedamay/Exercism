@@ -4,6 +4,7 @@ module Counting (
     territoryFor,
 ) where
 
+import Data.List (transpose)
 import qualified Data.Set as Set
 import qualified Data.Array as Array
 
@@ -33,13 +34,21 @@ territories board = polishTerritories colors $ findTerritories' colors [] coo
 territoryFor :: [String] -> Coord -> Maybe (Set.Set Coord, Maybe Color)
 territoryFor board coord = error "You need to implement this function."
 
-setup :: (Colors, [Coord])
-setup = (colors, coo)
+allBlank = ["   ", "   "]
+allBlankSquare = ["   ", "   ", "   "]
+simple =  ["B   B", "B   B"]
+square = ["BBBBB", "B   B", "B   B","B   B", "BBBBB"]
+twoBlank = ["  "]
+
+setup :: [String] -> (Colors, [Coord])
+setup board = (colors, coo)
   where
---     arr = strToArray ["   ", "   "]
-    arr = strToArray ["B   B", "B   B"]
+    arr = strToArray board
     coo = coords arr
-    colors = Colors {arr = arr, getColor = (arr Array.!)}
+    colors = Colors {arr = arr, getColor = (f arr)}
+
+f arr (r, c) = arr Array.! (r, c)
+
 
 start :: ColorArray -> [CoordSet]
 start arr = findTerritories' colors [] []
@@ -59,20 +68,25 @@ queryCell' ctr coord colors set
     | ctr == 0 = set
     | set `setContainsCoord'` coord = set
     | color /= None = Set.insert coord set
-    | otherwise = foldl (\acc c -> queryCell' (ctr - 1) c colors acc) (Set.insert coord set) (neighbours maxCol maxRow coord)
+    | otherwise = foldl (\acc c -> queryCell' (ctr - 1) c colors acc) (Set.insert coord set) (neighbours maxRow maxCol coord)
   where
     color = getColor colors coord
-    (maxCol, maxRow) = snd $ Array.bounds (arr colors)
+    (maxRow, maxCol) = snd $ Array.bounds (arr colors)
 
-queryStuff :: Int -> Coord -> Colors -> [Coord] -> [Coord]
-queryStuff ctr coord colors set
-    | ctr == 0 = set
-    | coord `elem` set = set
-    | color /= None = coord:set
-    | otherwise = foldl (\acc c -> queryStuff (ctr - 1) c colors acc) (coord:set) (neighbours maxCol maxRow coord)
-  where
-    color = getColor colors coord
-    (maxCol, maxRow) = snd $ Array.bounds (arr colors)
+-- queryStuff :: Int -> Coord -> Colors -> [Coord]
+-- queryStuff ctr coord colors
+--     | ctr == 0 = [(-2, -2)]
+-- --     | coord `elem` set = set
+--     | color /= None = [coord]           -- ????
+--     | otherwise = coord:(queryNeighbour (ctr - 1) colors (neighbours maxCol maxRow coord))
+-- --     | otherwise = foldl (\acc c -> queryStuff (ctr - 1) c colors acc) (coord:set) (neighbours maxCol maxRow coord)
+--   where
+--     color = getColor colors coord
+--     (maxCol, maxRow) = snd $ Array.bounds (arr colors)
+--
+-- queryNeighbour :: Int -> Colors -> [Coord] -> [Coord]
+-- queryNeighbour _ _ [] = []
+-- queryNeighbour ctr colors (x:xs) = (queryStuff ctr x colors) ++ (queryNeighbour ctr colors xs)
 
 
 containsCoord' :: [CoordSet] -> Coord -> Bool
@@ -82,15 +96,15 @@ setContainsCoord' :: CoordSet -> Coord -> Bool
 setContainsCoord' set coord = Set.member coord set
 
 addCoords :: Coord -> Coord -> Coord
-addCoords (c1, r1) (c2, r2) = (c1 + c2, r1 + r2)
+addCoords (r1, c1) (r2, c2) = (r1 + r2, c1 + c2)
 
 neighbours :: Int -> Int -> Coord -> [Coord]
-neighbours maxCol maxRow coord = filter (\(c, r) -> r >= minRow && r <= maxRow && c >= minCol && c <= maxCol) $ map (addCoords coord) [(0, 1), (1, 0), (0, -1), (-1, 0)]
+neighbours maxRow maxCol coord = filter (\(r,  c) -> r >= minRow && r <= maxRow && c >= minCol && c <= maxCol) $ map (addCoords coord) [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
 coords :: ColorArray -> [Coord]
-coords arr = [(c, r) | c <- [minCol..maxCol], r <- [minRow..maxRow]]
+coords arr = [(r, c) | r <- [minRow..maxRow], c <- [minCol..maxCol]]
   where
-    (min, (maxCol, maxRow)) = Array.bounds arr
+    (min, (maxRow, maxCol)) = Array.bounds arr
 
 polishTerritories :: Colors -> [CoordSet] -> [(CoordSet, Maybe Color)]
 polishTerritories _ [] = []
@@ -114,8 +128,8 @@ territoryColor colors set = foldl (\acc coord -> if acc == Nothing then Nothing 
                                                         ) (Just None) (Set.toList set)
 
 strToArray :: [String] -> ColorArray
-strToArray lines = Array.listArray ((minCol, minRow), (minCol + (lengthOfLine lines) - 1, minRow + (length lines) - 1))
-    $ map charToColor $ concat lines
+strToArray lines = Array.listArray ((minRow, minCol), (minRow + (length lines) - 1, minCol + (lengthOfLine lines) - 1))
+    $ map charToColor $ concat $ lines
   where
     charToColor 'B' = Black
     charToColor 'W' = White
@@ -124,10 +138,3 @@ strToArray lines = Array.listArray ((minCol, minRow), (minCol + (lengthOfLine li
     lengthOfLine [] = 0
     lengthOfLine ([]:xs) = 0
     lengthOfLine (x:xs) = length x
-
-filterPrimes (p:xs) =
-    p : (filterPrimes [x | x <- xs, x `rem` p /= 0])
-
-jon =  ((Array.listArray ((0,0),(0,1)) [Black, Black]) Array.!)
-
-bob = Colors {arr = Array.listArray ((0,0),(0,1)) [Black, Black], getColor = jon}
