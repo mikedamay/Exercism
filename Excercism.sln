@@ -120,6 +120,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LargestSeriesProduct", "csh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelLetterFrequency", "csharp\parallel-letter-frequency\ParallelLetterFrequency.csproj", "{022F8F80-312F-49DD-9327-2BAFB1B11152}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PascalsTriangle", "csharp\pascals-triangle\PascalsTriangle.csproj", "{AB9D0199-CD94-4A54-ADFD-B091D68FD4F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -362,5 +364,9 @@ Global
 		{022F8F80-312F-49DD-9327-2BAFB1B11152}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{022F8F80-312F-49DD-9327-2BAFB1B11152}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{022F8F80-312F-49DD-9327-2BAFB1B11152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB9D0199-CD94-4A54-ADFD-B091D68FD4F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB9D0199-CD94-4A54-ADFD-B091D68FD4F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB9D0199-CD94-4A54-ADFD-B091D68FD4F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB9D0199-CD94-4A54-ADFD-B091D68FD4F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
