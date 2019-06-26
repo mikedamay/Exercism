@@ -25,20 +25,31 @@ minCol :: Int
 minCol = 1
 
 territories :: [String] -> [(Set.Set Coord, Maybe Color)]
-territories board = polishTerritories colors $ findTerritories' colors [] coo
+territories board = map normalise $ reverse $ polishTerritories colors $ findTerritories' colors [] coo
   where
     colorArray = strToArray board
     coo = coords colorArray
     colors = Colors {arr = colorArray, getColor = (colorArray Array.!)}
 
 territoryFor :: [String] -> Coord -> Maybe (Set.Set Coord, Maybe Color)
-territoryFor board coord = error "You need to implement this function."
+territoryFor board coord = if Set.null territory then Nothing else Just (normalise $ polishTerritory colors territory)
+  where
+    colorArray = strToArray board
+    coo = coords colorArray
+    colors = Colors {arr = colorArray, getColor = (colorArray Array.!)}
+    territory = queryCell' 5 (invertTuple coord) colors Set.empty
+
 
 allBlank = ["   ", "   "]
 allBlankSquare = ["   ", "   ", "   "]
 simple =  ["B   B", "B   B"]
 square = ["BBBBB", "B   B", "B   B","B   B", "BBBBB"]
 twoBlank = ["  "]
+main = [ "  B  "
+       , " B B "
+       , "B W B"
+       , " W W "
+       , "  W  " ]
 
 setup :: [String] -> (Colors, [Coord])
 setup board = (colors, coo)
@@ -138,3 +149,8 @@ strToArray lines = Array.listArray ((minRow, minCol), (minRow + (length lines) -
     lengthOfLine [] = 0
     lengthOfLine ([]:xs) = 0
     lengthOfLine (x:xs) = length x
+
+normalise :: (CoordSet, Maybe Color) -> (CoordSet, Maybe Color)
+normalise (set, color) = (Set.fromList $ map (\(r, c) -> (c, r)) $ Set.toList set, color)
+
+invertTuple (r, c) = (c, r)
