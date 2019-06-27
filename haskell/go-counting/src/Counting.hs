@@ -13,7 +13,7 @@ type Coord = (Int, Int)
 type CoordAndColor = (Int, Int, Color)
 
 type ColorArray = Array.Array (Int, Int) Color
-data Colors = Colors {arr :: ColorArray, getColor :: Coord -> Color }
+data Colors = Colors {arr :: ColorArray, getColor :: Coord -> Color, includes :: Coord -> Bool }
 
 type CoordAndColorSet = Set.Set (Int, Int, Color)
 type CoordSet = Set.Set (Int, Int)
@@ -29,15 +29,17 @@ territories board = map normalise $ reverse $ polishTerritories colors $ findTer
   where
     colorArray = strToArray board
     coo = coords colorArray
-    colors = Colors {arr = colorArray, getColor = (colorArray Array.!)}
+    colors = Colors {arr = colorArray, getColor = (colorArray Array.!), includes = (testInclusion colorArray)}
 
 territoryFor :: [String] -> Coord -> Maybe (Set.Set Coord, Maybe Color)
-territoryFor board coord = if Set.null territory then Nothing else Just (normalise $ polishTerritory colors territory)
+territoryFor board coord = if  not (colors `includes` coord) || null cleaned then Nothing else Just (normalise $ polishTerritory colors territory)
+-- territoryFor board coord = if null cleaned || not (colors `includes` coord) then Nothing else Just (normalise $ polishTerritory colors territory)
   where
     colorArray = strToArray board
     coo = coords colorArray
-    colors = Colors {arr = colorArray, getColor = (colorArray Array.!)}
+    colors = Colors {arr = colorArray, getColor = (colorArray Array.!), includes = (testInclusion colorArray)}
     territory = queryCell' 5 (invertTuple coord) colors Set.empty
+    cleaned = filter (\coord -> (getColor colors coord) == None) $ Set.toList territory
 
 
 allBlank = ["   ", "   "]
@@ -56,7 +58,7 @@ setup board = (colors, coo)
   where
     arr = strToArray board
     coo = coords arr
-    colors = Colors {arr = arr, getColor = (f arr)}
+    colors = Colors {arr = arr, getColor = (f arr), includes = (testInclusion arr)}
 
 f arr (r, c) = arr Array.! (r, c)
 
@@ -64,7 +66,7 @@ f arr (r, c) = arr Array.! (r, c)
 start :: ColorArray -> [CoordSet]
 start arr = findTerritories' colors [] []
   where
-    colors = Colors {arr = arr, getColor = (arr Array.!)}
+    colors = Colors {arr = arr, getColor = (arr Array.!), includes = (testInclusion arr)}
 
 findTerritories' :: Colors -> [CoordSet] -> [Coord] -> [CoordSet]
 findTerritories' _ territories [] = territories
@@ -154,3 +156,8 @@ normalise :: (CoordSet, Maybe Color) -> (CoordSet, Maybe Color)
 normalise (set, color) = (Set.fromList $ map (\(r, c) -> (c, r)) $ Set.toList set, color)
 
 invertTuple (r, c) = (c, r)
+
+testInclusion :: ColorArray -> Coord -> Bool
+testInclusion arr (r, c) = r >= minRow && r <= maxRow && c >= minCol && c <= maxCol
+  where
+    (min, (maxRow, maxCol)) = Array.bounds arr
