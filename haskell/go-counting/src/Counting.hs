@@ -4,7 +4,7 @@ module Counting (
     territoryFor,
 ) where
 
-import Data.List (transpose)
+import Data.List
 import qualified Data.Set as Set
 import qualified Data.Array as Array
 
@@ -17,7 +17,7 @@ data Colors = Colors {
     arr :: ColorArray
     , getColor :: Coord -> Color
     , includes :: Coord -> Bool
-    , coords' :: [(Int, Int)]
+    , coordsxx :: [(Int, Int)]
     }
 
 type CoordAndColorSet = Set.Set (Int, Int, Color)
@@ -30,7 +30,7 @@ minCol :: Int
 minCol = 1
 
 territories :: [String] -> [(Set.Set Coord, Maybe Color)]
-territories board = map normalise $ reverse $ polishTerritories colors $ findTerritories colors [] (coords' colors)
+territories board = map normalise $ reverse $ polishTerritories colors $ findTerritories colors [] (coordsxx colors)
   where
     colors = boardToColors board
 
@@ -45,8 +45,12 @@ boardToColors :: [String] -> Colors
 boardToColors board = colors
   where
     colorArray = strToArray board
-    coo = coords colorArray
-    colors = Colors {arr = colorArray, getColor = (colorArray Array.!), includes = (testInclusion colorArray), coords' = coo}
+    colors = Colors
+                {arr = colorArray
+                , getColor = (colorArray Array.!)
+                , includes = (testInclusion colorArray)
+                , coordsxx = coords' colorArray
+                }
 
 
 
@@ -62,7 +66,7 @@ main = [ "  B  "
        , "  W  " ]
 
 setup :: [String] -> (Colors, [Coord])
-setup board = (colors, coords' colors)
+setup board = (colors, coordsxx colors)
   where
     colors = boardToColors board
 
@@ -93,16 +97,17 @@ containsCoord sets coord = any ((flip setContainsCoord) coord) sets
 setContainsCoord :: CoordSet -> Coord -> Bool
 setContainsCoord set coord = Set.member coord set
 
-addCoords :: Coord -> Coord -> Coord
-addCoords (r1, c1) (r2, c2) = (r1 + r2, c1 + c2)
+-- addCoords :: Coord -> Coord -> Coord
 
 neighbours :: ColorArray -> Coord -> [Coord]
 neighbours colors coord = filter (testInclusion colors) $ map (addCoords coord) [(0, 1), (1, 0), (0, -1), (-1, 0)]
-
-coords :: ColorArray -> [Coord]
-coords arr = [(r, c) | r <- [minRow..maxRow], c <- [minCol..maxCol]]
   where
-    (min, (maxRow, maxCol)) = Array.bounds arr
+    addCoords (r1, c1) (r2, c2) = (r1 + r2, c1 + c2)
+
+coords' :: ColorArray -> [Coord]
+coords' arr = [(r, c) | r <- [minRow..maxRow], c <- [minCol..maxCol]]
+  where
+    ((minRow, minCol), (maxRow, maxCol)) = Array.bounds arr
 
 polishTerritories :: Colors -> [CoordSet] -> [(CoordSet, Maybe Color)]
 polishTerritories _ [] = []
@@ -136,13 +141,15 @@ strToArray lines = Array.listArray ((minRow, minCol), (minRow + (length lines) -
     lengthOfLine [] = 0
     lengthOfLine ([]:xs) = 0
     lengthOfLine (x:xs) = length x
+    (minRow, minCol) = (1, 1)
 
 normalise :: (CoordSet, Maybe Color) -> (CoordSet, Maybe Color)
 normalise (set, color) = (Set.fromList $ map invertTuple $ Set.toList set, color)
 
+invertTuple :: (Int, Int) -> (Int, Int)
 invertTuple (r, c) = (c, r)
 
 testInclusion :: ColorArray -> Coord -> Bool
 testInclusion arr (r, c) = r >= minRow && r <= maxRow && c >= minCol && c <= maxCol
   where
-    (min, (maxRow, maxCol)) = Array.bounds arr
+    ((minRow, minCol), (maxRow, maxCol)) = Array.bounds arr
