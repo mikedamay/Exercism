@@ -25,7 +25,7 @@ minCol :: Int
 minCol = 1
 
 territories :: [String] -> [(Set.Set Coord, Maybe Color)]
-territories board = map normalise $ reverse $ polishTerritories colors $ findTerritories' colors [] coo
+territories board = map normalise $ reverse $ polishTerritories colors $ findTerritories colors [] coo
   where
     colorArray = strToArray board
     coo = coords colorArray
@@ -38,7 +38,7 @@ territoryFor board coord = if  not (colors `includes` coord) || null cleaned the
     colorArray = strToArray board
     coo = coords colorArray
     colors = Colors {arr = colorArray, getColor = (colorArray Array.!), includes = (testInclusion colorArray)}
-    territory = queryCell' 5 (invertTuple coord) colors Set.empty
+    territory = queryCell 5 (invertTuple coord) colors Set.empty
     cleaned = filter (\coord -> (getColor colors coord) == None) $ Set.toList territory
 
 
@@ -64,49 +64,33 @@ f arr (r, c) = arr Array.! (r, c)
 
 
 start :: ColorArray -> [CoordSet]
-start arr = findTerritories' colors [] []
+start arr = findTerritories colors [] []
   where
     colors = Colors {arr = arr, getColor = (arr Array.!), includes = (testInclusion arr)}
 
-findTerritories' :: Colors -> [CoordSet] -> [Coord] -> [CoordSet]
-findTerritories' _ territories [] = territories
-findTerritories' colors territories (c:coords)
-    | territories `containsCoord'` c = findTerritories' colors territories coords
-    | getColor colors c /= None = findTerritories' colors territories coords
-    | otherwise = findTerritories' colors (set:territories) coords
-        where set = queryCell' 5 c colors Set.empty
+findTerritories :: Colors -> [CoordSet] -> [Coord] -> [CoordSet]
+findTerritories _ territories [] = territories
+findTerritories colors territories (c:coords)
+    | territories `containsCoord` c = findTerritories colors territories coords
+    | getColor colors c /= None = findTerritories colors territories coords
+    | otherwise = findTerritories colors (set:territories) coords
+        where set = queryCell 5 c colors Set.empty
 
-queryCell' :: Int -> Coord -> Colors -> CoordSet -> CoordSet
-queryCell' ctr coord colors set
+queryCell :: Int -> Coord -> Colors -> CoordSet -> CoordSet
+queryCell ctr coord colors set
     | ctr == 0 = set
-    | set `setContainsCoord'` coord = set
+    | set `setContainsCoord` coord = set
     | color /= None = Set.insert coord set
-    | otherwise = foldl (\acc c -> queryCell' (ctr - 1) c colors acc) (Set.insert coord set) (neighbours maxRow maxCol coord)
+    | otherwise = foldl (\acc c -> queryCell (ctr - 1) c colors acc) (Set.insert coord set) (neighbours maxRow maxCol coord)
   where
     color = getColor colors coord
     (maxRow, maxCol) = snd $ Array.bounds (arr colors)
 
--- queryStuff :: Int -> Coord -> Colors -> [Coord]
--- queryStuff ctr coord colors
---     | ctr == 0 = [(-2, -2)]
--- --     | coord `elem` set = set
---     | color /= None = [coord]           -- ????
---     | otherwise = coord:(queryNeighbour (ctr - 1) colors (neighbours maxCol maxRow coord))
--- --     | otherwise = foldl (\acc c -> queryStuff (ctr - 1) c colors acc) (coord:set) (neighbours maxCol maxRow coord)
---   where
---     color = getColor colors coord
---     (maxCol, maxRow) = snd $ Array.bounds (arr colors)
---
--- queryNeighbour :: Int -> Colors -> [Coord] -> [Coord]
--- queryNeighbour _ _ [] = []
--- queryNeighbour ctr colors (x:xs) = (queryStuff ctr x colors) ++ (queryNeighbour ctr colors xs)
+containsCoord :: [CoordSet] -> Coord -> Bool
+containsCoord sets coord = any ((flip setContainsCoord) coord) sets
 
-
-containsCoord' :: [CoordSet] -> Coord -> Bool
-containsCoord' sets coord = any ((flip setContainsCoord') coord) sets
-
-setContainsCoord' :: CoordSet -> Coord -> Bool
-setContainsCoord' set coord = Set.member coord set
+setContainsCoord :: CoordSet -> Coord -> Bool
+setContainsCoord set coord = Set.member coord set
 
 addCoords :: Coord -> Coord -> Coord
 addCoords (r1, c1) (r2, c2) = (r1 + r2, c1 + c2)
