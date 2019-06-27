@@ -47,23 +47,23 @@ findTerritories _ territories [] = territories
 findTerritories colors territories (c:coords)
     | territories `containsCoord` c = findTerritories colors territories coords
     | getColor colors c /= Nothing = findTerritories colors territories coords
-    | otherwise = findTerritories colors (set:territories) coords
-        where set = queryCell c colors Set.empty
+    | otherwise = findTerritories colors (territory:territories) coords
+        where territory = queryCell c colors Set.empty
 
 queryCell :: Coord -> Colors -> CoordSet -> CoordSet
-queryCell coord colors set
-    | set `setContainsCoord` coord = set
-    | color /= Nothing = Set.insert coord set
-    | otherwise = foldl (\acc c -> queryCell c colors acc) (Set.insert coord set) (neighbours (arr colors) coord)
+queryCell coord colors territory
+    | territory `setContainsCoord` coord = territory
+    | color /= Nothing = Set.insert coord territory
+    | otherwise = foldl (\acc c -> queryCell c colors acc) (Set.insert coord territory) (neighbours (arr colors) coord)
   where
     color = getColor colors coord
     (maxRow, maxCol) = snd $ Array.bounds (arr colors)
 
 containsCoord :: [CoordSet] -> Coord -> Bool
-containsCoord sets coord = any ((flip setContainsCoord) coord) sets
+containsCoord territories coord = any ((flip setContainsCoord) coord) territories
 
 setContainsCoord :: CoordSet -> Coord -> Bool
-setContainsCoord set coord = Set.member coord set
+setContainsCoord territory coord = Set.member coord territory
 
 neighbours :: ColorArray -> Coord -> [Coord]
 neighbours colors coord = filter (isValidCoord colors) $ map (addCoords coord) [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -77,23 +77,23 @@ coords' arr = [(r, c) | r <- [minRow..maxRow], c <- [minCol..maxCol]]
 
 formatResults :: Colors -> [CoordSet] -> [(CoordSet, Maybe Color)]
 formatResults _ [] = []
-formatResults colors sets = map (formatResult colors) sets
+formatResults colors territories = map (formatResult colors) territories
 
 formatResult :: Colors -> CoordSet -> (CoordSet, Maybe Color)
-formatResult colors set | set == Set.empty = (Set.empty, Nothing)
-formatResult colors set =
+formatResult colors territory | territory == Set.empty = (Set.empty, Nothing)
+formatResult colors territory =
     (Set.fromList $ cleaned, color)
   where
-    color = territoryColor colors set
-    cleaned = filter (\coord -> (getColor colors coord) == Nothing) $ Set.toList set
+    color = territoryColor colors territory
+    cleaned = filter (\coord -> (getColor colors coord) == Nothing) $ Set.toList territory
 
 territoryColor :: Colors -> CoordSet -> Maybe Color
-territoryColor _ set | set == Set.empty = Nothing
-territoryColor colors set = case resolve of
+territoryColor _ territory | territory == Set.empty = Nothing
+territoryColor colors territory = case resolve of
                                 Nothing -> Nothing
                                 Just x -> x
   where
-    resolve = foldl resolveColor (Just Nothing) (Set.toList set)
+    resolve = foldl resolveColor (Just Nothing) (Set.toList territory)
     resolveColor acc c = if acc == Nothing then Nothing else
                                if acc == Just Nothing then Just color else
                                  if color == Nothing then acc else
