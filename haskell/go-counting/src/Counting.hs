@@ -12,10 +12,10 @@ data Color = Black | White | None deriving (Eq, Ord, Show)
 type Coord = (Int, Int)
 type CoordAndColor = (Int, Int, Color)
 
-type ColorArray = Array.Array (Int, Int) Color
+type ColorArray = Array.Array (Int, Int) (Maybe Color)
 data Colors = Colors {
     arr :: ColorArray
-    , getColor :: Coord -> Color
+    , getColor :: Coord -> Maybe Color
     , includes :: Coord -> Bool
     , coordsxx :: [(Int, Int)]
     }
@@ -39,7 +39,7 @@ territoryFor board coord = if  not (colors `includes` coord) || null cleaned the
   where
     colors = boardToColors board
     territory = queryCell 5 coord colors Set.empty
-    cleaned = filter (\coord -> (getColor colors coord) == None) $ Set.toList territory
+    cleaned = filter (\coord -> (getColor colors coord) == Just None) $ Set.toList territory
 
 boardToColors :: [String] -> Colors
 boardToColors board = colors
@@ -74,7 +74,7 @@ findTerritories :: Colors -> [CoordSet] -> [Coord] -> [CoordSet]
 findTerritories _ territories [] = territories
 findTerritories colors territories (c:coords)
     | territories `containsCoord` c = findTerritories colors territories coords
-    | getColor colors c /= None = findTerritories colors territories coords
+    | getColor colors c /= Just None = findTerritories colors territories coords
     | otherwise = findTerritories colors (set:territories) coords
         where set = queryCell 5 c colors Set.empty
 
@@ -82,7 +82,7 @@ queryCell :: Int -> Coord -> Colors -> CoordSet -> CoordSet
 queryCell ctr coord colors set
     | ctr == 0 = set
     | set `setContainsCoord` coord = set
-    | color /= None = Set.insert coord set
+    | color /= Just None = Set.insert coord set
     | otherwise = foldl (\acc c -> queryCell (ctr - 1) c colors acc) (Set.insert coord set) (neighbours (arr colors) coord)
   where
     color = getColor colors coord
@@ -114,18 +114,18 @@ polishTerritory colors set =
     (Set.fromList $ cleaned, if color == Just None then Nothing else color)
   where
     color = territoryColor colors set
-    cleaned = filter (\coord -> (getColor colors coord) == None) $ Set.toList set
+    cleaned = filter (\coord -> (getColor colors coord) == Just None) $ Set.toList set
 
 territoryColor :: Colors -> CoordSet -> Maybe Color
 territoryColor _ set | set == Set.empty = Nothing
 territoryColor colors set = case resolve of
                                 Nothing -> Nothing
-                                Just x -> Just x
+                                Just x -> x
   where
-    resolve = foldl resolveColor (Just None) (Set.toList set)
+    resolve = foldl resolveColor (Just (Just None)) (Set.toList set)
     resolveColor acc c = if acc == Nothing then Nothing else
-                               if acc == Just None then Just color else
-                                 if color == None then acc else
+                               if acc == Just (Just None) then Just color else
+                                 if color == Just None then acc else
                                    if Just color == acc then acc else
                                        Nothing
                                      where color = getColor colors c
@@ -134,9 +134,9 @@ strToArray :: [String] -> ColorArray
 strToArray lines = Array.listArray ((minRow, minCol), (minRow + (length lines) - 1, minCol + (lengthOfLine lines) - 1))
     $ map charToColor $ concat $ lines
   where
-    charToColor 'B' = Black
-    charToColor 'W' = White
-    charToColor ' ' = None
+    charToColor 'B' = Just Black
+    charToColor 'W' = Just White
+    charToColor ' ' = Just None
     charToColor _ = error "Unknown color"
     lengthOfLine [] = 0
     lengthOfLine ([]:xs) = 0
