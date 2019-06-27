@@ -7,7 +7,7 @@ module Counting (
 import Data.List
 import qualified Data.Set as Set
 import qualified Data.Array as Array
-import Data.Tuple (swap)
+-- import Data.Tuple (swap)
 
 data Color = Black | White | None deriving (Eq, Ord, Show)
 type Coord = (Int, Int)
@@ -31,21 +31,21 @@ minCol :: Int
 minCol = 1
 
 territories :: [String] -> [(Set.Set Coord, Maybe Color)]
-territories board = map normalise $ reverse $ polishTerritories colors $ findTerritories colors [] (coordsxx colors)
+territories board = reverse $ polishTerritories colors $ findTerritories colors [] (coordsxx colors)
   where
     colors = boardToColors board
 
 territoryFor :: [String] -> Coord -> Maybe (Set.Set Coord, Maybe Color)
-territoryFor board coord = if  not (colors `includes` coord) || null cleaned then Nothing else Just (normalise $ polishTerritory colors territory)
+territoryFor board coord = if  not (colors `includes` coord) || null cleaned then Nothing else Just (polishTerritory colors territory)
   where
     colors = boardToColors board
-    territory = queryCell 5 (swap coord) colors Set.empty
+    territory = queryCell 5 coord colors Set.empty
     cleaned = filter (\coord -> (getColor colors coord) == None) $ Set.toList territory
 
 boardToColors :: [String] -> Colors
 boardToColors board = colors
   where
-    colorArray = strToArray board
+    colorArray = strToArray $ transpose board
     colors = Colors
                 {arr = colorArray
                 , getColor = (colorArray Array.!)
@@ -139,9 +139,6 @@ strToArray lines = Array.listArray ((minRow, minCol), (minRow + (length lines) -
     lengthOfLine ([]:xs) = 0
     lengthOfLine (x:xs) = length x
     (minRow, minCol) = (1, 1)
-
-normalise :: (CoordSet, Maybe Color) -> (CoordSet, Maybe Color)
-normalise (set, color) = (Set.fromList $ map swap $ Set.toList set, color)
 
 isValidCoord :: ColorArray -> Coord -> Bool
 isValidCoord arr (r, c) = r >= minRow && r <= maxRow && c >= minCol && c <= maxCol
