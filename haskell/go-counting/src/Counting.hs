@@ -12,7 +12,7 @@ data Color = Black | White deriving (Eq, Ord, Show)
 type Coord = (Int, Int)
 type ColorArray = Array.Array (Int, Int) (Maybe Color)
 data Colors = Colors {
-    arr :: ColorArray
+    getArrayOf :: ColorArray
     , getColor :: Coord -> Maybe Color
     , includes :: Coord -> Bool
     , coordsxx :: [(Int, Int)]
@@ -29,38 +29,37 @@ territoryFor board coord = if not (colors `includes` coord) || null cleaned then
   where
     colors = boardToColors board
     territory = queryCell coord colors Set.empty
-    cleaned = Set.filter (\coord -> (getColor colors coord) == Nothing) $ territory
+    cleaned = Set.filter (\c -> (getColor colors c) == Nothing) $ territory
 
 boardToColors :: [String] -> Colors
 boardToColors board = colors
   where
     colorArray = strToArray $ transpose board
     colors = Colors
-                {arr = colorArray
+                {getArrayOf = colorArray
                 , getColor = (colorArray Array.!)
                 , includes = (isValidCoord colorArray)
                 , coordsxx = coords' colorArray
                 }
 
 findTerritories :: Colors -> [CoordSet] -> [Coord] -> [CoordSet]
-findTerritories _ territories [] = territories
-findTerritories colors territories (c:coords)
-    | territories `containsCoord` c = findTerritories colors territories coords
-    | getColor colors c /= Nothing = findTerritories colors territories coords
-    | otherwise = findTerritories colors (territory:territories) coords
+findTerritories _ territorys [] = territorys
+findTerritories colors territorys (c:coords)
+    | territorys `containsCoord` c = findTerritories colors territorys coords
+    | getColor colors c /= Nothing = findTerritories colors territorys coords
+    | otherwise = findTerritories colors (territory:territorys) coords
         where territory = queryCell c colors Set.empty
 
 queryCell :: Coord -> Colors -> CoordSet -> CoordSet
 queryCell coord colors territory
     | territory `setContainsCoord` coord = territory
     | color /= Nothing = Set.insert coord territory
-    | otherwise = foldl (\acc c -> queryCell c colors acc) (Set.insert coord territory) (neighbours (arr colors) coord)
+    | otherwise = foldl (\acc c -> queryCell c colors acc) (Set.insert coord territory) (neighbours (getArrayOf colors) coord)
   where
     color = getColor colors coord
-    (maxRow, maxCol) = snd $ Array.bounds (arr colors)
 
 containsCoord :: [CoordSet] -> Coord -> Bool
-containsCoord territories coord = any ((flip setContainsCoord) coord) territories
+containsCoord territorys coord = any ((flip setContainsCoord) coord) territorys
 
 setContainsCoord :: CoordSet -> Coord -> Bool
 setContainsCoord territory coord = Set.member coord territory
@@ -77,10 +76,10 @@ coords' arr = [(r, c) | r <- [minRow..maxRow], c <- [minCol..maxCol]]
 
 formatResults :: Colors -> [CoordSet] -> [(CoordSet, Maybe Color)]
 formatResults _ [] = []
-formatResults colors territories = map (formatResult colors) territories
+formatResults colors territorys = map (formatResult colors) territorys
 
 formatResult :: Colors -> CoordSet -> (CoordSet, Maybe Color)
-formatResult colors territory | territory == Set.empty = (Set.empty, Nothing)
+formatResult _ territory | territory == Set.empty = (Set.empty, Nothing)
 formatResult colors territory =
     (Set.fromList $ cleaned, color)
   where
@@ -102,38 +101,20 @@ territoryColor colors territory = case resolve of
                                      where color = getColor colors c
 
 strToArray :: [String] -> ColorArray
-strToArray lines = Array.listArray ((minRow, minCol), (minRow + (length lines) - 1, minCol + (lengthOfLine lines) - 1))
-    $ map charToColor $ concat $ lines
+strToArray ll = Array.listArray ((minRow, minCol), (minRow + (length ll) - 1, minCol + (lengthOfLine ll) - 1))
+    $ map charToColor $ concat $ ll
   where
     charToColor 'B' = Just Black
     charToColor 'W' = Just White
     charToColor ' ' = Nothing
     charToColor _ = error "Unknown color"
     lengthOfLine [] = 0
-    lengthOfLine ([]:xs) = 0
-    lengthOfLine (x:xs) = length x
+    lengthOfLine ([]:_) = 0
+    lengthOfLine (x:_) = length x
     (minRow, minCol) = (1, 1)
 
 isValidCoord :: ColorArray -> Coord -> Bool
 isValidCoord arr (r, c) = r >= minRow && r <= maxRow && c >= minCol && c <= maxCol
   where
     ((minRow, minCol), (maxRow, maxCol)) = Array.bounds arr
-
-
-
-allBlank = ["   ", "   "]
-allBlankSquare = ["   ", "   ", "   "]
-simple =  ["B   B", "B   B"]
-square = ["BBBBB", "B   B", "B   B","B   B", "BBBBB"]
-twoBlank = ["  "]
-main = [ "  B  "
-       , " B B "
-       , "B W B"
-       , " W W "
-       , "  W  " ]
-
-setup :: [String] -> (Colors, [Coord])
-setup board = (colors, coordsxx colors)
-  where
-    colors = boardToColors board
 
