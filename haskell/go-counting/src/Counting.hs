@@ -7,7 +7,6 @@ module Counting (
 import Data.List
 import qualified Data.Set as Set
 import qualified Data.Array as Array
--- import Data.Tuple (swap)
 
 data Color = Black | White | None deriving (Eq, Ord, Show)
 type Coord = (Int, Int)
@@ -119,8 +118,12 @@ polishTerritory colors set =
 
 territoryColor :: Colors -> CoordSet -> Maybe Color
 territoryColor _ set | set == Set.empty = Nothing
-territoryColor colors set = foldl resolveColor (Just None) (Set.toList set)
-  where resolveColor acc c = if acc == Nothing then Nothing else
+territoryColor colors set = case resolve of
+                                Nothing -> Nothing
+                                Just x -> Just x
+  where
+    resolve = foldl resolveColor (Just None) (Set.toList set)
+    resolveColor acc c = if acc == Nothing then Nothing else
                                if acc == Just None then Just color else
                                  if color == None then acc else
                                    if Just color == acc then acc else
