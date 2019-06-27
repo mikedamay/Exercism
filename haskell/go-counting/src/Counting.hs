@@ -20,16 +20,16 @@ data Colors = Colors {
 type CoordSet = Set.Set (Int, Int)
 
 territories :: [String] -> [(Set.Set Coord, Maybe Color)]
-territories board = reverse $ polishTerritories colors $ findTerritories colors [] (coordsxx colors)
+territories board = formatResults colors $ findTerritories colors [] (coordsxx colors)
   where
     colors = boardToColors board
 
 territoryFor :: [String] -> Coord -> Maybe (Set.Set Coord, Maybe Color)
-territoryFor board coord = if  not (colors `includes` coord) || null cleaned then Nothing else Just (polishTerritory colors territory)
+territoryFor board coord = if not (colors `includes` coord) || null cleaned then Nothing else Just (formatResult colors territory)
   where
     colors = boardToColors board
-    territory = queryCell 5 coord colors Set.empty
-    cleaned = filter (\coord -> (getColor colors coord) == Nothing) $ Set.toList territory
+    territory = queryCell coord colors Set.empty
+    cleaned = Set.filter (\coord -> (getColor colors coord) == Nothing) $ territory
 
 boardToColors :: [String] -> Colors
 boardToColors board = colors
@@ -42,38 +42,19 @@ boardToColors board = colors
                 , coordsxx = coords' colorArray
                 }
 
-
-
-allBlank = ["   ", "   "]
-allBlankSquare = ["   ", "   ", "   "]
-simple =  ["B   B", "B   B"]
-square = ["BBBBB", "B   B", "B   B","B   B", "BBBBB"]
-twoBlank = ["  "]
-main = [ "  B  "
-       , " B B "
-       , "B W B"
-       , " W W "
-       , "  W  " ]
-
-setup :: [String] -> (Colors, [Coord])
-setup board = (colors, coordsxx colors)
-  where
-    colors = boardToColors board
-
 findTerritories :: Colors -> [CoordSet] -> [Coord] -> [CoordSet]
 findTerritories _ territories [] = territories
 findTerritories colors territories (c:coords)
     | territories `containsCoord` c = findTerritories colors territories coords
     | getColor colors c /= Nothing = findTerritories colors territories coords
     | otherwise = findTerritories colors (set:territories) coords
-        where set = queryCell 5 c colors Set.empty
+        where set = queryCell c colors Set.empty
 
-queryCell :: Int -> Coord -> Colors -> CoordSet -> CoordSet
-queryCell ctr coord colors set
-    | ctr == 0 = set
+queryCell :: Coord -> Colors -> CoordSet -> CoordSet
+queryCell coord colors set
     | set `setContainsCoord` coord = set
     | color /= Nothing = Set.insert coord set
-    | otherwise = foldl (\acc c -> queryCell (ctr - 1) c colors acc) (Set.insert coord set) (neighbours (arr colors) coord)
+    | otherwise = foldl (\acc c -> queryCell c colors acc) (Set.insert coord set) (neighbours (arr colors) coord)
   where
     color = getColor colors coord
     (maxRow, maxCol) = snd $ Array.bounds (arr colors)
@@ -94,13 +75,13 @@ coords' arr = [(r, c) | r <- [minRow..maxRow], c <- [minCol..maxCol]]
   where
     ((minRow, minCol), (maxRow, maxCol)) = Array.bounds arr
 
-polishTerritories :: Colors -> [CoordSet] -> [(CoordSet, Maybe Color)]
-polishTerritories _ [] = []
-polishTerritories colors sets = map (polishTerritory colors) sets
+formatResults :: Colors -> [CoordSet] -> [(CoordSet, Maybe Color)]
+formatResults _ [] = []
+formatResults colors sets = map (formatResult colors) sets
 
-polishTerritory :: Colors -> CoordSet -> (CoordSet, Maybe Color)
-polishTerritory colors set | set == Set.empty = (Set.empty, Nothing)
-polishTerritory colors set =
+formatResult :: Colors -> CoordSet -> (CoordSet, Maybe Color)
+formatResult colors set | set == Set.empty = (Set.empty, Nothing)
+formatResult colors set =
     (Set.fromList $ cleaned, color)
   where
     color = territoryColor colors set
@@ -137,3 +118,22 @@ isValidCoord :: ColorArray -> Coord -> Bool
 isValidCoord arr (r, c) = r >= minRow && r <= maxRow && c >= minCol && c <= maxCol
   where
     ((minRow, minCol), (maxRow, maxCol)) = Array.bounds arr
+
+
+
+allBlank = ["   ", "   "]
+allBlankSquare = ["   ", "   ", "   "]
+simple =  ["B   B", "B   B"]
+square = ["BBBBB", "B   B", "B   B","B   B", "BBBBB"]
+twoBlank = ["  "]
+main = [ "  B  "
+       , " B B "
+       , "B W B"
+       , " W W "
+       , "  W  " ]
+
+setup :: [String] -> (Colors, [Coord])
+setup board = (colors, coordsxx colors)
+  where
+    colors = boardToColors board
+
