@@ -1,7 +1,7 @@
 module Bob (responseFor) where
 
 import Data.List.Extra (trim)
-import Data.Char (isUpper, isLower, isLetter)
+import Data.Char (isLower, isLetter)
 
 responseFor :: String -> String
 responseFor xs
@@ -12,5 +12,4 @@ responseFor xs
     | otherwise = "Whatever."
   where
     trimmed = trim xs
-    isYelling2 = any isLetter trimmed && (all isUpper $ filter isLetter trimmed)
     isYelling = not (any isLower trimmed) && any isLetter trimmed
