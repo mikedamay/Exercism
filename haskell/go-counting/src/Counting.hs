@@ -15,12 +15,12 @@ data Colors = Colors {
     getArrayOf :: ColorArray
     , getColor :: Coord -> Maybe Color
     , includes :: Coord -> Bool
-    , coordsxx :: [(Int, Int)]
+    , coords :: [(Int, Int)]
     }
 type CoordSet = Set.Set (Int, Int)
 
 territories :: [String] -> [(Set.Set Coord, Maybe Color)]
-territories board = formatResults colors $ findTerritories colors [] (coordsxx colors)
+territories board = formatResults colors $ findTerritories colors [] (coords colors)
   where
     colors = boardToColors board
 
@@ -39,15 +39,15 @@ boardToColors board = colors
                 {getArrayOf = colorArray
                 , getColor = (colorArray Array.!)
                 , includes = (isValidCoord colorArray)
-                , coordsxx = coords' colorArray
+                , coords = coords' colorArray
                 }
 
 findTerritories :: Colors -> [CoordSet] -> [Coord] -> [CoordSet]
 findTerritories _ territorys [] = territorys
-findTerritories colors territorys (c:coords)
-    | territorys `containsCoord` c = findTerritories colors territorys coords
-    | getColor colors c /= Nothing = findTerritories colors territorys coords
-    | otherwise = findTerritories colors (territory:territorys) coords
+findTerritories colors territorys (c:cs)
+    | territorys `containsCoord` c = findTerritories colors territorys cs
+    | getColor colors c /= Nothing = findTerritories colors territorys cs
+    | otherwise = findTerritories colors (territory:territorys) cs
         where territory = queryCell c colors Set.empty
 
 queryCell :: Coord -> Colors -> CoordSet -> CoordSet
