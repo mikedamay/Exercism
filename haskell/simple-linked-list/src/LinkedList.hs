@@ -14,7 +14,7 @@ data LinkedList a = Empty | Head a (LinkedList a) deriving (Eq, Show)
 
 datum :: LinkedList a -> a
 datum Empty = error "empty list"
-datum (Head h t) = h
+datum (Head h _) = h
 
 fromList :: [a] -> LinkedList a
 fromList [] = Empty
@@ -25,12 +25,11 @@ isNil Empty = True
 isNil _ = False
 
 new :: a -> LinkedList a -> LinkedList a
--- new x Empty = Head x Empty
 new x ll = Head x ll
 
 next :: LinkedList a -> LinkedList a
 next Empty = Empty
-next (Head h t) = t
+next (Head _ t) = t
 
 nil :: LinkedList a
 nil = Empty
