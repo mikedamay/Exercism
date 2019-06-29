@@ -14,7 +14,7 @@ encode text = concat $ map encodingToText $ foldr rle [] text
         | ac == c = (ac, n+1) : xs
         | otherwise = (c, 1) : all : xs
     encodingToText (c, 1) = [c]
-    encodingToText (c, n) = (show n) ++ (replicate n c)
+    encodingToText (c, n) = (show n) ++ [c]
 
 rlencode :: Char -> (Char, Int, [Char]) -> (Char, Int, [Char])
 rlencode c ('0', 0, []) = (c, 1, [c])
