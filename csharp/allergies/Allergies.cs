@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace xx {
 [Flags]
@@ -22,6 +23,11 @@ public class Allergies
     public Allergies(int maskArg)
     {
         mask = (Allergen)maskArg;
+
+        Allergen bob = 0; 
+        bob = Allergen.Eggs | Allergen.Peanuts;
+        bool x = (bob & Allergen.Cats) == Allergen.Cats;
+        string str = bob.ToString();
     }
 
     public bool IsAllergicTo(Allergen allergen)
@@ -34,6 +40,22 @@ public class Allergies
             .Cast<Allergen>()
             .Where(a => mask.HasFlag(a))
             .ToArray();
+    }
+
+}
+
+namespace MyTests
+{
+    using Xunit;
+
+    public class MyTests
+    {
+        [Fact]
+        public void Test()
+        {
+            var nn = new xx.Allergies((int)Allergen.Cats);
+        }
+        
     }
 
 }
