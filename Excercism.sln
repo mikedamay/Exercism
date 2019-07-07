@@ -124,6 +124,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PascalsTriangle", "csharp\p
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Series", "csharp\series\Series.csproj", "{809AD6F9-F8E2-49C8-A7D5-30C931150365}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimeFactors", "csharp\prime-factors\PrimeFactors.csproj", "{E1342CF3-4291-4514-BC92-26421EDC7132}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -374,5 +376,9 @@ Global
 		{809AD6F9-F8E2-49C8-A7D5-30C931150365}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{809AD6F9-F8E2-49C8-A7D5-30C931150365}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{809AD6F9-F8E2-49C8-A7D5-30C931150365}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1342CF3-4291-4514-BC92-26421EDC7132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1342CF3-4291-4514-BC92-26421EDC7132}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1342CF3-4291-4514-BC92-26421EDC7132}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1342CF3-4291-4514-BC92-26421EDC7132}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

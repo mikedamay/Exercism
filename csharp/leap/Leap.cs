@@ -1,10 +1,11 @@
 
 public static class Leap
 {
-    public static bool IsLeapYear(int year) 
-      => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
-            // the parens reduce the time from 16 to 13 seconds in the
-            // Perform test below
+    public static bool IsLeapYear(int year)
+    {
+        return ((year % 4 == 0 && year % 100 == 0 && year % 400 == 0) || year % 4 == 0 && year % 100 != 0);
+        
+    }
 }
 
 namespace MyTests
