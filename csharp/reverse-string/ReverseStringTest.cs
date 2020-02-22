@@ -33,4 +33,16 @@ public class ReverseStringTest
     {
         Assert.Equal("racecar", ReverseString.Reverse("racecar"));
     }
+    [Fact]
+    public void An_even_sized_word()
+    {
+        Assert.Equal("reward", ReverseString.Reverse("drawer"));
+    }
+
+    [Fact]
+    public void An_even_sized_word_with_unicode()
+    {
+        Assert.Equal("reward😀", ReverseString.Reverse("😀drawer"));
+    }
+    
 }
