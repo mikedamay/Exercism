@@ -112,8 +112,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DifferenceOfSquares", "csha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meetup", "csharp\meetup\Meetup.csproj", "{771E877C-5A68-49D8-B599-2E58F1967A65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Series", "csharp\series\Series.csproj", "{06CAA732-8108-4C61-852B-AE7EA0B3C00F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythagoreanTriplet", "csharp\pythagorean-triplet\PythagoreanTriplet.csproj", "{6AFCC969-8AA8-4C8C-9D42-6BE41D54998E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LargestSeriesProduct", "csharp\largest-series-product\LargestSeriesProduct.csproj", "{039A7E36-0BF7-452B-99CE-DC7B7264DCA3}"
@@ -352,10 +350,6 @@ Global
 		{771E877C-5A68-49D8-B599-2E58F1967A65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{771E877C-5A68-49D8-B599-2E58F1967A65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{771E877C-5A68-49D8-B599-2E58F1967A65}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06CAA732-8108-4C61-852B-AE7EA0B3C00F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06CAA732-8108-4C61-852B-AE7EA0B3C00F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06CAA732-8108-4C61-852B-AE7EA0B3C00F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06CAA732-8108-4C61-852B-AE7EA0B3C00F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6AFCC969-8AA8-4C8C-9D42-6BE41D54998E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6AFCC969-8AA8-4C8C-9D42-6BE41D54998E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AFCC969-8AA8-4C8C-9D42-6BE41D54998E}.Release|Any CPU.ActiveCfg = Release|Any CPU
