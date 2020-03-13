@@ -130,6 +130,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllYourBase", "csharp\all-y
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bowling", "csharp\bowling\Bowling.csproj", "{AAD4DE3C-4890-4C18-BD0F-1D8FF09F2829}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Change", "csharp\change\Change.csproj", "{96A09C29-5601-4430-B5D2-492AB25D5083}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -392,5 +394,9 @@ Global
 		{AAD4DE3C-4890-4C18-BD0F-1D8FF09F2829}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAD4DE3C-4890-4C18-BD0F-1D8FF09F2829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAD4DE3C-4890-4C18-BD0F-1D8FF09F2829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96A09C29-5601-4430-B5D2-492AB25D5083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96A09C29-5601-4430-B5D2-492AB25D5083}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96A09C29-5601-4430-B5D2-492AB25D5083}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A09C29-5601-4430-B5D2-492AB25D5083}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
