@@ -18,7 +18,7 @@ public static class Change
         else
         {
             (ImmutableList<int> coinsResult, int underPaid) 
-              = FindFewestCoins(new List<int>(coins), target, ImmutableList<int>.Empty);
+              = FindFewestCoins(new List<int>(coins.Reverse()), target, ImmutableList<int>.Empty);
             if (underPaid != 0)
             {
                 throw new ArgumentException();
@@ -29,16 +29,17 @@ public static class Change
             }
         }
         
-        (ImmutableList<int> coins, int underPaid) FindFewestCoins(List<int> denominations
+        (ImmutableList<int> coins, int underPaid) FindFewestCoins(IEnumerable<int> denominations
             , int target
             , ImmutableList<int> coins)
         {
             (ImmutableList<int> coins, int underPaid) winner = (ImmutableList<int>.Empty, -1);
-            if (denominations.Count == 0)
+            var denoms = denominations.Where(d => d <= target);
+            if (denoms.Count() == 0)
             {
                 return (coins, target);
             }
-            foreach (var denom in denominations)
+            foreach (var denom in denoms.RemoveFactors(target))
             {
                 (ImmutableList<int> coins, int underPaid) trial = (ImmutableList<int>.Empty, -1);
                 if (target - denom == 0)
@@ -48,12 +49,11 @@ public static class Change
                 }
                 else if (target - denom < 0)
                 {
-                    trial = FindFewestCoins(denominations.GetRange(0, denominations.Count - 1), target, coins);
+                    trial = FindFewestCoins(denoms.Skip(1), target, coins);
                 }
                 else
                 {
-                    coins = coins.Add(denom);
-                    trial = FindFewestCoins(denominations, target - denom, coins);
+                    trial = FindFewestCoins(denoms, target - denom, coins.Add(denom));
                 }
 
                 winner = FindWinner(winner, trial);
@@ -70,12 +70,38 @@ public static class Change
         {        // attempt to build list failed
             return currentWinner;
         }
-            
+        else if (currentWinner.underPaid != 0)
+        {
+            return trial;
+        }
         return currentWinner.coins.Count <= trial.coins.Count ? currentWinner : trial;
     }
 
     private static int GetCoinCount(ImmutableList<int> coins)
     {
         return coins.Sum();
+    }
+
+    private static IEnumerable<int> RemoveFactors(this IEnumerable<int> denomsArg, int target)
+    {
+        List<int> highers = denomsArg.ToList();
+        List<int> lowers = denomsArg.ToList();
+        for (int ii = 0; ii < highers.Count; ii++)
+        {
+            for (int jj = lowers.Count - 1; jj >= 0; jj--)
+            {
+                if (highers[ii] > lowers[jj] && highers[ii] % lowers[jj] == 0
+                  &&  highers[ii] + lowers[jj] <= target)
+                {
+                    lowers.RemoveAt(jj);
+                }
+            }
+
+        }
+
+        foreach (int denom in lowers)
+        {
+            yield return denom;
+        }
     }
 }
