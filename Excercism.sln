@@ -136,6 +136,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsbnVerifier", "csharp\isbn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minesweeper", "csharp\minesweeper\Minesweeper.csproj", "{7C9D9FEA-5B0E-4E55-A79F-DDE079D93A57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueenAttack", "csharp\queen-attack\QueenAttack.csproj", "{9FAC058A-76CC-4F2A-A7A1-BA48E51DBA08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -410,5 +412,9 @@ Global
 		{7C9D9FEA-5B0E-4E55-A79F-DDE079D93A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C9D9FEA-5B0E-4E55-A79F-DDE079D93A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C9D9FEA-5B0E-4E55-A79F-DDE079D93A57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FAC058A-76CC-4F2A-A7A1-BA48E51DBA08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FAC058A-76CC-4F2A-A7A1-BA48E51DBA08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FAC058A-76CC-4F2A-A7A1-BA48E51DBA08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FAC058A-76CC-4F2A-A7A1-BA48E51DBA08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
