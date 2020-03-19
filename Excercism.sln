@@ -140,6 +140,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueenAttack", "csharp\queen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zipper", "csharp\zipper\Zipper.csproj", "{33D851DD-0ABE-4DB1-9575-5E97E8C61034}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matrix", "csharp\matrix\Matrix.csproj", "{51E07719-2725-40DF-A12D-9F2EFF58AAFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -422,5 +424,9 @@ Global
 		{33D851DD-0ABE-4DB1-9575-5E97E8C61034}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D851DD-0ABE-4DB1-9575-5E97E8C61034}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D851DD-0ABE-4DB1-9575-5E97E8C61034}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51E07719-2725-40DF-A12D-9F2EFF58AAFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51E07719-2725-40DF-A12D-9F2EFF58AAFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51E07719-2725-40DF-A12D-9F2EFF58AAFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51E07719-2725-40DF-A12D-9F2EFF58AAFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

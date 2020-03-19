@@ -11,7 +11,7 @@ public class ZipperTests
         var sut = Zipper.FromTree(tree);
         var actual = sut.ToTree();
         var expected = new BinTree(1, new BinTree(2, null, new BinTree(3, null, null)), new BinTree(4, null, null));
-        Assert.Equal(expected, actual);
+        Assert.Equal(actual, expected);
     }
 
     [Fact(Skip = "")]
