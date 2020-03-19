@@ -142,6 +142,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zipper", "csharp\zipper\Zip
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matrix", "csharp\matrix\Matrix.csproj", "{51E07719-2725-40DF-A12D-9F2EFF58AAFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strain", "csharp\strain\Strain.csproj", "{4281A79A-5A40-4666-AD6D-DBB711F01EA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rectangles", "csharp\rectangles\Rectangles.csproj", "{58A30631-5A2F-4797-ACF2-DB4849D905A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -428,5 +432,13 @@ Global
 		{51E07719-2725-40DF-A12D-9F2EFF58AAFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51E07719-2725-40DF-A12D-9F2EFF58AAFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51E07719-2725-40DF-A12D-9F2EFF58AAFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4281A79A-5A40-4666-AD6D-DBB711F01EA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4281A79A-5A40-4666-AD6D-DBB711F01EA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4281A79A-5A40-4666-AD6D-DBB711F01EA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4281A79A-5A40-4666-AD6D-DBB711F01EA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58A30631-5A2F-4797-ACF2-DB4849D905A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58A30631-5A2F-4797-ACF2-DB4849D905A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58A30631-5A2F-4797-ACF2-DB4849D905A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58A30631-5A2F-4797-ACF2-DB4849D905A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
