@@ -17,7 +17,7 @@ namespace Example
         public Units Units { get; set; } = Units.Kilograms;
         public float Weight
         {
-            get { return weight *  Reduction / 100; }
+            get { return weight *  (100 - Reduction) / 100; }
             set
             {
                 if (value < 0)
@@ -33,12 +33,12 @@ namespace Example
         {
             get
             {
-                float adjustedWeight = weight * Reduction / 100;
+                float adjustedWeight = weight * (100 - Reduction) / 100;
                 float weightInPounds = Units == Units.Kilograms ? adjustedWeight * POUNDS_PER_KILOGRAM : adjustedWeight;
                 return new BritishWeight(
-                  (int)weightInPounds / POUNDS_PER_STONE
-                  , (int)Math.Floor(weightInPounds)
-                  , OUNCES_PER_POUND * (weightInPounds - (int)weightInPounds) );
+                  (int)weightInPounds / POUNDS_PER_STONE 
+                  , (int)Math.Floor(weightInPounds) - ((int)weightInPounds / POUNDS_PER_STONE) * POUNDS_PER_STONE
+                  , (int)(OUNCES_PER_POUND * (weightInPounds - (int)weightInPounds)) );
             }
         }
         public float Reduction { set; private get; }
@@ -46,7 +46,7 @@ namespace Example
 
     public struct BritishWeight
     {
-        public BritishWeight(int stones, int pounds, float ounces)
+        public BritishWeight(int stones, int pounds, int ounces)
         {
             Stones = stones;
             Pounds = pounds;
@@ -55,7 +55,7 @@ namespace Example
 
         public int Stones { get; }
         public int Pounds { get; }
-        public float Ounces { get; }
+        public int Ounces { get; }
     }
     
 }

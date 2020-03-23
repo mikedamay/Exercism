@@ -9,14 +9,14 @@ public class WeighingMachineTests
     {
         var wm = new WeighingMachine();
         wm.Weight = 77.7f;
-        Assert.Equal(77.7, wm.Weight );
+        Assert.Equal(77.7, wm.Weight, 3 );
     }
     [Fact]
     public void Got_british_weight()
     {
         var wm = new WeighingMachine();
         wm.Weight = 77.7f;
-        var expected = new BritishWeight(10, 10, 10);
+        var expected = new BritishWeight(12, 3, 4);
         Assert.Equal(expected, wm.BritishWeight );
     }
     [Fact]
@@ -24,8 +24,8 @@ public class WeighingMachineTests
     {
         var wm = new WeighingMachine();
         wm.Units = Units.Pounds;
-        wm.Weight = 77.7f;
-        var expected = new BritishWeight(10, 10, 10);
+        wm.Weight = 175f;
+        var expected = new BritishWeight(12, 7, 0);
         Assert.Equal(expected, wm.BritishWeight );
     }
     [Fact]
