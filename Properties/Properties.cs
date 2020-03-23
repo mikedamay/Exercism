@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class WeighingMachine
+public class WeighingMachine_Template
 {
     public float Weight
     {
@@ -16,7 +16,7 @@ public class WeighingMachine
         }
     }
 
-    public BritishWeight BritishWeight
+    public BritishWeight_Template BritishWeight
     {
         get
         {
@@ -44,9 +44,9 @@ public class WeighingMachine
     }
 }
 
-public struct BritishWeight
+public struct BritishWeight_Template
 {
-    public BritishWeight(int stones, int bounds, float ounces)
+    public BritishWeight_Template(int stones, int bounds, float ounces)
     {
         
     }
