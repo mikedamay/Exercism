@@ -25,8 +25,7 @@ public class WeighingMachineTests
         var wm = new WeighingMachine();
         wm.Units = Units.Pounds;
         wm.Weight = 175f;
-        var expected = new BritishWeight(12, 7, 0);
-        Assert.Equal(expected, wm.BritishWeight );
+        Assert.Equal((12, 7, 0), (wm.BritishWeight.Stones, wm.BritishWeight.Pounds, wm.BritishWeight.Ounces) );
     }
     [Fact]
     public void Got_reduced_weight()

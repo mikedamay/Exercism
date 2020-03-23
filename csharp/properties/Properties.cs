@@ -46,11 +46,15 @@ public class WeighingMachine_Template
 
 public struct BritishWeight_Template
 {
-    public BritishWeight_Template(int stones, int bounds, float ounces)
+    public BritishWeight_Template(int stones, int bounds, int ounces)
     {
         
     }
 
+    public BritishWeight_Template(float weightInPounds)
+    {
+        
+    }
     public int Stones
     {
         get

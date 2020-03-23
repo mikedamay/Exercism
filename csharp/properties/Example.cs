@@ -10,8 +10,6 @@ namespace Example
     public class WeighingMachine
     {
         private const float POUNDS_PER_KILOGRAM = 2.20462f;
-        private const int POUNDS_PER_STONE = 14;
-        private const float OUNCES_PER_POUND = 16f;
         private float weight;
 
         public Units Units { get; set; } = Units.Kilograms;
@@ -33,19 +31,28 @@ namespace Example
         {
             get
             {
-                float adjustedWeight = weight * (100 - Reduction) / 100;
-                float weightInPounds = Units == Units.Kilograms ? adjustedWeight * POUNDS_PER_KILOGRAM : adjustedWeight;
-                return new BritishWeight(
-                  (int)weightInPounds / POUNDS_PER_STONE 
-                  , (int)Math.Floor(weightInPounds) - ((int)weightInPounds / POUNDS_PER_STONE) * POUNDS_PER_STONE
-                  , (int)(OUNCES_PER_POUND * (weightInPounds - (int)weightInPounds)) );
+                float adjustedWeight = Reduce(weight);
+                float weightInPounds = WeightInPounds(adjustedWeight);
+                return new BritishWeight(weightInPounds);
             }
         }
         public float Reduction { set; private get; }
+        private float Reduce(float weight) => weight * (100 - Reduction) / 100;
+        private float WeightInPounds(float weight) => Units == Units.Kilograms ? weight * POUNDS_PER_KILOGRAM : weight;
     }
 
     public struct BritishWeight
     {
+        private const int POUNDS_PER_STONE = 14;
+        private const float OUNCES_PER_POUND = 16f;
+
+        public BritishWeight(float weightInPounds)
+        {
+            Stones = (int)weightInPounds / POUNDS_PER_STONE;
+            Pounds = (int)Math.Floor(weightInPounds) - ((int)weightInPounds / POUNDS_PER_STONE) * POUNDS_PER_STONE;
+            Ounces = (int)(OUNCES_PER_POUND * (weightInPounds - (int)weightInPounds));
+        }
+
         public BritishWeight(int stones, int pounds, int ounces)
         {
             Stones = stones;
