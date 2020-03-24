@@ -48,14 +48,13 @@ namespace Example
         private const int POUNDS_PER_STONE = 14;
         private const float OUNCES_PER_POUND = 16f;
 
-        public BritishWeight(float weightInPounds)
+        public BritishWeight(float displayWeightInPounds)
         {
-            Stones = (int)weightInPounds / POUNDS_PER_STONE;
-            Pounds = (int)Math.Floor(weightInPounds) - ((int)weightInPounds / POUNDS_PER_STONE) * POUNDS_PER_STONE;
-            Ounces = (int)(OUNCES_PER_POUND * (weightInPounds - (int)weightInPounds));
+            Stones = (int)displayWeightInPounds / POUNDS_PER_STONE;
+            Pounds = (int)displayWeightInPounds % POUNDS_PER_STONE;
+            Ounces = (int)(OUNCES_PER_POUND * (displayWeightInPounds - (int)displayWeightInPounds));
         }
-
-
+        
         public int Stones { get; }
         public int Pounds { get; }
         public int Ounces { get; }
