@@ -10,12 +10,12 @@ namespace Example
     public class WeighingMachine
     {
         private const float POUNDS_PER_KILOGRAM = 2.20462f;
-        private float weight;
+        private float inputWeight;
 
         public Units Units { get; set; } = Units.Kilograms;
-        public float Weight
+        public float InputWeight
         {
-            get { return weight *  (100 - Reduction) / 100; }
+            get { return inputWeight; }
             set
             {
                 if (value < 0)
@@ -23,25 +23,29 @@ namespace Example
                     throw new ArgumentException("weight cannot be negative");
                 }
 
-                weight = value;
+                inputWeight = value;
             }
         }
 
+        public float DisplayWeight
+        {
+            get { return ApplyVanityFactor(inputWeight); }
+        }
         public BritishWeight BritishWeight
         {
             get
             {
-                float adjustedWeight = Reduce(weight);
+                float adjustedWeight = ApplyVanityFactor(inputWeight);
                 float weightInPounds = WeightInPounds(adjustedWeight);
                 return new BritishWeight(weightInPounds);
             }
         }
-        public float Reduction { set; private get; }
-        private float Reduce(float weight) => weight * (100 - Reduction) / 100;
+        public float VanityFactor { set; private get; }
+        private float ApplyVanityFactor(float weight) => weight * (100 - VanityFactor) / 100;
         private float WeightInPounds(float weight) => Units == Units.Kilograms ? weight * POUNDS_PER_KILOGRAM : weight;
     }
 
-    public struct BritishWeight
+    public class BritishWeight
     {
         private const int POUNDS_PER_STONE = 14;
         private const float OUNCES_PER_POUND = 16f;
@@ -53,16 +57,9 @@ namespace Example
             Ounces = (int)(OUNCES_PER_POUND * (weightInPounds - (int)weightInPounds));
         }
 
-        public BritishWeight(int stones, int pounds, int ounces)
-        {
-            Stones = stones;
-            Pounds = pounds;
-            Ounces = ounces;
-        }
 
         public int Stones { get; }
         public int Pounds { get; }
         public int Ounces { get; }
     }
-    
 }
