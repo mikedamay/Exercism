@@ -35,7 +35,7 @@ namespace Example
         {
             get
             {
-                return new BritishWeight(WeightInPounds(ApplyVanityFactor(inputWeight)));
+                return new BritishWeight(WeightInPounds(DisplayWeight));
             }
         }
         public float VanityFactor { set; private get; }

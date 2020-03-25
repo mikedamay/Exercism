@@ -1,128 +1,132 @@
 ﻿using System;
 
-
-public enum Units_Template
-{
-    Kilograms
-    ,Pounds
-}
-
-public class WeighingMachine_Template
-{
-    public float InputWeight
-    {
-        get
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-        set
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-    }
-
-    public float DisplayWeight
-    {
-        get
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-        set
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-    }
-
-    public BritishWeight_Template BritishWeight
-    {
-        get
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-        set
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-    }
-    public float VanityFactor
-    {
-        get
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-        set
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-    }
-
-    public Units_Template Units
-    {
-        get
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-        set
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-    }
-}
-
-public struct BritishWeight_Template
+namespace Template
 {
 
-    public BritishWeight_Template(float weightInPounds)
+    public enum Units
     {
-        throw new NotImplementedException("Please implement the constructor");
+        Kilograms
+        ,Pounds
     }
-    public int Stones
+
+    public class WeighingMachine
     {
-        get
+        public float InputWeight
         {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
+            get
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+            set
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
         }
-        set
+
+        public float DisplayWeight
         {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
+            get
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+            set
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+        }
+
+        public BritishWeight BritishWeight
+        {
+            get
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+            set
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+        }
+        public float VanityFactor
+        {
+            get
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+            set
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+        }
+
+        public Units Units
+        {
+            get
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+            set
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
         }
     }
-    public int Pounds
+
+    public struct BritishWeight
     {
-        get
+
+        public BritishWeight(float weightInPounds)
         {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
+            throw new NotImplementedException("Please implement the constructor");
         }
-        set
+        public int Stones
         {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
+            get
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+            set
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+        }
+        public int Pounds
+        {
+            get
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+            set
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+        }
+        public int Ounces
+        {
+            get
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
+            set
+            {
+                throw new NotImplementedException(
+                    "Please implement accessors where appropriate for this property and remove unused stubs");
+            }
         }
     }
-    public int Ounces
-    {
-        get
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-        set
-        {
-            throw new NotImplementedException(
-                "Please implement accessors where appropriate for this property and remove unused stubs");
-        }
-    }
+    
 }
