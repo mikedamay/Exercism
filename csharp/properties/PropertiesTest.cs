@@ -41,5 +41,21 @@ public class WeighingMachineTests
         wm.TareAdjustment = 10;
         Assert.Equal(90, wm.DisplayWeight );
     }
+    [Fact]
+    public void Apply_negative_tare_adjustment()
+    {
+        var wm = new WeighingMachine();
+        wm.InputWeight = 100;
+        wm.TareAdjustment = -10;
+        Assert.Equal(110, wm.DisplayWeight );
+    }
+    [Fact]
+    public void Apply_large_tare_adjustment_to_allow_negative_display_weight()
+    {
+        var wm = new WeighingMachine();
+        wm.InputWeight = 100;
+        wm.TareAdjustment = 110;
+        Assert.Equal(-10, wm.DisplayWeight );
+    }
     
 }
