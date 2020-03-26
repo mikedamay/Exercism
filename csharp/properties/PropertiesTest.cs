@@ -8,8 +8,8 @@ public class WeighingMachineTests
     public void Got_weight_is_set_weight()
     {
         var wm = new WeighingMachine();
-        wm.InputWeight = 60f;
-        Assert.Equal(60f, wm.InputWeight, 3 );
+        wm.InputWeight = 60m;
+        Assert.Equal(60m, wm.InputWeight, 3 );
     }
     [Fact]
     public void Negative_weight_is_invalid()
@@ -22,15 +22,15 @@ public class WeighingMachineTests
     public void Got_british_weight()
     {
         var wm = new WeighingMachine();
-        wm.InputWeight = 60f;
-        Assert.Equal((9, 6, 4), (wm.BritishWeight.Stones, wm.BritishWeight.Pounds, wm.BritishWeight.Ounces) );
+        wm.InputWeight = 60m;
+        Assert.Equal((9, 6, 4.43520m), (wm.BritishWeight.Stones, wm.BritishWeight.Pounds, wm.BritishWeight.Ounces) );
     }
     [Fact]
     public void Got_british_weight_in_pounds()
     {
         var wm = new WeighingMachine();
         wm.Units = Units.Pounds;
-        wm.InputWeight = 175f;
+        wm.InputWeight = 175m;
         Assert.Equal((12, 7, 0), (wm.BritishWeight.Stones, wm.BritishWeight.Pounds, wm.BritishWeight.Ounces) );
     }
     [Fact]

@@ -9,11 +9,11 @@ namespace Example
     }
     public class WeighingMachine
     {
-        private const float POUNDS_PER_KILOGRAM = 2.20462f;
-        private float inputWeight;
+        private const decimal POUNDS_PER_KILOGRAM = 2.20462m;
+        private decimal inputWeight;
 
         public Units Units { get; set; } = Units.Kilograms;
-        public float InputWeight
+        public decimal InputWeight
         {
             get { return inputWeight; }
             set
@@ -27,7 +27,7 @@ namespace Example
             }
         }
 
-        public float DisplayWeight
+        public decimal DisplayWeight
         {
             get { return ApplyVanityFactor(inputWeight); }
         }
@@ -38,25 +38,25 @@ namespace Example
                 return new BritishWeight(WeightInPounds(DisplayWeight));
             }
         }
-        public float VanityFactor { set; private get; }
-        private float ApplyVanityFactor(float weight) => weight * (100 - VanityFactor) / 100;
-        private float WeightInPounds(float weight) => Units == Units.Kilograms ? weight * POUNDS_PER_KILOGRAM : weight;
+        public decimal VanityFactor { set; private get; }
+        private decimal ApplyVanityFactor(decimal weight) => weight * (100 - VanityFactor) / 100;
+        private decimal WeightInPounds(decimal weight) => Units == Units.Kilograms ? weight * POUNDS_PER_KILOGRAM : weight;
     }
 
     public class BritishWeight
     {
         private const int POUNDS_PER_STONE = 14;
-        private const float OUNCES_PER_POUND = 16f;
+        private const decimal OUNCES_PER_POUND = 16m;
 
-        public BritishWeight(float displayWeightInPounds)
+        public BritishWeight(decimal displayWeightInPounds)
         {
             Stones = (int)displayWeightInPounds / POUNDS_PER_STONE;
             Pounds = (int)displayWeightInPounds % POUNDS_PER_STONE;
-            Ounces = (int)(OUNCES_PER_POUND * (displayWeightInPounds - (int)displayWeightInPounds));
+            Ounces = (OUNCES_PER_POUND * (displayWeightInPounds - (int)displayWeightInPounds));
         }
         
         public int Stones { get; }
         public int Pounds { get; }
-        public int Ounces { get; }
+        public decimal Ounces { get; }
     }
 }
