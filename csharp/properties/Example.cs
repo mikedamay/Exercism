@@ -29,34 +29,31 @@ namespace Example
 
         public decimal DisplayWeight
         {
-            get { return ApplyVanityFactor(inputWeight); }
+            get { return ApplyTareAdjustment(inputWeight); }
         }
-        public BritishWeight BritishWeight
+        public USWeight USDisplayWeight
         {
             get
             {
-                return new BritishWeight(WeightInPounds(DisplayWeight));
+                return new USWeight(WeightInPounds(DisplayWeight));
             }
         }
-        public decimal VanityFactor { set; private get; }
-        private decimal ApplyVanityFactor(decimal weight) => weight * (100 - VanityFactor) / 100;
+        public decimal TareAdjustment { set; private get; }
+        private decimal ApplyTareAdjustment(decimal weight) => weight - TareAdjustment;
         private decimal WeightInPounds(decimal weight) => Units == Units.Kilograms ? weight * POUNDS_PER_KILOGRAM : weight;
     }
 
-    public class BritishWeight
+    public class USWeight
     {
-        private const int POUNDS_PER_STONE = 14;
         private const decimal OUNCES_PER_POUND = 16m;
 
-        public BritishWeight(decimal displayWeightInPounds)
+        public USWeight(decimal displayWeightInPounds)
         {
-            Stones = (int)displayWeightInPounds / POUNDS_PER_STONE;
-            Pounds = (int)displayWeightInPounds % POUNDS_PER_STONE;
-            Ounces = (OUNCES_PER_POUND * (displayWeightInPounds - (int)displayWeightInPounds));
+            Pounds = (int)displayWeightInPounds;
+            Ounces = (int)(OUNCES_PER_POUND * (displayWeightInPounds - (int)displayWeightInPounds));
         }
         
-        public int Stones { get; }
         public int Pounds { get; }
-        public decimal Ounces { get; }
+        public int Ounces { get; }
     }
 }

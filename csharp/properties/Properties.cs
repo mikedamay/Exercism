@@ -11,7 +11,7 @@ namespace Template
 
     public class WeighingMachine
     {
-        public float InputWeight
+        public decimal InputWeight
         {
             get
             {
@@ -25,7 +25,7 @@ namespace Template
             }
         }
 
-        public float DisplayWeight
+        public decimal DisplayWeight
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Template
             }
         }
 
-        public BritishWeight BritishWeight
+        public USWeight USDisplayWeight
         {
             get
             {
@@ -52,7 +52,7 @@ namespace Template
                     "Please implement accessors where appropriate for this property and remove unused stubs");
             }
         }
-        public float VanityFactor
+        public decimal TareAdjustment
         {
             get
             {
@@ -81,27 +81,14 @@ namespace Template
         }
     }
 
-    public struct BritishWeight
+    public struct USWeight
     {
 
-        public BritishWeight(float weightInPounds)
+        public USWeight(decimal weightInPounds)
         {
             throw new NotImplementedException("Please implement the constructor");
         }
-        public int Stones
-        {
-            get
-            {
-                throw new NotImplementedException(
-                    "Please implement accessors where appropriate for this property and remove unused stubs");
-            }
-            set
-            {
-                throw new NotImplementedException(
-                    "Please implement accessors where appropriate for this property and remove unused stubs");
-            }
-        }
-        public int Pounds
+         public int Pounds
         {
             get
             {

@@ -5,7 +5,7 @@ using Example;
 public class WeighingMachineTests
 {
     [Fact]
-    public void Got_weight_is_set_weight()
+    public void Set_weight_and_get_weight()
     {
         var wm = new WeighingMachine();
         wm.InputWeight = 60m;
@@ -19,26 +19,26 @@ public class WeighingMachineTests
     }
     
     [Fact]
-    public void Got_british_weight()
+    public void Get_US_display_weight()
     {
         var wm = new WeighingMachine();
         wm.InputWeight = 60m;
-        Assert.Equal((9, 6, 4.43520m), (wm.BritishWeight.Stones, wm.BritishWeight.Pounds, wm.BritishWeight.Ounces) );
+        Assert.Equal((132, 4), (wm.USDisplayWeight.Pounds, wm.USDisplayWeight.Ounces) );
     }
     [Fact]
-    public void Got_british_weight_in_pounds()
+    public void Input_pounds_and_get_US_display_weight()
     {
         var wm = new WeighingMachine();
         wm.Units = Units.Pounds;
-        wm.InputWeight = 175m;
-        Assert.Equal((12, 7, 0), (wm.BritishWeight.Stones, wm.BritishWeight.Pounds, wm.BritishWeight.Ounces) );
+        wm.InputWeight = 175.5m;
+        Assert.Equal((175, 8), (wm.USDisplayWeight.Pounds, wm.USDisplayWeight.Ounces) );
     }
     [Fact]
-    public void Apply_vanity_factor()
+    public void Apply_tare_adjustment_and_get_display_weight()
     {
         var wm = new WeighingMachine();
         wm.InputWeight = 100;
-        wm.VanityFactor = 10;
+        wm.TareAdjustment = 10;
         Assert.Equal(90, wm.DisplayWeight );
     }
     
