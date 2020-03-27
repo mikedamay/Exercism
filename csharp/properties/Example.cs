@@ -4,8 +4,8 @@ namespace Example
 {
     public enum Units
     {
-        Kilograms
-        ,Pounds
+        Pounds
+        ,Kilograms
     }
     public class WeighingMachine
     {
