@@ -148,6 +148,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rectangles", "csharp\rectan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Properties", "csharp\properties\Properties.csproj", "{F136FB9D-F8A8-4570-9BD7-6D47F5EFA720}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "House", "csharp\house\House.csproj", "{CA02B3BB-5A84-4E59-991F-ACBE906B08A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordy", "csharp\wordy\Wordy.csproj", "{20860F86-387A-45C1-BB51-5E4ED20442B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -446,5 +450,13 @@ Global
 		{F136FB9D-F8A8-4570-9BD7-6D47F5EFA720}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F136FB9D-F8A8-4570-9BD7-6D47F5EFA720}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F136FB9D-F8A8-4570-9BD7-6D47F5EFA720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA02B3BB-5A84-4E59-991F-ACBE906B08A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA02B3BB-5A84-4E59-991F-ACBE906B08A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA02B3BB-5A84-4E59-991F-ACBE906B08A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA02B3BB-5A84-4E59-991F-ACBE906B08A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20860F86-387A-45C1-BB51-5E4ED20442B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20860F86-387A-45C1-BB51-5E4ED20442B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20860F86-387A-45C1-BB51-5E4ED20442B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20860F86-387A-45C1-BB51-5E4ED20442B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
