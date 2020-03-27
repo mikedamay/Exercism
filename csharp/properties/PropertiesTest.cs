@@ -57,5 +57,42 @@ public class WeighingMachineTests
         wm.TareAdjustment = 110;
         Assert.Equal(-10, wm.DisplayWeight );
     }
+
+    [Fact]
+    public void Units_should_be_auto_implemented()
+    {
+        bool autoImplemented = false;
+        Assert.True(autoImplemented);
+    }
+    [Fact]
+    public void DisplayWeight_should_not_have_a_setter()
+    {
+        bool hasSetter = true;
+        Assert.False(hasSetter);
+    }
+    [Fact]
+    public void USDisplayWeight_should_not_have_a_setter()
+    {
+        bool hasSetter = true;
+        Assert.False(hasSetter);
+    }
+    [Fact]
+    public void TareAdjustment_should_be_auto_implemented_with_private_getter()
+    {
+        bool hasPrivateGetter = false;
+        Assert.False(hasPrivateGetter);
+    }
+    [Fact]
+    public void Pounds_should_not_have_a_setter()
+    {
+        bool hasSetter = true;
+        Assert.False(hasSetter);
+    }
+    [Fact]
+    public void Ounces_should_not_have_a_setter()
+    {
+        bool hasSetter = true;
+        Assert.False(hasSetter);
+    }
     
 }
