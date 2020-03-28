@@ -152,6 +152,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "House", "csharp\house\House
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordy", "csharp\wordy\Wordy.csproj", "{20860F86-387A-45C1-BB51-5E4ED20442B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triangle", "csharp\triangle\Triangle.csproj", "{09AB1126-806F-4569-9868-03AF6C937494}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -458,5 +460,9 @@ Global
 		{20860F86-387A-45C1-BB51-5E4ED20442B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20860F86-387A-45C1-BB51-5E4ED20442B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20860F86-387A-45C1-BB51-5E4ED20442B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09AB1126-806F-4569-9868-03AF6C937494}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09AB1126-806F-4569-9868-03AF6C937494}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09AB1126-806F-4569-9868-03AF6C937494}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09AB1126-806F-4569-9868-03AF6C937494}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

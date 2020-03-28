@@ -1,56 +1,40 @@
 using System;
 
-public readonly struct Clock
+public struct Clock
 {
-    private readonly int hours, minutes;
+    private readonly int hours;
+    private readonly int minutes;
+
     public Clock(int hours, int minutes)
     {
-        this.hours = hours;
-        this.minutes = minutes;
-    }
-
-    public int Hours
-    {
-        get
+        var m = minutes;
+        var s = Math.Sign(m);
+        while (m >= 60 || m < 0)
         {
-            var hours = CalculateHours();
-            var minutes = CalculteMinutes();
-            if (minutes < 0)
-            {
-                hours = (((24 + hours) * 60 + minutes) / 60) % 24;
-            }
-            return hours < 0 ? 24 + hours : hours;
+            hours += s;
+            m -= s * 60;
         }
-    }
+        this.minutes = m;
 
-    public int Minutes
-    {
-        get
+        var h = hours;
+        s = Math.Sign(h);
+        while (h >= 24 || h < 0)
         {
-            var minutes = CalculteMinutes();
-            if (minutes < 0)
-            {
-                minutes = 60 + minutes;
-            }
-            return minutes;
+            h -= s * 24;
         }
+        this.hours = h;
     }
 
-    private int HoursToMinutes(int hours, int minutes) => hours * 60 + minutes;
+    public Clock Add(int minutesToAdd) => new Clock(hours, minutes + minutesToAdd);
 
-    private int CalculateHours(int hours, int minutes) => ((HoursToMinutes(hours, minutes) / 60) + 24) % 24;
 
-    private int CalculteMinutes(int hours, int minutes) => HoursToMinutes(hours, minutes) % 60;
+    public Clock Subtract(int minutesToSubtract) => new Clock(hours, minutes - minutesToSubtract);
 
-    public Clock Add(int minutesToAdd) => new Clock(Hours, Minutes + minutesToAdd);
-
-    public Clock Subtract(int minutesToSubtract) => new Clock(Hours, Minutes - minutesToSubtract);
-
-    private (int, int) Normalise(int hours, int minutes)
-    {
-        return (CalculateHours(HoursToMinutes(hours, minutes)), CalculteMinutes(HoursToMinutes(hours, minutes))
-    }
+    public override string ToString() => $"{hours.ToString().PadLeft(2, '0')}:{minutes.ToString().PadLeft(2, '0')}";
     
-    public override string ToString() => $"{Hours:00}:{Minutes:00}";
-//    public bool Equals(Clock other) => Hours.Equals(other.Hours) && Minutes.Equals(other.Minutes);
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(hours, minutes);
+    }
+
 }
