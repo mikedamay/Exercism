@@ -29,8 +29,6 @@ internal struct State
     public State(Direction direction, int x, int y) : this(direction, (x, y)) { }
 }
 
-
-
 public class RobotSimulator
 {
 
