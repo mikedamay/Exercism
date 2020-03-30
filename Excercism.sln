@@ -154,6 +154,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordy", "csharp\wordy\Wordy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triangle", "csharp\triangle\Triangle.csproj", "{09AB1126-806F-4569-9868-03AF6C937494}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Research", "csharp\research\Research.csproj", "{E18B4206-3320-4247-9923-60E87FE27C81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotSimulator", "csharp\robot-simulator\RobotSimulator.csproj", "{79E7C047-D54E-43B0-AF31-44BE561BE5D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -464,5 +468,13 @@ Global
 		{09AB1126-806F-4569-9868-03AF6C937494}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09AB1126-806F-4569-9868-03AF6C937494}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09AB1126-806F-4569-9868-03AF6C937494}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E18B4206-3320-4247-9923-60E87FE27C81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E18B4206-3320-4247-9923-60E87FE27C81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E18B4206-3320-4247-9923-60E87FE27C81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E18B4206-3320-4247-9923-60E87FE27C81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79E7C047-D54E-43B0-AF31-44BE561BE5D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79E7C047-D54E-43B0-AF31-44BE561BE5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79E7C047-D54E-43B0-AF31-44BE561BE5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79E7C047-D54E-43B0-AF31-44BE561BE5D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
