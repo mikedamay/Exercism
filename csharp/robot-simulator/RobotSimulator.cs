@@ -45,9 +45,7 @@ public class RobotSimulator
         initialState = new State(direction, x, y);
         finalState = initialState;
     }
-
-
-
+    
     public void Move(string instructions)
     {
         finalState = instructions
@@ -58,9 +56,8 @@ public class RobotSimulator
                 'A' => AdvanceMove,
                 _ => throw new ArgumentException()
                 })
-            .ProcessMove(initialState).Last();
+            .MoveFromStateToState(initialState).Last();
     }
-
     
     private State AdvanceMove(State state) =>
         new State(state.Direction, state.Direction switch
@@ -71,15 +68,14 @@ public class RobotSimulator
             Direction.West => (state.X - 1, state.Y),
             _ => throw new ArgumentOutOfRangeException()
             });
-
-
+    
     private State TurnLeftMove(State state) => new State((Direction) (((int) state.Direction + 3) % 4), state.X, state.Y);
     private State TurnRightMove(State state) => new State((Direction) (((int) state.Direction + 1) % 4), state.X, state.Y);
 }
 
 internal static class RobotSimulatorExtensions
 {
-    public static IEnumerable<State> ProcessMove(this IEnumerable< Func<State, State>> moves, State initialState)
+    public static IEnumerable<State> MoveFromStateToState(this IEnumerable< Func<State, State>> moves, State initialState)
     {
         State st = initialState;
         foreach (var move in moves)
