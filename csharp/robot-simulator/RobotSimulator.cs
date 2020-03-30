@@ -14,7 +14,7 @@ public enum Direction
     West = 3
 }
 
-public struct State
+internal struct State
 {
     public Direction Direction { get;}
     public int X { get;}
@@ -34,33 +34,35 @@ public struct State
 public class RobotSimulator
 {
 
-    public Direction Direction => state.Direction;
-    public int X => state.X;
-    public int Y => state.Y;
+    public Direction Direction => finalState.Direction;
+    public int X => finalState.X;
+    public int Y => finalState.Y;
     
-    private State state;
+    private readonly State initialState;
+    private State finalState;
     public RobotSimulator(Direction direction, int x, int y)
     {
-        state = new State(direction, x, y);
+        initialState = new State(direction, x, y);
+        finalState = initialState;
     }
 
 
 
     public void Move(string instructions)
     {
-        var aaa = instructions
+        finalState = instructions
             .Select<char, Func<State, State>>(instruction => instruction switch
                 {
-                'L' => TurnLeft,
-                'R' => TurnRight,
-                'A' => Advance,
+                'L' => TurnLeftMove,
+                'R' => TurnRightMove,
+                'A' => AdvanceMove,
                 _ => throw new ArgumentException()
                 })
-            .ProcessMove(state).Last();
+            .ProcessMove(initialState).Last();
     }
 
     
-    private void Advance(State state) =>
+    private State AdvanceMove(State state) =>
         new State(state.Direction, state.Direction switch
             {
             Direction.North => (state.X, state.Y + 1),
@@ -71,8 +73,8 @@ public class RobotSimulator
             });
 
 
-    private State TurnLeft(State state) => new State((Direction) (((int) state.Direction + 3) % 4), state.X, state.Y);
-    private State TurnRight(State state) => new State((Direction) (((int) state.Direction + 1) % 4), state.X, state.Y);
+    private State TurnLeftMove(State state) => new State((Direction) (((int) state.Direction + 3) % 4), state.X, state.Y);
+    private State TurnRightMove(State state) => new State((Direction) (((int) state.Direction + 1) % 4), state.X, state.Y);
 }
 
 internal static class RobotSimulatorExtensions
@@ -82,7 +84,8 @@ internal static class RobotSimulatorExtensions
         State st = initialState;
         foreach (var move in moves)
         {
-            yield return move(st);
+            st = move(st);
+            yield return st;
         }
     }
 }
