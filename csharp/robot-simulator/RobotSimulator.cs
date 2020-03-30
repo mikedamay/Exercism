@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
+/**
+ * based on a idea by David Godfrey
+ */
 
 public enum Direction
 {
@@ -11,22 +14,25 @@ public enum Direction
     West = 3
 }
 
+public struct State
+{
+    public Direction Direction { get;}
+    public int X { get;}
+    public int Y { get;}
+    public State(Direction direction, (int x, int y) coords)
+    {
+        Direction = direction;
+        X = coords.x;
+        Y = coords.y;
+    }
+
+    public State(Direction direction, int x, int y) : this(direction, (x, y)) { }
+}
+
 
 
 public class RobotSimulator
 {
-    private struct State
-    {
-        public Direction Direction { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public State(Direction direction, int x, int y)
-        {
-            Direction = direction;
-            X = x;
-            Y = y;
-        }
-    }
 
     public Direction Direction => state.Direction;
     public int X => state.X;
@@ -40,29 +46,43 @@ public class RobotSimulator
 
 
 
-    public void Move(string instructions) => instructions
-        .Select<char, Action>(instruction => instruction switch
-            {
-            'L' => TurnLeft,
-            'R' => TurnRight,
-            'A' => Advance,
-            _ => throw new ArgumentException()
-            })
-        .ToList()
-        .ForEach(operation => operation.Invoke());
+    public void Move(string instructions)
+    {
+        var aaa = instructions
+            .Select<char, Func<State, State>>(instruction => instruction switch
+                {
+                'L' => TurnLeft,
+                'R' => TurnRight,
+                'A' => Advance,
+                _ => throw new ArgumentException()
+                })
+            .ProcessMove(state).Last();
+    }
 
-
-    private void Advance() =>
-        (state.X, state.Y) = state.Direction switch
+    
+    private void Advance(State state) =>
+        new State(state.Direction, state.Direction switch
             {
             Direction.North => (state.X, state.Y + 1),
             Direction.East => (state.X + 1, state.Y),
             Direction.South => (state.X, state.Y - 1),
             Direction.West => (state.X - 1, state.Y),
             _ => throw new ArgumentOutOfRangeException()
-            };
+            });
 
 
-    private void TurnLeft() => state.Direction = (Direction) (((int) state.Direction + 3) % 4);
-    private void TurnRight() => state.Direction = (Direction) (((int) state.Direction + 1) % 4);
+    private State TurnLeft(State state) => new State((Direction) (((int) state.Direction + 3) % 4), state.X, state.Y);
+    private State TurnRight(State state) => new State((Direction) (((int) state.Direction + 1) % 4), state.X, state.Y);
+}
+
+internal static class RobotSimulatorExtensions
+{
+    public static IEnumerable<State> ProcessMove(this IEnumerable< Func<State, State>> moves, State initialState)
+    {
+        State st = initialState;
+        foreach (var move in moves)
+        {
+            yield return move(st);
+        }
+    }
 }
