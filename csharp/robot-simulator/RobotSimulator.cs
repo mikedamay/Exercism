@@ -29,6 +29,9 @@ internal struct State
     public State(Direction direction, int x, int y) : this(direction, (x, y)) { }
 }
 
+internal delegate State RobotAction(State st);
+
+
 public class RobotSimulator
 {
 
@@ -38,48 +41,52 @@ public class RobotSimulator
     
     private readonly State initialState;
     private State finalState;
+    
     public RobotSimulator(Direction direction, int x, int y)
     {
         initialState = new State(direction, x, y);
         finalState = initialState;
     }
     
-    public void Move(string instructions)
+    public void Move(string instructionLetters)
     {
-        finalState = instructions
-            .Select<char, Func<State, State>>(instruction => instruction switch
+        finalState = instructionLetters
+            .Select<char, RobotAction>(letter => letter switch
                 {
-                'L' => TurnLeftMove,
-                'R' => TurnRightMove,
-                'A' => AdvanceMove,
-                _ => throw new ArgumentException()
-                })
-            .MoveFromStateToState(initialState).Last();
+                    'L' => TurnLeftAction,
+                    'R' => TurnRightAction,
+                    'A' => MoveForwardAction,
+                    _ => throw new ArgumentException()
+                }
+            )
+            .ExecuteRobotActions(initialState).Last();
     }
     
-    private State AdvanceMove(State state) =>
-        new State(state.Direction, state.Direction switch
-            {
-            Direction.North => (state.X, state.Y + 1),
-            Direction.East => (state.X + 1, state.Y),
-            Direction.South => (state.X, state.Y - 1),
-            Direction.West => (state.X - 1, state.Y),
-            _ => throw new ArgumentOutOfRangeException()
-            });
+    private State MoveForwardAction(State state) =>
+        new State(state.Direction
+            , state.Direction switch
+                {
+                    Direction.North => (state.X, state.Y + 1),
+                    Direction.East => (state.X + 1, state.Y),
+                    Direction.South => (state.X, state.Y - 1),
+                    Direction.West => (state.X - 1, state.Y),
+                    _ => throw new ArgumentOutOfRangeException()
+                }
+            );
     
-    private State TurnLeftMove(State state) => new State((Direction) (((int) state.Direction + 3) % 4), state.X, state.Y);
-    private State TurnRightMove(State state) => new State((Direction) (((int) state.Direction + 1) % 4), state.X, state.Y);
+    private State TurnLeftAction(State state) => new State((Direction) (((int) state.Direction + 3) % 4), state.X, state.Y);
+    private State TurnRightAction(State state) => new State((Direction) (((int) state.Direction + 1) % 4), state.X, state.Y);
 }
 
 internal static class RobotSimulatorExtensions
 {
-    public static IEnumerable<State> MoveFromStateToState(this IEnumerable< Func<State, State>> moves, State initialState)
+    public static IEnumerable<State> ExecuteRobotActions(this IEnumerable<RobotAction> robotActions, State initialState)
     {
-        State st = initialState;
-        foreach (var move in moves)
+        State state = initialState;
+        foreach (var robotAction in robotActions)
         {
-            st = move(st);
-            yield return st;
+            state = robotAction(state);
+            yield return state;
         }
     }
 }
