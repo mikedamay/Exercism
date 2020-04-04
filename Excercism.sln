@@ -158,6 +158,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Research", "csharp\research
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotSimulator", "csharp\robot-simulator\RobotSimulator.csproj", "{79E7C047-D54E-43B0-AF31-44BE561BE5D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalindromeProducts", "csharp\palindrome-products\PalindromeProducts.csproj", "{D74FBD74-4E5E-482E-94C6-30E62D7DE76F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -476,5 +478,9 @@ Global
 		{79E7C047-D54E-43B0-AF31-44BE561BE5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79E7C047-D54E-43B0-AF31-44BE561BE5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79E7C047-D54E-43B0-AF31-44BE561BE5D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D74FBD74-4E5E-482E-94C6-30E62D7DE76F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D74FBD74-4E5E-482E-94C6-30E62D7DE76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D74FBD74-4E5E-482E-94C6-30E62D7DE76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D74FBD74-4E5E-482E-94C6-30E62D7DE76F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
