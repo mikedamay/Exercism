@@ -160,6 +160,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotSimulator", "csharp\ro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalindromeProducts", "csharp\palindrome-products\PalindromeProducts.csproj", "{D74FBD74-4E5E-482E-94C6-30E62D7DE76F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Equalizer", "Equalizer\Equalizer.csproj", "{4ED72D98-4C8C-47CB-80AF-F73A5E120F42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -482,5 +484,9 @@ Global
 		{D74FBD74-4E5E-482E-94C6-30E62D7DE76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D74FBD74-4E5E-482E-94C6-30E62D7DE76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D74FBD74-4E5E-482E-94C6-30E62D7DE76F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ED72D98-4C8C-47CB-80AF-F73A5E120F42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ED72D98-4C8C-47CB-80AF-F73A5E120F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ED72D98-4C8C-47CB-80AF-F73A5E120F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ED72D98-4C8C-47CB-80AF-F73A5E120F42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
