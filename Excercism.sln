@@ -162,7 +162,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalindromeProducts", "cshar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Equalizer", "Equalizer\Equalizer.csproj", "{4ED72D98-4C8C-47CB-80AF-F73A5E120F42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionaries", "Dictionaries\Dictionaries.csproj", "{728C1300-6BCF-4AD5-B1FE-2F5343025DEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionaries", "csharp\dictionaries\Dictionaries.csproj", "{1F7D6B16-3261-4600-A9B8-BF955E425EB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -490,9 +490,9 @@ Global
 		{4ED72D98-4C8C-47CB-80AF-F73A5E120F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ED72D98-4C8C-47CB-80AF-F73A5E120F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4ED72D98-4C8C-47CB-80AF-F73A5E120F42}.Release|Any CPU.Build.0 = Release|Any CPU
-		{728C1300-6BCF-4AD5-B1FE-2F5343025DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{728C1300-6BCF-4AD5-B1FE-2F5343025DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{728C1300-6BCF-4AD5-B1FE-2F5343025DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{728C1300-6BCF-4AD5-B1FE-2F5343025DEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F7D6B16-3261-4600-A9B8-BF955E425EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F7D6B16-3261-4600-A9B8-BF955E425EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F7D6B16-3261-4600-A9B8-BF955E425EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F7D6B16-3261-4600-A9B8-BF955E425EB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
