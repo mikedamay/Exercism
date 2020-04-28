@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Dictionaries_Code;
 using Xunit;
 
@@ -22,11 +21,8 @@ public class DictionariesTest
     public void TestAddCountryToEmptyDictionary()
     {
         var ed = Example.AddCountryToEmptyDictionary(44, "United Kingdom");
-        Assert.Equal(4, ed.Count);
-        Assert.Equal("United States of America", ed[1]);
+        Assert.Equal(1, ed.Count);
         Assert.Equal("United Kingdom", ed[44]);
-        Assert.Equal("Brazil", ed[55]);
-        Assert.Equal("India", ed[91]);
     }
     [Fact(Skip = "")]
     public void TestAddCountryToExistingDictionary()
