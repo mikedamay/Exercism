@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Dictionaries_Code
@@ -29,6 +30,29 @@ namespace Dictionaries_Code
         {
             existingDictiopnary[countryCode] = CountryName;
             return existingDictiopnary;
+        }
+
+        public static string GetCountryNameFromDictionary(
+            Dictionary<int, string> existingDictionary, int countryCode)
+        {
+            if (existingDictionary.ContainsKey(countryCode))
+            {
+                return existingDictionary[countryCode];
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+        public static Dictionary<int, string>  UpdatgeDictionary(
+            Dictionary<int, string> existingDictionary, int countryCode, string countryName)
+        {
+            if (existingDictionary.ContainsKey(countryCode))
+            {
+                existingDictionary[countryCode] = countryName;
+            }
+
+            return existingDictionary;
         }
     }
 }
