@@ -44,7 +44,7 @@ namespace Dictionaries_Code
                 return string.Empty;
             }
         }
-        public static Dictionary<int, string>  UpdatgeDictionary(
+        public static Dictionary<int, string>  UpdateDictionary(
             Dictionary<int, string> existingDictionary, int countryCode, string countryName)
         {
             if (existingDictionary.ContainsKey(countryCode))
@@ -52,6 +52,13 @@ namespace Dictionaries_Code
                 existingDictionary[countryCode] = countryName;
             }
 
+            return existingDictionary;
+        }
+
+        public static Dictionary<int, string> RemoveCountryFromDictionary(
+            Dictionary<int, string> existingDictionary, int countryCode)
+        {
+            existingDictionary.Remove(countryCode);
             return existingDictionary;
         }
     }

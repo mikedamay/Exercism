@@ -43,7 +43,7 @@ public class DictionariesTest
         Assert.Equal("Brazil", countryName);
     }
     [Fact(Skip = "")]
-    public void Try_get_non_existent_country_name_from_dictionary()
+    public void Try_to_get_non_existent_country_name_from_dictionary()
     {
         var countryName = Example.GetCountryNameFromDictionary(
             Example.GetExistingDictionary(), 999);
@@ -52,7 +52,7 @@ public class DictionariesTest
     [Fact(Skip = "")]
     public void Update_country_name_in_dictionary()
     {
-        var ed = Example.UpdatgeDictionary(
+        var ed = Example.UpdateDictionary(
             Example.GetExistingDictionary(), 1, "Les États-Unis");
         Assert.Equal(3, ed.Count);
         Assert.Equal("Les États-Unis", ed[1]);
@@ -62,11 +62,20 @@ public class DictionariesTest
     [Fact(Skip = "")]
     public void Try_to_update_country_name_in_dictionary_for_non_existent_country()
     {
-        var ed = Example.UpdatgeDictionary(
+        var ed = Example.UpdateDictionary(
             Example.GetExistingDictionary(), 999, "Newlands");
         Assert.Equal(3, ed.Count);
         Assert.Equal("United States of America", ed[1]);
         Assert.Equal("Brazil", ed[55]);
         Assert.Equal("India", ed[91]);
+    }
+    [Fact(Skip = "")]
+    public void Remove_country_from_dictionary()
+    {
+        var ed = Example.RemoveCountryFromDictionary(
+            Example.GetExistingDictionary(), 91);
+        Assert.Equal(2, ed.Count);
+        Assert.Equal("United States of America", ed[1]);
+        Assert.Equal("Brazil", ed[55]);
     }
 }
