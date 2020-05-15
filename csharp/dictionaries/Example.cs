@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Dictionaries_Code
 {
-    public static class Example
+    public static class Dictionaries
     {
         public static Dictionary<int, string> GetEmptyDiectionary()
         {

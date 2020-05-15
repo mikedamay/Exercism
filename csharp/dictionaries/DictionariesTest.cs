@@ -6,76 +6,76 @@ public class DictionariesTest
     [Fact]
     public void Empty_dictionary()
     {
-        Assert.Empty(Example.GetEmptyDiectionary());
+        Assert.Empty(Dictionaries_Code.Dictionaries.GetEmptyDiectionary());
     }
     [Fact(Skip = "")]
     public void Existing_dictionary()
     {
-        var ed = Example.GetExistingDictionary();
-        Assert.Equal(3, ed.Count);
-        Assert.Equal("United States of America", ed[1]);
-        Assert.Equal("Brazil", ed[55]);
-        Assert.Equal("India", ed[91]);
+        var idcd = Dictionaries_Code.Dictionaries.GetExistingDictionary();
+        Assert.Equal(3, idcd.Count);
+        Assert.Equal("United States of America", idcd[1]);
+        Assert.Equal("Brazil", idcd[55]);
+        Assert.Equal("India", idcd[91]);
     }
     [Fact(Skip = "")]
     public void Add_country_to_empty_dictionary()
     {
-        var ed = Example.AddCountryToEmptyDictionary(44, "United Kingdom");
-        Assert.Equal(1, ed.Count);
-        Assert.Equal("United Kingdom", ed[44]);
+        var idcd = Dictionaries_Code.Dictionaries.AddCountryToEmptyDictionary(44, "United Kingdom");
+        Assert.Equal(1, idcd.Count);
+        Assert.Equal("United Kingdom", idcd[44]);
     }
     [Fact(Skip = "")]
     public void Add_country_to_existing_dictionary()
     {
-        var ed = Example.AddCountryToExistingDictionary(
-            Example.GetExistingDictionary(), 44, "United Kingdom");
-        Assert.Equal(4, ed.Count);
-        Assert.Equal("United States of America", ed[1]);
-        Assert.Equal("United Kingdom", ed[44]);
-        Assert.Equal("Brazil", ed[55]);
-        Assert.Equal("India", ed[91]);
+        var idcd = Dictionaries_Code.Dictionaries.AddCountryToExistingDictionary(
+            Dictionaries_Code.Dictionaries.GetExistingDictionary(), 44, "United Kingdom");
+        Assert.Equal(4, idcd.Count);
+        Assert.Equal("United States of America", idcd[1]);
+        Assert.Equal("United Kingdom", idcd[44]);
+        Assert.Equal("Brazil", idcd[55]);
+        Assert.Equal("India", idcd[91]);
     }
     [Fact(Skip = "")]
     public void Get_country_name_from_dictionary()
     {
-        var countryName = Example.GetCountryNameFromDictionary(
-            Example.GetExistingDictionary(), 55);
+        var countryName = Dictionaries_Code.Dictionaries.GetCountryNameFromDictionary(
+            Dictionaries_Code.Dictionaries.GetExistingDictionary(), 55);
         Assert.Equal("Brazil", countryName);
     }
     [Fact(Skip = "")]
     public void Try_to_get_non_existent_country_name_from_dictionary()
     {
-        var countryName = Example.GetCountryNameFromDictionary(
-            Example.GetExistingDictionary(), 999);
+        var countryName = Dictionaries_Code.Dictionaries.GetCountryNameFromDictionary(
+            Dictionaries_Code.Dictionaries.GetExistingDictionary(), 999);
         Assert.Equal(string.Empty, countryName);
     }
     [Fact(Skip = "")]
     public void Update_country_name_in_dictionary()
     {
-        var ed = Example.UpdateDictionary(
-            Example.GetExistingDictionary(), 1, "Les États-Unis");
-        Assert.Equal(3, ed.Count);
-        Assert.Equal("Les États-Unis", ed[1]);
-        Assert.Equal("Brazil", ed[55]);
-        Assert.Equal("India", ed[91]);
+        var idcd = Dictionaries_Code.Dictionaries.UpdateDictionary(
+            Dictionaries_Code.Dictionaries.GetExistingDictionary(), 1, "Les États-Unis");
+        Assert.Equal(3, idcd.Count);
+        Assert.Equal("Les États-Unis", idcd[1]);
+        Assert.Equal("Brazil", idcd[55]);
+        Assert.Equal("India", idcd[91]);
     }
     [Fact(Skip = "")]
     public void Try_to_update_country_name_in_dictionary_for_non_existent_country()
     {
-        var ed = Example.UpdateDictionary(
-            Example.GetExistingDictionary(), 999, "Newlands");
-        Assert.Equal(3, ed.Count);
-        Assert.Equal("United States of America", ed[1]);
-        Assert.Equal("Brazil", ed[55]);
-        Assert.Equal("India", ed[91]);
+        var idcd = Dictionaries_Code.Dictionaries.UpdateDictionary(
+            Dictionaries_Code.Dictionaries.GetExistingDictionary(), 999, "Newlands");
+        Assert.Equal(3, idcd.Count);
+        Assert.Equal("United States of America", idcd[1]);
+        Assert.Equal("Brazil", idcd[55]);
+        Assert.Equal("India", idcd[91]);
     }
     [Fact(Skip = "")]
     public void Remove_country_from_dictionary()
     {
-        var ed = Example.RemoveCountryFromDictionary(
-            Example.GetExistingDictionary(), 91);
-        Assert.Equal(2, ed.Count);
-        Assert.Equal("United States of America", ed[1]);
-        Assert.Equal("Brazil", ed[55]);
+        var idcd = Dictionaries_Code.Dictionaries.RemoveCountryFromDictionary(
+            Dictionaries_Code.Dictionaries.GetExistingDictionary(), 91);
+        Assert.Equal(2, idcd.Count);
+        Assert.Equal("United States of America", idcd[1]);
+        Assert.Equal("Brazil", idcd[55]);
     }
 }

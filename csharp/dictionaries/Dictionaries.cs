@@ -1,5 +1,5 @@
 ﻿using System;
 
-public class Dictionaries
+public class Dictionaries_xxx
 {
 }
