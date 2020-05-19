@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-public class Dictionaries_template
+public class Dictionaries
 {
     public static Dictionary<int, string> GetEmptyDiectionary()
     {
@@ -38,6 +38,15 @@ public class Dictionaries_template
 
     public static Dictionary<int, string> RemoveCountryFromDictionary(
         Dictionary<int, string> existingDictionary, int countryCode)
+    {
+        throw new NotImplementedException($"Please implement the (static) {MethodBase.GetCurrentMethod().Name} method");
+    }
+    public static bool CheckCodeExists(Dictionary<int, string> existingDictionary, int countryCode)
+    {
+        throw new NotImplementedException($"Please implement the (static) {MethodBase.GetCurrentMethod().Name} method");
+    }
+
+    public static string FindLongestCountryName(Dictionary<int, string> existingDictionary)
     {
         throw new NotImplementedException($"Please implement the (static) {MethodBase.GetCurrentMethod().Name} method");
     }
