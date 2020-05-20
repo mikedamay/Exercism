@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-public class Dictionaries
+public class Dictionaries_template
 {
     public static Dictionary<int, string> GetEmptyDiectionary()
     {
@@ -30,7 +30,7 @@ public class Dictionaries
     {
         throw new NotImplementedException($"Please implement the (static) {MethodBase.GetCurrentMethod().Name} method");
     }
-    public static Dictionary<int, string>  UpdateDictionary(
+    public static Dictionary<int, string> UpdateDictionary(
         Dictionary<int, string> existingDictionary, int countryCode, string countryName)
     {
         throw new NotImplementedException($"Please implement the (static) {MethodBase.GetCurrentMethod().Name} method");

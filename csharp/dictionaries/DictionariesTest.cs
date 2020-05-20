@@ -7,7 +7,7 @@ public class DictionariesTest
     {
         Assert.Empty(Dictionaries.GetEmptyDiectionary());
     }
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact(Skip = "")]
     public void Existing_dictionary()
     {
         var idcd = Dictionaries.GetExistingDictionary();
@@ -16,14 +16,14 @@ public class DictionariesTest
         Assert.Equal("Brazil", idcd[55]);
         Assert.Equal("India", idcd[91]);
     }
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact(Skip = "")]
     public void Add_country_to_empty_dictionary()
     {
         var idcd = Dictionaries.AddCountryToEmptyDictionary(44, "United Kingdom");
         Assert.Equal(1, idcd.Count);
         Assert.Equal("United Kingdom", idcd[44]);
     }
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact(Skip = "")]
     public void Add_country_to_existing_dictionary()
     {
         var idcd = Dictionaries.AddCountryToExistingDictionary(
@@ -34,28 +34,28 @@ public class DictionariesTest
         Assert.Equal("Brazil", idcd[55]);
         Assert.Equal("India", idcd[91]);
     }
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact(Skip = "")]
     public void Get_country_name_from_dictionary()
     {
         var countryName = Dictionaries.GetCountryNameFromDictionary(
             Dictionaries.GetExistingDictionary(), 55);
         Assert.Equal("Brazil", countryName);
     }
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact(Skip = "")]
     public void Check_country_exists()
     {
         var exists = Dictionaries.CheckCodeExists(
             Dictionaries.GetExistingDictionary(), 55);
         Assert.True(exists);
     }
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact(Skip = "")]
     public void Try_to_get_non_existent_country_name_from_dictionary()
     {
         var countryName = Dictionaries.GetCountryNameFromDictionary(
             Dictionaries.GetExistingDictionary(), 999);
         Assert.Equal(string.Empty, countryName);
     }
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact(Skip = "")]
     public void Update_country_name_in_dictionary()
     {
         var idcd = Dictionaries.UpdateDictionary(
@@ -65,7 +65,7 @@ public class DictionariesTest
         Assert.Equal("Brazil", idcd[55]);
         Assert.Equal("India", idcd[91]);
     }
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact(Skip = "")]
     public void Try_to_update_country_name_in_dictionary_for_non_existent_country()
     {
         var idcd = Dictionaries.UpdateDictionary(
@@ -75,7 +75,7 @@ public class DictionariesTest
         Assert.Equal("Brazil", idcd[55]);
         Assert.Equal("India", idcd[91]);
     }
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact(Skip = "")]
     public void Remove_country_from_dictionary()
     {
         var idcd = Dictionaries.RemoveCountryFromDictionary(
@@ -84,7 +84,7 @@ public class DictionariesTest
         Assert.Equal("United States of America", idcd[1]);
         Assert.Equal("Brazil", idcd[55]);
     }
-    [Fact(Skip = "Remove this Skip property to run this test")]
+    [Fact(Skip = "")]
     public void Longest_name()
     {
         var idcd = Dictionaries.FindLongestCountryName(

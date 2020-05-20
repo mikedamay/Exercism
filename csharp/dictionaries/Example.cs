@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public static class Dictionaries_example
+public static class Dictionaries
 {
     public static Dictionary<int, string> GetEmptyDiectionary()
     {
@@ -42,7 +42,7 @@ public static class Dictionaries_example
             return string.Empty;
         }
     }
-    public static Dictionary<int, string>  UpdateDictionary(
+    public static Dictionary<int, string> UpdateDictionary(
         Dictionary<int, string> existingDictionary, int countryCode, string countryName)
     {
         if (existingDictionary.ContainsKey(countryCode))
