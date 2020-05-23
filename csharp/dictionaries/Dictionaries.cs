@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-public class Dictionaries
+public class DialingCodes
 {
     public static Dictionary<int, string> GetEmptyDictionary()
     {
