@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-public static class Dictionaries
+public static class Dictionaries_example
 {
-    public static Dictionary<int, string> GetEmptyDiectionary()
+    public static Dictionary<int, string> GetEmptyDictionary()
     {
         return new Dictionary<int, string>();
     }
@@ -24,10 +24,10 @@ public static class Dictionaries
     }
 
     public static Dictionary<int, string> AddCountryToExistingDictionary(
-        Dictionary<int, string> existingDictiopnary, int countryCode, string CountryName)
+        Dictionary<int, string> existingDictionary, int countryCode, string countryName)
     {
-        existingDictiopnary[countryCode] = CountryName;
-        return existingDictiopnary;
+        existingDictionary[countryCode] = countryName;
+        return existingDictionary;
     }
 
     public static string GetCountryNameFromDictionary(

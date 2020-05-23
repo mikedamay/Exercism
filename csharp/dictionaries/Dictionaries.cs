@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-public class Dictionaries_template
+public class Dictionaries
 {
-    public static Dictionary<int, string> GetEmptyDiectionary()
+    public static Dictionary<int, string> GetEmptyDictionary()
     {
         throw new NotImplementedException($"Please implement the (static) {MethodBase.GetCurrentMethod().Name} method");
     }
