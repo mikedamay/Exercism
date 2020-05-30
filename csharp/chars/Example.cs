@@ -43,7 +43,7 @@ public static class CharUtils
             }
             else if (Char.IsControl(ch))
             {
-                sb.Append( "CTRL");
+                sb.Append("CTRL");
             }
             else if (!nonDigitFound && Char.IsDigit(ch))
             {
@@ -88,9 +88,8 @@ public static class CharUtils
             sb.Append(ch);
         }
         return sb.ToString();
-        
     }
-    
+
     public static string InsertASCIICharacter(string str, char ch)
     {
         bool charInserted = false;
