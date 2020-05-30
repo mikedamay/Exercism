@@ -93,7 +93,7 @@ public class CharsTest
     }
 
     [Fact( /*Skip = "Remove this Skip property to run this test"*/)]
-    public void Insert_char_into_string_with_equal_char()
+    public void Insert_char_into_string_with_outlying_char()
     {
         Assert.Equal("ǞÊÆ", CharUtils.InsertCharacter("ǞÊ", 'Æ'));
     }
