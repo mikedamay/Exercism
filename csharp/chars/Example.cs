@@ -44,19 +44,17 @@ public static class CharUtils
             else if (Char.IsControl(ch))
             {
                 sb.Append("CTRL");
+                nonDigitFound = true;
             }
             else if (!nonDigitFound && Char.IsDigit(ch))
             {
                 sb.Append(UNDERSCORE);
+                nonDigitFound = true;
             }
-            else if (ch == '_' || Char.IsLetter(ch))
+            else if (ch == UNDERSCORE || Char.IsLetterOrDigit(ch))
             {
                 sb.Append(ch);
                 nonDigitFound = true;
-            }
-            else
-            {
-                sb.Append('_');
             }
         }
 
@@ -67,14 +65,14 @@ public static class CharUtils
     {
         bool charInserted = false;
         var sb = new StringBuilder();
-        if (string.IsNullOrEmpty(str))
+        if (!string.IsNullOrEmpty(str))
         {
-            return str;
+            sb.Append(str[0]);
         }
-        sb.Append(str[0]);
         for (int i = 1; i < str.Length; i++)
         {
-            if (!charInserted && ch.CompareTo(str[i - 1]) > 0 && ch.CompareTo(str[i]) < 0)
+            if (!charInserted && Char.ToLower(ch).CompareTo(Char.ToLower((str[i - 1]))) > 0
+                              && Char.ToLower(ch).CompareTo(Char.ToLower(str[i])) < 0)
             {
                 sb.Append(ch);
                 charInserted = true;
@@ -101,7 +99,8 @@ public static class CharUtils
         sb.Append(str[0]);
         for (int i = 1; i < str.Length; i++)
         {
-            if (!charInserted && ch > str[i - 1] && ch < str[i])
+            if (!charInserted && Char.ToLower(ch) > Char.ToLower(str[i - 1]) 
+                              && Char.ToLower(ch) < Char.ToLower(str[i]))
             {
                 sb.Append(ch);
                 charInserted = true;
