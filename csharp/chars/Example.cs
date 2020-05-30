@@ -99,7 +99,7 @@ public static class CharUtils
         sb.Append(str[0]);
         for (int i = 1; i < str.Length; i++)
         {
-            if (!charInserted && Char.ToLower(ch) > Char.ToLower(str[i - 1]) 
+            if (!charInserted && Char.ToLower(ch) > Char.ToLower(str[i - 1])
                               && Char.ToLower(ch) < Char.ToLower(str[i]))
             {
                 sb.Append(ch);
