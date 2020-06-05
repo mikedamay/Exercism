@@ -1,9 +1,8 @@
 using System;
 using System.Text;
 
-public static class Identifier
+public static class Identifier_example
 {
-
     public static string Clean(string str)
     {
         const char UNDERSCORE = '_';
@@ -33,7 +32,7 @@ public static class Identifier
                 sb.Append(ch);
             }
         }
-
+        
         return sb.ToString();
     }
     
@@ -61,6 +60,7 @@ public static class Identifier
         {
             sb.Append(ch);
         }
+        
         return sb.ToString();
     }
 }
