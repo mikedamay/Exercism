@@ -1,27 +1,18 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-public class Det
+public class PhoneNumbers
 {
-    struct mike
+    public static (bool IsNewYork, bool IsFake, string LocalNumber) Analyze(string phoneNumber)
     {
-        private int abc;
-        mike(int a)
-        {
-            abc = a;
-        }
-    }
-    public static (bool IsSquare, bool IsCube, int Product) DetectPowers(int num1, int num2, int num3)
-    {
-        var mike = (1, 2);
-        var bob = (1, 2);
-        var xxx = bob == mike;
-        return (true, true, 1);
+        return (phoneNumber.Substring(0, 3) == "212"
+            , phoneNumber.Substring(4, 3) == "555"
+            , phoneNumber.Substring(8, 4));
     }
 
-    public static int ExtractProduct((bool, bool, bool) powersDetected)
+    public static bool IsFake((bool IsnewYork, bool IsFake, string LocalNumber) phoneNumberInfo)
     {
-        return 1;
+        return phoneNumberInfo.IsFake;
     }
     
 }
