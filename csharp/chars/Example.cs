@@ -1,18 +1,18 @@
 using System;
 using System.Text;
 
-public static class Identifier_example
+public static class Identifier
 {
-    public static string Clean(string str)
+    public static string Clean(string identifier)
     {
-        const char UNDERSCORE = '_';
-        const char DASH = '-';
-        const char ALPHA = 'α';
-        const char OMEGA = 'ω';
+        var UNDERSCORE = '_';
+        var DASH = '-';
+        var ALPHA = 'α';
+        var OMEGA = 'ω';
         var sb = new StringBuilder();
-        for (int i = 0; i < str.Length; i++)
+        for (int i = 0; i < identifier.Length; i++)
         {
-            char ch = str[i];
+            char ch = identifier[i];
             if (Char.IsWhiteSpace(ch))
             {
                 sb.Append(UNDERSCORE);
@@ -23,9 +23,9 @@ public static class Identifier_example
             }
             else if (ch == DASH)
             {
-                if (i + 1 < str.Length)
+                if (i + 1 < identifier.Length)
                 {
-                    sb.Append(Char.ToUpper(str[i + 1]));
+                    sb.Append(Char.ToUpper(identifier[i + 1]));
                     i++;
                 }
             }
