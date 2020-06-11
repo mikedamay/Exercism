@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-public class PhoneNumbers
+﻿public class PhoneNumbers
 {
     public static (bool IsNewYork, bool IsFake, string LocalNumber) Analyze(string phoneNumber)
     {

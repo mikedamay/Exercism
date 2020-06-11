@@ -2,7 +2,7 @@ using Xunit;
 
 public class TuplesTest
 {
-    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    [Fact]
     public void Analyze_non_fake_non_newyork()
     {
         Assert.Equal((false, false, "1234"), PhoneNumbers.Analyze("631-502-1234"));
