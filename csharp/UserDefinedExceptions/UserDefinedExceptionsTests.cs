@@ -25,6 +25,13 @@ public class UserDefinedExceptionsTests
     }
     
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
+    public void Call_Run_Calculate_with_nonsense()
+    {
+        var cth = new CalculatorTestHarness();
+        Assert.Equal(string.Empty, cth.Run("Foo", 123));
+    }
+    
+    [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void Call_Run_HandleInt()
     {
         var cth = new CalculatorTestHarness();
