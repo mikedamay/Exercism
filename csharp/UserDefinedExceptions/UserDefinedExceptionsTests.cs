@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 public class UserDefinedExceptionsTests
@@ -15,14 +14,14 @@ public class UserDefinedExceptionsTests
     public void Call_Run_Calculate_with_0()
     {
         var cth = new CalculatorTestHarness();
-        Assert.Equal("Calculate failed for a zero value", cth.Run("Calculate", 0));
+        Assert.Equal("Calculate failed for a zero value. Arithmetic operation resulted in an overflow.", cth.Run("Calculate", 0));
     }
     
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void Call_Run_Calculate_with_non_0()
     {
         var cth = new CalculatorTestHarness();
-        Assert.Equal("Calculate failed for a non-zero value", cth.Run("Calculate", 123));
+        Assert.Equal("Calculate failed for a non-zero value. Arithmetic operation resulted in an overflow.", cth.Run("Calculate", 123));
     }
     
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]

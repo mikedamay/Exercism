@@ -35,11 +35,11 @@ public class CalculatorTestHarness
         }
         catch (CalculationException cex) when (cex.GetOperand() == 0)
         {
-            return "Calculate failed for a zero value";
+            return "Calculate failed for a zero value. " + cex.InnerException.Message;
         }
-        catch (CalculationException)
+        catch (CalculationException cex)
         {
-            return "Calculate failed for a non-zero value";
+            return "Calculate failed for a non-zero value. " + cex.InnerException.Message;
         }
 
         return string.Empty;
