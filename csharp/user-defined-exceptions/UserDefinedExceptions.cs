@@ -20,12 +20,12 @@ public class CalculatorTestHarness_template
         this.calculator = calculator;
     }
 
-    public string Multiply(int x, int y)
+    public string TestMultiplication(int x, int y)
     {
         throw new NotImplementedException($"Please implement the Multiply() method");
     }
 
-    public void TestMultiplication(int x, int y)
+    public void Multiply(int x, int y)
     {
         throw new NotImplementedException($"Please implement the TestMultiplication() method");
     }
