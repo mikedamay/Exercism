@@ -1,8 +1,8 @@
 using System;
 
-public class CalculationException_template : Exception
+public class CalculationException : Exception
 {
-    public CalculationException_template(int operand1, int operand2, string message, Exception inner)
+    public CalculationException(int operand1, int operand2, string message, Exception inner)
     // TODO: complete the definition of the constructor
     {
     }
@@ -11,11 +11,11 @@ public class CalculationException_template : Exception
     public int Operand2 { get; }
 }
 
-public class CalculatorTestHarness_template
+public class CalculatorTestHarness
 {
-    private Calculator_template calculator;
+    private Calculator calculator;
 
-    public CalculatorTestHarness_template(Calculator_template calculator)
+    public CalculatorTestHarness(Calculator calculator)
     {
         this.calculator = calculator;
     }
@@ -35,7 +35,7 @@ public class CalculatorTestHarness_template
 // Please do not modify the code below.
 // If there is an overflow in the multiplication operation
 // then a System.OverflowException is thrown.
-public class Calculator_template
+public class Calculator
 {
     public int Multiply(int x, int y)
     {
