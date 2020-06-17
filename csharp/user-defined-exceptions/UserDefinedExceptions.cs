@@ -2,7 +2,7 @@ using System;
 
 public class CalculationException_template : Exception
 {
-    public CalculationException_template(int operand1, int operand2, string message, Exception inner) : base(message, inner)
+    public CalculationException_template(int operand1, int operand2, string message, Exception inner)
     // TODO: complete the definition of the constructor
     {
     }

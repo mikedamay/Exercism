@@ -1,40 +1,30 @@
 using System;
+using System.Collections.Generic;
 
-public struct Clock
+public class Clock : IEquatable<Clock>
 {
-    private readonly int hours;
-    private readonly int minutes;
+    private const int MinutesPerHour = 60;
+    private const int MinutesPerDay = 24 * MinutesPerHour;
 
-    public Clock(int hours, int minutes)
-    {
-        var m = minutes;
-        var s = Math.Sign(m);
-        while (m >= 60 || m < 0)
-        {
-            hours += s;
-            m -= s * 60;
-        }
-        this.minutes = m;
+    private readonly int totalMinutes;
 
-        var h = hours;
-        s = Math.Sign(h);
-        while (h >= 24 || h < 0)
-        {
-            h -= s * 24;
-        }
-        this.hours = h;
-    }
+    private int Hours => totalMinutes / MinutesPerHour;
+    private int Minutes => totalMinutes % MinutesPerHour;
 
-    public Clock Add(int minutesToAdd) => new Clock(hours, minutes + minutesToAdd);
+    public Clock(int hours, int minutes) : this(hours * MinutesPerHour + minutes) { }
+    public Clock(int minutes) => totalMinutes = (minutes % MinutesPerDay + MinutesPerDay) % MinutesPerDay;
 
+    private static string ToPaddedString(int n, int pad = 2) => n.ToString($"D{pad}");
 
-    public Clock Subtract(int minutesToSubtract) => new Clock(hours, minutes - minutesToSubtract);
+    public Clock Add(int minutesToAdd) => new Clock(totalMinutes + minutesToAdd);
+    public Clock Subtract(int minutesToSubtract) => Add(-minutesToSubtract);
 
-    public override string ToString() => $"{hours.ToString().PadLeft(2, '0')}:{minutes.ToString().PadLeft(2, '0')}";
-    
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(hours, minutes);
-    }
+    public override string ToString() => $"{ToPaddedString(Hours)}:{ToPaddedString(Minutes)}";
 
+    public override bool Equals(object obj) => obj is Clock clock && Equals(clock);
+    public bool Equals(Clock other) => other?.totalMinutes == totalMinutes;
+    public override int GetHashCode() => HashCode.Combine(totalMinutes);
+
+    public static bool operator ==(Clock left, Clock right) => EqualityComparer<Clock>.Default.Equals(left, right);
+    public static bool operator !=(Clock left, Clock right) => !(left == right);
 }
