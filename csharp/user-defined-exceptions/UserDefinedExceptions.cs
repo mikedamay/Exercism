@@ -3,7 +3,7 @@ using System;
 public class CalculationException : Exception
 {
     public CalculationException(int operand1, int operand2, string message, Exception inner)
-    // TODO: complete the definition of the constructor
+        // TODO: complete the definition of the constructor
     {
     }
 
@@ -22,12 +22,12 @@ public class CalculatorTestHarness
 
     public string TestMultiplication(int x, int y)
     {
-        throw new NotImplementedException($"Please implement the Multiply() method");
+        throw new NotImplementedException("Please implement the CalculatorTestHarness.TestMultiplication() method");
     }
 
     public void Multiply(int x, int y)
     {
-        throw new NotImplementedException($"Please implement the TestMultiplication() method");
+        throw new NotImplementedException("Please implement the CalculatorTestHarness.Multiply() method");
     }
 }
 
