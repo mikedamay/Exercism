@@ -31,11 +31,6 @@ namespace template
 
     public class Authenticator
     {
-        public Authenticator()
-        {
-            throw new NotImplementedException("Please implement the CalculatorTestHarness constructor");
-        }
-
         public bool IsAdmin(Identity identity)
         {
             throw new NotImplementedException("Please implement the Authenticator.IsAdmin() method");

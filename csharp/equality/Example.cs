@@ -65,13 +65,8 @@ public class Identity
 
 public class Authenticator
 {
-    private Identity admin;
+    private Identity admin = new Identity("admin@exerc.ism", new FacialFeatures("green", 0.9m));
     private HashSet<Identity> identities = new HashSet<Identity>();
-
-    public Authenticator()
-    {
-        admin = new Identity("admin@exerc.ism", new FacialFeatures("green", 0.9m));
-    }
 
     public bool IsAdmin(Identity identity)
     {
