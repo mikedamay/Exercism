@@ -4,7 +4,7 @@ using Xunit;
 public class ParametersTests
 {
 
-//    [Fact]
+    //    [Fact]
     public void DisplayNextSponsor_for_3_sponsors()
     {
         var car = RemoteControlCar.Buy();
@@ -44,7 +44,7 @@ public class ParametersTests
     public void IsCarOK_bad()
     {
         var car = RemoteControlCar.Buy();
-        car.Drive(); car.Drive(); car.Drive(); car.Drive(); car.Drive(); car.Drive(); 
+        car.Drive(); car.Drive(); car.Drive(); car.Drive(); car.Drive(); car.Drive();
         var tc = new TelemetryClient(car);
         Assert.Equal("car bad", tc.IsCarOk(timestamp: 1L));
     }
@@ -61,7 +61,7 @@ public class ParametersTests
     public void GetUsagePerMeter_good()
     {
         var car = RemoteControlCar.Buy();
-        car.Drive(); car.Drive(); 
+        car.Drive(); car.Drive();
         var tc = new TelemetryClient(car);
         Assert.Equal("usage-per-meter=5", tc.GetBatteryUsagePerMeter(timestamp: 1L));
     }
@@ -74,4 +74,4 @@ public class ParametersTests
         Assert.Equal("no data", tc.GetBatteryUsagePerMeter(timestamp: 1L));
     }
 
-}    
+}

@@ -16,18 +16,18 @@ namespace example
                 distanceDrivenInMeters += 2;
             }
         }
-        
+
         public void AddSponsors(params string[] sponsors)
         {
             this.sponsors = sponsors;
         }
 
         public string DisplaySponsor(int sponsorNum)
-        { 
+        {
             return sponsors[sponsorNum];
         }
 
-        public bool GetTelemetryData(ref long timestamp, 
+        public bool GetTelemetryData(ref long timestamp,
             out int batteryPercentage, out int distanceDrivenInMeters)
         {
             if (timestamp > latestTimestamp)
