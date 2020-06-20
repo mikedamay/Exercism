@@ -80,7 +80,7 @@ namespace example
             long localTime = timestamp;
             bool goodData = car.GetTelemetryData(ref localTime,
                 out int batteryPercentage, out int distanceDrivenInMeters);
-            if (!goodData)
+            if (!goodData || distanceDrivenInMeters == 0)
             {
                 return "no data";
             }

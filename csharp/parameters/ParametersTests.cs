@@ -66,4 +66,12 @@ public class ParametersTests
         Assert.Equal("usage-per-meter=5", tc.GetBatteryUsagePerMeter(timestamp: 1L));
     }
 
+    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    public void GetUsagePerMeter_not_started()
+    {
+        var car = RemoteControlCar.Buy();
+        var tc = new TelemetryClient(car);
+        Assert.Equal("no data", tc.GetBatteryUsagePerMeter(timestamp: 1L));
+    }
+
 }    
