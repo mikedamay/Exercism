@@ -13,5 +13,5 @@ namespace template
             throw new NotImplementedException("Please implement the Player.GenerateSpellStrength() method");
         }
     }
-    
+
 }
