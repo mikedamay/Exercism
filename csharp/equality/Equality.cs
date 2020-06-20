@@ -8,10 +8,10 @@ namespace template
         public string EyeColor { get; }
         public decimal PhiltrumWidth { get; }
 
-        public FacialFeatures(string eyeColor, decimal filtrumWidth)
+        public FacialFeatures(string eyeColor, decimal philtrumWidth)
         {
             EyeColor = eyeColor;
-            PhiltrumWidth = filtrumWidth;
+            PhiltrumWidth = philtrumWidth;
         }
         // TODO: implement equality and GetHashCode() methods
     }
