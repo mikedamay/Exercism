@@ -4,7 +4,7 @@ public class LogParser
 {
     public bool IsMatch(string text, string searchArg)
     {
-        string[] matches = Regex.Matches(text, searchArg);
-        return matches.Length > 0;
+        var matches = Regex.Matches(text, searchArg);
+        return matches.Count > 0;
     }
 }
