@@ -17,6 +17,21 @@ public class EqualityTests
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
+    public void SplitLogLine()
+    {
+        var lp = new LogParser();
+        Assert.Equal(new string[] {"section 1", "section 2", "section 3"}, lp.SplitLogLine("section 1<^>section 2<--->section 3"));
+    }
+
+    [Fact /*(Skip = "Remove this Skip property to run this test")*/]
+    public void SplitLogLine_Empty()
+    {
+        var lp = new LogParser();
+        Assert.Equal(new string[] {string.Empty}, lp.SplitLogLine(string.Empty));
+    }
+
+    
+    [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void AreQuotedPasswords()
     {
         var lp = new LogParser();
@@ -31,6 +46,14 @@ public class EqualityTests
         Assert.Equal(new bool[] {false, false, true, true}, lp.AreQuotedPasswords(lines));
     }
 
+    [Fact /*(Skip = "Remove this Skip property to run this test")*/]
+    public void RemoveEndOfLineText()
+    {
+        var lp = new LogParser();
+        string input = "[INF] end-of-line23033 Network Falure end-of-line27";
+        Assert.Equal("[INF]  Network Falure ", lp.RemoveEndOfLineText(input));
+    }
+    
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void RewriteLogLines()
     {

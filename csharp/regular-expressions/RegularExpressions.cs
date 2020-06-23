@@ -8,6 +8,11 @@ public class LogParser
         return Regex.Match(text, searchArg, RegexOptions.IgnorePatternWhitespace).Success;
     }
 
+    public string[] SplitLogLine(string text)
+    {
+        return Regex.Split(text, "<[*^=-]*>");
+    }
+    
     public bool[] AreQuotedPasswords(string[] lines)
     {
         bool[] results = new bool[lines.Length];
@@ -21,6 +26,15 @@ public class LogParser
         return results;
     }
 
+    public string RemoveEndOfLineText(string line)
+    {
+        string pattern = @"end-of-line\d+";
+
+        string str = Regex.Replace(line, pattern, string.Empty,
+            RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace);
+        return str;
+    }
+    
     public string[] RewriteLogLines(string[] lines)
     {
         const string PREAMBLE = "preamble";
@@ -39,7 +53,6 @@ public class LogParser
             $
           ";
         
-        var pattern2 = @"^(?<preamble>.*)(?<pwtext>password)\b(?<space>\s+)(?<pw>\w*)(?<postamble>.*)$";
         string[] rewrites = new string[lines.Length];
         var regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace);
         for (int i = 0; i < lines.Length; i++)
