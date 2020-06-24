@@ -8,6 +8,7 @@ namespace example
         private int distanceDrivenInMeters = 0;
         private string[] sponsors = new string[0];
         private long latestTimestamp = 0L;
+
         public void Drive()
         {
             if (batteryPercentage > 0)
@@ -45,6 +46,7 @@ namespace example
                 return false;
             }
         }
+
         public static RemoteControlCar Buy()
         {
             return new RemoteControlCar();
@@ -59,6 +61,7 @@ namespace example
         {
             this.car = car;
         }
+
         public string IsCarOk(long timestamp)
         {
             long localTime = timestamp;

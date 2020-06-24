@@ -3,7 +3,6 @@ using Xunit;
 
 public class ParametersTests
 {
-
     [Fact]
     public void DisplayNextSponsor_for_3_sponsors()
     {
@@ -73,5 +72,4 @@ public class ParametersTests
         var tc = new TelemetryClient(car);
         Assert.Equal("no data", tc.GetBatteryUsagePerMeter(timestamp: 1L));
     }
-
 }

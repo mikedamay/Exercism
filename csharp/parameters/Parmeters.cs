@@ -44,6 +44,7 @@ namespace template
         {
             this.car = car;
         }
+
         public string IsCarOk(long timestamp)
         {
             throw new NotImplementedException("Please implement the TelemetryClient.IsCarOk() method");
@@ -54,6 +55,4 @@ namespace template
             throw new NotImplementedException("Please implement the TelemetryClient.GetBatteryUsagePerMeter() method");
         }
     }
-
-
 }
