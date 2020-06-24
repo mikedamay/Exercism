@@ -40,7 +40,7 @@ namespace example
             }
             else
             {
-                latestTimestamp = timestamp;
+                timestamp = latestTimestamp;
                 batteryPercentage = -1;
                 distanceDrivenInMeters = -1;
                 return false;

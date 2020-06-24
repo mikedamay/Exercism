@@ -22,13 +22,13 @@ namespace template
 
         public string DisplaySponsor(int sponsorNum)
         {
-            throw new NotImplementedException("Please implement the RemoteControlCar.AddSponsors() method");
+            throw new NotImplementedException("Please implement the RemoteControlCar.DisplaySponsor() method");
         }
 
         public bool GetTelemetryData(ref long timestamp,
             out int batteryPercentage, out int distanceDrivenInMeters)
         {
-            throw new NotImplementedException("Please implement the RemoteControlCar.AddSponsors() method");
+            throw new NotImplementedException("Please implement the RemoteControlCar.GetTelemetryData() method");
         }
         public static RemoteControlCar Buy()
         {
