@@ -6,6 +6,7 @@ namespace template
     {
         private int batteryPercentage = 100;
         private int distanceDrivenInMeters = 0;
+
         public void Drive()
         {
             if (batteryPercentage > 0)
@@ -30,6 +31,7 @@ namespace template
         {
             throw new NotImplementedException("Please implement the RemoteControlCar.GetTelemetryData() method");
         }
+
         public static RemoteControlCar Buy()
         {
             return new RemoteControlCar();
