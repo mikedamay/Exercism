@@ -13,11 +13,5 @@ namespace template
         {
             throw new NotImplementedException($"Please implement the (static) PhoneNumber.IsFake() method");
         }
-
-        public static bool AreDuplicate((bool IsNewYork, bool IsFake, string LocalNumber) phoneNumberInfo,
-            (bool IsNewYork, bool IsFake, string LocalNumber) storedPhoneNumberInfo)
-        {
-            throw new NotImplementedException($"Please implement the (static) PhoneNumber.AreDuplicate() method");
-        }
     }
 }
