@@ -178,6 +178,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parameters", "csharp\Parame
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegularExpressions", "csharp\regular-expressions\RegularExpressions.csproj", "{523B38F2-F913-4AC9-A1F6-D17A764D929D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoWhile", "csharp\do-while\DoWhile.csproj", "{1AB3787F-46CC-43BB-86BC-8F0F6EFBF545}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -536,5 +538,9 @@ Global
 		{523B38F2-F913-4AC9-A1F6-D17A764D929D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{523B38F2-F913-4AC9-A1F6-D17A764D929D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{523B38F2-F913-4AC9-A1F6-D17A764D929D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AB3787F-46CC-43BB-86BC-8F0F6EFBF545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AB3787F-46CC-43BB-86BC-8F0F6EFBF545}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AB3787F-46CC-43BB-86BC-8F0F6EFBF545}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AB3787F-46CC-43BB-86BC-8F0F6EFBF545}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
