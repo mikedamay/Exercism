@@ -14,11 +14,5 @@ public class CourseResults
 {
     public void AddBadges(Badge[] badges)
     {
-        var badgeBag = new HashSet<Badge>();
-        Badge badge = Badge.Bronze;
-        do
-        {
-            Badge badge;
-        } while (badge != Badge.Paladium);
     }
 }
