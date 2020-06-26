@@ -38,7 +38,7 @@ public class ParametersTests
         car.GetTelemetryData(ref serialNum, out batteryPercentage, out distanceDrivenInMeters);
         Assert.Equal((4, -1, -1), (serialNum, batteryPercentage, distanceDrivenInMeters));
     }
-    
+
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
     public void GetUsagePerMeter_good()
     {
