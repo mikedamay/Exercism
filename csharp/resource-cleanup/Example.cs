@@ -63,7 +63,7 @@ public class Orm : IDisposable
         this.database = database;
     }
 
-    public void Open()
+    public void Begin()
     {
         database.BeginTransaction();
     }
@@ -80,7 +80,7 @@ public class Orm : IDisposable
         }
     }
 
-    public void Close(string data)
+    public void Commit(string data)
     {
         try
         {
