@@ -1,4 +1,3 @@
-using example;
 using Xunit;
 
 public class ParametersTests
@@ -14,7 +13,7 @@ public class ParametersTests
         Assert.Equal((sp1, sp2, sp3), ("Exercism", "Walker Industries", "Acme Co."));
     }
 
-    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    [Fact(Skip = "Remove this Skip property to run this test")]
     public void GetTelmetryData_good()
     {
         var car = RemoteControlCar.Buy();
@@ -25,7 +24,7 @@ public class ParametersTests
         Assert.Equal((1, 80, 4), (serialNum, batteryPercentage, distanceDrivenInMeters));
     }
 
-    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    [Fact(Skip = "Remove this Skip property to run this test")]
     public void GetTelmetryData_bad()
     {
         var car = RemoteControlCar.Buy();
@@ -39,7 +38,7 @@ public class ParametersTests
         Assert.Equal((4, -1, -1), (serialNum, batteryPercentage, distanceDrivenInMeters));
     }
 
-    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    [Fact(Skip = "Remove this Skip property to run this test")]
     public void GetUsagePerMeter_good()
     {
         var car = RemoteControlCar.Buy();
@@ -48,7 +47,7 @@ public class ParametersTests
         Assert.Equal("usage-per-meter=5", tc.GetBatteryUsagePerMeter(serialNum: 1));
     }
 
-    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    [Fact(Skip = "Remove this Skip property to run this test")]
     public void GetUsagePerMeter_not_started()
     {
         var car = RemoteControlCar.Buy();
