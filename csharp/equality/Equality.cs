@@ -1,54 +1,55 @@
-namespace template
+using System;
+
+public class FacialFeatures
 {
+    public string EyeColor { get; }
+    public decimal PhiltrumWidth { get; }
 
-    using System;
-
-    public class FacialFeatures
+    public FacialFeatures(string eyeColor, decimal philtrumWidth)
     {
-        public string EyeColor { get; }
-        public decimal PhiltrumWidth { get; }
+        EyeColor = eyeColor;
+        PhiltrumWidth = philtrumWidth;
+    }
+    // TODO: implement equality and GetHashCode() methods
+}
 
-        public FacialFeatures(string eyeColor, decimal philtrumWidth)
-        {
-            EyeColor = eyeColor;
-            PhiltrumWidth = philtrumWidth;
-        }
-        // TODO: implement equality and GetHashCode() methods
+public class Identity
+{
+    public string Email { get; }
+    public FacialFeatures FacialFeatures { get; }
+
+    public Identity(string email, FacialFeatures facialFeatures)
+    {
+        Email = email;
+        FacialFeatures = facialFeatures;
+    }
+    // TODO: implement equality and GetHashCode() methods
+}
+
+public class Authenticator
+{
+    public static bool AreSameFace(FacialFeatures faceA, FacialFeatures faceB)
+    {
+        throw new NotImplementedException("Please implement the (static) Authenticator.AreSameFace() method");
     }
 
-    public class Identity
+    public bool IsAdmin(Identity identity)
     {
-        public string Email { get; }
-        public FacialFeatures FacialFeatures { get; }
-
-        public Identity(string email, FacialFeatures facialFeatures)
-        {
-            Email = email;
-            FacialFeatures = facialFeatures;
-        }
-        // TODO: implement equality and GetHashCode() methods
+        throw new NotImplementedException("Please implement the Authenticator.IsAdmin() method");
     }
 
-    public class Authenticator
+    public bool Register(Identity identity)
     {
-        public bool IsAdmin(Identity identity)
-        {
-            throw new NotImplementedException("Please implement the Authenticator.IsAdmin() method");
-        }
+        throw new NotImplementedException("Please implement the Authenticator.Register() method");
+    }
 
-        public bool Register(Identity identity)
-        {
-            throw new NotImplementedException("Please implement the Authenticator.Register() method");
-        }
+    public bool IsRegistered(Identity identity)
+    {
+        throw new NotImplementedException("Please implement the Authenticator.IsRegistered() method");
+    }
 
-        public bool IsRegistered(Identity identity)
-        {
-            throw new NotImplementedException("Please implement the Authenticator.IsRegistered() method");
-        }
-
-        public static bool AreSameObject(Identity identityA, Identity identityB)
-        {
-            throw new NotImplementedException("Please implement the Authenticator.AreSameObject() method");
-        }
+    public static bool AreSameObject(Identity identityA, Identity identityB)
+    {
+        throw new NotImplementedException("Please implement the Authenticator.AreSameObject() method");
     }
 }
