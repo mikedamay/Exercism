@@ -16,9 +16,9 @@ namespace template
             }
         }
 
-        public void AddSponsors(params string[] sponsors)
+        public void SetSponsors(params string[] sponsors)
         {
-            throw new NotImplementedException("Please implement the RemoteControlCar.AddSponsors() method");
+            throw new NotImplementedException("Please implement the RemoteControlCar.SetSponsors() method");
         }
 
         public string DisplaySponsor(int sponsorNum)
