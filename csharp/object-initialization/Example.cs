@@ -30,13 +30,13 @@ public class Authenticator
 {
     public Identity Admin { get; } = new Identity
     {
-        Email = "admin@exerc.ism",
+        Email = "admin@ex.ism",
         FacialFeatures = new FacialFeatures
         {
             EyeColor = "green",
             PhiltrumWidth = 0.9m
         },
-        NameAndAddress = new List<string>{"Chanakya Niti Kautilya Arthashastra", "Plausible Address", "Mombai"}
+        NameAndAddress = new List<string>{"Chanakya", "Mombai", "India"}
     };
 
     public IDictionary<string, Identity> Developers { get; }
@@ -44,24 +44,24 @@ public class Authenticator
         {
             ["bert"] = new Identity
             {
-                Email = "bert@exerc.ism",
+                Email = "bert@ex.ism",
                 FacialFeatures = new FacialFeatures
                 {
-                    EyeColor = "green",
-                    PhiltrumWidth = 0.9m
+                    EyeColor = "blue",
+                    PhiltrumWidth = 0.8m
                 },
-                NameAndAddress = new List<string>{"Bertrand Meyer", "Avenue des Champs-Élysées", "Paris"}
+                NameAndAddress = new List<string>{"Bertrand", "Paris", "France"}
             },
 
             ["anders"] = new Identity
             {
-                Email = "anders@exerc.ism",
+                Email = "anders@ex.ism",
                 FacialFeatures = new FacialFeatures
                 {
-                    EyeColor = "green",
-                    PhiltrumWidth = 0.9m
+                    EyeColor = "brown",
+                    PhiltrumWidth = 0.85m
                 },
-                NameAndAddress = new List<string>{"Anders Hejlsberg", "Plausible Address", "Redmond"}
+                NameAndAddress = new List<string>{"Anders", "Redmond", "USA"}
             }
         };
 

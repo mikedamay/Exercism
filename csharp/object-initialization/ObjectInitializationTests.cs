@@ -18,10 +18,10 @@ public class ObjectInitializationTests
         };
         string[] expected =
         {
-            "admin@exerc.ism", 
+            "admin@ex.ism", 
             "green", 
             "0.9", 
-            "Chanakya Niti Kautilya Arthashastra"
+            "Chanakya"
         };
         Assert.Equal(expected, actual);
     }
@@ -40,10 +40,10 @@ public class ObjectInitializationTests
         };
         string[] expected =
         {
-            "bert@exerc.ism",
-            "green",
-            "0.9",
-            "Plausible Address"
+            "bert@ex.ism",
+            "blue",
+            "0.85",
+            "Redmond"
         };
         Assert.Equal(expected, actual);
     }
