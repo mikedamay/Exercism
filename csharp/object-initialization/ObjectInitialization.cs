@@ -1,13 +1,12 @@
 namespace template
 {
-    
 using System;
 using System.Collections.Generic;
 
 //**** please do not modify the FacialFeatures class ****
 public class FacialFeatures
 {
-    public string EyeColor { get; set;  }
+    public string EyeColor { get; set; }
     public decimal PhiltrumWidth { get; set; }
 
     public FacialFeatures()
@@ -21,7 +20,7 @@ public class Identity
     public string Email { get; set; }
     public FacialFeatures FacialFeatures { get; set; }
     public IList<string> NameAndAddress { get; set; }
-    
+
     public Identity()
     {
     }
@@ -29,14 +28,11 @@ public class Identity
 
 public class Authenticator
 {
-    public Identity GetAdmin()
-    {
-        throw new NotImplementedException("Please implement the Authenticator.GetAdmin() method");
-    }
+    // TODO: Impleent the Authenticator.Admin property
+    public Identity Admin { get; }
 
-    public IDictionary<string, Identity> GetDevelopers()
-    {
-        throw new NotImplementedException("Please implement the Authenticator.GetDevelopers() method");
-    }
+    // TODO: Impleent the Authenticator.Developers property
+    public IDictionary<string, Identity> Developers { get; }
+
 }
 }
