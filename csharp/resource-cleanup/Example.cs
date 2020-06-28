@@ -1,20 +1,29 @@
+namespace example
+{
 using System;
 
 // **** please do not modify the Database class ****
+// this demonstrates the "dispose pattern" appropriate when
+// a class acquires external resources.
 public class Database : IDisposable
 {
     public enum State {TransactionStarted, DataWritten, Invalid, Closed}
 
+    // extern object AcquireAnUnmanagedResource();    // allocates space on disk etc.
+    // extern bool ReleaseTheUnmanagedResource(object resource);
+    
     public State DbState { get; private set; } = State.Closed;
-    private string lastData;
+    private object resource;
+    public string lastData;
     public void BeginTransaction()
     {
+        //resource = AcquireAnUnmanagedResource();
         DbState = State.TransactionStarted;
     }
 
     public void Write(string data)
     {
-        // this does something significant with the db transaction object
+        // this does something significant with the unmanaged resource
         lastData = data;
         if (data == "bad write")
         {
@@ -36,15 +45,15 @@ public class Database : IDisposable
         DbState = State.Closed;
     }
 
-    private void ReleaseUnmanagedResources()
+    private void Release()
     {
-        // this will clean up the file system or something similar
+        // ReleaseTheUnmanagedResource(resource);
     }
 
     public void Dispose()
     {
         DbState = State.Closed;
-        ReleaseUnmanagedResources();
+        Release();
         GC.SuppressFinalize(this);
     }
 
@@ -74,19 +83,19 @@ public class Orm : IDisposable
         {
             database.Write(data);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             database.Dispose();
         }
     }
 
-    public void Commit(string data)
+    public void Commit()
     {
         try
         {
             database.EndTransaction();
         }
-        catch (Exception e)
+        catch (Exception)
         {
             database.Dispose();
         }
@@ -99,4 +108,5 @@ public class Orm : IDisposable
             database.Dispose();
         }
     }
+}
 }
