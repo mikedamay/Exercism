@@ -1,4 +1,5 @@
-
+namespace template
+{
 using System;
 
 // **** please do not modify the Manager class ****
@@ -90,4 +91,5 @@ public static class PlayAnalyzer
 
         return description;
     }
+}
 }
