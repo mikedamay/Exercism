@@ -50,6 +50,23 @@ public class Database : IDisposable
         // ReleaseTheUnmanagedResource(resource);
     }
 
+    private void ReleaseUnmanagedResources()
+    {
+        // TODO release unmanaged resources here
+    }
+
+    public void Dispose()
+    {
+        ReleaseUnmanagedResources();
+        GC.SuppressFinalize(this);
+    }
+
+    ~Database()
+    {
+        ReleaseUnmanagedResources();
+    }
+
+    /*
     public void Dispose()
     {
         DbState = State.Closed;
@@ -61,6 +78,7 @@ public class Database : IDisposable
     {
         Dispose();
     }
+*/
 }
 
 public class Orm : IDisposable
