@@ -1,8 +1,7 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using Xunit;
-using example;
+using template;
 
 public class ResourceCleanupTests
 {
@@ -12,8 +11,8 @@ public class ResourceCleanupTests
         var db = new Database();
         var orm = new Orm(db);
         orm.Write("good write");
-        object[] results = {db.DbState, db.lastData};
-        Assert.Equal(new object[] { Database.State.DataWritten, "good write"}, results);
+        object[] actual = {db.DbState, db.lastData};
+        Assert.Equal(new object[] { Database.State.DataWritten, "good write"}, actual);
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
@@ -22,8 +21,8 @@ public class ResourceCleanupTests
         var db = new Database();
         var orm = new Orm(db);
         orm.Write("bad write");
-        object[] results = {db.DbState, db.lastData};
-        Assert.Equal(new object[] { Database.State.Closed, "bad write"}, results);
+        object[] actual = {db.DbState, db.lastData};
+        Assert.Equal(new object[] { Database.State.Closed, "bad write"}, actual);
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
@@ -33,8 +32,8 @@ public class ResourceCleanupTests
         var orm = new Orm(db);
         orm.Write("good commit");
         orm.Commit();
-        object[] results = {db.DbState, db.lastData};
-        Assert.Equal(new object[] { Database.State.Closed, "good commit"}, results);
+        object[] actual = {db.DbState, db.lastData};
+        Assert.Equal(new object[] { Database.State.Closed, "good commit"}, actual);
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
@@ -44,8 +43,8 @@ public class ResourceCleanupTests
         var orm = new Orm(db);
         orm.Write("bad commit");
         orm.Commit();
-        object[] results = {db.DbState, db.lastData};
-        Assert.Equal(new object[] { Database.State.Closed, "bad commit"}, results);
+        object[] actual = {db.DbState, db.lastData};
+        Assert.Equal(new object[] { Database.State.Closed, "bad commit"}, actual);
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
@@ -55,7 +54,6 @@ public class ResourceCleanupTests
         var orm = new Orm(db);
         orm.Write("good data");
         bool disposable = orm is IDisposable;
-        string lastData = string.Empty;
         if (disposable)
         {
             typeof(Orm).InvokeMember("Dispose",
@@ -63,7 +61,52 @@ public class ResourceCleanupTests
                 null, orm, null);
         }
 
-        object[] results = {disposable, db.DbState, db.lastData};
-        Assert.Equal(new object[] {true, Database.State.Closed, "good data"}, results);
+        object[] actual = {disposable, db.DbState, db.lastData};
+        Assert.Equal(new object[] {true, Database.State.Closed, "good data"}, actual);
     }
 }
+
+// **** please do not modify the Database class ****
+public class Database : IDisposable
+{
+    public enum State {TransactionStarted, DataWritten, Invalid, Closed}
+
+    public State DbState { get; private set; } = State.Closed;
+    public string lastData;
+
+    public void BeginTransaction()
+    {
+        DbState = State.TransactionStarted;
+    }
+
+    public void Write(string data)
+    {
+        // this does something significant with the db transaction object
+        lastData = data;
+        if (data == "bad write")
+        {
+            DbState = State.Invalid;
+            throw new InvalidOperationException();
+        }
+
+        DbState = State.DataWritten;
+    }
+
+    public void EndTransaction()
+    {
+        // this does something significant to end the db transaction object
+        if (lastData == "bad commit")
+        {
+            DbState = State.Invalid;
+            throw new InvalidOperationException();
+        }
+
+        DbState = State.Closed;
+    }
+
+    public void Dispose()
+    {
+        DbState = State.Closed;
+    }
+}
+
