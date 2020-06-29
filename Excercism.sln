@@ -186,6 +186,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceCleanup", "csharp\r
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwitchStatements", "csharp\switch-statements\SwitchStatements.csproj", "{BB40EB6B-B4B2-4380-AB4C-1BAB0BD3A4D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Overflow", "csharp\overflow\Overflow.csproj", "{C4CB3136-77F4-4804-B392-A65EF98E5157}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -560,5 +562,9 @@ Global
 		{BB40EB6B-B4B2-4380-AB4C-1BAB0BD3A4D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB40EB6B-B4B2-4380-AB4C-1BAB0BD3A4D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB40EB6B-B4B2-4380-AB4C-1BAB0BD3A4D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4CB3136-77F4-4804-B392-A65EF98E5157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4CB3136-77F4-4804-B392-A65EF98E5157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4CB3136-77F4-4804-B392-A65EF98E5157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4CB3136-77F4-4804-B392-A65EF98E5157}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
