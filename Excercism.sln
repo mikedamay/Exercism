@@ -188,6 +188,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwitchStatements", "csharp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Overflow", "csharp\overflow\Overflow.csproj", "{C4CB3136-77F4-4804-B392-A65EF98E5157}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Time", "csharp\time\Time.csproj", "{76E69B74-5E02-4D33-B58A-C1B472D7AD35}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -566,5 +568,9 @@ Global
 		{C4CB3136-77F4-4804-B392-A65EF98E5157}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4CB3136-77F4-4804-B392-A65EF98E5157}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4CB3136-77F4-4804-B392-A65EF98E5157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76E69B74-5E02-4D33-B58A-C1B472D7AD35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76E69B74-5E02-4D33-B58A-C1B472D7AD35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76E69B74-5E02-4D33-B58A-C1B472D7AD35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76E69B74-5E02-4D33-B58A-C1B472D7AD35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
