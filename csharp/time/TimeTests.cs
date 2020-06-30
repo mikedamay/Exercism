@@ -1,9 +1,19 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Threading;
 using Xunit;
 
-public class ParametersTests
+public class TimeTests
 {
     [Fact]
+    public void ShowLocalTime()
+    {
+        var dt = new DateTime(2030, 07, 25, 13, 45, 0);
+        var tzi = TimeZoneInfo.Local;
+        var offset = tzi.GetUtcOffset(dt);
+        Assert.Equal(dt + offset, Appointment.ShowLocalTime(dt));
+    }
+    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
     public void Schedule_newyork()
     {
         Assert.Equal(new DateTime(2030, 07, 25, 8, 45, 0),
