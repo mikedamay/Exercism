@@ -49,7 +49,7 @@ public class ClaimsHandler
         plots.Add(plot);
     }
 
-    public bool IsPlotClaimed(Plot plot)
+    public bool IsClaimStaked(Plot plot)
     {
         return plots.Contains(plot);
     }
