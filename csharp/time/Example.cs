@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using System.Globalization;
 
 public enum Location
 {
@@ -20,35 +22,11 @@ public static class Appointment
     {
         return dt.ToLocalTime();
     }
+
     public static DateTime Schedule(string appointmentDateDescription, Location location)
     {
-        string tzid = string.Empty;
-       /* switch (location)
-        {
-            case Location.NewYork:
-                tzid = "America/New_York";
-                break;
-            case Location.London:
-                tzid = "Europe/London";
-                break;
-            case Location.Paris:
-                tzid = "Europe/Paris";
-                break;
-        }*/
-        switch (location)
-        {
-            case Location.NewYork:
-                tzid = "Eastern Standard Time";
-                break;
-            case Location.London:
-                tzid = "GMT Standard Time";
-                break;
-            case Location.Paris:
-                tzid = "W. Europe Standard Time";
-                break;
-        }
         DateTime dt = DateTime.Parse(appointmentDateDescription);
-        DateTime local = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(dt, tzid);
+        DateTime local = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(dt, GetTimeZoneId(location));
         return local;
     }
 
@@ -76,31 +54,41 @@ public static class Appointment
     {
         DateTime dtPrevious = dt.AddDays(-7);
         string tzid = string.Empty;
-        /* switch (location)
-         {
-             case Location.NewYork:
-                 tzid = "America/New_York";
-                 break;
-             case Location.London:
-                 tzid = "Europe/London";
-                 break;
-             case Location.Paris:
-                 tzid = "Europe/Paris";
-                 break;
-         }*/
-        switch (location)
-        {
-            case Location.NewYork:
-                tzid = "Eastern Standard Time";
-                break;
-            case Location.London:
-                tzid = "GMT Standard Time";
-                break;
-            case Location.Paris:
-                tzid = "W. Europe Standard Time";
-                break;
-        }
-        TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById(tzid);
+        TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById(GetTimeZoneId(location));
         return tzi.IsDaylightSavingTime(dtPrevious) != tzi.IsDaylightSavingTime(dt);
     }
+
+    public static DateTime NormalizeDateTime(string dtStr, Location location)
+    {
+        return DateTime.Parse(dtStr, LocationToCulture(location));
+    }
+
+    private static CultureInfo LocationToCulture(Location location) =>
+        location switch
+        {
+            Location.NewYork => new CultureInfo("en-US"),
+            Location.London => new CultureInfo("en-GB"),
+            Location.Paris => new CultureInfo("fr-FR")
+        };
+
+#if Windows
+    private static string GetTimeZoneId(Location location) =>
+        location switch
+
+        {
+            Location.NewYork => "Eastern Standard Time",
+            Location.London => "GMT Standard Time",
+            Location.Paris => "W. Europe Standard Time"
+        };
+#else    
+    private static string GetTimeZoneId(Location location) =>
+        location switch
+
+        {
+            Location.NewYork => "America/New_York",
+            Location.London => "America/New_York",
+            Location.Paris => "America/New_York"
+        };
+#endif    
+    
 }
