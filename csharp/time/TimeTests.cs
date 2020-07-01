@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using Xunit;
 
-
 public class TimeTests
 {
     public TimeTests()

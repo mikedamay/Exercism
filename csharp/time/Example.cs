@@ -1,22 +1,21 @@
 using System;
-using System.Diagnostics;
 using System.Globalization;
 
-public enum Location
+public enum Location_example
 {
     NewYork,
     London,
     Paris
 }
 
-public enum AlertLevel
+public enum AlertLevel_example
 {
     Early,
     Standard,
     Late
 }
 
-public static class Appointment
+public static class Appointment_exmaple
 {
     public static DateTime ShowLocalTime(DateTime dt)
     {
@@ -28,7 +27,6 @@ public static class Appointment
         TimeZoneInfo tziLocation = TimeZoneInfo.FindSystemTimeZoneById(GetTimeZoneId(location));
         DateTime dtl = DateTime.Parse(appointmentDateDescription);
         DateTime dtu = TimeZoneInfo.ConvertTimeToUtc(dtl, tziLocation);
-        DateTime local = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(dtu, GetTimeZoneId(location));
         return dtu;
     }
 
