@@ -17,7 +17,7 @@ public enum AlertLevel_template
 
 public static class Appointment_template
 {
-    public static DateTime ShowLocalTime(DateTime dt)
+    public static DateTime ShowLocalTime(DateTime dtUtc)
     {
         throw new NotImplementedException("Please implement the (static) Appointment.ShowLocalTime() method");
     }

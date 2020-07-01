@@ -14,11 +14,10 @@ public class TimeTests
     [Fact]
     public void ShowLocalTime()
     {
-        var aaa = GetTimeZoneIds();
-        var dt = new DateTime(2030, 07, 25, 13, 45, 0);
+        var dtUtc = new DateTime(2030, 07, 25, 13, 45, 0);
         var tzi = TimeZoneInfo.Local;
-        var offset = tzi.GetUtcOffset(dt);
-        Assert.Equal(dt + offset, Appointment.ShowLocalTime(dt));
+        var offset = tzi.GetUtcOffset(dtUtc);
+        Assert.Equal(dtUtc + offset, Appointment.ShowLocalTime(dtUtc));
     }
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
     public void Schedule_newyork()

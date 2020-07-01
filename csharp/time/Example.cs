@@ -18,9 +18,9 @@ public enum AlertLevel
 
 public static class Appointment
 {
-    public static DateTime ShowLocalTime(DateTime dt)
+    public static DateTime ShowLocalTime(DateTime dtUtc)
     {
-        return dt.ToLocalTime();
+        return dtUtc.ToLocalTime();
     }
 
     public static DateTime Schedule(string appointmentDateDescription, Location location)
