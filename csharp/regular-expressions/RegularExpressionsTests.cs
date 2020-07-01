@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Xunit;
 
 public class EqualityTests
@@ -13,7 +15,7 @@ public class EqualityTests
     public void IsMatch_no_match()
     {
         var lp = new LogParser();
-        Assert.False(lp.IsMatch("bad start to INF Message"));
+        Assert.False(lp.IsMatch("bad start to [INF] Message"));
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
@@ -42,8 +44,7 @@ public class EqualityTests
             "\"passWord\"",
             "[INF] The message \"Please reset your password\" was ignored by the user"
         };
-        var results = lp.AreQuotedPasswords(lines);
-        Assert.Equal(new bool[] {false, false, true, true}, lp.AreQuotedPasswords(lines));
+        Assert.Equal(2, lp.CountQuotedPasswords(string.Join(Environment.NewLine, lines)));
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
@@ -55,24 +56,24 @@ public class EqualityTests
     }
     
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
-    public void RewriteLogLines()
+    public void ListLinesWithPasswords()
     {
         var lp = new LogParser();
         string[] lines =
         {
-            "[INF] passWord",
+            "[INF] passWordaa",
             "passWord mysecret",
             "[INF] password KeyToTheCastle for nobody",
             "[INF] password password123 for everybody"
         };
         string[] expected =
         {
-            "[INF] passWord",
-            "passWord xxxxxxxx",
-            "[INF] password xxxxxxxx for nobody",
-            "[INF] password ******** for everybody"
+            "passWordaa: [INF] passWordaa",
+            "--------: passWord mysecret",
+            "--------: [INF] password KeyToTheCastle for nobody",
+            "password123: [INF] password password123 for everybody"
         };
-        Assert.Equal(expected, lp.RewriteLogLines(lines));
+        Assert.Equal(expected, lp.ListLinesWithPasswords(lines));
     }
 
 }
