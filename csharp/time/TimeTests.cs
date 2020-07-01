@@ -24,22 +24,22 @@ public class TimeTests
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
     public void Schedule_newyork()
     {
-        Assert.Equal(new DateTime(2019, 07, 25, 8, 45, 0),
-            Appointment.Schedule("7/25/2019 13:45:00", Location.NewYork));
+        Assert.Equal(new DateTime(2019, 07, 25, 12, 45, 0),
+            Appointment.Schedule("7/25/2019 08:45:00", Location.NewYork));
     }
 
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
     public void Schedule_london()
     {
-        Assert.Equal(new DateTime(2019, 07, 25, 13, 45, 0),
+        Assert.Equal(new DateTime(2019, 07, 25, 12, 45, 0),
             Appointment.Schedule("7/25/2019 13:45:00", Location.London));
     }
 
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
     public void Schedule_paris()
     {
-        Assert.Equal(new DateTime(2019, 07, 25, 14, 45, 0),
-            Appointment.Schedule("7/25/2019 13:45:00", Location.Paris));
+        Assert.Equal(new DateTime(2019, 07, 25, 12, 45, 0),
+            Appointment.Schedule("7/25/2019 14:45:00", Location.Paris));
     }
 
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]

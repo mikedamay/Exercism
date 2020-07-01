@@ -25,9 +25,11 @@ public static class Appointment
 
     public static DateTime Schedule(string appointmentDateDescription, Location location)
     {
-        DateTime dt = DateTime.Parse(appointmentDateDescription);
-        DateTime local = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(dt, GetTimeZoneId(location));
-        return local;
+        TimeZoneInfo tziLocation = TimeZoneInfo.FindSystemTimeZoneById(GetTimeZoneId(location));
+        DateTime dtl = DateTime.Parse(appointmentDateDescription);
+        DateTime dtu = TimeZoneInfo.ConvertTimeToUtc(dtl, tziLocation);
+        DateTime local = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(dtu, GetTimeZoneId(location));
+        return dtu;
     }
 
     public static DateTime GetAlertTime(DateTime appointment, AlertLevel alertLevel)
@@ -63,32 +65,59 @@ public static class Appointment
         return DateTime.Parse(dtStr, LocationToCulture(location));
     }
 
-    private static CultureInfo LocationToCulture(Location location) =>
-        location switch
+    private static CultureInfo LocationToCulture(Location location)
+    {
+        string cultureId = string.Empty;
+        switch (location)
         {
-            Location.NewYork => new CultureInfo("en-US"),
-            Location.London => new CultureInfo("en-GB"),
-            Location.Paris => new CultureInfo("fr-FR")
-        };
+            case Location.NewYork:
+                cultureId = "en-US";
+                break;
+            case Location.London:
+                cultureId = "en-GB";
+                break;
+            case Location.Paris:
+                cultureId = "fr-FR";
+                break;
+        }
+        return new CultureInfo(cultureId);
+    }
 
 #if Windows
-    private static string GetTimeZoneId(Location location) =>
-        location switch
-
+    private static string GetTimeZoneId(Location location)
+    {
+        string timeZoneId = string.Empty;
+        switch (location)
         {
-            Location.NewYork => "Eastern Standard Time",
-            Location.London => "GMT Standard Time",
-            Location.Paris => "W. Europe Standard Time"
-        };
+            case Location.NewYork:
+                timeZoneId = "Eastern Standard Time";
+                break;
+            case Location.London:
+                timeZoneId = "GMT Standard Time";
+                break;
+            case Location.Paris:
+                timeZoneId = "W. Europe Standard Time";
+                break;
+        }
+        return timeZoneId;
+    }
 #else    
-    private static string GetTimeZoneId(Location location) =>
-        location switch
-
+    private static string GetTimeZoneId(Location location)
+    {
+        string timeZoneId = string.Empty;
+        switch (location)
         {
-            Location.NewYork => "America/New_York",
-            Location.London => "America/New_York",
-            Location.Paris => "America/New_York"
-        };
-#endif    
-    
+            case Location.NewYork:
+                timeZoneId = "America/New_York";
+                break;
+            case Location.London:
+                timeZoneId = "Europe/London";
+                break;
+            case Location.Paris:
+                timeZoneId = "Europe/Paris";
+                break;
+        }
+        return timeZoneId;
+    }
+#endif
 }
