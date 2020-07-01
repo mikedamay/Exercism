@@ -1,21 +1,22 @@
 using System;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
-public enum Location_example
+public enum Location
 {
     NewYork,
     London,
     Paris
 }
 
-public enum AlertLevel_example
+public enum AlertLevel
 {
     Early,
     Standard,
     Late
 }
 
-public static class Appointment_exmaple
+public static class Appointment
 {
     public static DateTime ShowLocalTime(DateTime dt)
     {
@@ -88,8 +89,19 @@ public static class Appointment_exmaple
         return new CultureInfo(cultureId);
     }
 
-#if Windows
     private static string GetTimeZoneId(Location location)
+    {
+        if (IsWindows())
+        {
+            return GetTimeZoneIdForWindows(location);
+        }
+        else
+        {
+            return GetTimeZoneIdForPosix(location);
+        }
+    }
+
+    private static string GetTimeZoneIdForWindows(Location location)
     {
         string timeZoneId = string.Empty;
         switch (location)
@@ -106,8 +118,8 @@ public static class Appointment_exmaple
         }
         return timeZoneId;
     }
-#else    
-    private static string GetTimeZoneId(Location location)
+
+    private static string GetTimeZoneIdForPosix(Location location)
     {
         string timeZoneId = string.Empty;
         switch (location)
@@ -124,5 +136,9 @@ public static class Appointment_exmaple
         }
         return timeZoneId;
     }
-#endif
+
+    private static bool IsWindows()
+    {
+        return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+    }    
 }
