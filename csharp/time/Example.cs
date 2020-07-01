@@ -23,7 +23,7 @@ public static class Appointment
     public static DateTime Schedule(string appointmentDateDescription, Location location)
     {
         string tzid = string.Empty;
-        switch (location)
+       /* switch (location)
         {
             case Location.NewYork:
                 tzid = "America/New_York";
@@ -33,6 +33,18 @@ public static class Appointment
                 break;
             case Location.Paris:
                 tzid = "Europe/Paris";
+                break;
+        }*/
+        switch (location)
+        {
+            case Location.NewYork:
+                tzid = "Eastern Standard Time";
+                break;
+            case Location.London:
+                tzid = "GMT Standard Time";
+                break;
+            case Location.Paris:
+                tzid = "W. Europe Standard Time";
                 break;
         }
         DateTime dt = DateTime.Parse(appointmentDateDescription);
@@ -64,16 +76,28 @@ public static class Appointment
     {
         DateTime dtPrevious = dt.AddDays(-7);
         string tzid = string.Empty;
+        /* switch (location)
+         {
+             case Location.NewYork:
+                 tzid = "America/New_York";
+                 break;
+             case Location.London:
+                 tzid = "Europe/London";
+                 break;
+             case Location.Paris:
+                 tzid = "Europe/Paris";
+                 break;
+         }*/
         switch (location)
         {
             case Location.NewYork:
-                tzid = "America/New_York";
+                tzid = "Eastern Standard Time";
                 break;
             case Location.London:
-                tzid = "Europe/London";
+                tzid = "GMT Standard Time";
                 break;
             case Location.Paris:
-                tzid = "Europe/Paris";
+                tzid = "W. Europe Standard Time";
                 break;
         }
         TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById(tzid);
