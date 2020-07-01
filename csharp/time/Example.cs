@@ -62,7 +62,14 @@ public static class Appointment
 
     public static DateTime NormalizeDateTime(string dtStr, Location location)
     {
-        return DateTime.Parse(dtStr, LocationToCulture(location));
+        try
+        {
+            return DateTime.Parse(dtStr, LocationToCulture(location));
+        }
+        catch (Exception)
+        {
+            return new DateTime();
+        }
     }
 
     private static CultureInfo LocationToCulture(Location location)

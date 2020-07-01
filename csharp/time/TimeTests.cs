@@ -162,6 +162,14 @@ public class TimeTests
                 Location.Paris));
     }
 
+    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    public void NormalizeDateTime_bad()
+    {
+        Assert.Equal( DateTime.MinValue,
+            Appointment.NormalizeDateTime("25/11/2019 13:45:00",
+                Location.NewYork));
+    }
+
     private static IList<string> GetTimeZoneIds()
     {
         return TimeZoneInfo.GetSystemTimeZones().Select(tzi => tzi.Id).OrderBy(tzi => tzi).ToList();
