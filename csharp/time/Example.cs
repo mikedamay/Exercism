@@ -67,7 +67,7 @@ public static class Appointment
         }
         catch (Exception)
         {
-            return new DateTime();
+            return DateTime.MinValue;
         }
     }
 
