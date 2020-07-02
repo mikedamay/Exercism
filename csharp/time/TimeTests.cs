@@ -11,6 +11,7 @@ public class TimeTests
     {
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
     }
+
     [Fact]
     public void ShowLocalTime()
     {
@@ -19,6 +20,7 @@ public class TimeTests
         var offset = tzi.GetUtcOffset(dtUtc);
         Assert.Equal(dtUtc + offset, Appointment.ShowLocalTime(dtUtc));
     }
+
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
     public void Schedule_newyork()
     {
