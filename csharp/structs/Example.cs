@@ -1,7 +1,9 @@
+namespace example
+{
 using System;
 using System.Collections.Generic;
 
-public struct Coord : IEquatable<Coord>
+public struct Coord
 {
     public Coord(ushort x, ushort y)
     {
@@ -28,7 +30,7 @@ public struct Coord : IEquatable<Coord>
     }
 }
 
-public struct Plot //: IEquatable<Plot>
+public struct Plot
 {
     public Plot(Coord topLeft, Coord topRight, Coord bottomLeft, Coord bottomRight)
     {
@@ -108,4 +110,5 @@ public class ClaimsHandler
 
         return longest;
     }
+}
 }
