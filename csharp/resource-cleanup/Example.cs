@@ -13,7 +13,14 @@ public class Orm : IDisposable
 
     public void Begin()
     {
-        database.BeginTransaction();
+        try
+        {
+            database.BeginTransaction();
+        }
+        catch (Exception e)
+        {
+            database.Dispose();
+        }
     }
 
     public void Write(string data)

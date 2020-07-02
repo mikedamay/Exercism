@@ -2,7 +2,7 @@ namespace template
 {
 using System;
 
-public class Orm : IDisposable
+public class Orm
 {
     private Database database;
 
