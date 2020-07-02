@@ -10,6 +10,7 @@ public class ResourceCleanupTests
     {
         var db = new Database();
         var orm = new Orm(db);
+        orm.Begin();
         orm.Write("good write");
         object[] actual = {db.DbState, db.lastData};
         Assert.Equal(new object[] { Database.State.DataWritten, "good write"}, actual);
@@ -20,6 +21,7 @@ public class ResourceCleanupTests
     {
         var db = new Database();
         var orm = new Orm(db);
+        orm.Begin();
         orm.Write("bad write");
         object[] actual = {db.DbState, db.lastData};
         Assert.Equal(new object[] { Database.State.Closed, "bad write"}, actual);
@@ -30,6 +32,7 @@ public class ResourceCleanupTests
     {
         var db = new Database();
         var orm = new Orm(db);
+        orm.Begin();
         orm.Write("good commit");
         orm.Commit();
         object[] actual = {db.DbState, db.lastData};
@@ -41,6 +44,7 @@ public class ResourceCleanupTests
     {
         var db = new Database();
         var orm = new Orm(db);
+        orm.Begin();
         orm.Write("bad commit");
         orm.Commit();
         object[] actual = {db.DbState, db.lastData};
@@ -48,10 +52,22 @@ public class ResourceCleanupTests
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
+    public void Out_of_order()
+    {
+        var db = new Database();
+        var orm = new Orm(db);
+        orm.Write("bad commit");
+        orm.Commit();
+        object[] actual = {db.DbState, db.lastData};
+        Assert.Equal(new object[] { Database.State.Closed, string.Empty}, actual);
+    }
+
+    [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void Disposable()
     {
         var db = new Database();
         var orm = new Orm(db);
+        orm.Begin();
         orm.Write("good data");
         var disposable = Assert.IsAssignableFrom<IDisposable>(orm);
         disposable.Dispose();
@@ -66,7 +82,7 @@ public class Database : IDisposable
     public enum State {TransactionStarted, DataWritten, Invalid, Closed}
 
     public State DbState { get; private set; } = State.Closed;
-    public string lastData;
+    public string lastData = string.Empty;
 
     public void BeginTransaction()
     {
