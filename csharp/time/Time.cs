@@ -1,3 +1,4 @@
+/*
 using System;
 
 
@@ -42,3 +43,4 @@ public static class Appointment_template
         throw new NotImplementedException("Please implement the (static) Appointment.NormalizeDateTime() method");
     }
 }
+*/
