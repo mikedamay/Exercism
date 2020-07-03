@@ -2,21 +2,21 @@
 using System;
 
 
-public enum Location_template
+public enum Location
 {
     NewYork,
     London,
     Paris
 }
-
-public enum AlertLevel_template
+/*#1#
+public enum AlertLevel
 {
     Early,
     Standard,
     Late
 }
 
-public static class Appointment_template
+public static class Appointment
 {
     public static DateTime ShowLocalTime(DateTime dtUtc)
     {
