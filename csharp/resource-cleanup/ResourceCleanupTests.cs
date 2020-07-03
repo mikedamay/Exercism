@@ -112,7 +112,7 @@ public class Database : IDisposable
 
     public void EndTransaction()
     {
-        if (DbState != State.DataWritten)
+        if (DbState != State.DataWritten && DbState != State.TransactionStarted)
         {
             throw new InvalidOperationException();
         }
