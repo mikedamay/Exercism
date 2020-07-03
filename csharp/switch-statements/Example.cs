@@ -1,6 +1,4 @@
-namespace example
-{
-using System;
+/*using System;
 
 // **** please do not modify the Manager class ****
 public class Manager
@@ -20,7 +18,7 @@ public enum Incident
 {
     RedCard,
     YellowCard,
-    Fowl,
+    Foul,
     Injury
 }
 
@@ -91,5 +89,4 @@ public static class PlayAnalyzer
 
         return description;
     }
-}
-}
+}*/

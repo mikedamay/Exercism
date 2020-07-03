@@ -1,6 +1,5 @@
 using System;
 using Xunit;
-using example;
 
 public class TuplesTest
 {
@@ -31,7 +30,7 @@ public class TuplesTest
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void OffField_incident()
     {
-        Assert.Equal("Fowl", PlayAnalyzer.AnalyzeOffField(Incident.Fowl));
+        Assert.Equal("Foul", PlayAnalyzer.AnalyzeOffField(Incident.Foul));
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]

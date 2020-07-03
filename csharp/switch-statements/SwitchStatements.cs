@@ -1,5 +1,3 @@
-namespace template
-{
 using System;
 
 // **** please do not modify the Manager class ****
@@ -20,7 +18,7 @@ public enum Incident
 {
     RedCard,
     YellowCard,
-    Fowl,
+    Foul,
     Injury
 }
 
@@ -35,5 +33,4 @@ public static class PlayAnalyzer
     {
         throw new NotImplementedException($"Please implement the (static) PlayAnalyzer.AnalyzeOffField() method");
     }
-}
 }
