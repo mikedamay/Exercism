@@ -12,7 +12,7 @@ public class OverflowTests
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
     public void DisplayDenomination_bad()
     {
-        Assert.Equal("*** Too Big ***", CentralBank.DisplayDenomination(10000L, long.MaxValue));
+        Assert.Equal("*** Too Big ***", CentralBank.DisplayDenomination(10000L, long.MaxValue / 2L));
     }
 
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
@@ -24,6 +24,19 @@ public class OverflowTests
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
     public void DisplayGDP_bad()
     {
-        Assert.Equal("*** Too Big ***", CentralBank.DisplayGDP(555f, float.MaxValue));
+        Assert.Equal("*** Too Big ***", CentralBank.DisplayGDP(555f, float.MaxValue / 2L));
+    }
+
+    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    public void DisplayShare_good()
+    {
+        Assert.Equal("5550000000", CentralBank.DisplayCHiefEconomistSalary(555000m, 10000m));
+    }
+
+    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    public void DisplayShare_bad()
+    {
+        Assert.Equal("*** Much Too Big ***", CentralBank.DisplayCHiefEconomistSalary(555000m,
+            decimal.MaxValue / 2L));
     }
 }

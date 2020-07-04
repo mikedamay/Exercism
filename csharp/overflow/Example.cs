@@ -30,9 +30,15 @@ public static class CentralBank
         }
     }
 
-    public static string DisplayAverageSalaryShare(float averageSalary, float GDP)
+    public static string DisplayCHiefEconomistSalary(decimal salaryBase, decimal multiplier)
     {
-        var share = (averageSalary / GDP) * 100;
-        return share.ToString() + "%";
+        try
+        {
+            return (salaryBase * multiplier).ToString();
+        }
+        catch (OverflowException)
+        {
+            return "*** Much Too Big ***";
+        }
     }
 }
