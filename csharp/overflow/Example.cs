@@ -30,7 +30,7 @@ public static class CentralBank
         }
     }
 
-    public static string DisplayCHiefEconomistSalary(decimal salaryBase, decimal multiplier)
+    public static string DisplayChiefEconomistSalary(decimal salaryBase, decimal multiplier)
     {
         try
         {

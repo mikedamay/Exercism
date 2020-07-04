@@ -30,13 +30,13 @@ public class OverflowTests
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
     public void DisplaySalary_good()
     {
-        Assert.Equal("5550000000", CentralBank.DisplayCHiefEconomistSalary(555000m, 10000m));
+        Assert.Equal("5550000000", CentralBank.DisplayChiefEconomistSalary(555000m, 10000m));
     }
 
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
     public void DisplaySalary_bad()
     {
-        Assert.Equal("*** Much Too Big ***", CentralBank.DisplayCHiefEconomistSalary(555000m,
+        Assert.Equal("*** Much Too Big ***", CentralBank.DisplayChiefEconomistSalary(555000m,
             decimal.MaxValue / 2L));
     }
 }
