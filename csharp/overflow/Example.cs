@@ -1,19 +1,38 @@
 using System;
 
-public class Calculator
+public static class CentralBank
 {
-    public double[] Memory { get; } = new double[256];
-    public byte Current { get; private set; }
-
-    public double Multiply(double x, double y)
+    public static string DisplayDenomination(long @base, long multiplier)
     {
-        double dd = x * y;
-        if (!Double.IsFinite(dd))
-            // I'm not sure what this covers - may have to add IsNaN etc.
+        try
         {
-            dd = 0d;
+            checked
+            {
+                return (@base * multiplier).ToString();
+            }
         }
-        Memory[Current++] = dd;
-        return dd;
+        catch (OverflowException)
+        {
+            return "*** Too Big ***";
+        }
+    }
+
+    public static string DisplayGDP(float @base, float multiplier)
+    {
+        float gdp = @base * multiplier;
+        if (float.IsInfinity(gdp))
+        {
+            return "*** Too Big ***";
+        }
+        else
+        {
+            return gdp.ToString();
+        }
+    }
+
+    public static string DisplayAverageSalaryShare(float averageSalary, float GDP)
+    {
+        var share = (averageSalary / GDP) * 100;
+        return share.ToString() + "%";
     }
 }

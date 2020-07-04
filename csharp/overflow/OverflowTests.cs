@@ -4,20 +4,26 @@ using Xunit;
 public class OverflowTests
 {
     [Fact]
-    public void Multiply_bad()
+    public void DisplayDenomination_good()
     {
-        var calculator = new Calculator();
-        Assert.Equal(0.0d, calculator.Multiply(Double.MaxValue, Double.MaxValue));
+        Assert.Equal("10000000", CentralBank.DisplayDenomination(10000L, 1000L));
     }
 
     [Fact/*(Skip = "Remove this Skip property to run this test")*/]
-    public void Store_257()
+    public void DisplayDenomination_bad()
     {
-        var calculator = new Calculator();
-        for (int ii = 0; ii <= 257; ii++)
-        {
-            calculator.Multiply((double)ii, 100d);
-        }
-        Assert.Equal(25600, calculator.Memory[0]);
+        Assert.Equal("*** Too Big ***", CentralBank.DisplayDenomination(10000L, long.MaxValue));
+    }
+
+    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    public void DisplayGDP_good()
+    {
+        Assert.Equal("5550000", CentralBank.DisplayGDP(555f, 10000f));
+    }
+
+    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    public void DisplayGDP_bad()
+    {
+        Assert.Equal("*** Too Big ***", CentralBank.DisplayGDP(555f, float.MaxValue));
     }
 }
