@@ -1,97 +1,52 @@
 using System;using System.Security.Cryptography.X509Certificates;
 
-public static class PlayAnalyzer
+public class LaminateMaker
 {
-    public static string AnalyzeOnField(int shirtNum)
+    private bool securityAlert;
+    public LaminateMaker(bool securityAlert)
     {
-        string playerDescription = string.Empty;
-        switch (shirtNum)
+        this.securityAlert = securityAlert;
+    }
+    public string GetDisplayName(TeamSupport support)
+    {
+        if (support is Staff staff)
         {
-            case 1:
-                playerDescription = "goalie";
-                break;
-            case 2:
-                playerDescription = "left back";
-                break;
-            case 5:
-                playerDescription = "right back";
-                break;
-            case 3:
-            case 4:
-                playerDescription = "center back";
-                break;
-            case 6:
-            case 7:
-            case 8:
-                playerDescription = "midfielder";
-                break;
-            case 9:
-                playerDescription = "left wing";
-                break;
-            case 11:
-                playerDescription = "right wing";
-                break;
-            case 10:
-                playerDescription = "striker";
-                break;
-            default:
-                throw new ArgumentException();
+            string priorityPersonnelText = string.Empty;
+            if (securityAlert && staff.GetType() == typeof(Security))
+            {
+                priorityPersonnelText = " Priority Personnel";
+            }
+
+            return staff.Title + priorityPersonnelText;
         }
-
-        return playerDescription;
-    }
-
-    public static string AnalyzeOffField(object report)
-    {
-        string description = string.Empty;
-        switch (report)
+        else
         {
-            case int shirtNum:
-                description = AnalyzeOnField(shirtNum);
-                break;
-            case string freeFormText:
-                description = freeFormText;
-                break;
-            case Incident incident:
-                description = incident.ToString();
-                break;
-            case Manager manager when !string.IsNullOrWhiteSpace(manager.Name):
-                description = manager.Name;
-                break;
-            case Manager manager:
-                description = "the manager";
-                break;
-            default:
-                throw new ArgumentException();
+            return "Too Important for a Laminate";
         }
-
-        return description;
     }
 }
 
-public interface ISupport { public string Name { get; } }
+/**** Please do not alter the code below ****/
 
-public abstract class Staff : ISupport { public  string Name { get; }}
+public interface TeamSupport {string Title { get; } }
 
-// **** please do not modify the Manager class ****
-public class Manager
-{
-    public string Name { get; }
-    public string Activity { get; }
+public abstract class Staff : TeamSupport { public abstract string Title { get; }}
 
-    public Manager(string name, string activity)
-    {
-        this.Name = name;
-        this.Activity = activity;
-    }
-}
+public class Manager : TeamSupport { public string Title { get; } = "The Manager"; }
 
-// **** please do not modify the Incident enum ****
-public enum Incident
-{
-    RedCard,
-    YellowCard,
-    Foul,
-    Injury
-}
+public class Chairman : TeamSupport { public string Title { get; } = "The Manager"; }
+
+public class Physio : Staff { public override string Title { get; } = "The Physio"; }
+
+public class OffensiveCoach : Staff { public override string Title { get; } = "Offensive Coach"; }
+
+public class BoalKeepingCoach : Staff { public override string Title { get; } = "Goal Keeping Coach"; }
+
+public class Security : Staff { public override string Title { get; } = "Security Team Member"; }
+
+public class SecurityJunior : Security { public override string Title { get; } = "Security Junior"; }
+
+public class SecurityIntern : Security { public override string Title { get; } = "Security Intern"; }
+
+public class PoliceLiaison : Security { public override string Title { get; } = "Police Liaison Officer"; }
 
