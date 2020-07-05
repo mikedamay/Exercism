@@ -194,6 +194,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Structs", "csharp\structs\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringFormatting", "csharp\string-formatting\StringFormatting.csproj", "{09C60F41-11EE-436B-AFEB-DA031DFE420D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceLifetime", "csharp\resource-lifetime\ResourceLifetime.csproj", "{39CA1E71-C720-4790-837A-245E9447EE44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -584,5 +586,9 @@ Global
 		{09C60F41-11EE-436B-AFEB-DA031DFE420D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09C60F41-11EE-436B-AFEB-DA031DFE420D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09C60F41-11EE-436B-AFEB-DA031DFE420D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39CA1E71-C720-4790-837A-245E9447EE44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39CA1E71-C720-4790-837A-245E9447EE44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39CA1E71-C720-4790-837A-245E9447EE44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39CA1E71-C720-4790-837A-245E9447EE44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
