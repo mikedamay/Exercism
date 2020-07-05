@@ -11,7 +11,8 @@ public class ResourceCleanupTests
     [Fact]
     public void Write_good()
     {
-        var orm = new Orm();
+        var db = new Database();
+        var orm = new Orm(db);
         orm.Write("good write");
         Assert.Equal((Database.State.Closed, "good write"),
             (Database.DbState, Database.lastData));
@@ -23,7 +24,8 @@ public class ResourceCleanupTests
         Exception result = Exception.NoInvalidOperationExceptionThrown;        
         try
         {
-            var orm = new Orm();
+            var db = new Database();
+            var orm = new Orm(db);
             orm.Write("bad write");
         }
         catch (InvalidOperationException)
@@ -40,7 +42,8 @@ public class ResourceCleanupTests
         Exception result = Exception.NoInvalidOperationExceptionThrown;        
         try
         {
-            var orm = new Orm();
+            var db = new Database();
+            var orm = new Orm(db);
             orm.Write("bad commit");
         }
         catch (InvalidOperationException)
@@ -54,21 +57,24 @@ public class ResourceCleanupTests
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void CommitSafely_good()
     {
-        var orm = new Orm();
+        var db = new Database();
+        var orm = new Orm(db);
         Assert.True(orm.WriteSafely("good write"));
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void CommitSafely_bad_write()
     {
-        var orm = new Orm();
+        var db = new Database();
+        var orm = new Orm(db);
         Assert.False(orm.WriteSafely("bad write"));
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void CommitSafely_bad_commit()
     {
-        var orm = new Orm();
+        var db = new Database();
+        var orm = new Orm(db);
         Assert.False(orm.WriteSafely("bad commit"));
     }
 }

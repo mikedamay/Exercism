@@ -4,18 +4,23 @@ public class Orm
 {
     private Database database;
 
+    public Orm(Database database)
+    {
+        this.database = database;
+    }
+
     public void Write(string data)
     {
-        using (var db = new Database())
+        using (database)
         {
-            db.Write(data);
-            db.EndTransaction();
+            database.Write(data);
+            database.EndTransaction();
         }
     }
 
     public bool WriteSafely(string data)
     {
-        using var db = new Database();
+        using var db = database;
         try
         {
             db.Write(data);
