@@ -58,4 +58,18 @@ public class CastingTests
         var lm = new LaminateMaker(false);
         Assert.Equal("Security Intern", lm.GetDisplayName(new SecurityIntern()));
     }
+
+    [Fact /*(Skip = "Remove this Skip property to run this test")*/]
+    public void ConvertShirtNum_good()
+    {
+        var lm = new LaminateMaker(false);
+        Assert.Equal(21u, lm.ConvertShirtNum(21ul));
+    }
+
+    [Fact /*(Skip = "Remove this Skip property to run this test")*/]
+    public void ConvertShirtNum_bad()
+    {
+        var lm = new LaminateMaker(false);
+        Assert.Equal(0u, lm.ConvertShirtNum((ulong)uint.MaxValue + 10));
+    }
 }

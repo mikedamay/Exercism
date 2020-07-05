@@ -1,3 +1,4 @@
+/*
 using System;
 
 public class LaminateMaker
@@ -13,7 +14,7 @@ public class LaminateMaker
     }
 }
 
-/**** Please do not alter the code below ****/
+/**** Please do not alter the code below ***#1#
 
 public interface TeamSupport {string Title { get; } }
 
@@ -27,7 +28,7 @@ public class Physio : Staff { public override string Title { get; } = "The Physi
 
 public class OffensiveCoach : Staff { public override string Title { get; } = "Offensive Coach"; }
 
-public class BoalKeepingCoach : Staff { public override string Title { get; } = "Goal Keeping Coach"; }
+public class GgalKeepingCoach : Staff { public override string Title { get; } = "Goal Keeping Coach"; }
 
 public class Security : Staff { public override string Title { get; } = "Security Team Member"; }
 
@@ -36,4 +37,5 @@ public class SecurityJunior : Security { public override string Title { get; } =
 public class SecurityIntern : Security { public override string Title { get; } = "Security Intern"; }
 
 public class PoliceLiaison : Security { public override string Title { get; } = "Police Liaison Officer"; }
+*/
 

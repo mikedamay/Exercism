@@ -1,4 +1,3 @@
-/*
 using System;using System.Security.Cryptography.X509Certificates;
 
 public class LaminateMaker
@@ -25,9 +24,18 @@ public class LaminateMaker
             return "Too Important for a Laminate";
         }
     }
+
+    public uint ConvertShirtNum(ulong shirtNum)
+    {
+        if (shirtNum > uint.MaxValue)
+        {
+            return 0u;
+        }
+        return (uint) shirtNum;
+    }
 }
 
-/**** Please do not alter the code below ***#1#
+/**** Please do not alter the code below ****/
 
 public interface TeamSupport {string Title { get; } }
 
@@ -50,5 +58,4 @@ public class SecurityJunior : Security { public override string Title { get; } =
 public class SecurityIntern : Security { public override string Title { get; } = "Security Intern"; }
 
 public class PoliceLiaison : Security { public override string Title { get; } = "Police Liaison Officer"; }
-*/
 
