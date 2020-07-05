@@ -1,3 +1,4 @@
+/*
 using System;using System.Security.Cryptography.X509Certificates;
 
 public class LaminateMaker
@@ -26,7 +27,7 @@ public class LaminateMaker
     }
 }
 
-/**** Please do not alter the code below ****/
+/**** Please do not alter the code below ***#1#
 
 public interface TeamSupport {string Title { get; } }
 
@@ -49,4 +50,5 @@ public class SecurityJunior : Security { public override string Title { get; } =
 public class SecurityIntern : Security { public override string Title { get; } = "Security Intern"; }
 
 public class PoliceLiaison : Security { public override string Title { get; } = "Police Liaison Officer"; }
+*/
 
