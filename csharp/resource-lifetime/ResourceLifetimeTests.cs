@@ -3,7 +3,7 @@ using Xunit;
 
 public class ResourceLifetimeTests
 {
-    enum Exception
+    private enum Exception
     {
         InvalidOperationExceptionThrown,
         NoInvalidOperationExceptionThrown
