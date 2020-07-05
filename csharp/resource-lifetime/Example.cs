@@ -1,3 +1,4 @@
+/*
 using System;
 
 public class Orm
@@ -34,3 +35,4 @@ public class Orm
         }
     }
 }
+*/
