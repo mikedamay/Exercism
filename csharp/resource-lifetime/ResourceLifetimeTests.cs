@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-public class ResourceCleanupTests
+public class ResourceLifetimeTests
 {
     enum Exception
     {
