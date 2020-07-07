@@ -1,5 +1,3 @@
-namespace example
-{
 using System;
 using System.Collections.Generic;
 
@@ -74,5 +72,4 @@ public class ClaimsHandler
 
         return longest;
     }
-}
 }
