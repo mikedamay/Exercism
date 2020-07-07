@@ -1,4 +1,3 @@
-/*
 using System;
 
 public struct Coord
@@ -9,9 +8,8 @@ public struct Coord
         Y = y;
     }
 
-    public int X {get; }
+    public ushort X {get; }
     public ushort Y {get; }
-
 }
 
 public struct Plot
@@ -42,4 +40,3 @@ public class ClaimsHandler
         throw new NotImplementedException("Please implement the ClaimsHandler.GetClaimWithLongestSide() method");
     }
 }
-*/
