@@ -1,3 +1,4 @@
+/*
 using System;
 
 public struct Coord
@@ -40,3 +41,4 @@ public class ClaimsHandler
         throw new NotImplementedException("Please implement the ClaimsHandler.GetClaimWithLongestSide() method");
     }
 }
+*/
