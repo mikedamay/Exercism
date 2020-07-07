@@ -1,7 +1,6 @@
+/*
 using System;
 
-namespace template
-{    
 public struct Coord
 {
     public Coord(ushort x, ushort y)
@@ -43,4 +42,4 @@ public class ClaimsHandler
         throw new NotImplementedException("Please implement the ClaimsHandler.GetClaimWithLongestSide() method");
     }
 }
-}
+*/

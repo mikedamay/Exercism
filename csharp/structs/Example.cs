@@ -13,21 +13,6 @@ public struct Coord
 
     public int X {get; }
     public ushort Y {get; }
-
-    public bool Equals(Coord other)
-    {
-        return X == other.X && Y == other.Y;
-    }
-
-    public override bool Equals(object obj)
-    {
-        return obj is Coord other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(X, Y);
-    }
 }
 
 public struct Plot
@@ -38,32 +23,12 @@ public struct Plot
         TopRight = topRight;
         BottomLeft = bottomLeft;
         BottomRight = bottomRight;
-        str = "mike";
     }
 
     public Coord TopLeft {get; }
     public Coord TopRight {get; }
-    public string str { get; }
     public Coord BottomLeft {get; }
     public Coord BottomRight {get; }
-
-    public bool Equals(Plot other)
-    {
-        return TopLeft.Equals(other.TopLeft) 
-               && TopRight.Equals(other.TopRight) 
-               && BottomLeft.Equals(other.BottomLeft) 
-               && BottomRight.Equals(other.BottomRight);
-    }
-
-    public override bool Equals(object obj)
-    {
-        return obj is Plot other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(TopLeft, TopRight, BottomLeft, BottomRight);
-    }
 
     public int GetLongestSide()
     {
@@ -71,10 +36,9 @@ public struct Plot
             TopRight.X - TopLeft.X,
             Math.Max(BottomRight.X - BottomLeft.X,
                 Math.Max(BottomRight.Y - TopRight.Y
-                ,BottomLeft.Y - TopLeft.Y)));
+                    ,BottomLeft.Y - TopLeft.Y)));
     }
 }
-
 
 public class ClaimsHandler
 {
