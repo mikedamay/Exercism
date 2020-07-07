@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 public struct Coord
 {
@@ -9,7 +10,7 @@ public struct Coord
         Y = y;
     }
 
-    public int X {get; }
+    public ushort X {get; }
     public ushort Y {get; }
 }
 
@@ -28,9 +29,9 @@ public struct Plot
     public Coord BottomLeft {get; }
     public Coord BottomRight {get; }
 
-    public int GetLongestSide()
+    public ushort GetLongestSide()
     {
-        return Math.Max(
+        return (ushort)Math.Max(
             TopRight.X - TopLeft.X,
             Math.Max(BottomRight.X - BottomLeft.X,
                 Math.Max(BottomRight.Y - TopRight.Y
