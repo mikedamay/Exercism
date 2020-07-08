@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-public class EqualityTests
+public class RegularExpressionTests
 {
     [Fact]
     public void IsMatch_match()
