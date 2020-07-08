@@ -1,57 +1,32 @@
+/*
+using System;
 using System.Text.RegularExpressions;
 
 public class LogParser
 {
     public bool IsMatch(string text)
     {
-        const string searchArg = @"^(\[TRC\] | \[DBG\] | \[INF\] | \[ERR\] | \[WRN\] | \[FTL\])";
-        return Regex.IsMatch(text, searchArg, RegexOptions.IgnorePatternWhitespace);
+        throw new NotImplementedException($"Please implement the LogParser.IsMatch() method");
     }
 
     public string[] SplitLogLine(string text)
     {
-        return Regex.Split(text, "<[*^=-]*>");
+        throw new NotImplementedException($"Please implement the LogParser.SplitLogLine() method");
     }
     
     public int CountQuotedPasswords(string lines)
     {
-        bool[] results = new bool[lines.Length];
-        var regex = new Regex(@"^.*""[^\\""]*password[^\\""]*"".*$",
-            RegexOptions.IgnoreCase | RegexOptions.Multiline);
-        var matches = regex.Matches(lines);
-        return matches.Count;
+        throw new NotImplementedException($"Please implement the LogParser.CountQuotedPasswords() method");
     }
 
     public string RemoveEndOfLineText(string line)
     {
-        string pattern = @"end-of-Line\d+";
-
-        string str = Regex.Replace(line, pattern, string.Empty,
-            RegexOptions.IgnoreCase);
-        return str;
+        throw new NotImplementedException($"Please implement the LogParser.RemoveEndOfLineText() method");
     }
     
     public string[] ListLinesWithPasswords(string[] lines)
     {
-        var pattern = @".*\s(?<pw>password\S+).*";
-        
-        string[] outlines = new string[lines.Length];
-        var regex = new Regex(pattern, RegexOptions.IgnoreCase);
-        for (int i = 0; i < lines.Length; i++)
-        {
-            var matches = regex.Matches(lines[i]);
-            if (matches.Count > 0)
-            {
-                var grps = matches[0].Groups;
-                outlines[i] 
-                  = $"{grps["pw"].Value}: {lines[i]}";
-            }
-            else
-            {
-                outlines[i] = $"--------: {lines[i]}";
-            }
-        }
-
-        return outlines;
+        throw new NotImplementedException($"Please implement the LogParser.ListLinesWithPasswords() method");
     }
 }
+*/
