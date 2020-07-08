@@ -1,5 +1,4 @@
 using System.Text.RegularExpressions;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 public class LogParser
 {
