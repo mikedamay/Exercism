@@ -1,4 +1,4 @@
-/*public class SpaceAge
+public class SpaceAge
 {
     private const double EarthSeconds = 31557600;
     private readonly double seconds;
@@ -25,4 +25,4 @@
     public double OnNeptune() => PlanetSeconds(164.79132);
 
     private double PlanetSeconds(double planetFactor) => seconds / (EarthSeconds * planetFactor);
-}*/
+}
