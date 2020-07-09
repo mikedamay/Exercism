@@ -198,6 +198,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceLifetime", "csharp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Casting", "csharp\casting\Casting.csproj", "{698A887F-F44F-413C-A690-BE70CD12DC35}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionBodiedMembers", "csharp\expression-bodied-members\ExpressionBodiedMembers.csproj", "{BCF95D22-8FFF-4604-84A6-3A036DEA80A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -596,5 +598,9 @@ Global
 		{698A887F-F44F-413C-A690-BE70CD12DC35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{698A887F-F44F-413C-A690-BE70CD12DC35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{698A887F-F44F-413C-A690-BE70CD12DC35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCF95D22-8FFF-4604-84A6-3A036DEA80A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCF95D22-8FFF-4604-84A6-3A036DEA80A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCF95D22-8FFF-4604-84A6-3A036DEA80A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCF95D22-8FFF-4604-84A6-3A036DEA80A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
