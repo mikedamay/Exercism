@@ -7,11 +7,12 @@ public class WeatherStation
     private List<DateTime> recordDates = new List<DateTime>();
     private List<decimal> temperatures = new List<decimal>();
 
-    public void AcceptReading(Reading reading)
+    public int AcceptReading(Reading reading)
     {
         this.reading = reading;
         recordDates.Add(DateTime.Now);
         temperatures.Add(reading.Temperature);
+        return recordDates.Count;
     }
 
     public void ClearAll()
@@ -21,82 +22,21 @@ public class WeatherStation
         temperatures.Clear();
     }
 
-    public decimal LatestTemperature
-    {
-        get
-        {
-            return reading.Temperature;
-        }
-    }
+    public decimal LatestTemperature => reading.Temperature;
 
-    public decimal LatestPressure
-    {
-        get
-        {
-            return reading.Pressure;
-        }
-    }
+    public decimal LatestPressure => reading.Pressure;
 
-    public decimal LatestRainfall
-    {
-        get
-        {
-            return reading.Rainfall;
-        }
-    }
+    public decimal LatestRainfall => reading.Rainfall;
 
-    public bool HasHistory
-    {
-        get
-        {
-            if (recordDates.Count > 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
+    public bool HasHistory => recordDates.Count > 1;
 
     public Outlook Outlook
-    {
-        get
-        {
-            if (reading.Equals(new Reading()))
-            {
-                throw new ArgumentException();
-            }
-            else
-            {
-                if (reading.Pressure < 10m && reading.Temperature < 30m)
-                {
-                    return Outlook.Cool;
-                }
-                else if (reading.Temperature > 50)
-                {
-                    return Outlook.Good;
-                }
-                else
-                {
-                    return Outlook.Warm;
-                }
-            }
-        }
-    }
+        => reading.Equals(new Reading()) ? throw new ArgumentException()
+            : reading.Pressure < 10m && reading.Temperature < 30m ? Outlook.Cool
+            : reading.Temperature > 50 ? Outlook.Good
+            : Outlook.Warm;
 
-    public State RunSelfTest()
-    {
-        if (reading.Equals(new Reading()))
-        {
-            return State.Bad;
-        }
-        else
-        {
-            return State.Good;
-        }
-    }
+    public State RunSelfTest() => reading.Equals(new Reading()) ? State.Bad : State.Good;
 }
 
 /*** Please do not modify this struct ***/
