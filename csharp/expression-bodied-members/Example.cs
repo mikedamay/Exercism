@@ -1,28 +1,131 @@
-public class SpaceAge
-{
-    private const double EarthSeconds = 31557600;
-    private readonly double seconds;
+using System;
+using System.Collections.Generic;
 
-    public SpaceAge(long seconds)
+public class WeatherStation
+{
+    private Reading reading;
+    private List<DateTime> recordDates = new List<DateTime>();
+    private List<decimal> temperatures = new List<decimal>();
+
+    public void AcceptReading(Reading reading)
     {
-        this.seconds = seconds;
+        this.reading = reading;
+        recordDates.Add(DateTime.Now);
+        temperatures.Add(reading.Temperature);
     }
 
-    public double OnEarth() => PlanetSeconds(1d);
+    public void ClearAll()
+    {
+        this.reading = new Reading();
+        recordDates.Clear();
+        temperatures.Clear();
+    }
 
-    public double OnMercury() => PlanetSeconds(0.2408467);
+    public decimal LatestTemperature
+    {
+        get
+        {
+            return reading.Temperature;
+        }
+    }
 
-    public double OnVenus() => PlanetSeconds(0.61519726);
+    public decimal LatestPressure
+    {
+        get
+        {
+            return reading.Pressure;
+        }
+    }
 
-    public double OnMars() => PlanetSeconds(1.8808158);
+    public decimal LatestRainfall
+    {
+        get
+        {
+            return reading.Rainfall;
+        }
+    }
 
-    public double OnJupiter() => PlanetSeconds(11.862615);
+    public bool HasHistory
+    {
+        get
+        {
+            if (recordDates.Count > 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 
-    public double OnSaturn() => PlanetSeconds(29.447498);
+    public Outlook Outlook
+    {
+        get
+        {
+            if (reading.Equals(new Reading()))
+            {
+                throw new ArgumentException();
+            }
+            else
+            {
+                if (reading.Pressure < 10m && reading.Temperature < 30m)
+                {
+                    return Outlook.Cool;
+                }
+                else if (reading.Temperature > 50)
+                {
+                    return Outlook.Good;
+                }
+                else
+                {
+                    return Outlook.Warm;
+                }
+            }
+        }
+    }
 
-    public double OnUranus() => PlanetSeconds(84.016846);
+    public State RunSelfTest()
+    {
+        if (reading.Equals(new Reading()))
+        {
+            return State.Bad;
+        }
+        else
+        {
+            return State.Good;
+        }
+    }
+}
 
-    public double OnNeptune() => PlanetSeconds(164.79132);
+/*** Please do not modify this struct ***/
+public struct Reading
+{
+    public decimal Temperature { get; }
+    public decimal Pressure { get; }
+    public decimal Rainfall { get; }
 
-    private double PlanetSeconds(double planetFactor) => seconds / (EarthSeconds * planetFactor);
+    public Reading(decimal temperature, decimal pressure, decimal rainfall)
+    {
+        Temperature = temperature;
+        Pressure = pressure;
+        Rainfall = rainfall;
+    }
+}
+
+/*** Please do not modify this enum ***/
+public enum State
+{
+    Good,
+    Bad
+}
+
+/*** Please do not modify this enum ***/
+public enum Outlook
+{
+    Cool,
+    Rainy,
+    Warm,
+    Good
 }
