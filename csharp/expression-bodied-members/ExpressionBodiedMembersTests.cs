@@ -10,7 +10,7 @@ public class ExpressionBodiedMembersTests
         var ws = new WeatherStation();
         ws.AcceptReading(new Reading(20m, 25m, 0.01m));
         decimal[] expected = {20, 25, 0.01m};
-        decimal[] actual = {ws.LatestTemperature, ws.LatestTemperature, ws.LatestRainfall};
+        decimal[] actual = {ws.LatestTemperature, ws.LatestPressure, ws.LatestRainfall};
         Assert.Equal(expected, actual);
     }
 
