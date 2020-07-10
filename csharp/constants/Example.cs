@@ -46,8 +46,8 @@ public class Authenticator
     }
 }
 
-//**** please do not modify the Identity class ****
-public class Identity
+//**** please do not modify the Identity struct ****
+public struct Identity
 {
     public string Email { get; set; }
 
