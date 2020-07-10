@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-
 public class ObjectInitializationTests
 {
     [Fact]
@@ -22,6 +21,7 @@ public class ObjectInitializationTests
         bool?[] expected = {true, true, true};
         Assert.Equal(expected, actual);
     }
+
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void TamperWithDevelopers()
     {
