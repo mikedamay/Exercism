@@ -6,22 +6,22 @@ public class OperatorOverloadingTests
     [Fact]
     public void Equality_true()
     {
-        Assert.True(Eq(new Currency(55, "HD"), new Currency(55, "HD")));
+        Assert.True(Eq(new CurrencyAmount(55, "HD"), new CurrencyAmount(55, "HD")));
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void EQuality_false()
     {
-        Assert.False(Eq(new Currency(55, "HD"), new Currency(60, "HD")));
+        Assert.False(Eq(new CurrencyAmount(55, "HD"), new CurrencyAmount(60, "HD")));
     }
 
     [Fact /*(Skip = "Remove this Skip property to run this test")*/]
     public void EQuality_bad()
     {
-        Assert.Throws<ArgumentException>(() => Eq(new Currency(55, "HD"), new Currency(60, "USD")));
+        Assert.Throws<ArgumentException>(() => Eq(new CurrencyAmount(55, "HD"), new CurrencyAmount(60, "USD")));
     }
 
-    private bool Eq(Currency amountA, Currency amountB)
+    private bool Eq(CurrencyAmount amountA, CurrencyAmount amountB)
     {
         return amountA == amountB;
     }
