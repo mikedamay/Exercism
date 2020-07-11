@@ -81,3 +81,20 @@ public struct Currency
         return (double) @this.value;
     }
 }
+
+struct Point 
+{
+    decimal x;
+    decimal y;
+    
+    public static bool operator ==(Point pt, Point ptOther)
+    {
+        return pt.x == ptOther.x && pt.y == ptOther.y;
+    }
+    
+    public static bool operator !=(Point pt, Point ptOther)
+    {
+        return !(pt == ptOther);
+    }
+}
+
