@@ -27,6 +27,11 @@ public static class Languages
         return languages.Count;
     }
 
+    public static bool HasLanguage(List<string> languages, string language)
+    {
+        return languages.Contains(language);
+    }
+    
     public static List<string> ReverseList(List<string> languages)
     {
         languages.Reverse();
@@ -35,16 +40,14 @@ public static class Languages
 
     public static bool ContainsStar(List<string> languages)
     {
-        if (languages.Count > 0)
+        if (languages.Count > 0 && languages[0] == "C#")
         {
-            if (languages[0] == "C#")
-            {
-                return true;
-            }
-            if (languages.Count > 1 && languages.Count < 4 && languages[1] == "C#")
-            {
-                return true;
-            }
+            return true;
+        }
+
+        if (languages.Count > 1 && languages.Count < 4 && languages[1] == "C#")
+        {
+            return true;
         }
 
         return false;
