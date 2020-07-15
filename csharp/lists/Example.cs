@@ -33,7 +33,7 @@ public static class Languages
         return languages;
     }
 
-    public static bool Match(List<string> languages)
+    public static bool ContainsStar(List<string> languages)
     {
         if (languages.Count > 0)
         {
