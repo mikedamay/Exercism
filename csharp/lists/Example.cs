@@ -49,4 +49,25 @@ public static class Languages
 
         return false;
     }
+
+    public static List<string> RemoveLanguage(List<string> languages, string language)
+    {
+        languages.Remove(language);
+        return languages;
+    }
+
+    // guaranteed not empty
+    public static bool EnsureUnique(List<string> languages)
+    {
+        languages.Sort();
+        for (int i = 1; i < languages.Count; i++)
+        {
+            if (languages[i] == languages[i - 1])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

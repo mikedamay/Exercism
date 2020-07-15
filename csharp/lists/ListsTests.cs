@@ -57,4 +57,33 @@ public class ListsTests
         languages.RemoveAt(1);
         Assert.True(Languages.ContainsStar(languages));
     }
+
+    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    public void RemoveLanguage_yes()
+    {
+        var languages = Languages.GetExistingLanguages();
+        Assert.Equal(new string[] {"C#", "Elm"}, Languages.RemoveLanguage(languages, "Clojure"));
+    }
+
+    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    public void RemoveLanguage_no()
+    {
+        var languages = Languages.GetExistingLanguages();
+        Assert.Equal(new string[] {"C#", "Clojure", "Elm"}, Languages.RemoveLanguage(languages, "English"));
+    }
+
+    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    public void EnsureUnique_yes()
+    {
+        var languages = Languages.GetExistingLanguages();
+        Assert.True(Languages.EnsureUnique(languages));
+    }
+
+    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    public void EnsureUnique_no()
+    {
+        var languages = Languages.GetExistingLanguages();
+        languages.Add("C#");
+        Assert.False(Languages.EnsureUnique(languages));
+    }
 }
