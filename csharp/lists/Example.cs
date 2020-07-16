@@ -31,7 +31,7 @@ public static class Languages
     {
         return languages.Contains(language);
     }
-    
+
     public static List<string> ReverseList(List<string> languages)
     {
         languages.Reverse();
