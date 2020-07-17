@@ -1,5 +1,4 @@
-/*using Microsoft.VisualStudio.TestPlatform.Common.Telemetry;
-
+/*
 public static class RedRemoteControlCarTeam
 {
     public class RemoteControlCar
