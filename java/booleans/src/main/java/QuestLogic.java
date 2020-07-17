@@ -14,4 +14,15 @@ class QuestLogic {
     public static boolean canFreePrisoner(boolean knightIsAwake, boolean archerIsAwake, boolean prisonerIsAwake, boolean petDogIsPresent) {
         throw new UnsupportedOperationException("Please implement the (static) QuestLogic.canFreePrisoner() method");
     }
+    public static void foo() {
+        var knightIsAwake = false;
+        var archerIsAwake = true;
+        var prisonerIsAwake = false;
+        var petDogIsPresent = false;
+        QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent);
+// => false
+
+
+
+    }
 }
