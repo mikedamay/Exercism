@@ -1,4 +1,5 @@
 import org.junit.Test;
+import org.junit.Ignore;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -13,7 +14,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_execute_fast_attack_if_knight_is_sleeping()
     {
         var knightIsAwake = false;
@@ -21,7 +22,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_spy_if_everyone_is_sleeping()
     {
         var knightIsAwake = false;
@@ -31,7 +32,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_spy_if_everyone_but_knight_is_sleeping()
     {
         var knightIsAwake = true;
@@ -41,7 +42,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_spy_if_everyone_but_archer_is_sleeping()
     {
         var knightIsAwake = false;
@@ -51,7 +52,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_spy_if_everyone_but_prisoner_is_sleeping()
     {
         var knightIsAwake = false;
@@ -63,7 +64,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_spy_if_only_knight_is_sleeping()
     {
         var knightIsAwake = false;
@@ -73,7 +74,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_spy_if_only_archer_is_sleeping()
     {
         var knightIsAwake = true;
@@ -83,7 +84,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_spy_if_only_prisoner_is_sleeping()
     {
         var knightIsAwake = true;
@@ -93,7 +94,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_spy_if_everyone_is_awake()
     {
         var knightIsAwake = true;
@@ -103,7 +104,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_signal_prisoner_ifarcher_is_sleeping_and_prisoner_is_awake()
     {
         var archerIsAwake = false;
@@ -112,7 +113,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_signal_prisoner_ifarcher_is_awake_and_prisoner_is_sleeping()
     {
         var archerIsAwake = true;
@@ -121,7 +122,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_signal_prisoner_ifarcher_and_prisoner_are_both_sleeping()
     {
         var archerIsAwake = false;
@@ -130,7 +131,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_signal_prisoner_ifarcher_and_prisoner_are_both_awake()
     {
         var archerIsAwake = true;
@@ -139,7 +140,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_release_prisoner_if_everyone_is_awake_and_pet_dog_is_present()
     {
         var knightIsAwake = true;
@@ -150,7 +151,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_release_prisoner_if_everyone_is_awake_and_pet_dog_is_absent()
     {
         var knightIsAwake = true;
@@ -161,7 +162,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_release_prisoner_if_everyone_is_asleep_and_pet_dog_is_present()
     {
         var knightIsAwake = false;
@@ -172,7 +173,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_release_prisoner_if_everyone_is_asleep_and_pet_dog_is_absent()
     {
         var knightIsAwake = false;
@@ -183,7 +184,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_release_prisoner_if_only_prisoner_is_awake_and_pet_dog_is_present()
     {
         var knightIsAwake = false;
@@ -194,7 +195,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_release_prisoner_if_only_prisoner_is_awake_and_pet_dog_is_absent()
     {
         var knightIsAwake = false;
@@ -205,7 +206,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_release_prisoner_if_only_archer_is_awake_and_pet_dog_is_present()
     {
         var knightIsAwake = false;
@@ -216,7 +217,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_release_prisoner_if_only_archer_is_awake_and_pet_dog_is_absent()
     {
         var knightIsAwake = false;
@@ -227,7 +228,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_release_prisoner_if_only_knight_is_awake_and_pet_dog_is_present()
     {
         var knightIsAwake = true;
@@ -238,7 +239,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_release_prisoner_if_only_knight_is_awake_and_pet_dog_is_absent()
     {
         var knightIsAwake = true;
@@ -249,7 +250,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_release_prisoner_if_only_knight_is_asleep_and_pet_dog_is_present()
     {
         var knightIsAwake = false;
@@ -260,7 +261,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_release_prisoner_if_only_knight_is_asleep_and_pet_dog_is_absent()
     {
         var knightIsAwake = false;
@@ -271,7 +272,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void can_release_prisoner_if_only_archer_is_asleep_and_pet_dog_is_present()
     {
         var knightIsAwake = true;
@@ -282,7 +283,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_release_prisoner_if_only_archer_is_asleep_and_pet_dog_is_absent()
     {
         var knightIsAwake = true;
@@ -292,7 +293,7 @@ public class QuestLogicTest
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
-    @Test// @Ignore
+    @Test@Ignore
     public void cannot_release_prisoner_if_only_prisoner_is_asleep_and_pet_dog_is_present()
     {
         var knightIsAwake = true;
@@ -303,7 +304,7 @@ public class QuestLogicTest
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void cannot_release_prisoner_if_only_prisoner_is_asleep_and_pet_dog_is_absent()
     {
         var knightIsAwake = true;
