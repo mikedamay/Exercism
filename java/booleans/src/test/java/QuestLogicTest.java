@@ -9,12 +9,12 @@ import static org.junit.Assert.assertFalse;
 
 
 
-public class BooleansTests
+public class QuestLogicTest
 {
     @Test
     public void cannot_execute_fast_attack_if_knight_is_awake()
     {
-        boolean knightIsAwake = true;
+        var knightIsAwake = true;
         assertFalse(QuestLogic.canFastAttack(knightIsAwake));
     }
 
@@ -22,7 +22,7 @@ public class BooleansTests
     // @Ignore
     public void can_execute_fast_attack_if_knight_is_sleeping()
     {
-        boolean knightIsAwake = false;
+        var knightIsAwake = false;
         assertTrue(QuestLogic.canFastAttack(knightIsAwake));
     }
 
@@ -30,9 +30,9 @@ public class BooleansTests
     // @Ignore
     public void cannot_spy_if_everyone_is_sleeping()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = false;
+        var knightIsAwake = false;
+        var archerIsAwake = false;
+        var prisonerIsAwake = false;
         assertFalse(QuestLogic.canSpy(knightIsAwake, archerIsAwake, prisonerIsAwake));
     }
 
@@ -40,9 +40,9 @@ public class BooleansTests
     // @Ignore
     public void can_spy_if_everyone_but_knight_is_sleeping()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = false;
+        var knightIsAwake = true;
+        var archerIsAwake = false;
+        var prisonerIsAwake = false;
         assertTrue(QuestLogic.canSpy(knightIsAwake, archerIsAwake, prisonerIsAwake));
     }
 
@@ -50,9 +50,9 @@ public class BooleansTests
     // @Ignore
     public void can_spy_if_everyone_but_archer_is_sleeping()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = false;
+        var knightIsAwake = false;
+        var archerIsAwake = true;
+        var prisonerIsAwake = false;
         assertTrue(QuestLogic.canSpy(knightIsAwake, archerIsAwake, prisonerIsAwake));
     }
 
@@ -60,11 +60,11 @@ public class BooleansTests
     // @Ignore
     public void can_spy_if_everyone_but_prisoner_is_sleeping()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = false;
+        var knightIsAwake = false;
+        var archerIsAwake = false;
 
 
-        boolean prisonerIsAwake = true;
+        var prisonerIsAwake = true;
         assertTrue(QuestLogic.canSpy(knightIsAwake, archerIsAwake, prisonerIsAwake));
     }
 
@@ -72,9 +72,9 @@ public class BooleansTests
     // @Ignore
     public void can_spy_if_only_knight_is_sleeping()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = true;
+        var knightIsAwake = false;
+        var archerIsAwake = true;
+        var prisonerIsAwake = true;
         assertTrue(QuestLogic.canSpy(knightIsAwake, archerIsAwake, prisonerIsAwake));
     }
 
@@ -82,9 +82,9 @@ public class BooleansTests
     // @Ignore
     public void can_spy_if_only_archer_is_sleeping()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = true;
+        var knightIsAwake = true;
+        var archerIsAwake = false;
+        var prisonerIsAwake = true;
         assertTrue(QuestLogic.canSpy(knightIsAwake, archerIsAwake, prisonerIsAwake));
     }
 
@@ -92,9 +92,9 @@ public class BooleansTests
     // @Ignore
     public void can_spy_if_only_prisoner_is_sleeping()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = false;
+        var knightIsAwake = true;
+        var archerIsAwake = true;
+        var prisonerIsAwake = false;
         assertTrue(QuestLogic.canSpy(knightIsAwake, archerIsAwake, prisonerIsAwake));
     }
 
@@ -102,9 +102,9 @@ public class BooleansTests
     // @Ignore
     public void can_spy_if_everyone_is_awake()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = true;
+        var knightIsAwake = true;
+        var archerIsAwake = true;
+        var prisonerIsAwake = true;
         assertTrue(QuestLogic.canSpy(knightIsAwake, archerIsAwake, prisonerIsAwake));
     }
 
@@ -112,8 +112,8 @@ public class BooleansTests
     // @Ignore
     public void can_signal_prisoner_ifarcher_is_sleeping_and_prisoner_is_awake()
     {
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = true;
+        var archerIsAwake = false;
+        var prisonerIsAwake = true;
         assertTrue(QuestLogic.canSignalPrisoner(archerIsAwake, prisonerIsAwake));
     }
 
@@ -121,8 +121,8 @@ public class BooleansTests
     // @Ignore
     public void cannot_signal_prisoner_ifarcher_is_awake_and_prisoner_is_sleeping()
     {
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = false;
+        var archerIsAwake = true;
+        var prisonerIsAwake = false;
         assertFalse(QuestLogic.canSignalPrisoner(archerIsAwake, prisonerIsAwake));
     }
 
@@ -130,8 +130,8 @@ public class BooleansTests
     // @Ignore
     public void cannot_signal_prisoner_ifarcher_and_prisoner_are_both_sleeping()
     {
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = false;
+        var archerIsAwake = false;
+        var prisonerIsAwake = false;
         assertFalse(QuestLogic.canSignalPrisoner(archerIsAwake, prisonerIsAwake));
     }
 
@@ -139,8 +139,8 @@ public class BooleansTests
     // @Ignore
     public void cannot_signal_prisoner_ifarcher_and_prisoner_are_both_awake()
     {
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = true;
+        var archerIsAwake = true;
+        var prisonerIsAwake = true;
         assertFalse(QuestLogic.canSignalPrisoner(archerIsAwake, prisonerIsAwake));
     }
 
@@ -148,10 +148,10 @@ public class BooleansTests
     // @Ignore
     public void cannot_release_prisoner_if_everyone_is_awake_and_pet_dog_is_present()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = true;
-        boolean petDogIsPresent = true;
+        var knightIsAwake = true;
+        var archerIsAwake = true;
+        var prisonerIsAwake = true;
+        var petDogIsPresent = true;
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -159,10 +159,10 @@ public class BooleansTests
     // @Ignore
     public void cannot_release_prisoner_if_everyone_is_awake_and_pet_dog_is_absent()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = true;
-        boolean petDogIsPresent = false;
+        var knightIsAwake = true;
+        var archerIsAwake = true;
+        var prisonerIsAwake = true;
+        var petDogIsPresent = false;
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -170,10 +170,10 @@ public class BooleansTests
     // @Ignore
     public void can_release_prisoner_if_everyone_is_asleep_and_pet_dog_is_present()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = false;
-        boolean petDogIsPresent = true;
+        var knightIsAwake = false;
+        var archerIsAwake = false;
+        var prisonerIsAwake = false;
+        var petDogIsPresent = true;
         assertTrue(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -181,10 +181,10 @@ public class BooleansTests
     // @Ignore
     public void cannot_release_prisoner_if_everyone_is_asleep_and_pet_dog_is_absent()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = false;
-        boolean petDogIsPresent = false;
+        var knightIsAwake = false;
+        var archerIsAwake = false;
+        var prisonerIsAwake = false;
+        var petDogIsPresent = false;
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -192,10 +192,10 @@ public class BooleansTests
     // @Ignore
     public void can_release_prisoner_if_only_prisoner_is_awake_and_pet_dog_is_present()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = true;
-        boolean petDogIsPresent = true;
+        var knightIsAwake = false;
+        var archerIsAwake = false;
+        var prisonerIsAwake = true;
+        var petDogIsPresent = true;
         assertTrue(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -203,10 +203,10 @@ public class BooleansTests
     // @Ignore
     public void can_release_prisoner_if_only_prisoner_is_awake_and_pet_dog_is_absent()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = true;
-        boolean petDogIsPresent = false;
+        var knightIsAwake = false;
+        var archerIsAwake = false;
+        var prisonerIsAwake = true;
+        var petDogIsPresent = false;
         assertTrue(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -214,10 +214,10 @@ public class BooleansTests
     // @Ignore
     public void cannot_release_prisoner_if_only_archer_is_awake_and_pet_dog_is_present()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = false;
-        boolean petDogIsPresent = true;
+        var knightIsAwake = false;
+        var archerIsAwake = true;
+        var prisonerIsAwake = false;
+        var petDogIsPresent = true;
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -225,10 +225,10 @@ public class BooleansTests
     // @Ignore
     public void cannot_release_prisoner_if_only_archer_is_awake_and_pet_dog_is_absent()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = false;
-        boolean petDogIsPresent = false;
+        var knightIsAwake = false;
+        var archerIsAwake = true;
+        var prisonerIsAwake = false;
+        var petDogIsPresent = false;
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -236,10 +236,10 @@ public class BooleansTests
     // @Ignore
     public void can_release_prisoner_if_only_knight_is_awake_and_pet_dog_is_present()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = false;
-        boolean petDogIsPresent = true;
+        var knightIsAwake = true;
+        var archerIsAwake = false;
+        var prisonerIsAwake = false;
+        var petDogIsPresent = true;
         assertTrue(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -247,10 +247,10 @@ public class BooleansTests
     // @Ignore
     public void cannot_release_prisoner_if_only_knight_is_awake_and_pet_dog_is_absent()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = false;
-        boolean petDogIsPresent = false;
+        var knightIsAwake = true;
+        var archerIsAwake = false;
+        var prisonerIsAwake = false;
+        var petDogIsPresent = false;
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -258,10 +258,10 @@ public class BooleansTests
     // @Ignore
     public void cannot_release_prisoner_if_only_knight_is_asleep_and_pet_dog_is_present()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = true;
-        boolean petDogIsPresent = true;
+        var knightIsAwake = false;
+        var archerIsAwake = true;
+        var prisonerIsAwake = true;
+        var petDogIsPresent = true;
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -269,10 +269,10 @@ public class BooleansTests
     // @Ignore
     public void cannot_release_prisoner_if_only_knight_is_asleep_and_pet_dog_is_absent()
     {
-        boolean knightIsAwake = false;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = true;
-        boolean petDogIsPresent = false;
+        var knightIsAwake = false;
+        var archerIsAwake = true;
+        var prisonerIsAwake = true;
+        var petDogIsPresent = false;
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -280,10 +280,10 @@ public class BooleansTests
     // @Ignore
     public void can_release_prisoner_if_only_archer_is_asleep_and_pet_dog_is_present()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = true;
-        boolean petDogIsPresent = true;
+        var knightIsAwake = true;
+        var archerIsAwake = false;
+        var prisonerIsAwake = true;
+        var petDogIsPresent = true;
         assertTrue(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -291,20 +291,20 @@ public class BooleansTests
     // @Ignore
     public void cannot_release_prisoner_if_only_archer_is_asleep_and_pet_dog_is_absent()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = false;
-        boolean prisonerIsAwake = true;
-        boolean petDogIsPresent = false;
+        var knightIsAwake = true;
+        var archerIsAwake = false;
+        var prisonerIsAwake = true;
+        var petDogIsPresent = false;
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
     @Test// @Ignore
     public void cannot_release_prisoner_if_only_prisoner_is_asleep_and_pet_dog_is_present()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = false;
-        boolean petDogIsPresent = true;
+        var knightIsAwake = true;
+        var archerIsAwake = true;
+        var prisonerIsAwake = false;
+        var petDogIsPresent = true;
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 
@@ -312,10 +312,10 @@ public class BooleansTests
     // @Ignore
     public void cannot_release_prisoner_if_only_prisoner_is_asleep_and_pet_dog_is_absent()
     {
-        boolean knightIsAwake = true;
-        boolean archerIsAwake = true;
-        boolean prisonerIsAwake = false;
-        boolean petDogIsPresent = false;
+        var knightIsAwake = true;
+        var archerIsAwake = true;
+        var prisonerIsAwake = false;
+        var petDogIsPresent = false;
         assertFalse(QuestLogic.canFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent));
     }
 }
