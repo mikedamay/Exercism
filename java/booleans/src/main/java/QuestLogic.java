@@ -1,3 +1,4 @@
+/*
 class QuestLogic {
     public static boolean canFastAttack(boolean knightIsAwake) {
         throw new UnsupportedOperationException("Please implement the (static) QuestLogic.canFastAttack() method");
@@ -15,3 +16,4 @@ class QuestLogic {
         throw new UnsupportedOperationException("Please implement the (static) QuestLogic.canFreePrisoner() method");
     }
 }
+*/
