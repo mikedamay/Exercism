@@ -1,3 +1,4 @@
+/*
 class QuestLogic {
     public static boolean canFastAttack(boolean knightIsAwake) {
         return !knightIsAwake;
@@ -16,3 +17,4 @@ class QuestLogic {
     }
 }
 
+*/
