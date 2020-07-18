@@ -210,6 +210,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Namespaces", "csharp\namesp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lists", "csharp\lists\Lists.csproj", "{55DD3524-A45E-41F8-8F86-3324555C7D3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMarkdown", "csharp\mmarkdown\MMarkdown.csproj", "{99562AE9-E4D3-452C-9F36-712464CBEBD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -632,5 +634,9 @@ Global
 		{55DD3524-A45E-41F8-8F86-3324555C7D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55DD3524-A45E-41F8-8F86-3324555C7D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55DD3524-A45E-41F8-8F86-3324555C7D3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99562AE9-E4D3-452C-9F36-712464CBEBD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99562AE9-E4D3-452C-9F36-712464CBEBD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99562AE9-E4D3-452C-9F36-712464CBEBD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99562AE9-E4D3-452C-9F36-712464CBEBD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
