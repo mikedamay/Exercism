@@ -7,7 +7,7 @@ namespace ExerciseReport
     public enum DocType
     {
         None = 'N',
-        Excercise = 'E',
+        Design = 'D',
         Issue = 'I'
     }
 
@@ -31,11 +31,11 @@ namespace ExerciseReport
         public string Name { get; set; } = string.Empty;
         [JsonPropertyName("description")]
         public string Description { get; set; } = string.Empty;
-        [JsonPropertyName("slug")]
-        public string TrackNeutralConcept { get; set; } = string.Empty;
         [JsonPropertyName("track-neutral-concept")]
+        public string TrackNeutralConcept { get; set; } = string.Empty;
+        [JsonPropertyName("learning-objectives")]
         public IList<string> LearningObjectives { get; set; } = new List<string>();
-        [JsonPropertyName("learning-objective")]
+        [JsonPropertyName("original-concepts")]
         public IList<OriginalConcept> OriginalConcepts { get; set; } = new List<OriginalConcept>();
     }
 
@@ -57,8 +57,23 @@ namespace ExerciseReport
     {
         public string ToString(ExerciseFile exerciseFile)
         {
-            return JsonSerializer.Serialize(exerciseFile,
-                new JsonSerializerOptions {PropertyNameCaseInsensitive = true, WriteIndented = true});
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                WriteIndented = true,
+            };
+            options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+            return JsonSerializer.Serialize(exerciseFile, options);
+        }
+
+        public ExerciseFile FromString(string sampleJson)
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+            return JsonSerializer.Deserialize<ExerciseFile>(sampleJson, options);
         }
     }
 }

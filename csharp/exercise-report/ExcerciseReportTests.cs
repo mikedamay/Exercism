@@ -21,6 +21,23 @@ namespace ExerciseReport
                 expected = reader.ReadToEnd();
             Assert.Equal(expected.Trim(), actual.Trim());
         }
+
+        [Fact]
+        public void Deserialize_WellFormedJson_ProducesObjectTree()
+        {
+            var erh = new ExerciseFileHandler();
+            var expected = ObjectHierarchy.Sample1;
+            var resourceStream = this.GetType().Assembly.GetManifestResourceStream(JsonSample1);
+            var sampleJson = string.Empty;
+            using (resourceStream)
+            using (var reader = new StreamReader(resourceStream))
+                sampleJson = reader.ReadToEnd();
+            var actual = erh.FromString(sampleJson);
+            var actualString = erh.ToString(actual);
+            Assert.Equal(sampleJson, actualString);
+            // Assert.Equal(expected, actual);
+                // xunit says they don't match.  I wonder if it's looking for attributes.
+        }
     }
 
     public static class ObjectHierarchy
@@ -33,7 +50,7 @@ namespace ExerciseReport
                 {
                     Slug = "sample1-slug",
                     TrackNeutralStory = "sample1-track-neutral-story",
-                    DocumentType = DocType.Excercise,
+                    DocumentType = DocType.Design,
                     DocumentLink = "http://sample1-doclink",
                     Concepts = new List<Concept>
                     {
