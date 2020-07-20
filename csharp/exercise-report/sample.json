@@ -1,0 +1,26 @@
+{
+  "exercises": [
+    {
+      "slug": "sample1-slug",
+      "track-neutral-story": "http://sample1-story",
+      "document-type": "N",
+      "document-link": "",
+      "concepts": [
+        {
+          "canonical-name": "sample1.1-canonical-name",
+          "description": "sample1.1-description",
+          "track-neutral-concept": "http://sample1.1-concept",
+          "learning-objectives": [
+            "sample1.1.1-learning-objective"
+          ],
+          "original-concepts": [
+            {
+              "name": "sample1.1.1-original-concept-name",
+              "line-number": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
