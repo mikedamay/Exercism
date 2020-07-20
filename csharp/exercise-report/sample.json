@@ -2,21 +2,21 @@
   "exercises": [
     {
       "slug": "sample1-slug",
-      "track-neutral-story": "http://sample1-story",
-      "document-type": "N",
-      "document-link": "",
+      "track-neutral-story": "sample1-track-neutral-story",
+      "document-type": "E",
+      "document-link": "http://sample1-doclink",
       "concepts": [
         {
-          "canonical-name": "sample1.1-canonical-name",
+          "name": "sample1.1-name",
           "description": "sample1.1-description",
-          "track-neutral-concept": "http://sample1.1-concept",
+          "track-neutral-concept": "sample1.1-track-neutral-concept",
           "learning-objectives": [
             "sample1.1.1-learning-objective"
           ],
           "original-concepts": [
             {
-              "name": "sample1.1.1-original-concept-name",
-              "line-number": 0
+              "name": "sample1.1.1-name",
+              "line-number": 1729
             }
           ]
         }
