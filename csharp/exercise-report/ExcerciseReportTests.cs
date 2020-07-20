@@ -36,7 +36,7 @@ namespace ExerciseReport
             var actualString = erh.ToString(actual);
             Assert.Equal(sampleJson, actualString);
             // Assert.Equal(expected, actual);
-                // xunit says they don't match.  I wonder if it's looking for attributes.
+                // xunit says they don't match.  I wonder if it's checking attributes.
         }
     }
 

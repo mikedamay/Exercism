@@ -1,0 +1,190 @@
+﻿0,Orig Order,Concept Name,Canonical Name,Rank,Section,Status,Link,Further Info
+1,,,,,,,,
+9991,99900,,,0,Z,,,
+9992,99900,Introduction To C#,,0,Z,,,
+9993,99900,,,0,Z,,,
+10000,11,- [Classes][classes],classes,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/classes/.meta/design.md,
+10100,16, [Inheritance][inheritance],inheritance,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/inheritance/.meta/design.md,
+10200,20, basics (including methods),basics,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/basics/.meta/design.md,
+10300,21,  - Constructors,constructors,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/constructors/.meta/design.md,
+10400,28,  - Method overloading,method-overloading,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/method-overloading/.meta/design.md,
+10500,35,- Properties,properties,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/properties/.meta/design.md,
+10600,102,- Null,null,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/nullability/.meta/design.md,
+10700,107,- Numbers,numbers,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/numbers/.meta/design.md,
+10800,138,- [Booleans][bool],booleans,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/booleans/.meta/design.md,
+10900,139,- [Characters][char],chars,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/chars/.meta/design.md,
+11000,141,  - [Arrays][array],arrays,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/arrays/.meta/design.md,
+11100,143,  - [Dictionaries][map],dictionaries,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/dictionaries/.meta/design.md,
+11200,151,- Dates,dates,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/datetimes/.meta/design.md,
+11300,155,- Enums,enums,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/enums/.meta/design.md,
+11400,162,  - Floating point numbers,floating-point-numbers,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/floating-point-numbers/.meta/design.md,
+11500,167,- [Strings][string],strings,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/strings/.meta/design.md,
+11600,156,- Flag Enums,flag-enums,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/flag-enums/.meta/design.md,
+11610,59,- User Defined Exceptions,user-defined-exceptions,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/user-defined-exceptions/.meta/design.md,
+11610,101,- User Defined Exceptions,user-defined-exceptions,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/user-defined-exceptions/.meta/design.md,
+11611,80,  - [Equality][equality] (`Equals`; `GetHashCode`),equality,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/equality/.meta/design.md,
+11612,170,- [Tuples][tuple],tuples,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/tuples/.meta/design.md,
+11613,111,- Randomness,randomness,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/randomness/.meta/design.md,
+11614,24,  - Method arguments / parameters,parameters,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/parameters/.meta/design.md,
+11615,88,  - Conditionals: switch,conditionals-switch,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/switch-statements/.meta/design.md,
+11616,33,  - Object initializers,object-initializers,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/object-initializers/.meta/design.md,
+11617,115,  - Resource cleanup (`IDisposable`),resource-cleanup,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/resource-cleanup/.meta/design.md,
+11618,169,- Time,time,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/time/.meta/design.md,
+11700,17,- [Interfaces][interfaces],interfaces,10,A,I,https://github.com/exercism/v3/issues/1225,
+12100,163,  - Signed integers,signed-integers,10,A,I,https://github.com/exercism/v3/issues/780,
+12200,92,- Constants/readonly,constants,10,A,I,https://github.com/exercism/v3/issues/1044,
+12600,91,  - [Conditionals: ternary][conditionals],conditionals-ternary,14,A,I,https://github.com/exercism/v3/issues/1635,
+12800,100,- Exceptions,exceptions,15,A,I,https://github.com/exercism/v3/issues/966,
+12900,146,  - [Lists][list],lists,15,A,I,https://github.com/exercism/v3/issues/958,
+13200,38,- Structs,structs,20,A,I,https://github.com/exercism/v3/issues/1017,
+13300,44,- Expression-bodied members,expression-bodied-members,20,A,I,https://github.com/exercism/v3/issues/1145,
+13500,122,  - Namespaces,namespaces,20,A,I,https://github.com/exercism/v3/issues/1127,
+13600,126,- String formatting,string-formatting,20,A,I,https://github.com/exercism/v3/issues/962,
+14000,113,- Regular Expressions,regular-expressions,24,A,I,https://github.com/exercism/v3/issues/1638,
+14200,116,  - Resource lifetime,resource-lifetime,28,A,I,https://github.com/exercism/v3/issues/1640,
+14500,108,  - Arithmetic overflow,overflow,30,A,I,https://github.com/exercism/v3/issues/1138,
+14600,160,- Nested types,nested-types,30,A,I,https://github.com/exercism/v3/issues/1643,
+14611,95,  - Explicit (casts),casting,30,A,I,https://github.com/exercism/v3/issues/1142,
+14650,29,- operator overloading,operator-overload,20,A,I,https://github.com/exercism/v3/issues/1712,
+14990,99900,,,0,Z,,,
+14991,99900,Introduction To C# (Duplicates & Non-exercises),,0,Z,,,
+14992,99900,,,0,Z,,,
+15000,12,- [Composition][composition],,700,A,,,background
+15100,45,- Expressions vs statements,,700,A,,,background
+15200,56,- [Pattern matching][pattern_matching],,700,A,,,background
+15300,13,- [Encapsulation][encapsulation],,800,A,D,,classes
+15400,14,- Fields,,800,A,D,,classes
+15500,18,  - Explicit Interface Implementation,,800,A,D,,interfaces
+15600,25,    - Named arguments,,800,A,D,,parameters
+15700,26,    - Out parameters,,800,A,D,,parameters
+15800,27,    - [Optional arguments][optional_arguments],,800,A,D,,parameters
+15900,30,  - Return values,,800,A,D,,basics
+15910,174,Base Class Library,,800,A,D,,dictionaries
+16000,31,- [Mutation][mutation],,800,A,D,,basics
+16100,32,- [Objects][objects],,800,A,D,,classes
+16200,34,- [Polymorphism][polymorphism],,800,A,D,,inheritance
+16300,36,- [State][state],,800,A,D,,classes
+16400,46,- [Functions][functions],,800,A,D,,basics
+16500,61,- [Type inference][type_inference],,800,A,D,,basics
+16600,67,- Collections,,800,A,D,,lists
+16700,78,- Comments,,800,A,D,,basics
+16800,85,- Conditionals,,800,A,D,,numbers
+16900,86,  - Boolean logic,,800,A,D,,booleans
+17000,89,  - Conditionals: while,,800,A,D,,floating-point-numbers
+17100,96,  - Implicit,,800,A,D,,casting
+17200,103,  - Null-coalescing operator,,800,A,D,,null
+17300,104,  - Null-conditional operator,,800,A,D,,null
+17400,105,  - Null-forgiving operator,,800,A,D,,null
+17500,106,  - Nullable values,,800,A,D,,null
+17600,109,  - Bitwise manipulation,,800,A,D,,flag-ennums
+17700,110,  - Math operators,,800,A,D,,numbers
+17800,120,- Scoping,,800,A,D,,basics
+17900,123,  - Visibility (`public`; `private`; etc.),,800,A,D,,classes
+18000,127,  - Formatting types,,800,A,D,,string-formatting
+18100,128,  - Interpolation,,800,A,D,,string-formatting
+18200,129,  - StringBuilder,,800,A,D,,string-formatting
+18300,131,- [Variables][variables],,800,A,D,,basics
+18400,132,  - Assignment,,800,A,D,,numbers
+18500,133,  - Default values (a `bool` being `false` by default; etc.),,800,A,D,,classes
+18600,161,- Numbers,,800,A,D,,numbers
+18700,164,  - Unsigned integers,,800,A,D,,signed-integers
+18901,19,- Marker interfaces,,800,A,D,,equality
+18902,75,- Generics Introduction,,800,B,D,,Lists
+18905,121,  - Imports (usings),,800,A,D,,namespaces
+18906,149,  - [Sets][set],,800,A,D,,equality
+18907,90,  - [Conditionals: if][conditionals],,800,A,D,,conditiponals-if
+18910,87,  - Conditionals: do-while,,800,A,D,,do-while
+19000,81,  - Ordering,,997,A,D,,ordering
+19010,172,verbatim strings,,800,A,D,,string-formatting
+19011,176,cross-platform,,800,A,D,,time
+19100,158,- Indexes,,998,A,,,
+19200,79,- Comparison,,999,A,,,
+19300,93,- Conversions,,999,A,,,
+19400,97,- Enumeration,,999,A,,,
+19500,114,- Resources,,999,A,,,
+19600,140,- Collections,,999,A,,,
+19690,99900,,,0,Z,,,
+19691,99900,Essential C# Topics (Not Covered By Introduction),,0,Z,,,
+19692,99900,,,0,Z,,,
+19700,153,- Delegates,delegates,18,B,,,
+19800,66,- Attributes,attributes-advanced,25,B,I,https://github.com/exercism/v3/issues/1176,
+19900,112,- Reflection,reflection,25,B,,,
+20000,157,- Events,events,30,B,,,
+20200,166,- Streams,streams,35,B,,,
+20300,168,- Tasks,tasks,35,B,,,
+20400,65,- Asynchronous programming,async,40,B,,,
+20410,173,thread safety,thread-safety,40,B,,,
+20500,76,    - Generics Constraints,generics-advanced,40,B,,,
+20600,77,    - Covariance/Contravariance,covariance,40,B,,,
+20700,83,  - Concurrent collections,contravariance,40,B,,,
+20800,84,  - Locks,locks,40,B,,,
+20900,124,- Serialization,serialization,45,B,,,
+21000,23,  - Extension methods,extension-methods,50,B,I,https://github.com/exercism/v3/issues/1070,
+21100,37,- Statics,statics,50,B,,,
+21200,47,  - [Anonymous functions][anonymous_functions],lambdas,50,B,,,
+21300,48,  - [Higher-order functions][higher_order_functions],higherl-order-functions,50,B,,,
+21400,51,- [LINQ][linq],linq,50,B,,,
+21500,137,- Anonymous types,anonymous-types,50,B,,,
+21600,144,  - Enumerables,enumerables,50,B,,,
+21700,52,  - Advanced (GroupBy; Join; Zip; Cast; GroupJoin; AsEnumerable),linq-advanced,55,B,,,
+21800,54,  - Query Syntax,linq-query-syntax,55,B,,,
+21900,55,  - SelectMany,linq-select-many,55,B,,,
+22000,73,  - Iterators (yield),yield,55,B,,,
+22200,53,  - Method Classification (deferred; non-streaming etc.),,700,B,,,background
+22300,82,- Concurrency,,700,B,,,background
+22400,68,  - Collections: combining,,800,B,D,,linq
+22500,69,  - Collections: filtering,,800,B,D,,linq
+22600,70,  - Collections: mapping,,800,B,D,,linq
+22700,71,  - Collections: ordering,,800,B,D,,linq
+22800,72,  - Collections: reducing,,800,B,D,,linq
+22811,15,- Indexers,,20,B,,,indexers
+22812,60,- [Recursion][recursion],,30,B,,,recursion
+22813,57,- Pattern Matching Types,,30,B,I,https://github.com/exercism/v3/issues/546,pattern-matching-types
+22814,58,- Pattern Matching Tuples,,30,B,I,https://github.com/exercism/v3/issues/964,pattern-matching-tuples
+22900,98,  - [Enumeration: for loop][enumeration],,997,B,,,for-loops
+23000,99,  - [Enumeration: foreach loop][enumeration],,997,B,,,foreach-loops
+23091,99900,,,0,Z,,,
+23092,99900,Advanced C# Topics,,0,Z,,,
+23093,99900,,,0,Z,,,
+23100,145,  - Immutable collections,immutable-collections,28,C,,,
+23200,117,  - Resource passing (by reference/by value),by-ref,30,C,,,
+23300,118,  - [Resource allocation][memory_allocation],memory-allocation,30,C,I,https://github.com/exercism/v3/issues/1018,
+23400,147,  - [Queues][queue],queues,30,C,,,
+23500,148,  - [Ranges][range],ranges,30,C,,,
+23600,152,  - Time zones,time-zones,30,C,,,
+23700,119,- Resource Pooling,resource-pooling,30,C,I,https://github.com/exercism/v3/issues/1146,
+23800,154,- dynamic,dynamic,30,C,,,
+23900,49,  - [Local functions][local_functions],local-functions,45,C,,,
+24000,94,  - Boxing/unboxing,boxing,45,C,,,
+24100,125,- Slicing,slicing,45,C,,,
+24200,130,- Unsafe code,unsafe-code,45,C,,,
+24300,159,- Lazy&lt;T&gt;,lazy<T>,45,C,,,
+24400,165,- Pointers,pointsers,45,C,I,https://github.com/exercism/v3/issues/1147,
+24500,142,  - multi-dimensional array (incl Array.CreateInstance,multi-dimensional-array,45,C,,,
+24510,50, - [Immutability][immutability] - public readonly structs,immutability,45,C,,,
+24600,150,  - [Stacks][stack],stacks,48,C,,,
+24700,22,  - Destructors,destructors,49,C,,,
+24800,74,    - Async iterators,aysnc-iterators,49,C,,,
+24900,171,ref local; ref return,ref-local,49,C,,,
+24910,175,Dispose Pattern,dispose-pattern,49,C,,,
+99900,1,,,,,,,
+99900,2,,,,,,,
+99900,3,,,,,,,
+99900,4,,,,,,,
+99900,5,,,,,,,
+99900,6,,,,,,,
+99900,7,,,,,,,
+99900,8,,,,,,,
+99900,9,,,,,,,
+99900,10,,,,,,,
+99900,39,,,,,,,
+99900,40,,,,,,,
+99900,41,,,,,,,
+99900,42,,,,,,,
+99900,43,,,,,,,
+99900,62,,,,,,,
+99900,63,,,,,,,
+99900,64,,,,,,,
+99900,134,,,,,,,
+99900,135,,,,,,,
+99900,136,,,,,,,
