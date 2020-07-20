@@ -52,51 +52,51 @@
 15000,12,- [Composition][composition],,700,A,,,background
 15100,45,- Expressions vs statements,,700,A,,,background
 15200,56,- [Pattern matching][pattern_matching],,700,A,,,background
-15300,13,- [Encapsulation][encapsulation],,800,A,D,,classes
-15400,14,- Fields,,800,A,D,,classes
-15500,18,  - Explicit Interface Implementation,,800,A,D,,interfaces
-15600,25,    - Named arguments,,800,A,D,,parameters
-15700,26,    - Out parameters,,800,A,D,,parameters
-15800,27,    - [Optional arguments][optional_arguments],,800,A,D,,parameters
-15900,30,  - Return values,,800,A,D,,basics
-15910,174,Base Class Library,,800,A,D,,dictionaries
-16000,31,- [Mutation][mutation],,800,A,D,,basics
-16100,32,- [Objects][objects],,800,A,D,,classes
-16200,34,- [Polymorphism][polymorphism],,800,A,D,,inheritance
-16300,36,- [State][state],,800,A,D,,classes
-16400,46,- [Functions][functions],,800,A,D,,basics
-16500,61,- [Type inference][type_inference],,800,A,D,,basics
-16600,67,- Collections,,800,A,D,,lists
-16700,78,- Comments,,800,A,D,,basics
-16800,85,- Conditionals,,800,A,D,,numbers
-16900,86,  - Boolean logic,,800,A,D,,booleans
-17000,89,  - Conditionals: while,,800,A,D,,floating-point-numbers
-17100,96,  - Implicit,,800,A,D,,casting
-17200,103,  - Null-coalescing operator,,800,A,D,,null
-17300,104,  - Null-conditional operator,,800,A,D,,null
-17400,105,  - Null-forgiving operator,,800,A,D,,null
-17500,106,  - Nullable values,,800,A,D,,null
-17600,109,  - Bitwise manipulation,,800,A,D,,flag-ennums
-17700,110,  - Math operators,,800,A,D,,numbers
-17800,120,- Scoping,,800,A,D,,basics
-17900,123,  - Visibility (`public`; `private`; etc.),,800,A,D,,classes
-18000,127,  - Formatting types,,800,A,D,,string-formatting
-18100,128,  - Interpolation,,800,A,D,,string-formatting
-18200,129,  - StringBuilder,,800,A,D,,string-formatting
-18300,131,- [Variables][variables],,800,A,D,,basics
-18400,132,  - Assignment,,800,A,D,,numbers
-18500,133,  - Default values (a `bool` being `false` by default; etc.),,800,A,D,,classes
-18600,161,- Numbers,,800,A,D,,numbers
-18700,164,  - Unsigned integers,,800,A,D,,signed-integers
-18901,19,- Marker interfaces,,800,A,D,,equality
-18902,75,- Generics Introduction,,800,B,D,,Lists
-18905,121,  - Imports (usings),,800,A,D,,namespaces
-18906,149,  - [Sets][set],,800,A,D,,equality
-18907,90,  - [Conditionals: if][conditionals],,800,A,D,,conditiponals-if
-18910,87,  - Conditionals: do-while,,800,A,D,,do-while
-19000,81,  - Ordering,,997,A,D,,ordering
-19010,172,verbatim strings,,800,A,D,,string-formatting
-19011,176,cross-platform,,800,A,D,,time
+15300,13,- [Encapsulation][encapsulation],encapsulation,800,A,D,,classes
+15400,14,- Fields,fields,800,A,D,,classes
+15500,18,  - Explicit Interface Implementation,explicit-interfaces,800,A,D,,interfaces
+15600,25,    - Named arguments,named-arguments,800,A,D,,parameters
+15700,26,    - Out parameters,out-parameters,800,A,D,,parameters
+15800,27,    - [Optional arguments][optional_arguments],optional-arguments,800,A,D,,parameters
+15900,30,  - Return values,return-values,800,A,D,,basics
+15910,174,Base Class Library,base-class-library,800,A,D,,dictionaries
+16000,31,- [Mutation][mutation],mutation,800,A,D,,basics
+16100,32,- [Objects][objects],objects,800,A,D,,classes
+16200,34,- [Polymorphism][polymorphism],polymorphism,800,A,D,,inheritance
+16300,36,- [State][state],state,800,A,D,,classes
+16400,46,- [Functions][functions],functions,800,A,D,,basics
+16500,61,- [Type inference][type_inference],type-inference,800,A,D,,basics
+16600,67,- Collections,collections,800,A,D,,lists
+16700,78,- Comments,comments,800,A,D,,basics
+16800,85,- Conditionals,conditionals,800,A,D,,numbers
+16900,86,  - Boolean logic,booleans,800,A,D,,booleans
+17000,89,  - Conditionals: while,conditionals-while,800,A,D,,floating-point-numbers
+17100,96,  - Implicit,implicit-casting,800,A,D,,casting
+17200,103,  - Null-coalescing operator,null-coalescing,800,A,D,,null
+17300,104,  - Null-conditional operator,null-conditional,800,A,D,,null
+17400,105,  - Null-forgiving operator,null-forgiving,800,A,D,,null
+17500,106,  - Nullable values,nullable-values,800,A,D,,null
+17600,109,  - Bitwise manipulation,bitwise-manipulation,800,A,D,,flag-ennums
+17700,110,  - Math operators,math-operators,800,A,D,,numbers
+17800,120,- Scoping,scoping,800,A,D,,basics
+17900,123,  - Visibility (`public`; `private`; etc.),visibility,800,A,D,,classes
+18000,127,  - Formatting types,formatting-types,800,A,D,,string-formatting
+18100,128,  - Interpolation,interpolation,800,A,D,,string-formatting
+18200,129,  - StringBuilder,string-builder,800,A,D,,string-formatting
+18300,131,- [Variables][variables],variables,800,A,D,,basics
+18400,132,  - Assignment,assignment,800,A,D,,numbers
+18500,133,  - Default values (a `bool` being `false` by default; etc.),default-value,800,A,D,,classes
+18600,161,- Numbers,numbers,800,A,D,,numbers
+18700,164,  - Unsigned integers,unsigned-integers,800,A,D,,signed-integers
+18901,19,- Marker interfaces,marker-interfaces,800,A,D,,equality
+18902,75,- Generics Introduction,generics-introduction,800,B,D,,Lists
+18905,121,  - Imports (usings),imports,800,A,D,,namespaces
+18906,149,  - [Sets][set],sets,800,A,D,,equality
+18907,90,  - [Conditionals: if][conditionals],conditionals-if,800,A,D,,conditiponals-if
+18910,87,  - Conditionals: do-while,conditionals-do-while,800,A,D,,do-while
+19000,81,  - Ordering,ordering,800,A,D,,ordering
+19010,172,verbatim strings,verbatim-strings,800,A,D,,string-formatting
+19011,176,cross-platform,cross-platform,800,A,D,,time
 19100,158,- Indexes,,998,A,,,
 19200,79,- Comparison,,999,A,,,
 19300,93,- Conversions,,999,A,,,
@@ -111,6 +111,10 @@
 19900,112,- Reflection,reflection,25,B,,,
 20000,157,- Events,events,30,B,,,
 20200,166,- Streams,streams,35,B,,,
+20201,15,- Indexers,indexers,20,B,,,
+20202,60,- [Recursion][recursion],recursion,30,B,,,
+20203,57,- Pattern Matching Types,pattern-matching-types,30,B,I,https://github.com/exercism/v3/issues/546,
+20204,58,- Pattern Matching Tuples,pattern-matching-tuples,30,B,I,https://github.com/exercism/v3/issues/964,
 20300,168,- Tasks,tasks,35,B,,,
 20400,65,- Asynchronous programming,async,40,B,,,
 20410,173,thread safety,thread-safety,40,B,,,
@@ -132,17 +136,13 @@
 22000,73,  - Iterators (yield),yield,55,B,,,
 22200,53,  - Method Classification (deferred; non-streaming etc.),,700,B,,,background
 22300,82,- Concurrency,,700,B,,,background
-22400,68,  - Collections: combining,,800,B,D,,linq
-22500,69,  - Collections: filtering,,800,B,D,,linq
-22600,70,  - Collections: mapping,,800,B,D,,linq
-22700,71,  - Collections: ordering,,800,B,D,,linq
-22800,72,  - Collections: reducing,,800,B,D,,linq
-22811,15,- Indexers,,20,B,,,indexers
-22812,60,- [Recursion][recursion],,30,B,,,recursion
-22813,57,- Pattern Matching Types,,30,B,I,https://github.com/exercism/v3/issues/546,pattern-matching-types
-22814,58,- Pattern Matching Tuples,,30,B,I,https://github.com/exercism/v3/issues/964,pattern-matching-tuples
-22900,98,  - [Enumeration: for loop][enumeration],,997,B,,,for-loops
-23000,99,  - [Enumeration: foreach loop][enumeration],,997,B,,,foreach-loops
+22400,68,  - Collections: combining,collections-combining,800,B,D,,linq
+22500,69,  - Collections: filtering,collections-filtering,800,B,D,,linq
+22600,70,  - Collections: mapping,collections-mapping,800,B,D,,linq
+22700,71,  - Collections: ordering,collections-ordering,800,B,D,,linq
+22800,72,  - Collections: reducing,collections-reduciing,800,B,D,,linq
+22900,98,  - [Enumeration: for loop][enumeration],for-loops,800,B,,,arrays
+23000,99,  - [Enumeration: foreach loop][enumeration],foreach-loops,800,B,,,arrays
 23091,99900,,,0,Z,,,
 23092,99900,Advanced C# Topics,,0,Z,,,
 23093,99900,,,0,Z,,,
