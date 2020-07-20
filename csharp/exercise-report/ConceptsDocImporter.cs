@@ -11,7 +11,7 @@ namespace ExerciseReport
     }
     internal class ConceptsDocImporter
     {
-        private const int MAX_ERRORS = 20;
+        private const int MAX_ERRORS = 60;
         private const string OriginalConceptsDoc = "ExerciseReport.original_concepts_doc.csv";
 
         private enum SplitResult
@@ -75,7 +75,8 @@ namespace ExerciseReport
                 errors);
         }
 
-        private (SplitResult splitResult, ImportedConcept importedConcept, ImportError error) SplitLine(string importedLineCsv, int lineNum)
+        private (SplitResult splitResult, ImportedConcept importedConcept, ImportError error) 
+            SplitLine(string importedLineCsv, int lineNum)
         {
             const int ROW_NUM = 0;
             const int ORIGINAL_LINE_NUM = 1;
@@ -92,7 +93,7 @@ namespace ExerciseReport
             if (parts.Length < NUM_PARTS)
             {
                 var error = new ImportError(lineNum,
-                    $"Only {parts.Length} values in the line were found, {NUM_PARTS} were expected");
+                    $"Only {parts.Length} values in the line were found, {NUM_PARTS} were expected", importedLineCsv);
                 return (SplitResult.Error, null, error);
             }
 
@@ -114,11 +115,11 @@ namespace ExerciseReport
             }
             catch (FormatException fe)
             {
-                return (SplitResult.Error, null, new ImportError(lineNum, "Numeric conversion failure"));
+                return (SplitResult.Error, null, new ImportError(lineNum, "Numeric conversion failure", importedLineCsv));
             }
             catch (Exception e)
             {
-                return (SplitResult.Error, null, new ImportError(lineNum, "Unspecified failure"));
+                return (SplitResult.Error, null, new ImportError(lineNum, "Unspecified failure", importedLineCsv));
             }
         }
     }
@@ -141,10 +142,12 @@ namespace ExerciseReport
     {
         public int LineNum { get; }
         public string Message { get; }
-        public ImportError(int lineNum, string message)
+        public string CsvLine { get; }
+        public ImportError(int lineNum, string message, string csvLine)
         {
             LineNum = lineNum;
             Message = message;
+            CsvLine = csvLine;
         }
     }
 }
