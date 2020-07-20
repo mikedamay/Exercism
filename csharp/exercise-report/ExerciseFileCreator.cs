@@ -77,7 +77,6 @@ namespace ExerciseReport
                         if (exerciseMap.ContainsKey(importedConcept.CanonicalConceptName))
                         {
                             exercise = exerciseMap[importedConcept.CanonicalConceptName];
-                            exerciseFile.Exercises.Add(exercise);
                         }
                         else
                         {
