@@ -13,6 +13,8 @@
     <ItemGroup>
       <None Remove="sample.json" />
       <EmbeddedResource Include="sample.json" />
+      <None Remove="orig.csv" />
+      <EmbeddedResource Include="original_concepts_doc.csv" />
     </ItemGroup>
 
 </Project>

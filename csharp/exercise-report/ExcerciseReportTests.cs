@@ -38,6 +38,14 @@ namespace ExerciseReport
             // Assert.Equal(expected, actual);
                 // xunit says they don't match.  I wonder if it's checking attributes.
         }
+
+        [Fact]
+        public void Import_OriginalConceptsDoc_ProducesListOfConcepts()
+        {
+            var cdi = new ConceptsDocImporter();
+            var results = cdi.ImportOriginalConceptsDoc();
+            Assert.Equal(ImportResult.Complete, results.importResult);
+        }
     }
 
     public static class ObjectHierarchy
