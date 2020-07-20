@@ -17,6 +17,11 @@ namespace ExerciseReport
             var conceptMap = new Dictionary<string, Concept>();
             var exerciseMap = new Dictionary<string, Exercise>();
             var exerciseFile = new ExerciseFile();
+            var unallocatedConceptsExercise = new Exercise
+            {
+                Slug = "unallocated-concepts"
+            };
+            exerciseFile.Exercises.Add(unallocatedConceptsExercise);
             
             (var importResult, var concepts, _) = importer.ImportOriginalConceptsDoc();
             if (importResult == ImportResult.Incomplete)
@@ -68,7 +73,16 @@ namespace ExerciseReport
                     else
                     {
                         concept = new Concept();
-                        Exercise exercise = exerciseMap[importedConcept.CanonicalConceptName];
+                        Exercise exercise;
+                        if (exerciseMap.ContainsKey(importedConcept.CanonicalConceptName))
+                        {
+                            exercise = exerciseMap[importedConcept.CanonicalConceptName];
+                            exerciseFile.Exercises.Add(exercise);
+                        }
+                        else
+                        {
+                            exercise = unallocatedConceptsExercise;
+                        }
                         exercise.Concepts.Add(concept);
                     }
 
