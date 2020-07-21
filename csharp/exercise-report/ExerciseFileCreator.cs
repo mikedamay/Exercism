@@ -35,18 +35,22 @@ namespace ExerciseReport
                 {
                     continue;    // section headings, unclassified concepts, report headings
                 }
-                if (importedConcept.Rank >= 0 && importedConcept.Rank <= 100)
+                if (importedConcept.Rank > 0 && importedConcept.Rank < 100)
                 {
                     OriginalConcept originalConcept = new OriginalConcept
                     {
                         Name = importedConcept.OriginalConceptName,
                         LineNumber = importedConcept.ConceptsDocLineNum
                     };
+                    MyDebug.Assert(() => !conceptMap.ContainsKey(importedConcept.CanonicalConceptName),
+                        "Failure - This should be a new concept: ");
                     Concept concept = new Concept
                     {
                         Name = importedConcept.CanonicalConceptName,
                         OriginalConcepts = new List<OriginalConcept>{originalConcept}
                     };
+                    MyDebug.Assert(() => !exerciseMap.ContainsKey(importedConcept.CanonicalConceptName),
+                        "Failure - This should be a new exercise: ");
                     Exercise exercise = new Exercise
                     {
                         Slug = importedConcept.CanonicalConceptName,
@@ -57,8 +61,9 @@ namespace ExerciseReport
                     };
                     conceptMap[concept.Name] = concept;
                     exerciseMap[exercise.Slug] = exercise;
+                    exerciseFile.Exercises.Add(exercise);
                 }
-                else // importedConcept.Rank == 800
+                else if (false)// importedConcept.Rank == 800
                 {
                     OriginalConcept originalConcept = new OriginalConcept
                     {

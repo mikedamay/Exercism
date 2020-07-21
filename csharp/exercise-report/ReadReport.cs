@@ -11,6 +11,13 @@ namespace ExerciseReport
         Issue = 'I'
     }
 
+    public enum Level
+    {
+        Introductory = 'A',
+        Essential = 'B',
+        Advanced = 'C'
+    }
+
     public class Exercise
     {
         [JsonPropertyName("slug")]

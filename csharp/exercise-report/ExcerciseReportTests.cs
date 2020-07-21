@@ -46,6 +46,15 @@ namespace ExerciseReport
             var results = cdi.ImportOriginalConceptsDoc();
             Assert.Equal(ImportResult.Complete, results.importResult);
         }
+
+        [Fact]
+        public void CreateExerciseFile_FromOriginalConceptsDoc_ProducesValidTree()
+        {
+            var cdi = new ConceptsDocImporter();
+            var efc = new ExerciseFileCreator(cdi);
+            var exerciseFile = efc.CreateExerciseFileFromConceptsDoc();
+            Assert.NotNull(exerciseFile);
+        }
     }
 
     public static class ObjectHierarchy

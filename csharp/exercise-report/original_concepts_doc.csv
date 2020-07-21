@@ -21,7 +21,7 @@
 11500,167,- [Strings][string],strings,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/strings/.meta/design.md,
 11600,156,- Flag Enums,flag-enums,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/flag-enums/.meta/design.md,
 11610,59,- User Defined Exceptions,user-defined-exceptions,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/user-defined-exceptions/.meta/design.md,
-11610,101,- User Defined Exceptions,user-defined-exceptions,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/user-defined-exceptions/.meta/design.md,
+11610,101,- User Defined Exceptions,user-defined-exceptions2,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/user-defined-exceptions/.meta/design.md,
 11611,80,  - [Equality][equality] (`Equals`; `GetHashCode`),equality,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/equality/.meta/design.md,
 11612,170,- [Tuples][tuple],tuples,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/tuples/.meta/design.md,
 11613,111,- Randomness,randomness,5,A,E,https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/randomness/.meta/design.md,
