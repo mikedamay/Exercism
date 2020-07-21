@@ -51,7 +51,8 @@ namespace ExerciseReport
         public void CreateExerciseFile_FromOriginalConceptsDoc_ProducesValidTree()
         {
             var cdi = new ConceptsDocImporter();
-            var efc = new ExerciseFileCreator(cdi);
+            var tnci = new TrackNeutralConceptsImporter();
+            var efc = new ExerciseFileCreator(cdi, tnci);
             var exerciseFile = efc.CreateExerciseFileFromConceptsDoc();
             var efh = new ExerciseFileHandler();
             string result = efh.ToString(exerciseFile);

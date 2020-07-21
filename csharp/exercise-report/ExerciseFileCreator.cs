@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ExerciseReport
 {
     internal class ExerciseFileCreator
     {
         private ConceptsDocImporter importer;
+        private TrackNeutralConceptsImporter tncImporter;
 
-        public ExerciseFileCreator(ConceptsDocImporter importer)
+        public ExerciseFileCreator(ConceptsDocImporter importer, TrackNeutralConceptsImporter tncImporter)
         {
             this.importer = importer;
+            this.tncImporter = tncImporter;
         }
 
         public ExerciseFile CreateExerciseFileFromConceptsDoc()
@@ -72,6 +73,9 @@ namespace ExerciseReport
                 })).Select(p => exerciseMap.ContainsKey(p.ic.FurtherInfo)
                     ? exerciseMap[p.ic.FurtherInfo].Concepts.AddNew(p.c)
                     : unallocatedConceptsExercise.Concepts.AddNew(p.c)).ToList();
+            var trackNeutralConceptMap = tncImporter.ImportTrackNeutralConcepts();
+            
+            
             return exerciseFile;
         }
     }
