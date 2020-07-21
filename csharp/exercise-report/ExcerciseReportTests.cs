@@ -53,6 +53,8 @@ namespace ExerciseReport
             var cdi = new ConceptsDocImporter();
             var efc = new ExerciseFileCreator(cdi);
             var exerciseFile = efc.CreateExerciseFileFromConceptsDoc();
+            var efh = new ExerciseFileHandler();
+            string result = efh.ToString(exerciseFile);
             Assert.NotNull(exerciseFile);
         }
     }
@@ -66,6 +68,7 @@ namespace ExerciseReport
                 new Exercise
                 {
                     Slug = "sample1-slug",
+                    Level = Level.Introductory,
                     TrackNeutralStory = "sample1-track-neutral-story",
                     DocumentType = DocType.Design,
                     DocumentLink = "http://sample1-doclink",
@@ -74,7 +77,6 @@ namespace ExerciseReport
                         new Concept
                         {
                             Name = "sample1.1-name",
-                            Description = "sample1.1-description",
                             TrackNeutralConcept = "sample1.1-track-neutral-concept",
                             LearningObjectives = new List<string>
                             {

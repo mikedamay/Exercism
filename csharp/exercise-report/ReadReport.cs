@@ -15,13 +15,16 @@ namespace ExerciseReport
     {
         Introductory = 'A',
         Essential = 'B',
-        Advanced = 'C'
+        Advanced = 'C',
+        None = 'N'
     }
 
     public class Exercise
     {
         [JsonPropertyName("slug")]
         public string Slug { get; set; } = string.Empty;
+        [JsonPropertyName("level")]
+        public Level Level { get; set; } = Level.None;
         [JsonPropertyName("track-neutral-story")]
         public string TrackNeutralStory { get; set; } = string.Empty;
         [JsonPropertyName("document-type")]
@@ -36,8 +39,8 @@ namespace ExerciseReport
     {
         [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
-        [JsonPropertyName("description")]
-        public string Description { get; set; } = string.Empty;
+        //[JsonPropertyName("description")]
+        //public string Description { get; set; } = string.Empty;
         [JsonPropertyName("track-neutral-concept")]
         public string TrackNeutralConcept { get; set; } = string.Empty;
         [JsonPropertyName("learning-objectives")]
