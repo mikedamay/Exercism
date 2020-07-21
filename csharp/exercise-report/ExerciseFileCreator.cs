@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ExerciseReport
 {
@@ -21,80 +23,65 @@ namespace ExerciseReport
             {
                 Slug = "unallocated-concepts"
             };
-            exerciseFile.Exercises.Add(unallocatedConceptsExercise);
-            
+
             (var importResult, var concepts, _) = importer.ImportOriginalConceptsDoc();
             if (importResult == ImportResult.Incomplete)
             {
                 throw new Exception("Too many errors were encountered importing the original concepts document");
             }
 
-            foreach (ImportedConcept importedConcept in concepts)
-            {
-                if (importedConcept.Rank <= 0 || importedConcept.Rank >= 100 && importedConcept.Rank != 800)
-                {
-                    continue;    // section headings, unclassified concepts, report headings
-                }
-                if (importedConcept.Rank > 0 && importedConcept.Rank < 100)
-                {
-                    OriginalConcept originalConcept = new OriginalConcept
+            exerciseFile.Exercises = concepts.Where(ic => ic.Rank > 0 && ic.Rank < 100)
+                .Select(ic =>
+                    new Exercise
                     {
-                        Name = importedConcept.OriginalConceptName,
-                        LineNumber = importedConcept.ConceptsDocLineNum
-                    };
-                    MyDebug.Assert(() => !conceptMap.ContainsKey(importedConcept.CanonicalConceptName),
-                        "Failure - This should be a new concept: ");
-                    Concept concept = new Concept
-                    {
-                        Name = importedConcept.CanonicalConceptName,
-                        OriginalConcepts = new List<OriginalConcept>{originalConcept}
-                    };
-                    MyDebug.Assert(() => !exerciseMap.ContainsKey(importedConcept.CanonicalConceptName),
-                        "Failure - This should be a new exercise: ");
-                    Exercise exercise = new Exercise
-                    {
-                        Slug = importedConcept.CanonicalConceptName,
-                        DocumentType = importedConcept.DocType == "I" ? DocType.Issue :
-                            importedConcept.DocType == "E" ? DocType.Design : DocType.None,
-                        DocumentLink = importedConcept.Link,
-                        Concepts = new List<Concept>{concept}
-                    };
-                    conceptMap[concept.Name] = concept;
-                    exerciseMap[exercise.Slug] = exercise;
-                    exerciseFile.Exercises.Add(exercise);
-                }
-                else if (false)// importedConcept.Rank == 800
-                {
-                    OriginalConcept originalConcept = new OriginalConcept
-                    {
-                        Name = importedConcept.OriginalConceptName,
-                        LineNumber = importedConcept.ConceptsDocLineNum
-                    };
-                    Concept concept;
-                    if (conceptMap.ContainsKey(importedConcept.CanonicalConceptName))
-                    {
-                        concept = conceptMap[importedConcept.CanonicalConceptName];
-                    }
-                    else
-                    {
-                        concept = new Concept();
-                        Exercise exercise;
-                        if (exerciseMap.ContainsKey(importedConcept.CanonicalConceptName))
+                        Slug = ic.CanonicalConceptName,
+                        DocumentType = ic.DocType == "I" ? DocType.Issue :
+                            ic.DocType == "E" ? DocType.Design : DocType.None,
+                        DocumentLink = ic.Link,
+                        Concepts = new List<Concept>
                         {
-                            exercise = exerciseMap[importedConcept.CanonicalConceptName];
+                            new Concept
+                            {
+                                Name = ic.CanonicalConceptName,
+                                OriginalConcepts = new List<OriginalConcept>
+                                {
+                                    new OriginalConcept
+                                    {
+                                        Name = ic.OriginalConceptName,
+                                        LineNumber = ic.ConceptsDocLineNum
+                                    }
+                                }
+                            }
                         }
-                        else
-                        {
-                            exercise = unallocatedConceptsExercise;
-                        }
-                        exercise.Concepts.Add(concept);
-                    }
+                    }).ToList();
+            exerciseFile.Exercises.Add(unallocatedConceptsExercise);
+            exerciseMap = exerciseFile.Exercises.ToDictionary((ex) => ex.Slug, (ex) => ex);
 
-                    concept.Name = importedConcept.CanonicalConceptName;
-                    concept.OriginalConcepts.Add(originalConcept);
-                }
-            }
+            concepts.Where(ic => ic.Rank == 800)
+                .Select<ImportedConcept, (ImportedConcept ic, Concept c)>(ic => (ic, new Concept
+                {
+                    Name = ic.CanonicalConceptName,
+                    OriginalConcepts = new List<OriginalConcept>
+                    {
+                        new OriginalConcept
+                        {
+                            Name = ic.OriginalConceptName,
+                            LineNumber = ic.ConceptsDocLineNum
+                        }
+                    }
+                })).Select(p => exerciseMap.ContainsKey(p.ic.FurtherInfo)
+                    ? exerciseMap[p.ic.FurtherInfo].Concepts.AddNew(p.c)
+                    : unallocatedConceptsExercise.Concepts.AddNew(p.c)).ToList();
             return exerciseFile;
+        }
+    }
+
+    public static class Extensions
+    {
+        public static bool AddNew<T>(this IList<T> list, T item)
+        {
+            list.Add(item);
+            return true;
         }
     }
 }
