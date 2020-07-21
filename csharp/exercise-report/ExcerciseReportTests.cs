@@ -57,6 +57,14 @@ namespace ExerciseReport
             string result = efh.ToString(exerciseFile);
             Assert.NotNull(exerciseFile);
         }
+
+        [Fact]
+        public void ImportTrackNeutralConcepts_FromConceptsFile_ProducesDefinitiveMapping()
+        {
+            var tnci = new TrackNeutralConceptsImporter();
+            var map = tnci.ImportTrackNeutralConcepts();
+            Assert.Equal(40, map.Count);
+        }
     }
 
     public static class ObjectHierarchy
