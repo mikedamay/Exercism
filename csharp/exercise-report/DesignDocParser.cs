@@ -74,7 +74,8 @@ namespace ExerciseReport
 
         // we are extracting the learning objectives as associated with each concept
         // not the ones actually called "Learning Objectives".  It is what it is.
-        public LearningObjectives ParseDesignDoc(string designDocText)
+        public IEnumerable<(bool success, string error, string concept, string objective)> 
+            ParseDesignDoc(string designDocText)
         {
             var errors = new List<string>();
             var learningObjectives = new LearningObjectives();
@@ -84,6 +85,8 @@ namespace ExerciseReport
                 .TakeWhile(line => !MatchesHeading(line, "^Concepts"))
                 .Where(line => line.Length > 1 && line[0] == '-' && char.IsWhiteSpace(line[1]))
                 .Select(line => LineToConceptAndObjective(line));
+            return conceptAndObjectives;
+            /*
             foreach (var conceptAndObjective in conceptAndObjectives)
             {
                 switch (conceptAndObjective)
@@ -98,13 +101,14 @@ namespace ExerciseReport
             }
 
             return learningObjectives;
+        */
         }
 
         // line: e.g. "- `basics`: basic stuff"
         private (bool success, string error, string concept, string objective) LineToConceptAndObjective(string line)
         {
             var match = learningObjectiveRegex.Match(line);
-            if (match.Groups.ContainsKey(CONCEPT) && match.Groups.ContainsKey(LEARNING_OBJECTIVE))
+            if (match.Success && match.Groups.ContainsKey(CONCEPT) && match.Groups.ContainsKey(LEARNING_OBJECTIVE))
             {
                 return (true, string.Empty, match.Groups[CONCEPT].Value, match.Groups[LEARNING_OBJECTIVE].Value);
             }

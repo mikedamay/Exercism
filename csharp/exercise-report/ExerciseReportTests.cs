@@ -14,18 +14,22 @@ namespace ExerciseReport
             var ddp = new DesignDocParser();
             string markdownText;
             Stream? stream = this.GetType().Assembly.GetManifestResourceStream(SampleDesignDoc);
+            if (stream == null)
+            {
+                Assert.False(true);
+            }
             using (stream)
             using (var reader = new StreamReader(stream))
                 markdownText = reader.ReadToEnd();
-            var lo = ddp.ParseDesignDoc(markdownText);
-            Assert.True(lo.GetList("string-formatting").First() != string.Empty);
+            var lo = ddp.ParseDesignDoc(markdownText).ToList();
+            Assert.NotEmpty(lo);
         }
 
         [Fact]
         public void ListExercises_OnExercismGit_ProducesFullList()
         {
             var ddc = new DesignDocCollator("/Users/mikedamay/projects/exercism/v3");
-            var actual = ddc.GetDesignFileNames().ToList();
+            var actual = ddc.GetLearningObjectives();
         }
     }
 }
