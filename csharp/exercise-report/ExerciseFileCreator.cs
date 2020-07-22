@@ -110,6 +110,8 @@ namespace ExerciseReport
 
         private bool IsTrackNeutralLink(string originalConceptName)
         {
+            string oc = null;
+            var _ = oc.Length;
             var match = regex.Match(originalConceptName);
             if (!match.Success)
             {

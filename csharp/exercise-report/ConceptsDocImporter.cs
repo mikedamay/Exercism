@@ -115,10 +115,12 @@ namespace ExerciseReport
             }
             catch (FormatException fe)
             {
+                var _ = fe;
                 return (SplitResult.Error, null, new ImportError(lineNum, "Numeric conversion failure", importedLineCsv));
             }
             catch (Exception e)
             {
+                var _ = e;
                 return (SplitResult.Error, null, new ImportError(lineNum, "Unspecified failure", importedLineCsv));
             }
         }
