@@ -1,20 +1,26 @@
 ## Learning objectives
 
-- Know what a variable is
+- Know how to use the `ToString()` method to convert any object to a `string`.
+- Know how to use string interpolation on values of any type.
+- Know how to use default format strings to convert to standard output formats.
+- Know how to use custom format strings to convert to custom output formats.
+- Know that `string.Format` underlies string interpolation.
+- Know of the `StringBuilder` type and when to use it.
+- Know that string interpolation can interpolate any expression.
+
+## Out of scope
+
+`IFormatProvider`, `ICustomFormatter`
 
 ## Concepts
 
-- `basics`: know what a variable is; know how to define a variable; know how to update a variable; know how to use type inference for variables; know how to define a method; know how to return a value from a method; know how to call a method; know that methods must be defined in classes; know about the `public` access modifier; know about the `static` modifier; know how to define an integer; know how to use mathematical operators on integers; know how to define single- and multiline comments.
+- `string-formatting`: know how to use the `ToString()` method to convert any object to a `string`; know how to use string interpolation on values of any type; know how to use default format strings to convert to standard output formats; know how to use custom format strings to convert to custom output formats; know that `string.Format` underlies string interpolation; know of the `StringBuilder` type and when to use it; know that string interpolation can interpolate any expression.
+- `verbatim-strings`: the syntax of verbatim strings.
 
 ## Prerequisites
 
-There are no prerequisites.
-
-## Analyzer
-
-This exercise could benefit from the following rules added to the the [analyzer][analyzer]:
-
-- Verify that the `RemainingMinutesInOven()` method calls the `ExpectedMinutesInOven()` method.
-- Verify that the `ElapsedTimeInMinutes()` method calls the `PreparationTimeInMinutes()` method.
-
-[analyzer]: https://github.com/exercism/csharp-analyzer
+- `strings`: strings will be formatted.
+- `inheritance`: knowing that each class derives from `object` and thus has built-in methods.
+- `const-readonly`
+- `time`: for use of `CultureInfo`.
+- `varargs`: for the common overload of `public static string Format (string format, params object[] args);`
