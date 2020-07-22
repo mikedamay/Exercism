@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ExerciseReport
 {
@@ -8,6 +9,8 @@ namespace ExerciseReport
     {
         private ConceptsDocImporter importer;
         private TrackNeutralConceptsImporter tncImporter;
+        private const string LINK_NAME = "linkName"; 
+        private Regex regex = new Regex(@$"\[.+\]\[(?<{LINK_NAME}>.+)\].*");
 
         public ExerciseFileCreator(ConceptsDocImporter importer, TrackNeutralConceptsImporter tncImporter)
         {
@@ -25,13 +28,13 @@ namespace ExerciseReport
                 Slug = "unallocated-concepts"
             };
 
-            (var importResult, var concepts, _) = importer.ImportOriginalConceptsDoc();
+            (var importResult, var importedConcepts, _) = importer.ImportOriginalConceptsDoc();
             if (importResult == ImportResult.Incomplete)
             {
                 throw new Exception("Too many errors were encountered importing the original concepts document");
             }
 
-            exerciseFile.Exercises = concepts.Where(ic => ic.Rank > 0 && ic.Rank < 100)
+            exerciseFile.Exercises = importedConcepts.Where(ic => ic.Rank > 0 && ic.Rank < 100)
                 .Select(ic =>
                     new Exercise
                     {
@@ -58,7 +61,7 @@ namespace ExerciseReport
             exerciseFile.Exercises.Add(unallocatedConceptsExercise);
             exerciseMap = exerciseFile.Exercises.ToDictionary((ex) => ex.Slug, (ex) => ex);
 
-            concepts.Where(ic => ic.Rank == 800)
+            importedConcepts.Where(ic => ic.Rank == 800)
                 .Select<ImportedConcept, (ImportedConcept ic, Concept c)>(ic => (ic, new Concept
                 {
                     Name = ic.CanonicalConceptName,
@@ -72,11 +75,44 @@ namespace ExerciseReport
                     }
                 })).Select(p => exerciseMap.ContainsKey(p.ic.FurtherInfo)
                     ? exerciseMap[p.ic.FurtherInfo].Concepts.AddNew(p.c)
-                    : unallocatedConceptsExercise.Concepts.AddNew(p.c)).ToList();
+                    : unallocatedConceptsExercise.Concepts.AddNew(p.c)).ToNull();
             var trackNeutralConceptMap = tncImporter.ImportTrackNeutralConcepts();
-            
-            
+            // if a concept has more than one original concept which contains a track neutral link
+            // then the last one processed will be used
+            exerciseFile.Exercises
+                .SelectMany(ex => ex.Concepts)
+                .SelectMany(con => con.OriginalConcepts, (con, ocon) => (con, ocon))
+                .Where(cons => IsTrackNeutralLink(cons.ocon.Name))
+                .Select(cons => (cons.con, GetTrackNeutralLinkName(cons.ocon.Name)))
+                .Select(conss => conss.con.TrackNeutralConcept
+                    = GetTrackNeutralLinkUrl(conss.Item2, trackNeutralConceptMap)).ToNull();
+
             return exerciseFile;
+        }
+
+        private string GetTrackNeutralLinkUrl(string tncName, IDictionary<string,string> trackNeutralConceptMap)
+        {
+            return trackNeutralConceptMap.ContainsKey(tncName) 
+                ? trackNeutralConceptMap[tncName].Trim()
+                : tncName.Trim();
+        }
+
+        private bool IsTrackNeutralLink(string originalConceptName)
+        {
+            var match = regex.Match(originalConceptName);
+            if (!match.Success)
+            {
+                return false;
+            }
+            return match.Groups.ContainsKey(LINK_NAME);
+        }
+
+        private string GetTrackNeutralLinkName(string originalConceptName)
+        {
+            var match  = regex.Match(originalConceptName);
+            MyDebug.Assert(() => match.Groups.ContainsKey(LINK_NAME)
+                , "This should part of a filtered LINQ pipeline");
+            return match.Groups[LINK_NAME].Value;
         }
     }
 
@@ -86,6 +122,11 @@ namespace ExerciseReport
         {
             list.Add(item);
             return true;
+        }
+
+        public static void ToNull<T>(this IEnumerable<T> source)
+        {
+            foreach (var s in source) ;
         }
     }
 }
