@@ -8,8 +8,8 @@ namespace ExerciseReport
     internal class LearningObjectives
     {
         public IBuilder Builder { get; }
-        
-        
+
+
         private Dictionary<string, List<string>> concepts = new Dictionary<string, List<string>>();
 
         public interface IBuilder
@@ -32,6 +32,7 @@ namespace ExerciseReport
                 {
                     _this.concepts[conceptName] = new List<string>();
                 }
+
                 _this.concepts[conceptName].Add(learningObjective);
             }
         }
@@ -40,6 +41,7 @@ namespace ExerciseReport
         {
             Builder = new BuilderImpl(this);
         }
+
         public IEnumerable<string>? GetList(string conceptName)
         {
             if (!concepts.ContainsKey(conceptName))
@@ -50,7 +52,7 @@ namespace ExerciseReport
             return new ReadOnlyCollection<string>(concepts[conceptName]);
         }
     }
-    
+
     internal class DesignDocParser
     {
         private const string HEADING_TEXT = "headingtext";
@@ -59,10 +61,16 @@ namespace ExerciseReport
 
         private Regex headingRegex = new Regex(@$"
             ^\s*\#+\s                    # typically ##
-            (?<{HEADING_TEXT}>.*)       # typically Concepts or Prerequisites
+            (?<{HEADING_TEXT}>.*)       # e.g one of the following: Concepts, Prerequisites
             $",
             RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace);
-        private Regex learningObjectiveRegex = new Regex(@$"^-\s`(?<{CONCEPT}>.*)`\s*:\s*(?<{LEARNING_OBJECTIVE}>.*)$",
+
+        private Regex learningObjectiveRegex = new Regex(@$"^
+            -\s                
+            `(?<{CONCEPT}>.*)`                # e.g. `string-formatting`
+            \s*:\s*                           # :
+            (?<{LEARNING_OBJECTIVE}>.*)       # e.g. our string formatting is great
+            $",
             RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace);
 
         // we are extracting the learning objectives as associated with each concept
@@ -72,14 +80,14 @@ namespace ExerciseReport
             var errors = new List<string>();
             var learningObjectives = new LearningObjectives();
             string[] lines = designDocText.Split("\n");
-            var learnings = lines
+            var conceptAndObjectives = lines
                 .SkipWhile(line => !MatchesHeading(line, "Concepts"))
-                .TakeWhile(line => !MatchesHeading(line, "*Concepts"))
+                .TakeWhile(line => !MatchesHeading(line, "^Concepts"))
                 .Where(line => line.Length > 1 && line[0] == '-' && char.IsWhiteSpace(line[1]))
-                .Select(line => SplitLine(line)).ToList();
-            foreach (var learning in learnings)
+                .Select(line => LineToConceptAndObjective(line));
+            foreach (var conceptAndObjective in conceptAndObjectives)
             {
-                switch (learning)
+                switch (conceptAndObjective)
                 {
                     case (true, _, string concept, string objective):
                         learningObjectives.Builder.Add(concept, objective);
@@ -94,7 +102,7 @@ namespace ExerciseReport
         }
 
         // line: e.g. "- `basics`: basic stuff"
-        private (bool success, string error, string concept, string objective) SplitLine(string line)
+        private (bool success, string error, string concept, string objective) LineToConceptAndObjective(string line)
         {
             var match = learningObjectiveRegex.Match(line);
             if (match.Groups.ContainsKey(CONCEPT) && match.Groups.ContainsKey(LEARNING_OBJECTIVE))
@@ -114,7 +122,8 @@ namespace ExerciseReport
             return match.Success switch
             {
                 false => false,
-                true when headingText.StartsWith("*") && match.Groups[HEADING_TEXT].Value != headingText.Substring(1) => true,
+                true when headingText.StartsWith("^")
+                          && match.Groups[HEADING_TEXT].Value != headingText.Substring(1) => true,
                 true when match.Groups[HEADING_TEXT].Value == headingText => true,
                 _ => false
             };

@@ -6,7 +6,7 @@ using Xunit.Sdk;
 
 namespace ExerciseReport
 {
-    public class ExcerciseReportTests
+    public class ExcerciseReportCreationTests
     {
         private const string JsonSample1 = "ExerciseReport.sample.json";
 
