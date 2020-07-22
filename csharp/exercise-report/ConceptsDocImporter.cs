@@ -21,7 +21,7 @@ namespace ExerciseReport
             Error
         }
 
-        public (ImportResult importResult, IList<ImportedConcept>? importedConcepts, IList<ImportError>? errors) 
+        public (ImportResult importResult, IList<ImportedConcept> importedConcepts, IList<ImportError> errors) 
             ImportOriginalConceptsDoc()
         {
             var originalConceptsDoc = this.GetType().Assembly.GetManifestResourceStream(OriginalConceptsDoc);
@@ -46,7 +46,7 @@ namespace ExerciseReport
             return ImportOriginalConceptsDoc(originalConcepts);
         }
 
-        public (ImportResult importResult, IList<ImportedConcept>? importedConcepts, IList<ImportError>? errors)
+        public (ImportResult importResult, IList<ImportedConcept> importedConcepts, IList<ImportError> errors)
             ImportOriginalConceptsDoc(string importedConceptsCsv)
         {
             var importedConcepts = new List<ImportedConcept>();
