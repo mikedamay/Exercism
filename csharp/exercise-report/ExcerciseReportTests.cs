@@ -75,6 +75,21 @@ namespace ExerciseReport
             var map = tnci.ImportTrackNeutralConcepts();
             Assert.Equal(40, map.Count);
         }
+
+        [Fact]
+        public void Parse_WellFormedDesignDoc_ProducesConceptLearningObjectives()
+        {
+            const string SampleDesignDoc = "ExerciseReport.sample_design.md";
+        
+            var ddp = new DesignDocParser();
+            string markdownText;
+            Stream? stream = this.GetType().Assembly.GetManifestResourceStream(SampleDesignDoc);
+            using (stream)
+            using (var reader = new StreamReader(stream))
+                markdownText = reader.ReadToEnd();
+            var lo = ddp.ParseDesignDoc(markdownText);
+            
+        }
     }
 
     public static class ObjectHierarchy

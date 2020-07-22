@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="FSharp.Formatting" Version="6.1.0" />
+      <PackageReference Include="Markdig" Version="0.20.0" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
       <PackageReference Include="xunit" Version="2.4.1" />
       <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
@@ -19,6 +21,8 @@
       <EmbeddedResource Include="original_concepts_doc.csv" />
       <None Remove="StoryLinks.txt" />
       <EmbeddedResource Include="track_neutral_concepts.md" />
+      <None Remove="sample_design.md" />
+      <EmbeddedResource Include="sample_design.md" />
     </ItemGroup>
 
 </Project>
