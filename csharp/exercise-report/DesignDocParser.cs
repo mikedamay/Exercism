@@ -9,7 +9,6 @@ namespace ExerciseReport
     {
         public IBuilder Builder { get; }
 
-
         private Dictionary<string, List<string>> concepts = new Dictionary<string, List<string>>();
 
         public interface IBuilder
@@ -19,7 +18,7 @@ namespace ExerciseReport
 
         private class BuilderImpl : IBuilder
         {
-            private LearningObjectives _this;
+            private readonly LearningObjectives _this;
 
             public BuilderImpl(LearningObjectives _this)
             {
@@ -59,13 +58,13 @@ namespace ExerciseReport
         private const string CONCEPT = "concept";
         private const string LEARNING_OBJECTIVE = "learningobjective";
 
-        private Regex headingRegex = new Regex(@$"
+        private readonly Regex headingRegex = new Regex(@$"
             ^\s*\#+\s                    # typically ##
             (?<{HEADING_TEXT}>.*)       # e.g one of the following: Concepts, Prerequisites
             $",
             RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace);
 
-        private Regex learningObjectiveRegex = new Regex(@$"^
+        private readonly Regex learningObjectiveRegex = new Regex(@$"^
             -\s                
             `(?<{CONCEPT}>.*)`                # e.g. `string-formatting`
             \s*:\s*                           # :

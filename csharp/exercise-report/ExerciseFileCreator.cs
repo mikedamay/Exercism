@@ -7,10 +7,10 @@ namespace ExerciseReport
 {
     internal class ExerciseFileCreator
     {
-        private ConceptsDocImporter importer;
-        private TrackNeutralConceptsImporter tncImporter;
+        private readonly ConceptsDocImporter importer;
+        private readonly TrackNeutralConceptsImporter tncImporter;
         private const string LINK_NAME = "linkName"; 
-        private Regex regex = new Regex(@$"\[.+\]\[(?<{LINK_NAME}>.+)\].*");
+        private readonly Regex regex = new Regex(@$"\[.+\]\[(?<{LINK_NAME}>.+)\].*");
 
         public ExerciseFileCreator(ConceptsDocImporter importer, TrackNeutralConceptsImporter tncImporter)
         {
