@@ -23,6 +23,7 @@ namespace ExerciseReport
             var conceptMap = new Dictionary<string, Concept>();
             var exerciseMap = new Dictionary<string, Exercise>();
             var exerciseFile = new ExerciseFile();
+
             var unallocatedConceptsExercise = new Exercise
             {
                 Slug = "unallocated-concepts"
@@ -39,6 +40,13 @@ namespace ExerciseReport
                     new Exercise
                     {
                         Slug = ic.CanonicalConceptName,
+                        Level = ic.Section switch
+                        {
+                            "A" => Level.Introductory,
+                            "B" => Level.Essential,
+                            "C" => Level.Advanced,
+                            _ => Level.None                            
+                        },
                         DocumentType = ic.DocType == "I" ? DocType.Issue :
                             ic.DocType == "E" ? DocType.Design : DocType.None,
                         DocumentLink = ic.Link,
@@ -77,6 +85,9 @@ namespace ExerciseReport
                     ? exerciseMap[p.ic.FurtherInfo].Concepts.AddNew(p.c)
                     : unallocatedConceptsExercise.Concepts.AddNew(p.c)).ToNull();
             var trackNeutralConceptMap = tncImporter.ImportTrackNeutralConcepts();
+            // The next statement identifies any original concept that is linked to
+            // a track-neutral concept and puts the url into the concept record.
+            //
             // if a concept has more than one original concept which contains a track neutral link
             // then the last one processed will be used
             exerciseFile.Exercises
