@@ -20,6 +20,12 @@ namespace ExerciseReport
             var lo = ddp.ParseDesignDoc(markdownText);
             Assert.True(lo.GetList("string-formatting").First() != string.Empty);
         }
-        
+
+        [Fact]
+        public void ListExercises_OnExercismGit_ProducesFullList()
+        {
+            var ddc = new DesignDocCollator("/Users/mikedamay/projects/exercism/v3");
+            var actual = ddc.GetDesignFileNames().ToList();
+        }
     }
 }
