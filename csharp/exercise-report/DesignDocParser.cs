@@ -53,12 +53,12 @@ namespace ExerciseReport
     
     internal class DesignDocParser
     {
-        private const string HEADING_TEXT = "heading-text";
+        private const string HEADING_TEXT = "headingtext";
         private const string CONCEPT = "concept";
-        private const string LEARNING_OBJECTIVE = "learning-objective";
+        private const string LEARNING_OBJECTIVE = "learningobjective";
 
         private Regex headingRegex = new Regex(@$"
-            ^\s*#+\s                    # typically ##
+            ^\s*\#+\s                    # typically ##
             (?<{HEADING_TEXT}>.*)       # typically Concepts or Prerequisites
             $",
             RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace);
@@ -74,9 +74,9 @@ namespace ExerciseReport
             string[] lines = designDocText.Split("\n");
             var learnings = lines
                 .SkipWhile(line => !MatchesHeading(line, "Concepts"))
-                .TakeWhile(line => !MatchesHeading(line, "*"))
-                .Where(line => line[0] == '-' && char.IsWhiteSpace(line[1]))
-                .Select(line => SplitLine(line));
+                .TakeWhile(line => !MatchesHeading(line, "*Concepts"))
+                .Where(line => line.Length > 1 && line[0] == '-' && char.IsWhiteSpace(line[1]))
+                .Select(line => SplitLine(line)).ToList();
             foreach (var learning in learnings)
             {
                 switch (learning)
@@ -114,7 +114,7 @@ namespace ExerciseReport
             return match.Success switch
             {
                 false => false,
-                true when headingText == "*" => true,
+                true when headingText.StartsWith("*") && match.Groups[HEADING_TEXT].Value != headingText.Substring(1) => true,
                 true when match.Groups[HEADING_TEXT].Value == headingText => true,
                 _ => false
             };
