@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ExerciseReport
 {
@@ -20,7 +21,7 @@ namespace ExerciseReport
             Error
         }
 
-        public (ImportResult importResult, IList<ImportedConcept> importedConcepts, IList<ImportError> errors) 
+        public (ImportResult importResult, IList<ImportedConcept>? importedConcepts, IList<ImportError>? errors) 
             ImportOriginalConceptsDoc()
         {
             var originalConceptsDoc = this.GetType().Assembly.GetManifestResourceStream(OriginalConceptsDoc);
@@ -45,7 +46,7 @@ namespace ExerciseReport
             return ImportOriginalConceptsDoc(originalConcepts);
         }
 
-        public (ImportResult importResult, IList<ImportedConcept> importedConcepts, IList<ImportError> errors)
+        public (ImportResult importResult, IList<ImportedConcept>? importedConcepts, IList<ImportError>? errors)
             ImportOriginalConceptsDoc(string importedConceptsCsv)
         {
             var importedConcepts = new List<ImportedConcept>();
@@ -56,26 +57,29 @@ namespace ExerciseReport
             {
                 var results = SplitLine(importedConcept, lineNum);
 
-                if (results.splitResult == SplitResult.Concept)
+                switch (results)
                 {
-                    importedConcepts.Add(results.importedConcept);
-                }
-                else
-                {
-                    errors.Add(results.error);
-                    if (errors.Count > MAX_ERRORS)
-                    {
+                    case (SplitResult.Concept, ImportedConcept ic, _):
+                        importedConcepts.Add(ic);
                         break;
-                    }
+                    case (SplitResult.Error, _, ImportError ie):
+                        errors.Add(ie);
+                        if (errors.Count > MAX_ERRORS)
+                        {
+                            goto after_loop;
+                        }
+
+                        break;
                 }
                 lineNum++;
             }
+            after_loop:
 
             return (errors.Count > MAX_ERRORS ? ImportResult.Incomplete : ImportResult.Complete, importedConcepts,
                 errors);
         }
 
-        private (SplitResult splitResult, ImportedConcept importedConcept, ImportError error) 
+        private (SplitResult splitResult, ImportedConcept? importedConcept, ImportError? error) 
             SplitLine(string importedLineCsv, int lineNum)
         {
             const int ROW_NUM = 0;
@@ -130,14 +134,15 @@ namespace ExerciseReport
     {
         public int SourceRowNum { get; set; }
         public int ConceptsDocLineNum { get; set; }
-        public string OriginalConceptName { get; set; }
-        public string CanonicalConceptName { get; set; }
+        public string OriginalConceptName { get; set; } = string.Empty;
+        public string CanonicalConceptName { get; set; } = string.Empty;
         public int Rank { get; set; }
-        public string Section { get; set; }
-        public string DocType { get; set; }
-        public string Link { get; set; }
-        public string FurtherInfo { get; set; }
-        
+        public string Section { get; set; } = string.Empty;
+        public string DocType { get; set; } = string.Empty;
+        public string Link { get; set; } = string.Empty;
+        public string FurtherInfo { get; set; } = string.Empty;
+
+        public static ImportedConcept NullConcept { get; } = new ImportedConcept();
     }
 
     internal class ImportError

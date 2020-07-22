@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
+using Xunit.Sdk;
 
 
 namespace ExerciseReport
@@ -14,8 +15,12 @@ namespace ExerciseReport
         {
             var erh = new ExerciseFileHandler();
             var actual = erh.ToString(ObjectHierarchy.Sample1);
-            var resourceStream = this.GetType().Assembly.GetManifestResourceStream(JsonSample1);
-            var expected = string.Empty;
+            Stream? resourceStream = this.GetType().Assembly.GetManifestResourceStream(JsonSample1);
+            if (resourceStream == null)
+            {
+                throw new NullException($"{nameof(resourceStream)}");
+            }
+            string expected;
             using (resourceStream)
             using (var reader = new StreamReader(resourceStream))
                 expected = reader.ReadToEnd();
@@ -27,8 +32,12 @@ namespace ExerciseReport
         {
             var erh = new ExerciseFileHandler();
             var expected = ObjectHierarchy.Sample1;
-            var resourceStream = this.GetType().Assembly.GetManifestResourceStream(JsonSample1);
-            var sampleJson = string.Empty;
+            Stream? resourceStream = this.GetType().Assembly.GetManifestResourceStream(JsonSample1);
+            if (resourceStream == null)
+            {
+                throw new NullException($"{nameof(resourceStream)}");
+            }
+            string sampleJson;
             using (resourceStream)
             using (var reader = new StreamReader(resourceStream))
                 sampleJson = reader.ReadToEnd();
