@@ -28,8 +28,8 @@ namespace ExerciseReport
         [Fact]
         public void ListExercises_OnExercismGit_ProducesFullList()
         {
-            var ddc = new DesignDocCollator("/Users/mikedamay/projects/exercism/v3");
-            var actual = ddc.GetLearningObjectives();
+            var ddc = new DesignDocCollator("/Users/mikedamay/projects/exercism/v3", new DesignDocParser());
+            var actual = ddc.GetLearningObjectives("csharp");
         }
     }
 }

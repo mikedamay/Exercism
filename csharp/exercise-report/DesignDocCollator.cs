@@ -1,31 +1,32 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using FSharp.Compiler.SourceCodeServices;
 
 namespace ExerciseReport
 {
     internal class DesignDocCollator
     {
         private readonly string root;
+        private readonly DesignDocParser designDocParser;
 
-        public DesignDocCollator(string root)
+        public DesignDocCollator(string root, DesignDocParser designDocParser)
         {
             this.root = root;
+            this.designDocParser = designDocParser;
         }
 
-        public (ReadOnlyDictionary<string, string> learningObjectives, List<string> errors) GetLearningObjectives()
+        public (LearningObjectives learningObjectives, List<string> errors) GetLearningObjectives(string track)
         {
-            var ddp = new DesignDocParser();
             var errors = new List<string>();
-            var conceptAndObjectivesMap = new Dictionary<string, string>();
-            var los = GetExerciseDesigns().SelectMany(d => ddp.ParseDesignDoc(d));
-            foreach (var lo in los)
+            var learningObjectives = new LearningObjectives();
+            var conceptsAndObjectives = GetExerciseDesignsForTrack(track).SelectMany(d => designDocParser.ParseDesignDoc(d));
+            foreach (var conceptAndObjective in conceptsAndObjectives)
             {
-                switch (lo)
+                switch (conceptAndObjective)
                 {
                     case (true, _, string concept, string objective):
-                        conceptAndObjectivesMap[concept] = objective;
+                        learningObjectives.Builder.Add(concept, objective);
                         break;
                     case (false, string error, _, _):
                         errors.Add(error);
@@ -33,20 +34,16 @@ namespace ExerciseReport
                 }
             }
 
-            return (new ReadOnlyDictionary<string, string>(conceptAndObjectivesMap), errors);
+            return (learningObjectives, errors);
         }
         
-        public IEnumerable<string> GetExerciseDesigns()
+        private IEnumerable<string> GetExerciseDesignsForTrack(string track)
         {
-            var exercises = Directory.EnumerateDirectories(Path.Combine(root, "languages/csharp/exercises/concept"));
-            /*
-            var conceptExercises = languages
-                .Where(l => Directory.Exists(Path.Combine(l, "exercises", "concept")))
-                .SelectMany(l => Directory.EnumerateDirectories(Path.Combine(l, "exercises", "concept")));
-            */
-            var files = exercises
-                .Where(ce => File.Exists(Path.Combine(ce, ".meta", "design.md")));
-            var designs = files.Select(ce => File.ReadAllText(Path.Combine(ce, ".meta", "design.md")));
+            var exercisePaths = Directory.EnumerateDirectories(Path.Combine(root, $"languages/{track}/exercises/concept"));
+            var designs = exercisePaths
+                .Select(exp => Path.Combine(exp, ".meta/design.md"))
+                .Where(path => File.Exists(path))
+                .Select(path => File.ReadAllText(path));
             return designs;
         }
     }
