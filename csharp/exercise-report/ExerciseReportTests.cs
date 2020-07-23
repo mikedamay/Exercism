@@ -25,7 +25,7 @@ namespace ExerciseReport
                 Assert.False(true);
             }
 
-            var lo = ddp.ParseDesignDoc(markdownText).ToList();
+            var lo = ddp.ParseDesignDoc(markdownText, "test-track").ToList();
             Assert.NotEmpty(lo);
         }
 
@@ -36,6 +36,18 @@ namespace ExerciseReport
             var ddc = new DesignDocCollator(ExercismRoot, new DesignDocParser()
             , new DesignDocFileHandler(ExercismRoot));
             var actual = ddc.GetLearningObjectives("csharp");
+        }
+
+        [Fact]
+        public void Merge_ExercisesAndDesignDocs_ShowsLearningObjectives()
+        {
+            const string ExercismRoot = "/Users/mikedamay/projects/exercism/v3";
+            const string Track = "csharp";
+            var em = new ExerciseMerger(Track, new ExerciseFileHandler(ExercismRoot,Track,
+                new ExerciseFileJsonHandler())
+                , new DesignDocCollator(ExercismRoot, new DesignDocParser()
+                    , new DesignDocFileHandler(ExercismRoot) ));
+            em.MergeLearningObjectives();
         }
     }
 }

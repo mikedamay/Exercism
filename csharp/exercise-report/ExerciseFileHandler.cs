@@ -9,7 +9,7 @@ namespace ExerciseReport
 
         public ExerciseFileHandler(string root, string track, ExerciseFileJsonHandler jsonHandler)
         {
-            trackConfigPathAndFileName = Path.Combine(root, track, "reference/exerciseFile.json");
+            trackConfigPathAndFileName = Path.Combine(root, "languages", track, "reference/exercise-file.json");
             exerciseFileJsonHandler = jsonHandler;
         }
 

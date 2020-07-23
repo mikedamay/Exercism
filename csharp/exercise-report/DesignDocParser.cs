@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -26,8 +27,8 @@ namespace ExerciseReport
 
         // we are extracting the learning objectives as associated with each concept
         // not the ones actually called "Learning Objectives".  It is what it is.
-        public IEnumerable<(bool success, string error, string concept, string objective)> 
-            ParseDesignDoc(string designDocText)
+        public IEnumerable<(bool success, string error, string concept, string objective)> ParseDesignDoc(
+            string designDocText, string track)
         {
             var errors = new List<string>();
             var learningObjectives = new LearningObjectives();
@@ -37,7 +38,8 @@ namespace ExerciseReport
                 .Skip(1)
                 .TakeWhile(line => !MatchesHeading(line))
                 .Where(line => line.Length > 1 && line[0] == '-' && char.IsWhiteSpace(line[1]))
-                .Select(line => LineToConceptAndObjective(line));
+                .Select(line => LineToConceptAndObjective(line))
+                .DefaultIfEmpty((false, $"{track}: no learning objectives found", string.Empty, String.Empty));
             return conceptsAndObjectives;
         }
 

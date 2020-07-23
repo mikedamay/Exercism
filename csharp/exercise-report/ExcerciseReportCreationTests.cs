@@ -94,7 +94,7 @@ namespace ExerciseReport
             {
                 Assert.False(true);
             }
-            var lo = ddp.ParseDesignDoc(markdownText);
+            var lo = ddp.ParseDesignDoc(markdownText, "test-track");
             
         }
     }
