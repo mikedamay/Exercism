@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FSharp.Compiler.SourceCodeServices;
 
 namespace ExerciseReport
 {
@@ -9,18 +8,21 @@ namespace ExerciseReport
     {
         private readonly string root;
         private readonly DesignDocParser designDocParser;
+        private readonly DesignDocFileHandler designDocFileHandler;
 
-        public DesignDocCollator(string root, DesignDocParser designDocParser)
+        public DesignDocCollator(string root, DesignDocParser designDocParser, DesignDocFileHandler designDocFileHandler)
         {
             this.root = root;
             this.designDocParser = designDocParser;
+            this.designDocFileHandler = designDocFileHandler;
         }
 
         public (LearningObjectives learningObjectives, List<string> errors) GetLearningObjectives(string track)
         {
             var errors = new List<string>();
             var learningObjectives = new LearningObjectives();
-            var conceptsAndObjectives = GetExerciseDesignsForTrack(track).SelectMany(d => designDocParser.ParseDesignDoc(d));
+            var conceptsAndObjectives = designDocFileHandler.GetExerciseDesignsForTrack(track)
+                .SelectMany(d => designDocParser.ParseDesignDoc(d));
             foreach (var conceptAndObjective in conceptsAndObjectives)
             {
                 switch (conceptAndObjective)
@@ -35,16 +37,6 @@ namespace ExerciseReport
             }
 
             return (learningObjectives, errors);
-        }
-        
-        private IEnumerable<string> GetExerciseDesignsForTrack(string track)
-        {
-            var exercisePaths = Directory.EnumerateDirectories(Path.Combine(root, $"languages/{track}/exercises/concept"));
-            var designs = exercisePaths
-                .Select(exp => Path.Combine(exp, ".meta/design.md"))
-                .Where(path => File.Exists(path))
-                .Select(path => File.ReadAllText(path));
-            return designs;
         }
     }
 }

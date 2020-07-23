@@ -12,15 +12,19 @@ namespace ExerciseReport
             const string SampleDesignDoc = "ExerciseReport.sample_design.md";
         
             var ddp = new DesignDocParser();
-            string markdownText;
+            string markdownText = string.Empty;
             Stream? stream = this.GetType().Assembly.GetManifestResourceStream(SampleDesignDoc);
-            if (stream == null)
+            if (stream != null)
+            {
+                using (stream)
+                using (var reader = new StreamReader(stream))
+                    markdownText = reader.ReadToEnd();
+            }
+            else
             {
                 Assert.False(true);
             }
-            using (stream)
-            using (var reader = new StreamReader(stream))
-                markdownText = reader.ReadToEnd();
+
             var lo = ddp.ParseDesignDoc(markdownText).ToList();
             Assert.NotEmpty(lo);
         }
@@ -28,7 +32,9 @@ namespace ExerciseReport
         [Fact]
         public void ListExercises_OnExercismGit_ProducesFullList()
         {
-            var ddc = new DesignDocCollator("/Users/mikedamay/projects/exercism/v3", new DesignDocParser());
+            const string ExercismRoot = "/Users/mikedamay/projects/exercism/v3";
+            var ddc = new DesignDocCollator(ExercismRoot, new DesignDocParser()
+            , new DesignDocFileHandler(ExercismRoot));
             var actual = ddc.GetLearningObjectives("csharp");
         }
     }

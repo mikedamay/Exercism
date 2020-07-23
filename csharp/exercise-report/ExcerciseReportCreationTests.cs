@@ -13,7 +13,7 @@ namespace ExerciseReport
         [Fact]
         public void Serialize_ExerciseFile_ProducesWellFormedJson()
         {
-            var erh = new ExerciseFileHandler();
+            var erh = new ExerciseFileJsonHandler();
             var actual = erh.ToString(ObjectHierarchy.Sample1);
             Stream? resourceStream = this.GetType().Assembly.GetManifestResourceStream(JsonSample1);
             if (resourceStream == null)
@@ -30,7 +30,7 @@ namespace ExerciseReport
         [Fact]
         public void Deserialize_WellFormedJson_ProducesObjectTree()
         {
-            var erh = new ExerciseFileHandler();
+            var erh = new ExerciseFileJsonHandler();
             var expected = ObjectHierarchy.Sample1;
             Stream? resourceStream = this.GetType().Assembly.GetManifestResourceStream(JsonSample1);
             if (resourceStream == null)
@@ -63,7 +63,7 @@ namespace ExerciseReport
             var tnci = new TrackNeutralConceptsImporter();
             var efc = new ExerciseFileCreator(cdi, tnci);
             var exerciseFile = efc.CreateExerciseFileFromConceptsDoc();
-            var efh = new ExerciseFileHandler();
+            var efh = new ExerciseFileJsonHandler();
             string result = efh.ToString(exerciseFile);
             Assert.NotNull(exerciseFile);
         }
@@ -82,11 +82,18 @@ namespace ExerciseReport
             const string SampleDesignDoc = "ExerciseReport.sample_design.md";
         
             var ddp = new DesignDocParser();
-            string markdownText;
+            string markdownText = string.Empty;
             Stream? stream = this.GetType().Assembly.GetManifestResourceStream(SampleDesignDoc);
-            using (stream)
-            using (var reader = new StreamReader(stream))
-                markdownText = reader.ReadToEnd();
+            if (stream != null)
+            {
+                using (stream)
+                using (var reader = new StreamReader(stream))
+                    markdownText = reader.ReadToEnd();
+            }
+            else
+            {
+                Assert.False(true);
+            }
             var lo = ddp.ParseDesignDoc(markdownText);
             
         }
