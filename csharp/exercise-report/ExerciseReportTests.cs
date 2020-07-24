@@ -47,7 +47,17 @@ namespace ExerciseReport
                 new ExerciseFileJsonHandler())
                 , new DesignDocCollator(ExercismRoot, new DesignDocParser()
                     , new DesignDocFileHandler(ExercismRoot) ));
-            em.MergeLearningObjectives();
+            em.Merge();
+        }
+
+        [Fact]
+        public void Report_OnExerciseFileTree_ProducesWellFormedReport()
+        {
+            var rr = new Reporter();
+            var merger = ExerciseMerger.TestCSharpMerger;
+            var exerciseFile = merger.MergeLearningObjectives();
+            var output = rr.CreateReport(exerciseFile);
+            Assert.NotEmpty(output);
         }
     }
 }
