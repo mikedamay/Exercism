@@ -1,4 +1,4 @@
-/*using System;
+using System;
 using System.Collections.Generic;
 
 public interface IRemoteControlCar
@@ -9,13 +9,13 @@ public interface IRemoteControlCar
 
 public class ProductionRemoteControlCar : IRemoteControlCar, IComparable<ProductionRemoteControlCar>
 {
+    public decimal DistanceTravelled { get; private set; }
+    public int NumberOfVictories { get; set; }
+
     public void Drive()
     {
         DistanceTravelled += 10;
     }
-
-    public decimal DistanceTravelled { get; private set; }
-    public int NumberOfVictories { get; set; }
 
     public int CompareTo(ProductionRemoteControlCar other)
     {
@@ -27,12 +27,12 @@ public class ProductionRemoteControlCar : IRemoteControlCar, IComparable<Product
 
 public class ExperimentalRemoteControlCar : IRemoteControlCar
 {
+    public decimal DistanceTravelled { get; private set; }
+
     public void Drive()
     {
         DistanceTravelled += 20;
     }
-
-    public decimal DistanceTravelled { get; private set; }
 }
 
 
@@ -51,4 +51,4 @@ public static class TestTrack
         rankings.Sort();
         return rankings;
     }
-}*/
+}

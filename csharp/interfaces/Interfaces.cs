@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections.Generic;
 
 public interface IRemoteControlCar
@@ -39,4 +39,4 @@ public static class TestTrack
     {
         throw new NotImplementedException($"Please implement the (static) TestTrack.GetRankedCars() method");
     }
-}
+}*/
