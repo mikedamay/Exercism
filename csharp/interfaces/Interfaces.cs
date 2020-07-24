@@ -27,7 +27,6 @@ public class ExperimentalRemoteControlCar : IRemoteControlCar
     }
 }
 
-
 public static class TestTrack
 {
     public static decimal Race(IRemoteControlCar car)
