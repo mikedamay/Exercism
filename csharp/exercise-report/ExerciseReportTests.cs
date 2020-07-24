@@ -53,7 +53,7 @@ namespace ExerciseReport
         [Fact]
         public void Report_OnExerciseFileTree_ProducesWellFormedReport()
         {
-            var rr = new Reporter();
+            var rr = new Reporter("https://github.com/mikedamay/v3/tree/csharp/interfaces");
             var merger = ExerciseMerger.TestCSharpMerger;
             var exerciseFile = merger.MergeLearningObjectives();
             var output = rr.CreateReport(exerciseFile);
