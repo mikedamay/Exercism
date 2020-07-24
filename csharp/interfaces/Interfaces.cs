@@ -17,7 +17,7 @@ public class ProductionRemoteControlCar
     }
 }
 
-public class ExperimentalRemoteControlCar : IRemoteControlCar
+public class ExperimentalRemoteControlCar
 {
     public decimal DistanceTravelled { get; private set; }
 

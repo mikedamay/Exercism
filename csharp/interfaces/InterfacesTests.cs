@@ -9,8 +9,8 @@ public class InterfacesTests
         var experimentalCar = new ExperimentalRemoteControlCar();
         TestTrack.Race((IRemoteControlCar)productionCar);
         TestTrack.Race((IRemoteControlCar)productionCar);
-        TestTrack.Race(experimentalCar);
-        TestTrack.Race(experimentalCar);
+        TestTrack.Race((IRemoteControlCar)experimentalCar);
+        TestTrack.Race((IRemoteControlCar)experimentalCar);
         Assert.Equal(20, experimentalCar.DistanceTravelled - productionCar.DistanceTravelled);
     }
 
