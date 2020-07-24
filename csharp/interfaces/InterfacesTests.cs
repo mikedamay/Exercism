@@ -7,8 +7,8 @@ public class InterfacesTests
     {
         var productionCar = new ProductionRemoteControlCar();
         var experimentalCar = new ExperimentalRemoteControlCar();
-        TestTrack.Race(productionCar);
-        TestTrack.Race(productionCar);
+        TestTrack.Race((IRemoteControlCar)productionCar);
+        TestTrack.Race((IRemoteControlCar)productionCar);
         TestTrack.Race(experimentalCar);
         TestTrack.Race(experimentalCar);
         Assert.Equal(20, experimentalCar.DistanceTravelled - productionCar.DistanceTravelled);
@@ -22,6 +22,6 @@ public class InterfacesTests
         prc1.NumberOfVictories = 3;
         prc2.NumberOfVictories = 2;
         var rankings = TestTrack.GetRankedCars(prc1, prc2);
-        Assert.Same(prc2, rankings[0]);
+        Assert.Same(prc1, rankings[1]);
     }
 }
