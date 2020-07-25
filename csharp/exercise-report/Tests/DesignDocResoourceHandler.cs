@@ -9,7 +9,7 @@ namespace ExerciseReport.Tests
     {
         public IEnumerable<string> GetExerciseDesignsForTrack(string track)
         {
-            Stream? stream = this.GetType().Assembly.GetManifestResourceStream("ExerciseReport.Tests.many_designs.md");
+            Stream? stream = this.GetType().Assembly.GetManifestResourceStream(Constants.ManyDesignsResource);
             string resource = string.Empty;
             if (stream != null)
             {
@@ -17,8 +17,12 @@ namespace ExerciseReport.Tests
                 using (var reader = new StreamReader(stream))
                     resource = reader.ReadToEnd();
             }
+            else
+            {
+                throw new NullReferenceException($"{nameof(stream)} is null - missing resource - {Constants.ManyDesignsResource}");
+            }
 
-            return Regex.Split(Environment.NewLine + "separator-1729" + Environment.NewLine, resource);
+            return Regex.Split(resource, Environment.NewLine + "separator-1729" + Environment.NewLine);
         }
     }
 }

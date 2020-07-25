@@ -4,32 +4,28 @@ namespace ExerciseReport
 {
     public interface IExerciseFileHandler
     {
-        ExerciseObjectTree ReadFile();
-        void WriteFile(ExerciseObjectTree exerciseObjectTree);
+        string ReadFile();
+        void WriteFile(string exerciseJson);
 
     }
 
-    internal class ExerciseFileHandler
+    internal class ExerciseFileHandler : IExerciseFileHandler
     {
         private readonly string trackConfigPathAndFileName;
-        private readonly ExerciseJsonParser exerciseJsonParser;
 
-        public ExerciseFileHandler(string root, string track, ExerciseJsonParser jsonParser)
+        public ExerciseFileHandler(string root, string track)
         {
             trackConfigPathAndFileName = Path.Combine(root, "languages", track, "reference/exercises.json");
-            exerciseJsonParser = jsonParser;
         }
 
-        public ExerciseObjectTree ReadFile()
+        public string ReadFile()
         {
-            var text = File.ReadAllText(trackConfigPathAndFileName);
-            return exerciseJsonParser.FromString(text);
+            return File.ReadAllText(trackConfigPathAndFileName);
         }
 
-        public void WriteFile(ExerciseObjectTree exerciseObjectTree)
+        public void WriteFile(string exerciseJson)
         {
-            var text = exerciseJsonParser.ToString(exerciseObjectTree);
-            File.WriteAllText(trackConfigPathAndFileName, text);
+            File.WriteAllText(trackConfigPathAndFileName, exerciseJson);
         }
     }
 }

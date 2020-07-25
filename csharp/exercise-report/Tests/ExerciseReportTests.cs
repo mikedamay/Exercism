@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Xml.XPath;
 using Xunit;
 
 namespace ExerciseReport.Tests
@@ -35,7 +34,7 @@ namespace ExerciseReport.Tests
         [Fact]
         public void ListExercises_OnExercismGit_ProducesFullList()
         {
-            const string ExercismRoot = "/Users/mikedamay/projects/exercism/v3";
+            const string ExercismRoot = Constants.TestUserRoot;
             var ddc = new DesignDocCollator(ExercismRoot, new DesignDocParser()
                 , new DesignDocFileHandler(ExercismRoot));
             var actual = ddc.GetLearningObjectives("csharp");
@@ -46,7 +45,7 @@ namespace ExerciseReport.Tests
         {
             string ExercismRoot = PathNames.Test.Root;
             const string Track = "csharp";
-            var em = new ExerciseMerger(Track, new ExerciseFileHandler(ExercismRoot, Track,
+            var em = new ExerciseMerger(Track, new ExerciseObjectTreeCollator( new ExerciseFileHandler(ExercismRoot, Track),
                     new ExerciseJsonParser())
                 , new DesignDocCollator(ExercismRoot, new DesignDocParser()
                     , new DesignDocResoourceHandler()));
@@ -56,7 +55,7 @@ namespace ExerciseReport.Tests
         [Fact]
         public void Report_OnExerciseFileTree_ProducesWellFormedReport()
         {
-            var rr = new Reporter("https://github.com/mikedamay/v3/tree/csharp/interfaces");
+            var rr = new Reporter("https://github.com/mikedamay/v3/tree/csharp/exercise-report");
             var merger = ExerciseMerger.TestCSharpMerger;
             var exerciseFile = merger.MergeLearningObjectives();
             var output = rr.CreateReport(exerciseFile);
@@ -66,7 +65,7 @@ namespace ExerciseReport.Tests
         [Fact]
         public void MakeDesignTestData() 
         {
-            string Separator = Environment.NewLine + "separator-1729" + Environment.NewLine;
+            string Separator = Constants.DesignDocSeparator;
             var ddfh = new DesignDocFileHandler(PathNames.Test.Root);
             var designs = ddfh.GetExerciseDesignsForTrack("csharp").ToList();
             var designResource = string.Join(Separator, designs);
