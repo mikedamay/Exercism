@@ -75,29 +75,29 @@ namespace ExerciseReport.Creation
             Assert.Equal(40, map.Count);
         }
 
-        [Fact]
-        public void Parse_WellFormedDesignDoc_ProducesConceptLearningObjectives()
-        {
-            const string SampleDesignDoc = "ExerciseReport.Tests.sample_design.md";
-        
-            var ddp = new DesignDocParser();
-            string markdownText = string.Empty;
-            Stream? stream = this.GetType().Assembly.GetManifestResourceStream(SampleDesignDoc);
-            if (stream != null)
-            {
-                using (stream)
-                using (var reader = new StreamReader(stream))
-                    markdownText = reader.ReadToEnd();
-            }
-            else
-            {
-                Assert.False(true);
-            }
-            var lo = ddp.ParseDesignDoc(markdownText, "test-track");
-            
-        }
+    //     [Fact]
+    //     public void Parse_WellFormedDesignDoc_ProducesConceptLearningObjectives()
+    //     {
+    //         const string SampleDesignDoc = "ExerciseReport.Creation.sample_design.md";
+    //     
+    //         var ddp = new DesignDocParser();
+    //         string markdownText = string.Empty;
+    //         Stream? stream = this.GetType().Assembly.GetManifestResourceStream(SampleDesignDoc);
+    //         if (stream != null)
+    //         {
+    //             using (stream)
+    //             using (var reader = new StreamReader(stream))
+    //                 markdownText = reader.ReadToEnd();
+    //         }
+    //         else
+    //         {
+    //             Assert.False(true);
+    //         }
+    //         var lo = ddp.ParseDesignDoc(markdownText, "test-track");
+    //         
+    //     }
     }
-
+    
     public static class ObjectHierarchy
     {
         public static ExerciseObjectTree Sample1 => new ExerciseObjectTree

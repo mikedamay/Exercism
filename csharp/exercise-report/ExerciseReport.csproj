@@ -15,12 +15,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="Tests\track_neutral_concepts.md" />
       <None Remove="sample.json" />
       <None Remove="orig.csv" />
       <EmbeddedResource Include="Creation\original_concepts_doc.csv" />
       <EmbeddedResource Include="Creation\sample.json" />
       <None Remove="StoryLinks.txt" />
+      <EmbeddedResource Include="Creation\track_neutral_concepts.md" />
       <EmbeddedResource Include="Tests\sample_design.md" />
       <None Remove="sample_design.md" />
     </ItemGroup>
