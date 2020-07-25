@@ -1,7 +1,6 @@
 {
   "exercises": [
     {
-      "slug": "sample1-slug",
       "level": "introductory",
       "track-neutral-story": "sample1-track-neutral-story",
       "document-type": "design",

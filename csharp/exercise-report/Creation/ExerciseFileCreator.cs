@@ -45,7 +45,7 @@ namespace ExerciseReport.Creation
                             "A" => Level.Introductory,
                             "B" => Level.Essential,
                             "C" => Level.Advanced,
-                            _ => Level.None                            
+                            _ => Level.Invalid                            
                         },
                         DocumentType = ic.DocType == "I" ? DocType.Issue :
                             ic.DocType == "E" ? DocType.Design : DocType.None,

@@ -7,7 +7,8 @@ namespace ExerciseReport
     {
         None = 'N',
         Design = 'D',
-        Issue = 'I'
+        Issue = 'I',
+        Invalid = 'L'
     }
 
     public enum Level
@@ -15,7 +16,8 @@ namespace ExerciseReport
         Introductory = 'A',
         Essential = 'B',
         Advanced = 'C',
-        None = 'N'
+        None = 'N',
+        Invalid = 'L'
     }
 
     public class Exercise
@@ -23,11 +25,11 @@ namespace ExerciseReport
         [JsonPropertyName("slug")]
         public string Slug { get; set; } = string.Empty;
         [JsonPropertyName("level")]
-        public Level Level { get; set; } = Level.None;
+        public Level Level { get; set; } = Level.Invalid;
         [JsonPropertyName("track-neutral-story")]
         public string TrackNeutralStory { get; set; } = string.Empty;
         [JsonPropertyName("document-type")]
-        public DocType DocumentType { get; set; } = DocType.None;
+        public DocType DocumentType { get; set; } = DocType.Invalid;
         [JsonPropertyName("document-link")]
         public string DocumentLink { get; set; } = string.Empty;
         [JsonPropertyName("concepts")]
@@ -38,8 +40,6 @@ namespace ExerciseReport
     {
         [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
-        //[JsonPropertyName("description")]
-        //public string Description { get; set; } = string.Empty;
         [JsonPropertyName("track-neutral-concept")]
         public string TrackNeutralConcept { get; set; } = string.Empty;
         [JsonPropertyName("learning-objectives")]
@@ -59,6 +59,6 @@ namespace ExerciseReport
     public class ExerciseObjectTree
     {
         [JsonPropertyName("exercises")]
-       public IList<Exercise> Exercises { get; set; } = new List<Exercise>(); 
+        public IList<Exercise> Exercises { get; set; } = new List<Exercise>(); 
     }
 }

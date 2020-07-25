@@ -31,4 +31,8 @@
       <EmbeddedResource Include="Tests\exercise_missing_fields.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Tests\Data" />
+    </ItemGroup>
+
 </Project>
