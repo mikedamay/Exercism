@@ -13,15 +13,15 @@ namespace ExerciseReport
             exerciseFileJsonHandler = jsonHandler;
         }
 
-        public ExerciseFile ReadFile()
+        public ExerciseObjectTree ReadFile()
         {
             var text = File.ReadAllText(trackConfigPathAndFileName);
             return exerciseFileJsonHandler.FromString(text);
         }
 
-        public void WriteFile(ExerciseFile exerciseFile)
+        public void WriteFile(ExerciseObjectTree exerciseObjectTree)
         {
-            var text = exerciseFileJsonHandler.ToString(exerciseFile);
+            var text = exerciseFileJsonHandler.ToString(exerciseObjectTree);
             File.WriteAllText(trackConfigPathAndFileName, text);
         }
     }

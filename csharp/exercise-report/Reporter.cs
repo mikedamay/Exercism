@@ -14,15 +14,15 @@ namespace ExerciseReport
             this.root = root;
         }
 
-        public string CreateReport(ExerciseFile exerciseFile)
+        public string CreateReport(ExerciseObjectTree exerciseObjectTree)
         {
-            var concepts = CreateConceptPart(exerciseFile);
-            var conceptDefiniitons = CreateLearningObjectivesPart(exerciseFile);
-            var linkReferences = CreateLinkReferences(exerciseFile);
+            var concepts = CreateConceptPart(exerciseObjectTree);
+            var conceptDefiniitons = CreateLearningObjectivesPart(exerciseObjectTree);
+            var linkReferences = CreateLinkReferences(exerciseObjectTree);
             return concepts + conceptDefiniitons + linkReferences;
         }
 
-        private string CreateConceptPart(ExerciseFile exerciseFile)
+        private string CreateConceptPart(ExerciseObjectTree exerciseObjectTree)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("# C&#35; reference");
@@ -39,21 +39,21 @@ namespace ExerciseReport
             sb.AppendLine();
             sb.AppendLine("### Introductory Concepts");
             sb.AppendLine(); 
-            GetCncepts(sb, exerciseFile, Level.Introductory);
+            GetCncepts(sb, exerciseObjectTree, Level.Introductory);
             sb.AppendLine();
             sb.AppendLine("### Essential Concepts");
             sb.AppendLine(); 
-            GetCncepts(sb, exerciseFile, Level.Essential);
+            GetCncepts(sb, exerciseObjectTree, Level.Essential);
             sb.AppendLine();
             sb.AppendLine("### Advanced Concepts");
             sb.AppendLine(); 
-            GetCncepts(sb, exerciseFile, Level.Advanced);
+            GetCncepts(sb, exerciseObjectTree, Level.Advanced);
             return sb.ToString();
         }
 
-        private string CreateLearningObjectivesPart(ExerciseFile exerciseFile)
+        private string CreateLearningObjectivesPart(ExerciseObjectTree exerciseObjectTree)
         {
-            var conceptList = exerciseFile.Exercises
+            var conceptList = exerciseObjectTree.Exercises
                 .SelectMany(ex => ex.Concepts)
                 .Where(c => c.LearningObjectives.Count > 0)
                 .OrderBy(c => c.Name)
@@ -76,10 +76,10 @@ namespace ExerciseReport
             return sb.ToString();
         }
 
-        private string CreateLinkReferences(ExerciseFile exerciseFile)
+        private string CreateLinkReferences(ExerciseObjectTree exerciseObjectTree)
         {
             StringBuilder sb = new StringBuilder();
-            var issuesOrDesigns = exerciseFile.Exercises
+            var issuesOrDesigns = exerciseObjectTree.Exercises
                 .Where(ex => ex.DocumentType != DocType.None)
                 .OrderBy(ex => ex.Slug)
                 .Select(ex => $"[{(ex.DocumentType == DocType.Issue ? "issue-" : "design-") + ex.Slug}]: {ex.DocumentLink}");
@@ -90,7 +90,7 @@ namespace ExerciseReport
                 sb.AppendLine(issueOrDesign);
             }
 
-            var trackNeutralConcepts = exerciseFile.Exercises
+            var trackNeutralConcepts = exerciseObjectTree.Exercises
                 .SelectMany(ex => ex.Concepts)
                 .Where(c => !string.IsNullOrWhiteSpace(c.TrackNeutralConcept))
                 .OrderBy(c => c.Name)
@@ -102,9 +102,9 @@ namespace ExerciseReport
             return sb.ToString();
         }
 
-        private void GetCncepts(StringBuilder sb, ExerciseFile exerciseFile, Level level)
+        private void GetCncepts(StringBuilder sb, ExerciseObjectTree exerciseObjectTree, Level level)
         {
-            var outputs = exerciseFile.Exercises
+            var outputs = exerciseObjectTree.Exercises
                 .SelectMany(ex => ex.Concepts, (ex,
                     c) => (ex, c))
                 .Where(p => p.Item1.Level == level)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace ExerciseReport
+namespace ExerciseReport.Creation
 {
     internal class ExerciseFileCreator
     {
@@ -18,11 +18,11 @@ namespace ExerciseReport
             this.tncImporter = tncImporter;
         }
 
-        public ExerciseFile CreateExerciseFileFromConceptsDoc()
+        public ExerciseObjectTree CreateExerciseFileFromConceptsDoc()
         {
             var conceptMap = new Dictionary<string, Concept>();
             var exerciseMap = new Dictionary<string, Exercise>();
-            var exerciseFile = new ExerciseFile();
+            var exerciseFile = new ExerciseObjectTree();
 
             var unallocatedConceptsExercise = new Exercise
             {

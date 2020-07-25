@@ -5,7 +5,7 @@ namespace ExerciseReport
 {
     public class ExerciseFileJsonHandler
     {
-        public string ToString(ExerciseFile exerciseFile)
+        public string ToString(ExerciseObjectTree exerciseObjectTree)
         {
             var options = new JsonSerializerOptions
             {
@@ -13,17 +13,17 @@ namespace ExerciseReport
                 WriteIndented = true,
             };
             options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-            return JsonSerializer.Serialize(exerciseFile, options);
+            return JsonSerializer.Serialize(exerciseObjectTree, options);
         }
 
-        public ExerciseFile FromString(string sampleJson)
+        public ExerciseObjectTree FromString(string sampleJson)
         {
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
             options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-            return JsonSerializer.Deserialize<ExerciseFile>(sampleJson, options);
+            return JsonSerializer.Deserialize<ExerciseObjectTree>(sampleJson, options);
         }
     }
 }

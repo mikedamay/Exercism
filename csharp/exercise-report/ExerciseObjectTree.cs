@@ -56,7 +56,7 @@ namespace ExerciseReport
         public int LineNumber { get; set; } = 0;
     }
     
-    public class ExerciseFile
+    public class ExerciseObjectTree
     {
         [JsonPropertyName("exercises")]
        public IList<Exercise> Exercises { get; set; } = new List<Exercise>(); 

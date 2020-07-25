@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace ExerciseReport
+namespace ExerciseReport.Creation
 {
     internal enum ImportResult
     {
@@ -12,7 +12,7 @@ namespace ExerciseReport
     internal class ConceptsDocImporter
     {
         private const int MAX_ERRORS = 60;
-        private const string OriginalConceptsDoc = "ExerciseReport.original_concepts_doc.csv";
+        private const string OriginalConceptsDoc = "ExerciseReport.Creation.original_concepts_doc.csv";
 
         private enum SplitResult
         {

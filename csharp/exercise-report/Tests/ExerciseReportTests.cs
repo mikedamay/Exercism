@@ -2,14 +2,14 @@ using System.IO;
 using System.Linq;
 using Xunit;
 
-namespace ExerciseReport
+namespace ExerciseReport.Tests
 {
     public class ExerciseReportTests
     {
         [Fact]
         public void Parse_WellFormedDesignDoc_ProducesConceptLearningObjectives()
         {
-            const string SampleDesignDoc = "ExerciseReport.sample_design.md";
+            const string SampleDesignDoc = "ExerciseReport.Tests.sample_design.md";
         
             var ddp = new DesignDocParser();
             string markdownText = string.Empty;

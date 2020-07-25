@@ -3,12 +3,11 @@ using System.IO;
 using Xunit;
 using Xunit.Sdk;
 
-
-namespace ExerciseReport
+namespace ExerciseReport.Creation
 {
     public class ExcerciseReportCreationTests
     {
-        private const string JsonSample1 = "ExerciseReport.sample.json";
+        private const string JsonSample1 = "ExerciseReport.Creation.sample.json";
 
         [Fact]
         public void Serialize_ExerciseFile_ProducesWellFormedJson()
@@ -79,7 +78,7 @@ namespace ExerciseReport
         [Fact]
         public void Parse_WellFormedDesignDoc_ProducesConceptLearningObjectives()
         {
-            const string SampleDesignDoc = "ExerciseReport.sample_design.md";
+            const string SampleDesignDoc = "ExerciseReport.Tests.sample_design.md";
         
             var ddp = new DesignDocParser();
             string markdownText = string.Empty;
@@ -101,7 +100,7 @@ namespace ExerciseReport
 
     public static class ObjectHierarchy
     {
-        public static ExerciseFile Sample1 => new ExerciseFile
+        public static ExerciseObjectTree Sample1 => new ExerciseObjectTree
         {
             Exercises = new List<Exercise>
             {

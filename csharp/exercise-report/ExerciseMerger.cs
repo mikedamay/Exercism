@@ -32,7 +32,7 @@ namespace ExerciseReport
             exerciseFileHandler.WriteFile(exerciseFile);
         }
 
-        public ExerciseFile MergeLearningObjectives()
+        public ExerciseObjectTree MergeLearningObjectives()
         {
             var exerciseFile = exerciseFileHandler.ReadFile();
             var learningObjectives = designDocCollator.GetLearningObjectives(track);
@@ -40,9 +40,9 @@ namespace ExerciseReport
             return exerciseFile;
         }
 
-        private void MergeLearningObjectives(ExerciseFile exerciseFile, LearningObjectives learningObjectives)
+        private void MergeLearningObjectives(ExerciseObjectTree exerciseObjectTree, LearningObjectives learningObjectives)
         {
-            var concepts = exerciseFile.Exercises.SelectMany(ex => ex.Concepts);
+            var concepts = exerciseObjectTree.Exercises.SelectMany(ex => ex.Concepts);
             foreach (Concept concept in concepts)
             {
                 var objectives = learningObjectives.GetList(concept.Name);

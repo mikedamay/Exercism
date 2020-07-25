@@ -7,7 +7,7 @@ namespace ExerciseReport
 {
     internal class TrackNeutralConceptsImporter
     {
-        private const string TrackNeutralConceptsDoc = "ExerciseReport.track_neutral_concepts.md";
+        private const string TrackNeutralConceptsDoc = "ExerciseReport.Tests.track_neutral_concepts.md";
 
         public IDictionary<String, string> ImportTrackNeutralConcepts()
         {
