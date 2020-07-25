@@ -27,6 +27,8 @@
       <EmbeddedResource Include="Tests\exercises.json" />
       <None Remove="Tests\many_designs.md" />
       <EmbeddedResource Include="Tests\many_designs.md" />
+      <None Remove="Tests\exercise_missing_fields.json" />
+      <EmbeddedResource Include="Tests\exercise_missing_fields.json" />
     </ItemGroup>
 
 </Project>

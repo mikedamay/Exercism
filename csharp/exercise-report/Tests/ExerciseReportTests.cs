@@ -3,29 +3,33 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xunit;
+using System.Text.Json;
 
 namespace ExerciseReport.Tests
 {
     public class ExerciseReportTests
     {
         [Fact]
+        public void Parse_ExtremeIllFormedExerciseFile_ThrowsException()
+        {
+            var ejp = new ExerciseJsonParser();
+            Assert.Throws<JsonException>(() => ejp.FromString(GetResourceAsString(Constants.ManyDesignsResource)));
+        }
+        
+        [Fact]
+        public void Parse_ExerciseFileMissingFields_ThrowsException()
+        {
+            var ejp = new ExerciseJsonParser();
+            ejp.FromString(GetResourceAsString(Constants.ExerciseMissingFieldsResource));
+        }
+        
+        [Fact]
         public void Parse_WellFormedDesignDoc_ProducesConceptLearningObjectives()
         {
             const string SampleDesignDoc = Constants.SampleDesignResource;
 
             var ddp = new DesignDocParser();
-            string markdownText = string.Empty;
-            Stream? stream = this.GetType().Assembly.GetManifestResourceStream(SampleDesignDoc);
-            if (stream != null)
-            {
-                using (stream)
-                using (var reader = new StreamReader(stream))
-                    markdownText = reader.ReadToEnd();
-            }
-            else
-            {
-                Assert.False(true);
-            }
+            string markdownText = GetResourceAsString(SampleDesignDoc);
 
             var lo = ddp.ParseDesignDoc(markdownText, Constants.CSharpTrack).ToList();
             Assert.NotEmpty(lo);
@@ -70,6 +74,24 @@ namespace ExerciseReport.Tests
             var designs = ddfh.GetExerciseDesignsForTrack().ToList();
             var designResource = string.Join(Separator, designs);
             var output = Regex.Split(designResource, Separator);
+        }
+
+        public static string GetResourceAsString(string resourceName)
+        {
+            string resourcePath = $"ExerciseReport.Tests.{resourceName}";
+            string markdownText = string.Empty;
+            Stream? stream = typeof(ExerciseReportTests).Assembly.GetManifestResourceStream(resourcePath);
+            if (stream != null)
+            {
+                using (stream)
+                using (var reader = new StreamReader(stream))
+                    markdownText = reader.ReadToEnd();
+                return markdownText;
+            }
+            else
+            {
+                throw new NullReferenceException($"{nameof(stream)} is null - missing resource {resourcePath}");
+            }
         }
     }
 }

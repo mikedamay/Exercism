@@ -4,9 +4,10 @@ namespace ExerciseReport.Tests
 {
     internal static class Constants
     {
-        public const string ExercisesResource = "ExerciseReport.Tests.exercises.json";
-        public const string ManyDesignsResource = "ExerciseReport.Tests.many_designs.md";
-        public const string SampleDesignResource = "ExerciseReport.Tests.sample_design.md";
+        public const string ExercisesResource = "exercises.json";
+        public const string ManyDesignsResource = "many_designs.md";
+        public const string SampleDesignResource = "sample_design.md";
+        public const string ExerciseMissingFieldsResource = "exercise_missing_fields.json";
 
         public static readonly string DesignDocSeparator = Environment.NewLine + "separator-1729" + Environment.NewLine;
 
