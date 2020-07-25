@@ -16,7 +16,7 @@ namespace ExerciseReport
             new ExerciseMerger(CSharpTrack, new ExerciseObjectTreeCollator(new ExerciseFileHandler( TestRoot, CSharpTrack),
                     new ExerciseJsonParser())
                 , new DesignDocCollator(TestRoot, new DesignDocParser()
-                    , new DesignDocFileHandler(TestRoot)));
+                    , new DesignDocFileHandler(TestRoot, "csharp")));
 
         public ExerciseMerger(string track,
             ExerciseObjectTreeCollator exerciseFileHandler, DesignDocCollator designDocCollator)

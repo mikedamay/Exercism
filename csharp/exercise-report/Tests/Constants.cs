@@ -11,5 +11,7 @@ namespace ExerciseReport.Tests
         public static readonly string DesignDocSeparator = Environment.NewLine + "separator-1729" + Environment.NewLine;
 
         public const string TestUserRoot = "/Users/mikedamay/projects/exercism/v3";
+
+        public const string CSharpTrack = "csharp";
     }
 }

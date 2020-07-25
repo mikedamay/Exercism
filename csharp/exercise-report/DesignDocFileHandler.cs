@@ -6,22 +6,29 @@ namespace ExerciseReport
 {
     internal interface IDesignDocFileHandler
     {
-        IEnumerable<string> GetExerciseDesignsForTrack(string track);
+        IEnumerable<string> GetExerciseDesignsForTrack();
     }
     internal class DesignDocFileHandler : IDesignDocFileHandler
     {
         private readonly string root;
+        private readonly string track;
 
-        public DesignDocFileHandler(string root)
+        public DesignDocFileHandler(string root, string track)
         {
             this.root = root;
+            this.track = track;
         }
 
-        public IEnumerable<string> GetExerciseDesignsForTrack(string track)
+        public IEnumerable<string> GetExerciseDesignsForTrack()
         {
-            var exercisePaths = Directory.EnumerateDirectories(Path.Combine(root, $"languages/{track}/exercises/concept"));
+            var exercisePaths = Directory.EnumerateDirectories(Path.Combine(
+                root,
+                PathNames.Default.Languages,
+                track,
+                PathNames.Default.Exercises
+                ));    // ./languages/csharp/exercises/concept
             var designs = exercisePaths
-                .Select(exp => Path.Combine(exp, ".meta/design.md"))
+                .Select(exp => Path.Combine(exp, PathNames.Default.Design))
                 .Where(path => File.Exists(path))
                 .Select(path => File.ReadAllText(path));
             return designs;

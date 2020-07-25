@@ -11,7 +11,7 @@ namespace ExerciseReport.Tests
         [Fact]
         public void Parse_WellFormedDesignDoc_ProducesConceptLearningObjectives()
         {
-            const string SampleDesignDoc = "ExerciseReport.Tests.sample_design.md";
+            const string SampleDesignDoc = Constants.SampleDesignResource;
 
             var ddp = new DesignDocParser();
             string markdownText = string.Empty;
@@ -27,7 +27,7 @@ namespace ExerciseReport.Tests
                 Assert.False(true);
             }
 
-            var lo = ddp.ParseDesignDoc(markdownText, "test-track").ToList();
+            var lo = ddp.ParseDesignDoc(markdownText, Constants.CSharpTrack).ToList();
             Assert.NotEmpty(lo);
         }
 
@@ -36,15 +36,15 @@ namespace ExerciseReport.Tests
         {
             const string ExercismRoot = Constants.TestUserRoot;
             var ddc = new DesignDocCollator(ExercismRoot, new DesignDocParser()
-                , new DesignDocFileHandler(ExercismRoot));
-            var actual = ddc.GetLearningObjectives("csharp");
+                , new DesignDocFileHandler(ExercismRoot, "csharp"));
+            var actual = ddc.GetLearningObjectives(Constants.CSharpTrack);
         }
 
         [Fact]
         public void Merge_ExercisesAndDesignDocs_ShowsLearningObjectives()
         {
             string ExercismRoot = PathNames.Test.Root;
-            const string Track = "csharp";
+            const string Track = Constants.CSharpTrack;
             var em = new ExerciseMerger(Track, new ExerciseObjectTreeCollator( new ExerciseFileHandler(ExercismRoot, Track),
                     new ExerciseJsonParser())
                 , new DesignDocCollator(ExercismRoot, new DesignDocParser()
@@ -66,8 +66,8 @@ namespace ExerciseReport.Tests
         public void MakeDesignTestData() 
         {
             string Separator = Constants.DesignDocSeparator;
-            var ddfh = new DesignDocFileHandler(PathNames.Test.Root);
-            var designs = ddfh.GetExerciseDesignsForTrack("csharp").ToList();
+            var ddfh = new DesignDocFileHandler(PathNames.Test.Root, "csharp");
+            var designs = ddfh.GetExerciseDesignsForTrack().ToList();
             var designResource = string.Join(Separator, designs);
             var output = Regex.Split(designResource, Separator);
         }

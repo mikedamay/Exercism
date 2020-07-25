@@ -7,7 +7,7 @@ namespace ExerciseReport.Tests
 {
     internal class DesignDocResoourceHandler : IDesignDocFileHandler
     {
-        public IEnumerable<string> GetExerciseDesignsForTrack(string track)
+        public IEnumerable<string> GetExerciseDesignsForTrack()
         {
             Stream? stream = this.GetType().Assembly.GetManifestResourceStream(Constants.ManyDesignsResource);
             string resource = string.Empty;

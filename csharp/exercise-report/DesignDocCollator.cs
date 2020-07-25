@@ -21,7 +21,7 @@ namespace ExerciseReport
         {
             var errors = new List<string>();
             var learningObjectives = new LearningObjectives();
-            var conceptsAndObjectives = designDocFileHandler.GetExerciseDesignsForTrack(track)
+            var conceptsAndObjectives = designDocFileHandler.GetExerciseDesignsForTrack()
                 .SelectMany(d => designDocParser.ParseDesignDoc(d, track));
             foreach (var conceptAndObjective in conceptsAndObjectives)
             {
