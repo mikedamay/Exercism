@@ -4,7 +4,11 @@ using System.Linq;
 
 namespace ExerciseReport
 {
-    internal class DesignDocFileHandler
+    internal interface IDesignDocFileHandler
+    {
+        IEnumerable<string> GetExerciseDesignsForTrack(string track);
+    }
+    internal class DesignDocFileHandler : IDesignDocFileHandler
     {
         private readonly string root;
 
