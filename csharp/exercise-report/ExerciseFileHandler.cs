@@ -2,7 +2,7 @@ using System.IO;
 
 namespace ExerciseReport
 {
-    public class ExerciseFileHandler
+    internal class ExerciseFileHandler
     {
         private readonly string trackConfigPathAndFileName;
         private readonly ExerciseJsonHandler exerciseJsonHandler;

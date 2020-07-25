@@ -4,7 +4,7 @@ using Xunit;
 
 namespace ExerciseReport
 {
-    public static class MyDebug
+    internal static class MyDebug
     {
         public static void Assert(Expression<Func<bool>> expr, string message)
         {

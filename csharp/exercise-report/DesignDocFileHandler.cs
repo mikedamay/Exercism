@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ExerciseReport
 {
-    public class DesignDocFileHandler
+    internal class DesignDocFileHandler
     {
         private readonly string root;
 
