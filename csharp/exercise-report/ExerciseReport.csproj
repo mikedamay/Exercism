@@ -15,24 +15,26 @@
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="Tests\Data\sample_design.md" />
       <None Remove="sample.json" />
       <None Remove="orig.csv" />
       <EmbeddedResource Include="Creation\original_concepts_doc.csv" />
       <EmbeddedResource Include="Creation\sample.json" />
       <None Remove="StoryLinks.txt" />
       <EmbeddedResource Include="Creation\track_neutral_concepts.md" />
-      <EmbeddedResource Include="Tests\sample_design.md" />
+      <EmbeddedResource Include="Tests\Data\exercises.json" />
+      <EmbeddedResource Include="Tests\Data\exercise_missing_fields.json" />
+      <EmbeddedResource Include="Tests\Data\many_designs.md" />
       <None Remove="sample_design.md" />
       <None Remove="Tests\exercises.json" />
-      <EmbeddedResource Include="Tests\exercises.json" />
       <None Remove="Tests\many_designs.md" />
-      <EmbeddedResource Include="Tests\many_designs.md" />
       <None Remove="Tests\exercise_missing_fields.json" />
-      <EmbeddedResource Include="Tests\exercise_missing_fields.json" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Tests\Data" />
+      <Content Include="Tests\Data\design_multiple_hashes.md" />
+      <Content Include="Tests\Data\design_no_concepts.md" />
+      <Content Include="Tests\Data\design_no_concepts_trailing.md" />
     </ItemGroup>
 
 </Project>
