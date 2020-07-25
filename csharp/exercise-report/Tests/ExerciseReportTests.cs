@@ -47,7 +47,7 @@ namespace ExerciseReport.Tests
             string ExercismRoot = PathNames.Test.Root;
             const string Track = "csharp";
             var em = new ExerciseMerger(Track, new ExerciseFileHandler(ExercismRoot, Track,
-                    new ExerciseJsonHandler())
+                    new ExerciseJsonParser())
                 , new DesignDocCollator(ExercismRoot, new DesignDocParser()
                     , new DesignDocResoourceHandler()));
             em.Merge();

@@ -14,7 +14,7 @@ namespace ExerciseReport
 
         public static ExerciseMerger TestCSharpMerger { get; } =
             new ExerciseMerger(CSharpTrack, new ExerciseFileHandler(TestRoot, CSharpTrack,
-                    new ExerciseJsonHandler())
+                    new ExerciseJsonParser())
                 , new DesignDocCollator(TestRoot, new DesignDocParser()
                     , new DesignDocFileHandler(TestRoot)));
 

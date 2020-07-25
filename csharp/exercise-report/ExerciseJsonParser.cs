@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace ExerciseReport
 {
-    internal class ExerciseJsonHandler
+    internal class ExerciseJsonParser
     {
         public string ToString(ExerciseObjectTree exerciseObjectTree)
         {

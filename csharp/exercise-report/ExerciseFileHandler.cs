@@ -2,26 +2,33 @@ using System.IO;
 
 namespace ExerciseReport
 {
+    public interface IExerciseFileHandler
+    {
+        ExerciseObjectTree ReadFile();
+        void WriteFile(ExerciseObjectTree exerciseObjectTree);
+
+    }
+
     internal class ExerciseFileHandler
     {
         private readonly string trackConfigPathAndFileName;
-        private readonly ExerciseJsonHandler exerciseJsonHandler;
+        private readonly ExerciseJsonParser exerciseJsonParser;
 
-        public ExerciseFileHandler(string root, string track, ExerciseJsonHandler jsonHandler)
+        public ExerciseFileHandler(string root, string track, ExerciseJsonParser jsonParser)
         {
             trackConfigPathAndFileName = Path.Combine(root, "languages", track, "reference/exercises.json");
-            exerciseJsonHandler = jsonHandler;
+            exerciseJsonParser = jsonParser;
         }
 
         public ExerciseObjectTree ReadFile()
         {
             var text = File.ReadAllText(trackConfigPathAndFileName);
-            return exerciseJsonHandler.FromString(text);
+            return exerciseJsonParser.FromString(text);
         }
 
         public void WriteFile(ExerciseObjectTree exerciseObjectTree)
         {
-            var text = exerciseJsonHandler.ToString(exerciseObjectTree);
+            var text = exerciseJsonParser.ToString(exerciseObjectTree);
             File.WriteAllText(trackConfigPathAndFileName, text);
         }
     }

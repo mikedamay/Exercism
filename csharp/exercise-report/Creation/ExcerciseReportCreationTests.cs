@@ -12,7 +12,7 @@ namespace ExerciseReport.Creation
         [Fact]
         public void Serialize_ExerciseFile_ProducesWellFormedJson()
         {
-            var erh = new ExerciseJsonHandler();
+            var erh = new ExerciseJsonParser();
             var actual = erh.ToString(ObjectHierarchy.Sample1);
             Stream? resourceStream = this.GetType().Assembly.GetManifestResourceStream(JsonSample1);
             if (resourceStream == null)
@@ -29,7 +29,7 @@ namespace ExerciseReport.Creation
         [Fact]
         public void Deserialize_WellFormedJson_ProducesObjectTree()
         {
-            var erh = new ExerciseJsonHandler();
+            var erh = new ExerciseJsonParser();
             var expected = ObjectHierarchy.Sample1;
             Stream? resourceStream = this.GetType().Assembly.GetManifestResourceStream(JsonSample1);
             if (resourceStream == null)
@@ -62,7 +62,7 @@ namespace ExerciseReport.Creation
             var tnci = new TrackNeutralConceptsImporter();
             var efc = new ExerciseFileCreator(cdi, tnci);
             var exerciseFile = efc.CreateExerciseFileFromConceptsDoc();
-            var efh = new ExerciseJsonHandler();
+            var efh = new ExerciseJsonParser();
             string result = efh.ToString(exerciseFile);
             Assert.NotNull(exerciseFile);
         }
