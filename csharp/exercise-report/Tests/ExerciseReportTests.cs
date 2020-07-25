@@ -44,7 +44,7 @@ namespace ExerciseReport.Tests
             const string ExercismRoot = "/Users/mikedamay/projects/exercism/v3";
             const string Track = "csharp";
             var em = new ExerciseMerger(Track, new ExerciseFileHandler(ExercismRoot,Track,
-                new ExerciseFileJsonHandler())
+                new ExerciseJsonHandler())
                 , new DesignDocCollator(ExercismRoot, new DesignDocParser()
                     , new DesignDocFileHandler(ExercismRoot) ));
             em.Merge();
