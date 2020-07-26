@@ -1,0 +1,15 @@
+{
+  "exercises": [
+    {
+      "slug": "constructors",
+      "level": "introductory",
+      "document-type": "none",
+      "concepts": [
+        {
+          "name": "constructors"
+        }
+      ]
+    }
+  ]
+}
+  

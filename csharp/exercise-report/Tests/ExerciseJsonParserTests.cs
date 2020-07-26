@@ -153,5 +153,15 @@ namespace ExerciseReport.Tests
             Assert.Single(results.errors);
             Assert.Contains("does not contain any JSON tokens", results.errors[0].Message);
         }
+
+        [Fact]
+        public void ParseExerciseJson_WithMissingInessentialFields_ReportsNoErrors()
+        {
+            var ejp = new ExerciseJsonParser();
+            var json = ExerciseReportTests.GetResourceAsString(
+                Constants.ExercisesMinimalValidResource);
+            var results = ejp.FromString(json); 
+            Assert.Equal(Result.Success, results.result);
+        }
     }
 }

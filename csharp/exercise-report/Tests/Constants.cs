@@ -10,6 +10,7 @@ namespace ExerciseReport.Tests
         public const string ExercisesBadDocTypeResource = "exercises_bad_doctype.json";
         public const string ExercisesBadLevelResource = "exercises_bad_level.json";
         public const string ExercisesEmptyResource = "exercises_empty.json";
+        public const string ExercisesMinimalValidResource = "exercises_minimal_valid.json";
         public const string ExercisesMissingLevelResource = "exercises_missing_level.json";
         public const string ExercisesMissingConceptsResource = "exercises_missing_concepts.json";
         public const string ExercisesMissingConceptNameResource = "exercises_missing_concept_name.json";

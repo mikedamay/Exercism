@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using ExerciseReport.Tests;
 
 namespace ExerciseReport
 {
@@ -13,7 +14,7 @@ namespace ExerciseReport
         private const string CSharpTrack = "csharp";
 
         public static ExerciseMerger TestCSharpMerger { get; } =
-            new ExerciseMerger(CSharpTrack, new ExerciseFileCollator(new ExerciseFileHandler( TestRoot, CSharpTrack),
+            new ExerciseMerger(CSharpTrack, new ExerciseFileCollator(new ExerciseResourceHandler(), 
                     new ExerciseJsonParser())
                 , new DesignDocCollator(TestRoot, new DesignDocParser()
                     , new DesignDocFileHandler(TestRoot, "csharp")));
