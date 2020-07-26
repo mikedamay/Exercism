@@ -39,6 +39,8 @@
       <EmbeddedResource Include="Tests\Data\design_concepts_without_bullets.md" />
       <None Remove="Tests\Data\design_just_concepts.md" />
       <EmbeddedResource Include="Tests\Data\design_just_concepts.md" />
+      <None Remove="Tests\Data\exercises_slightly_wrong.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_slightly_wrong.json" />
     </ItemGroup>
 
     <ItemGroup>

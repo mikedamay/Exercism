@@ -19,7 +19,7 @@ namespace ExerciseReport
         }
 
         public (Result result, ExerciseObjectTree, List<Error> errors) 
-            FromString(string sampleJson)
+            FromString(string jsonText)
         {
             var options = new JsonSerializerOptions
             {
@@ -28,7 +28,18 @@ namespace ExerciseReport
             try
             {
                 options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-                var exerciseObjectTree = JsonSerializer.Deserialize<ExerciseObjectTree>(sampleJson, options);
+                var exerciseObjectTree = JsonSerializer.Deserialize<ExerciseObjectTree>(jsonText, options);
+                if (exerciseObjectTree.Exercises.Count == 0)
+                {
+                    var message = string.IsNullOrWhiteSpace(jsonText)
+                        ? "exercise file input was empty"
+                        : $"Json parser failed to parse input file starting {jsonText.Substring(0, 20)}";
+                    return (
+                        Result.FatalError,
+                        exerciseObjectTree,
+                        new List<Error>{new Error(Severity.Fatal, message)}
+                    );
+                }
                 return (
                     Result.Success,
                     exerciseObjectTree,
