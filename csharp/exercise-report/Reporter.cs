@@ -57,8 +57,13 @@ namespace ExerciseReport
                 .SelectMany(ex => ex.Concepts)
                 .Where(c => c.LearningObjectives.Count > 0)
                 .OrderBy(c => c.Name)
-                .Select(c => new {name = "`" + c.Name + "`", learningObjectives = string.Join(';', c.LearningObjectives)})
+                .Select(c => new
+                    {name = "`" + c.Name + "`", learningObjectives = string.Join(';', c.LearningObjectives)})
                 .ToList();
+            if (conceptList.Count == 0)
+            {
+                return string.Empty;
+            }
             int longestConceptName = conceptList.Max(c => c.name.Length);
             int longestLearningObjectives = conceptList.Max(c => c.learningObjectives.Length);
             StringBuilder sb = new StringBuilder();

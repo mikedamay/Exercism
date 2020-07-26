@@ -41,6 +41,20 @@
       <EmbeddedResource Include="Tests\Data\design_just_concepts.md" />
       <None Remove="Tests\Data\exercises_slightly_wrong.json" />
       <EmbeddedResource Include="Tests\Data\exercises_slightly_wrong.json" />
+      <None Remove="Tests\Data\exercises_missing_concepts.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_missing_concepts.json" />
+      <None Remove="Tests\Data\exercises_missing_document_link.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_missing_document_link.json" />
+      <None Remove="Tests\Data\exercises_missing_document_type.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_missing_document_type.json" />
+      <None Remove="Tests\Data\exercises_missing_level.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_missing_level.json" />
+      <None Remove="Tests\Data\exercises_misssing_slug.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_missing_slug.json" />
+      <None Remove="Tests\Data\exercises_mssing_concept_name.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_missing_concept_name.json" />
+      <None Remove="Tests\Data\exercises_empty.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_empty.json" />
     </ItemGroup>
 
     <ItemGroup>

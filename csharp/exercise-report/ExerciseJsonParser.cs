@@ -36,9 +36,7 @@ namespace ExerciseReport
                 List<Error> errors = Validate(exerciseObjectTree);
                 if (exerciseObjectTree.Exercises.Count == 0)
                 {
-                    var message = string.IsNullOrWhiteSpace(jsonText)
-                        ? "exercise file input was empty"
-                        : $"Json parser failed to parse input file starting {jsonText.Substring(0, 20)}";
+                    var message = $"Json parser failed to parse input file starting {jsonText.Substring(0, 20)}";
                     return (
                         Result.FatalError,
                         exerciseObjectTree,

@@ -1,0 +1,11 @@
+{
+  "exercises": [
+    {
+      "test-of" : "missing concepts",
+      "slug": "classes4",
+      "level": "introductory",
+      "track-neutral-story": "sample1-track-neutral-story",
+      "document-link": "http://sample1-doclink"
+    }
+  ]
+}

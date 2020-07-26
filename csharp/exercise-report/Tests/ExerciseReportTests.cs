@@ -10,13 +10,6 @@ namespace ExerciseReport.Tests
     public class ExerciseReportTests
     {
         [Fact]
-        public void Parse_ExtremeIllFormedExerciseFile_ThrowsException()
-        {
-            var ejp = new ExerciseJsonParser();
-            Assert.Throws<JsonException>(() => ejp.FromString(GetResourceAsString(Constants.ManyDesignsResource)));
-        }
-        
-        [Fact]
         public void Parse_ExerciseFileMissingFields_ThrowsException()
         {
             var ejp = new ExerciseJsonParser();
@@ -62,7 +55,7 @@ namespace ExerciseReport.Tests
             var rr = new Reporter("https://github.com/mikedamay/v3/tree/csharp/exercise-report");
             var merger = ExerciseMerger.TestCSharpMerger;
             var exerciseFile = merger.MergeLearningObjectives();
-            var output = rr.CreateReport(exerciseFile);
+            var output = rr.CreateReport(exerciseFile.exerciseObjectTree);
             Assert.NotEmpty(output);
         }
 

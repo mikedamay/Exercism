@@ -28,16 +28,20 @@ namespace ExerciseReport
 
         public void Merge()
         {
-            var exerciseFile = MergeLearningObjectives();
-            exerciseFileHandler.WriteExercises(exerciseFile);
+            var outputs = MergeLearningObjectives();
+            exerciseFileHandler.WriteExercises(outputs.exerciseObjectTree);
         }
 
-        public ExerciseObjectTree MergeLearningObjectives()
+        public (Result result, ExerciseObjectTree exerciseObjectTree, List<Error> errors) MergeLearningObjectives()
         {
-            var exerciseFile = exerciseFileHandler.ReadExercises();
+            var outputs = exerciseFileHandler.ReadExercises();
+            if (outputs.result == Result.FatalError)
+            {
+                return outputs;
+            }
             var learningObjectives = designDocCollator.GetLearningObjectives(track);
-            MergeLearningObjectives(exerciseFile.exerciseObjectTree, learningObjectives.learningObjectives);
-            return exerciseFile.exerciseObjectTree;
+            MergeLearningObjectives(outputs.exerciseObjectTree, learningObjectives.learningObjectives);
+            return (Result.FatalError, outputs.exerciseObjectTree, outputs.errors);
         }
 
         private void MergeLearningObjectives(ExerciseObjectTree exerciseObjectTree, LearningObjectives learningObjectives)
