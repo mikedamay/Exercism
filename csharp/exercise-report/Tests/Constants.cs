@@ -6,6 +6,14 @@ namespace ExerciseReport.Tests
     {
         public const string ManyDesignsResource = "many_designs.md";
         public const string SampleDesignResource = "sample_design.md";
+        public const string DesignBrokenConceptsResource = "design_broken_concepts.md";
+        public const string DesignConceptsWithoutBulletsResource = "design_concepts_without_bullets.md";
+        public const string DesignConceptsWithoutQuotesResource = "design_concepts_without_quotes.md";
+        public const string DesignJustConceptsResource = "design_just_concepts.md";
+        public const string DesignMultipleHashesResource = "design_multiple_hashes.md";
+        public const string DesignNoConceptsResource = "design_no_concepts.md";
+        public const string DesignNoConceptsTrailingResource = "design_no_concepts_trailing.md";
+        public const string DesignNoConceptSectionResource = "design_no_concept_section.md";
 
         public const string ExercisesBadDocTypeResource = "exercises_bad_doctype.json";
         public const string ExercisesBadLevelResource = "exercises_bad_level.json";

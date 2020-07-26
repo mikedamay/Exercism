@@ -28,7 +28,7 @@ namespace ExerciseReport
         // we are extracting the learning objectives as associated with each concept
         // not the ones actually called "Learning Objectives".  It is what it is.
         public IEnumerable<(bool success, string error, string concept, string objective)> ParseDesignDoc(
-            string designDocText, string track)
+            string designDocName, string designDocText)
         {
             var errors = new List<string>();
             var learningObjectives = new LearningObjectives();
@@ -38,13 +38,14 @@ namespace ExerciseReport
                 .Skip(1)
                 .TakeWhile(line => !MatchesHeading(line))
                 .Where(line => line.Length > 1 && line[0] == '-' && char.IsWhiteSpace(line[1]))
-                .Select(line => LineToConceptAndObjective(line))
-                .DefaultIfEmpty((false, $"{track}: no learning objectives found", string.Empty, String.Empty));
+                .Select(line => LineToConceptAndObjective(designDocName, line))
+                .DefaultIfEmpty((false, $"{designDocName}: no learning objectives found", string.Empty, String.Empty));
             return conceptsAndObjectives;
         }
 
         // line: e.g. "- `basics`: basic stuff"
-        private (bool success, string error, string concept, string objective) LineToConceptAndObjective(string line)
+        private (bool success, string error, string concept, string objective)
+            LineToConceptAndObjective(string docId, string line)
         {
             var match = learningObjectiveRegex.Match(line);
             if (match.Success && match.Groups.ContainsKey(CONCEPT) && match.Groups.ContainsKey(LEARNING_OBJECTIVE))
@@ -53,7 +54,7 @@ namespace ExerciseReport
             }
             else
             {
-                return (false, $"invalid format: {line}", string.Empty, string.Empty);
+                return (false, $"{docId}: invalid format: {line}", string.Empty, string.Empty);
             }
         }
 

@@ -23,7 +23,7 @@ namespace ExerciseReport
             var errors = new List<string>();
             var learningObjectives = new LearningObjectives();
             var conceptsAndObjectives = designDocFileHandler.GetExerciseDesignsForTrack()
-                .SelectMany(d => designDocParser.ParseDesignDoc(d, track));
+                .SelectMany(d => designDocParser.ParseDesignDoc(d.Item1, d.Item2));
             foreach (var conceptAndObjective in conceptsAndObjectives)
             {
                 switch (conceptAndObjective)

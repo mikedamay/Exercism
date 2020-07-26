@@ -24,7 +24,7 @@ namespace ExerciseReport.Tests
             var ddp = new DesignDocParser();
             string markdownText = GetResourceAsString(SampleDesignDoc);
 
-            var lo = ddp.ParseDesignDoc(markdownText, Constants.CSharpTrack).ToList();
+            var lo = ddp.ParseDesignDoc("embedded-resource.md", markdownText).ToList();
             Assert.NotEmpty(lo);
         }
 
@@ -45,7 +45,7 @@ namespace ExerciseReport.Tests
             var em = new ExerciseMerger(Track, new ExerciseFileCollator( new ExerciseFileHandler(ExercismRoot, Track),
                     new ExerciseJsonParser())
                 , new DesignDocCollator(ExercismRoot, new DesignDocParser()
-                    , new DesignDocResoourceHandler()));
+                    , new DesignDocResourceHandler()));
             em.Merge();
         }
 
