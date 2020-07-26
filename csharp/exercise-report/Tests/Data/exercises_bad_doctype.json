@@ -1,0 +1,22 @@
+{
+  "slug": "constructors",
+  "level": "introductory",
+  "track-neutral-story": "",
+  "document-type": "xxx",
+  "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/constructors/.meta/design.md",
+  "concepts": [
+    {
+      "name": "constructors",
+      "track-neutral-concept": "",
+      "learning-objectives": [
+        "know what constructors are; know how to define parameterless constructors; know how to define parameterized constructors; know how to use constructor overloading; know how to define private constructors."
+      ],
+      "original-concepts": [
+        {
+          "name": "  - Constructors",
+          "line-number": 21
+        }
+      ]
+    }
+  ]
+}

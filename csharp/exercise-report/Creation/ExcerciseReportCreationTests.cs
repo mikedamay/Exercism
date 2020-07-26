@@ -41,7 +41,7 @@ namespace ExerciseReport.Creation
             using (var reader = new StreamReader(resourceStream))
                 sampleJson = reader.ReadToEnd();
             var actual = erh.FromString(sampleJson);
-            var actualString = erh.ToString(actual);
+            var actualString = erh.ToString(actual.Item2);
             Assert.Equal(sampleJson, actualString);
             // Assert.Equal(expected, actual);
                 // xunit says they don't match.  I wonder if it's checking attributes.

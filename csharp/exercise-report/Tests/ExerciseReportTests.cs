@@ -49,7 +49,7 @@ namespace ExerciseReport.Tests
         {
             string ExercismRoot = PathNames.Test.Root;
             const string Track = Constants.CSharpTrack;
-            var em = new ExerciseMerger(Track, new ExerciseObjectTreeCollator( new ExerciseFileHandler(ExercismRoot, Track),
+            var em = new ExerciseMerger(Track, new ExerciseFileCollator( new ExerciseFileHandler(ExercismRoot, Track),
                     new ExerciseJsonParser())
                 , new DesignDocCollator(ExercismRoot, new DesignDocParser()
                     , new DesignDocResoourceHandler()));
