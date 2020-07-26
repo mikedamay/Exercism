@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -28,19 +29,27 @@ namespace ExerciseReport
         // we are extracting the learning objectives as associated with each concept
         // not the ones actually called "Learning Objectives".  It is what it is.
         public IEnumerable<(bool success, string error, string concept, string objective)> ParseDesignDoc(
-            string designDocName, string designDocText)
+            string designDocPath, string designDocText)
         {
-            var errors = new List<string>();
-            var learningObjectives = new LearningObjectives();
+            string docId = GetIdFromPath(designDocPath);
             string[] lines = designDocText.Split("\n");
             var conceptsAndObjectives = lines
                 .SkipWhile(line => !MatchesHeading(line, "Concepts"))
                 .Skip(1)
                 .TakeWhile(line => !MatchesHeading(line))
                 .Where(line => line.Length > 1 && line[0] == '-' && char.IsWhiteSpace(line[1]))
-                .Select(line => LineToConceptAndObjective(designDocName, line))
-                .DefaultIfEmpty((false, $"{designDocName}: no learning objectives found", string.Empty, String.Empty));
+                .Select(line => LineToConceptAndObjective(docId, line))
+                .DefaultIfEmpty((false, $"{docId}: no learning objectives found", string.Empty, String.Empty));
             return conceptsAndObjectives;
+        }
+
+        // designDocPath: typically "./languages/<language>/exercises/concept/<exercise-name>/.meta/design.md"
+        // returns: <exercise-naem
+        private string GetIdFromPath(string designDocPath)
+        {
+            var path = Path.GetDirectoryName(designDocPath);
+            var parts = path.Split("/");
+            return parts.Length > 2 ? parts[^2] : designDocPath;
         }
 
         // line: e.g. "- `basics`: basic stuff"

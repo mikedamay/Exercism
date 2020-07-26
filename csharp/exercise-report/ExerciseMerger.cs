@@ -13,8 +13,15 @@ namespace ExerciseReport
         private const string TestRoot = Constants.TestUserRoot;
         private const string CSharpTrack = Constants.CSharpTrack;
 
-        public static ExerciseMerger TestCSharpMerger { get; } =
+        public static ExerciseMerger TestMergerWithResources { get; } =
             new ExerciseMerger(CSharpTrack, new ExerciseFileCollator(new ExerciseResourceHandler(), 
+                    new ExerciseJsonParser())
+                , new DesignDocCollator(TestRoot, new DesignDocParser()
+                    , new DesignDocResourceHandler()));
+
+        public static ExerciseMerger TestMergerWithFileSystem { get; } =
+            new ExerciseMerger(CSharpTrack, new ExerciseFileCollator(
+                    new ExerciseFileHandler(PathNames.Test.Root, Constants.CSharpTrack), 
                     new ExerciseJsonParser())
                 , new DesignDocCollator(TestRoot, new DesignDocParser()
                     , new DesignDocFileHandler(TestRoot, Constants.CSharpTrack)));
@@ -33,7 +40,8 @@ namespace ExerciseReport
             exerciseFileHandler.WriteExercises(outputs.exerciseObjectTree);
         }
 
-        public (Result result, ExerciseObjectTree exerciseObjectTree, List<Error> errors) MergeLearningObjectives()
+        public (Result result, ExerciseObjectTree exerciseObjectTree, List<Error> errors) 
+            MergeLearningObjectives()
         {
             var outputs = exerciseFileHandler.ReadExercises();
             if (outputs.result == Result.FatalError)
@@ -42,7 +50,8 @@ namespace ExerciseReport
             }
             var learningObjectives = designDocCollator.GetLearningObjectives(track);
             MergeLearningObjectives(outputs.exerciseObjectTree, learningObjectives.learningObjectives);
-            return (Result.FatalError, outputs.exerciseObjectTree, outputs.errors);
+            return (Result.FatalError, outputs.exerciseObjectTree
+                , outputs.errors.Concat(learningObjectives.errors).ToList());
         }
 
         private void MergeLearningObjectives(ExerciseObjectTree exerciseObjectTree, LearningObjectives learningObjectives)

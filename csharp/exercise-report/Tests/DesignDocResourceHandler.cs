@@ -12,7 +12,7 @@ namespace ExerciseReport.Tests
         {
             var resource = ExerciseReportTests.GetResourceAsString(Constants.ManyDesignsResource);
             var texts = Regex.Split(resource, Constants.DesignDocSeparator);
-            return texts.Select(t => ("embedded-resource.md", t));
+            return texts.Select(t => (Constants.ManyDesignsResource, t));
         }
     }
 }

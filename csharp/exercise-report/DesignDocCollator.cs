@@ -17,10 +17,10 @@ namespace ExerciseReport
             this.designDocFileHandler = designDocFileHandler;
         }
 
-        public (LearningObjectives learningObjectives, List<string> errors) 
+        public (LearningObjectives learningObjectives, List<Error> errors) 
             GetLearningObjectives(string track)
         {
-            var errors = new List<string>();
+            var errors = new List<Error>();
             var learningObjectives = new LearningObjectives();
             var conceptsAndObjectives = designDocFileHandler.GetExerciseDesignsForTrack()
                 .SelectMany(d => designDocParser.ParseDesignDoc(d.Item1, d.Item2));
@@ -32,7 +32,7 @@ namespace ExerciseReport
                         learningObjectives.Builder.Add(concept, objective);
                         break;
                     case (false, string error, _, _):
-                        errors.Add(error);
+                        errors.Add(new Error(Severity.Error, error));
                         break;
                 }
             }
