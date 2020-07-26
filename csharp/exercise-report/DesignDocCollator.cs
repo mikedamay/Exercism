@@ -17,7 +17,8 @@ namespace ExerciseReport
             this.designDocFileHandler = designDocFileHandler;
         }
 
-        public (LearningObjectives learningObjectives, List<string> errors) GetLearningObjectives(string track)
+        public (LearningObjectives learningObjectives, List<string> errors) 
+            GetLearningObjectives(string track)
         {
             var errors = new List<string>();
             var learningObjectives = new LearningObjectives();

@@ -5,8 +5,8 @@ namespace ExerciseReport
 {
     internal class ExerciseFileCollator
     {
-        private IExerciseFileHandler exerciseFileHandler;
-        private ExerciseJsonParser exerciseJsonParser;
+        private readonly IExerciseFileHandler exerciseFileHandler;
+        private readonly ExerciseJsonParser exerciseJsonParser;
 
         public ExerciseFileCollator(IExerciseFileHandler exerciseFileHandler,
             ExerciseJsonParser exerciseJsonParser)

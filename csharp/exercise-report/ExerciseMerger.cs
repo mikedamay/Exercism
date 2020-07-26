@@ -10,14 +10,14 @@ namespace ExerciseReport
         private readonly DesignDocCollator designDocCollator;
         private readonly string track;
 
-        private const string TestRoot = "/Users/mikedamay/projects/exercism/v3";
-        private const string CSharpTrack = "csharp";
+        private const string TestRoot = Constants.TestUserRoot;
+        private const string CSharpTrack = Constants.CSharpTrack;
 
         public static ExerciseMerger TestCSharpMerger { get; } =
             new ExerciseMerger(CSharpTrack, new ExerciseFileCollator(new ExerciseResourceHandler(), 
                     new ExerciseJsonParser())
                 , new DesignDocCollator(TestRoot, new DesignDocParser()
-                    , new DesignDocFileHandler(TestRoot, "csharp")));
+                    , new DesignDocFileHandler(TestRoot, Constants.CSharpTrack)));
 
         public ExerciseMerger(string track,
             ExerciseFileCollator exerciseFileHandler, DesignDocCollator designDocCollator)
