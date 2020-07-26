@@ -39,7 +39,7 @@ namespace ExerciseReport.Tests
         }
 
         [Fact]
-        public void ParseDesignDoc_WithJustConcepts_ReportsErrors()
+        public void ParseDesignDoc_WithJustConcepts_ReportsNoErrors()
         {
             const string resourceName = Constants.DesignJustConceptsResource;
             var ddp = new DesignDocParser();
@@ -49,7 +49,7 @@ namespace ExerciseReport.Tests
         }
 
         [Fact]
-        public void ParseDesignDoc_WithMultipleHashes_ReportsErrors()
+        public void ParseDesignDoc_WithMultipleHashes_ReportsNoErrors()
         {
             const string resourceName = Constants.DesignMultipleHashesResource;
             var ddp = new DesignDocParser();
