@@ -1,7 +1,8 @@
 {
   "exercises": [
     {
-      "slug": "classes",
+      "test-of" : "missing slug",
+      "level": "introductory",
       "track-neutral-story": "",
       "document-type": "design",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/classes/.meta/design.md",
@@ -22,10 +23,10 @@
       ]
     },
     {
+      "test-of" : "missing level",
       "slug": "classes2",
-      "level": "introductory",
       "track-neutral-story": "",
-      "document-type": "xxx",
+      "document-type": "design",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/classes/.meta/design.md",
       "concepts": [
         {
@@ -44,9 +45,10 @@
       ]
     },
     {
+      "test-of" : "missing document-type",
+      "slug": "classes3",
       "level": "introductory",
       "track-neutral-story": "sample1-track-neutral-story",
-      "document-type": "design",
       "document-link": "http://sample1-doclink",
       "concepts": [
         {
@@ -63,6 +65,13 @@
           ]
         }
       ]
+    },
+    {
+      "test-of" : "missing concepts",
+      "slug": "classes4",
+      "level": "introductory",
+      "track-neutral-story": "sample1-track-neutral-story",
+      "document-link": "http://sample1-doclink"
     }
   ]
 }

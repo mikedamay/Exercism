@@ -47,7 +47,7 @@ namespace ExerciseReport.Tests
             Assert.Equal(Result.FatalError, results.result);
             Assert.Contains("'#' is an invalid start", results.errors[0].Message);
         }
-        
+
         [Fact]
         public void ParseExerciseJson_WithSlightlyWrongStructure_ReportsFatalError()
         {
@@ -57,6 +57,17 @@ namespace ExerciseReport.Tests
             var results = ejp.FromString(json); 
             Assert.Equal(Result.FatalError, results.result);
             Assert.Contains("Json parser failed", results.errors[0].Message);
+        }
+
+        [Fact]
+        public void ParseExerciseJson_WithMisssingFields_ReportsErrors()
+        {
+            var ejp = new ExerciseJsonParser();
+            var json = ExerciseReportTests.GetResourceAsString(
+                Constants.ExercisesMissingFieldsResource);
+            var results = ejp.FromString(json); 
+            Assert.Equal(Result.Errors, results.result);
+            // Assert.Contains("Json parser failed", results.errors[0].Message);
         }
     }
 }
