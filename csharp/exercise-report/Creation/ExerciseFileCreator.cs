@@ -44,11 +44,10 @@ namespace ExerciseReport.Creation
                         {
                             "A" => Level.Introductory,
                             "B" => Level.Essential,
-                            "C" => Level.Advanced,
-                            _ => Level.Invalid                            
+                            "C" => Level.Advanced                         
                         },
-                        DocumentType = ic.DocType == "I" ? DocType.Issue :
-                            ic.DocType == "E" ? DocType.Design : DocType.None,
+                        DocumentType = ic.DocType == "I" ? DocumentType.Issue :
+                            ic.DocType == "E" ? DocumentType.Design : DocumentType.None,
                         DocumentLink = ic.Link,
                         Concepts = new List<Concept>
                         {

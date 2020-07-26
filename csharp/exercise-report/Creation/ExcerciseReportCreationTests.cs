@@ -109,7 +109,7 @@ namespace ExerciseReport.Creation
                     Slug = "sample1-slug",
                     Level = Level.Introductory,
                     TrackNeutralStory = "sample1-track-neutral-story",
-                    DocumentType = DocType.Design,
+                    DocumentType = DocumentType.Design,
                     DocumentLink = "http://sample1-doclink",
                     Concepts = new List<Concept>
                     {

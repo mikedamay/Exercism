@@ -28,9 +28,10 @@ namespace ExerciseReport
             try
             {
                 options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+                var exerciseObjectTree = JsonSerializer.Deserialize<ExerciseObjectTree>(sampleJson, options);
                 return (
                     Result.Success,
-                    JsonSerializer.Deserialize<ExerciseObjectTree>(sampleJson, options),
+                    exerciseObjectTree,
                     new List<Error>()
                 );
             }

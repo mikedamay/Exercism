@@ -23,18 +23,28 @@
       <None Remove="StoryLinks.txt" />
       <EmbeddedResource Include="Creation\track_neutral_concepts.md" />
       <EmbeddedResource Include="Tests\Data\exercises.json" />
-      <EmbeddedResource Include="Tests\Data\exercise_missing_fields.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_missing_fields.json" />
       <EmbeddedResource Include="Tests\Data\many_designs.md" />
       <None Remove="sample_design.md" />
       <None Remove="Tests\exercises.json" />
       <None Remove="Tests\many_designs.md" />
       <None Remove="Tests\exercise_missing_fields.json" />
+      <None Remove="Tests\Data\exercises_bad_doctype.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_bad_doctype.json" />
+      <None Remove="Tests\Data\exercises_bad_format.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_bad_format.json" />
+      <None Remove="Tests\Data\exercises_bad_level.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_bad_level.json" />
+      <None Remove="Tests\Data\design_concepts_without_bullets.md" />
+      <EmbeddedResource Include="Tests\Data\design_concepts_without_bullets.md" />
+      <None Remove="Tests\Data\design_just_concepts.md" />
+      <EmbeddedResource Include="Tests\Data\design_just_concepts.md" />
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="Tests\Data\design_multiple_hashes.md" />
-      <Content Include="Tests\Data\design_no_concepts.md" />
-      <Content Include="Tests\Data\design_no_concepts_trailing.md" />
+      <EmbeddedResource Include="Tests\Data\design_multiple_hashes.md" />
+      <EmbeddedResource Include="Tests\Data\design_no_concepts.md" />
+      <EmbeddedResource Include="Tests\Data\design_no_concepts_trailing.md" />
     </ItemGroup>
 
 </Project>

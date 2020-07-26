@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace ExerciseReport
 {
-    public enum DocType
+    public enum DocumentType
     {
         None = 'N',
         Design = 'D',
@@ -29,7 +29,7 @@ namespace ExerciseReport
         [JsonPropertyName("track-neutral-story")]
         public string TrackNeutralStory { get; set; } = string.Empty;
         [JsonPropertyName("document-type")]
-        public DocType DocumentType { get; set; } = DocType.Invalid;
+        public DocumentType DocumentType { get; set; } = DocumentType.Invalid;
         [JsonPropertyName("document-link")]
         public string DocumentLink { get; set; } = string.Empty;
         [JsonPropertyName("concepts")]

@@ -20,7 +20,7 @@ namespace ExerciseReport.Tests
         public void Parse_ExerciseFileMissingFields_ThrowsException()
         {
             var ejp = new ExerciseJsonParser();
-            ejp.FromString(GetResourceAsString(Constants.ExerciseMissingFieldsResource));
+            ejp.FromString(GetResourceAsString(Constants.ExercisesMissingFieldsResource));
         }
         
         [Fact]

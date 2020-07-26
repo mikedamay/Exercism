@@ -80,9 +80,9 @@ namespace ExerciseReport
         {
             StringBuilder sb = new StringBuilder();
             var issuesOrDesigns = exerciseObjectTree.Exercises
-                .Where(ex => ex.DocumentType != DocType.None)
+                .Where(ex => ex.DocumentType != DocumentType.None)
                 .OrderBy(ex => ex.Slug)
-                .Select(ex => $"[{(ex.DocumentType == DocType.Issue ? "issue-" : "design-") + ex.Slug}]: {ex.DocumentLink}");
+                .Select(ex => $"[{(ex.DocumentType == DocumentType.Issue ? "issue-" : "design-") + ex.Slug}]: {ex.DocumentLink}");
  
             sb.AppendLine();
             foreach (string issueOrDesign in issuesOrDesigns)
@@ -120,11 +120,11 @@ namespace ExerciseReport
         {
             var link = (exercise.DocumentType, concept.TrackNeutralConcept) switch
             {
-                (DocType.Issue, "") => $" - [Issue][issue-{exercise.Slug}]",
-                (DocType.Design, "") => $" - [Design][design-{exercise.Slug}]",
-                (DocType.Issue, _) => $" - [Issue][issue-{exercise.Slug}], [background][tnc-{concept.Name}]",
-                (DocType.Design, _) => $" - [Design][design-{exercise.Slug}], [background][tnc-{concept.Name}]",
-                (DocType.None, "") => string.Empty,
+                (DocumentType.Issue, "") => $" - [Issue][issue-{exercise.Slug}]",
+                (DocumentType.Design, "") => $" - [Design][design-{exercise.Slug}]",
+                (DocumentType.Issue, _) => $" - [Issue][issue-{exercise.Slug}], [background][tnc-{concept.Name}]",
+                (DocumentType.Design, _) => $" - [Design][design-{exercise.Slug}], [background][tnc-{concept.Name}]",
+                (DocumentType.None, "") => string.Empty,
                 _ => $" - [background][tnc-{concept.Name}]"
             };
             return $"- {concept.Name} _({exercise.Slug})_{link}";
