@@ -37,7 +37,7 @@ namespace ExerciseReport
         public void Merge()
         {
             var outputs = MergeLearningObjectives();
-            exerciseFileHandler.WriteExercises(outputs.exerciseObjectTree);
+            exerciseFileHandler.WriteExercises(outputs.exerciseObjectTree, outputs.errors);
         }
 
         public (Result result, ExerciseObjectTree exerciseObjectTree, List<Error> errors) 
@@ -54,7 +54,8 @@ namespace ExerciseReport
                 , outputs.errors.Concat(learningObjectives.errors).ToList());
         }
 
-        private void MergeLearningObjectives(ExerciseObjectTree exerciseObjectTree, LearningObjectives learningObjectives)
+        private void MergeLearningObjectives(ExerciseObjectTree exerciseObjectTree,
+            LearningObjectives learningObjectives)
         {
             var concepts = exerciseObjectTree.Exercises.SelectMany(ex => ex.Concepts);
             foreach (Concept concept in concepts)

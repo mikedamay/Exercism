@@ -11,7 +11,7 @@ namespace ExerciseReport
 {
     internal class ExerciseJsonParser
     {
-        public string ToString(ExerciseObjectTree exerciseObjectTree)
+        public string ToString(ExerciseObjectTree exerciseObjectTree, IList<Error> errors)
         {
             var options = new JsonSerializerOptions
             {
@@ -40,7 +40,7 @@ namespace ExerciseReport
                     return (
                         Result.FatalError,
                         exerciseObjectTree,
-                        new List<Error>{new Error(Severity.Fatal, message)}
+                        new List<Error>{new Error(ErrorSource.Exercise, Severity.Fatal, message)}
                     );
                 }
                 return (
@@ -56,7 +56,7 @@ namespace ExerciseReport
                 return (
                     Result.FatalError,
                     new ExerciseObjectTree(),
-                    new List<Error> {new Error(Severity.Fatal, je.Message)}
+                    new List<Error> {new Error(ErrorSource.Exercise, Severity.Fatal, je.Message)}
                 );
             }
             catch (Exception e)
@@ -64,7 +64,7 @@ namespace ExerciseReport
                 return (
                     Result.FatalError,
                     new ExerciseObjectTree(),
-                    new List<Error> {new Error(Severity.Fatal, "unknown error:" + e.Message)}
+                    new List<Error> {new Error(ErrorSource.Exercise, Severity.Fatal, "unknown error:" + e.Message)}
                 );
             }
         }
@@ -73,7 +73,7 @@ namespace ExerciseReport
         {
             var output = exerciseObjectTree.Exercises.Select(ex => ValidateExercise(ex))
                 .Where(exo => !string.IsNullOrWhiteSpace(exo))
-                .Select(exo => new Error(Severity.Error, exo))
+                .Select(exo => new Error(ErrorSource.Exercise, Severity.Error, exo))
                 .ToList();
             return output;
         }
@@ -93,6 +93,21 @@ namespace ExerciseReport
                 if (string.IsNullOrWhiteSpace(exercise.Concepts[ii].Name)) sb.AppendLine($"concept.name: missing for {exercise.Slug}");
             }
             return sb.ToString();
+        }
+    }
+    
+    internal class CombinedReport
+    {
+        [JsonPropertyName("exercises")]
+        public IList<Exercise> Exercises { get; }
+        
+        [JsonPropertyName("errors")]
+        public IList<Error> Errors { get; }
+
+        public CombinedReport(IList<Exercise> exercises, IList<Error> errors)
+        {
+            Exercises = exercises;
+            Errors = errors;
         }
     }
 }

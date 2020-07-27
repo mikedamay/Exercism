@@ -1,4 +1,5 @@
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace ExerciseReport
 {
@@ -15,13 +16,22 @@ namespace ExerciseReport
         Fatal
     }
 
+    internal enum ErrorSource 
+    {
+        Process,
+        Design,
+        Exercise
+    }
+
     internal class Error
     {
         public Severity Severity { get; }
         public string Message { get; }
+        public ErrorSource Source { get; }
 
-        public Error(Severity severity, string message)
+        public Error(ErrorSource source, Severity severity, string message)
         {
+            Source = source;
             Severity = severity;
             Message = message;
         }

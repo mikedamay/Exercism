@@ -28,17 +28,17 @@ namespace ExerciseReport
                 return (
                     Result.FatalError,
                     new ExerciseObjectTree(),
-                    new List<Error>{new Error(Severity.Fatal, "reading exercise.json file: " + e.Message)}
+                    new List<Error>{new Error(ErrorSource.Process, Severity.Fatal, "reading exercise.json file: " + e.Message)}
                     );
             }
         }
 
-        public (Result result, List<Error> errors) 
-            WriteExercises(ExerciseObjectTree exerciseObjectTree)
+        public (Result result, List<Error> errors)
+            WriteExercises(ExerciseObjectTree exerciseObjectTree, IList<Error> errors)
         {
             try
             {
-                var text = exerciseJsonParser.ToString(exerciseObjectTree);
+                var text = exerciseJsonParser.ToString(exerciseObjectTree, errors);
                 exerciseFileHandler.WriteFile(text);
                 return (Result.Success, new List<Error>());
             }
@@ -46,7 +46,7 @@ namespace ExerciseReport
             {
                 return (
                     Result.FatalError,
-                    new List<Error>{new Error(Severity.Fatal, "writing exercise.json file: " + e.Message)}
+                    new List<Error>{new Error(ErrorSource.Process, Severity.Fatal, "writing exercise.json file: " + e.Message)}
                 );
             }
         }

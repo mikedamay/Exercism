@@ -32,7 +32,7 @@ namespace ExerciseReport
                         learningObjectives.Builder.Add(concept, objective);
                         break;
                     case (false, string error, _, _):
-                        errors.Add(new Error(Severity.Error, error));
+                        errors.Add(new Error(ErrorSource.Design, Severity.Error, error));
                         break;
                 }
             }
