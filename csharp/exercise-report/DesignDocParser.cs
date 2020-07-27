@@ -48,7 +48,7 @@ namespace ExerciseReport
         private string GetIdFromPath(string designDocPath)
         {
             var path = Path.GetDirectoryName(designDocPath);
-            var parts = path.Split("/");
+            var parts = path?.Split("/") ?? new string[0];
             return parts.Length > 2 ? parts[^2] : designDocPath;
         }
 

@@ -47,6 +47,7 @@ namespace ExerciseReport
             }
             catch (Exception e)
             {
+                var _ = e;
                 throw;
             }
         }

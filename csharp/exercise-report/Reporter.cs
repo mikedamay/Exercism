@@ -39,15 +39,19 @@ namespace ExerciseReport
             sb.AppendLine();
             sb.AppendLine("### Introductory Concepts");
             sb.AppendLine(); 
-            GetCncepts(sb, exerciseObjectTree, Level.Introductory);
+            GetConcepts(sb, exerciseObjectTree, Level.Introductory);
             sb.AppendLine();
             sb.AppendLine("### Essential Concepts");
             sb.AppendLine(); 
-            GetCncepts(sb, exerciseObjectTree, Level.Essential);
+            GetConcepts(sb, exerciseObjectTree, Level.Essential);
             sb.AppendLine();
             sb.AppendLine("### Advanced Concepts");
             sb.AppendLine(); 
-            GetCncepts(sb, exerciseObjectTree, Level.Advanced);
+            GetConcepts(sb, exerciseObjectTree, Level.Advanced);
+            sb.AppendLine();
+            sb.AppendLine("### Unallocated Concepts");
+            sb.AppendLine(); 
+            GetConcepts(sb, exerciseObjectTree, Level.None);
             return sb.ToString();
         }
 
@@ -107,14 +111,14 @@ namespace ExerciseReport
             return sb.ToString();
         }
 
-        private void GetCncepts(StringBuilder sb, ExerciseObjectTree exerciseObjectTree, Level level)
+        private void GetConcepts(StringBuilder sb, ExerciseObjectTree exerciseObjectTree, Level level)
         {
             var outputs = exerciseObjectTree.Exercises
                 .SelectMany(ex => ex.Concepts, (ex,
-                    c) => (ex, c))
-                .Where(p => p.Item1.Level == level)
-                .OrderBy(p => p.Item2.Name)
-                .Select(p => FormatOutput(p.Item1, p.Item2));
+                    c) => new {Exercise = ex, Concept = c})
+                .Where(p => p.Exercise.Level == level)
+                .OrderBy(p => p.Concept.Name)
+                .Select(p => FormatOutput(p.Exercise, p.Concept)).DefaultIfEmpty("None");
             foreach (string output in outputs)
             {
                 sb.AppendLine(output);
@@ -127,8 +131,8 @@ namespace ExerciseReport
             {
                 (DocumentType.Issue, "") => $" - [Issue][issue-{exercise.Slug}]",
                 (DocumentType.Design, "") => $" - [Design][design-{exercise.Slug}]",
-                (DocumentType.Issue, _) => $" - [Issue][issue-{exercise.Slug}], [background][tnc-{concept.Name}]",
-                (DocumentType.Design, _) => $" - [Design][design-{exercise.Slug}], [background][tnc-{concept.Name}]",
+                (DocumentType.Issue, _) => $" - [Issue][issue-{exercise.Slug}], [Background][tnc-{concept.Name}]",
+                (DocumentType.Design, _) => $" - [Design][design-{exercise.Slug}], [Background][tnc-{concept.Name}]",
                 (DocumentType.None, "") => string.Empty,
                 _ => $" - [background][tnc-{concept.Name}]"
             };

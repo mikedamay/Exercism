@@ -5,13 +5,11 @@ namespace ExerciseReport
 {
     internal class DesignDocCollator
     {
-        private readonly string root;
         private readonly DesignDocParser designDocParser;
         private readonly IDesignDocFileHandler designDocFileHandler;
 
         public DesignDocCollator(IDesignDocFileHandler designDocFileHandler, DesignDocParser designDocParser)
         {
-            this.root = root;
             this.designDocParser = designDocParser;
             this.designDocFileHandler = designDocFileHandler;
         }
