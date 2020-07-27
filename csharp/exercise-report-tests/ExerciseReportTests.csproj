@@ -78,4 +78,8 @@
       <EmbeddedResource Include="Tests\Data\design_no_concepts_trailing.md" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\exercise-report\ExerciseReport.csproj" />
+    </ItemGroup>
+
 </Project>
