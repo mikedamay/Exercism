@@ -218,6 +218,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseReportTests", "csha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseReport", "csharp\exercise-report\ExerciseReport.csproj", "{B8C4B0B4-7CAC-4FAA-9632-78709285DA40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegralNumbers", "csharp\integral-numbers\IntegralNumbers.csproj", "{3BC49BC0-95AC-47A3-B5F0-01B682BBE7F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -656,5 +658,9 @@ Global
 		{B8C4B0B4-7CAC-4FAA-9632-78709285DA40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8C4B0B4-7CAC-4FAA-9632-78709285DA40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8C4B0B4-7CAC-4FAA-9632-78709285DA40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BC49BC0-95AC-47A3-B5F0-01B682BBE7F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC49BC0-95AC-47A3-B5F0-01B682BBE7F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC49BC0-95AC-47A3-B5F0-01B682BBE7F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC49BC0-95AC-47A3-B5F0-01B682BBE7F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
