@@ -5,15 +5,16 @@ namespace ExerciseReport
 {
     internal enum Result 
     {
-        Success,
-        Errors,
-        FatalError
+        Success = 0,
+        Errors = 1,
+        FatalError = 2
     }
 
     internal enum Severity
     {
-        Error,
-        Fatal
+        None = 0,
+        Error = 1,
+        Fatal = 2
     }
 
     internal enum ErrorSource 

@@ -3,7 +3,7 @@ using System.IO;
 
 namespace ExerciseReport.Tests
 {
-    internal class Utils
+    internal static class Utils
     {
         public static string GetResourceAsString(string resourceName)
         {
@@ -23,22 +23,32 @@ namespace ExerciseReport.Tests
             }
         }
 
+        public static ExerciseMerger GetMergerFromResources(
+            string exercisesResourceName, string designsResourceName,
+            IExerciseFileHandler? exerciseFileHandler = null)
+        {
+            return 
+                new ExerciseMerger(Constants.CSharpTrack, 
+                    new ExerciseFileCollator(
+                        exerciseFileHandler ?? new ExerciseResourceHandler(exercisesResourceName), 
+                        new ExerciseJsonParser()),
+                    new DesignDocCollator(
+                        new DesignDocResourceHandler(designsResourceName),
+                        new DesignDocParser()));
+           
+        }
+
         public static ExerciseMerger TestMergerWithResources { get; } =
-            new ExerciseMerger(Constants.CSharpTrack, 
-                new ExerciseFileCollator(
-                    new ExerciseResourceHandler(), 
-                    new ExerciseJsonParser()),
-                new DesignDocCollator(Constants.TestUserRoot,
-                    new DesignDocParser(),
-                    new DesignDocResourceHandler()));
+            GetMergerFromResources(Constants.ExercisesResource,
+                Constants.ManyDesignsResource);
 
         public static ExerciseMerger TestMergerWithFileSystem { get; } =
             new ExerciseMerger(Constants.CSharpTrack,
                 new ExerciseFileCollator(
                     new ExerciseFileHandler(PathNames.Test.Root, Constants.CSharpTrack), 
                     new ExerciseJsonParser()),
-                new DesignDocCollator(PathNames.Test.Root, new DesignDocParser(),
-                    new DesignDocFileHandler(PathNames.Test.Root,
-                        Constants.CSharpTrack)));
+                new DesignDocCollator(
+                    new DesignDocFileHandler(PathNames.Test.Root, Constants.CSharpTrack),
+                    new DesignDocParser()));
     }
 }

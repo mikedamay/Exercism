@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExerciseReport.Tests;
@@ -21,11 +22,12 @@ namespace ExerciseReport
         public static ExerciseMerger CSharpMerger { get; } =
             new ExerciseMerger(Constants.CSharpTrack, 
                 new ExerciseFileCollator(
-                    new ExerciseFileHandler(PathNames.Test.Root, Constants.CSharpTrack), 
+                    new ExerciseFileHandler(PathNames.Default.Root, Constants.CSharpTrack), 
                     new ExerciseJsonParser())
-                , new DesignDocCollator(Constants.Root, 
-                    new DesignDocParser(),
-                    new DesignDocFileHandler(Constants.Root, Constants.CSharpTrack)));
+                , new DesignDocCollator(
+                    new DesignDocFileHandler(PathNames.Default.Root, Constants.CSharpTrack),
+                    new DesignDocParser())
+                );
 
         public void Merge()
         {
@@ -43,9 +45,20 @@ namespace ExerciseReport
             }
             var learningObjectives = designDocCollator.GetLearningObjectives(track);
             MergeLearningObjectives(outputs.exerciseObjectTree, learningObjectives.learningObjectives);
-            return (Result.FatalError, outputs.exerciseObjectTree
-                , outputs.errors.Concat(learningObjectives.errors).ToList());
+            var combinedErrors = outputs.errors.Concat(learningObjectives.errors).ToList();
+            var maxSeverity = combinedErrors.Select(e => e.Severity).DefaultIfEmpty(Severity.None).Max();
+            Result result = SeverityToResult(maxSeverity);
+            return (result, outputs.exerciseObjectTree, combinedErrors);
         }
+
+        private Result SeverityToResult(Severity severity) =>
+            severity switch
+            {
+                Severity.Error => Result.Errors,
+                Severity.Fatal => Result.FatalError,
+                Severity.None => Result.Success,
+                _ => throw new ArgumentException($"unknown error Severity {severity}")
+            };
 
         private void MergeLearningObjectives(ExerciseObjectTree exerciseObjectTree,
             LearningObjectives learningObjectives)

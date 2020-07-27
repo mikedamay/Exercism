@@ -9,8 +9,7 @@ namespace ExerciseReport
         private readonly DesignDocParser designDocParser;
         private readonly IDesignDocFileHandler designDocFileHandler;
 
-        public DesignDocCollator(string root, DesignDocParser designDocParser,
-            IDesignDocFileHandler designDocFileHandler)
+        public DesignDocCollator(IDesignDocFileHandler designDocFileHandler, DesignDocParser designDocParser)
         {
             this.root = root;
             this.designDocParser = designDocParser;
