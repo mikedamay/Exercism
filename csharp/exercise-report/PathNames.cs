@@ -12,7 +12,8 @@ namespace ExerciseReport
         public string TrackNeutralConcepts { get; } = "reference/concepts";
         public string Exercises { get; } = "exercises/concept";
         public string Design { get; } = ".meta/design.md";
-        public string ExerciseFile { get; } = "reference/exercises.md";
+        public string ExerciseFile { get; } = "reference/exercises.json";
+        public string ErrorsFile { get; } = "reference/exercise-errors.json";
         public string ConceptReport { get; } = "reference/README.md";
 
         public static PathNames Default { get; } =

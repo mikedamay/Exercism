@@ -70,6 +70,7 @@ namespace ExerciseReport
                 var objectives = learningObjectives.GetList(concept.Name);
                 if (objectives != null)
                 {
+                    concept.LearningObjectives.Clear();
                     foreach (string objective in objectives)
                     {
                         concept.LearningObjectives.Add(objective);

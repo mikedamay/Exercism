@@ -20,7 +20,16 @@ namespace ExerciseReport
 
         public ExerciseFileHandler(string root, string track)
         {
-            exercisePathAndFileName = Path.Combine(root, "languages", track, "reference/exercises.json");
+            exercisePathAndFileName = Path.Combine(
+                root,
+                PathNames.Default.Languages,
+                track,
+                PathNames.Default.ExerciseFile);
+            errorPathAndFileName = Path.Combine(
+                root,
+                PathNames.Default.Languages,
+                track,
+                PathNames.Default.ErrorsFile);
             errorPathAndFileName = Path.Combine(root, "languages", track, "reference/exercise-errors.json");
         }
 
