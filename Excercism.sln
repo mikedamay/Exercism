@@ -212,7 +212,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lists", "csharp\lists\Lists
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMarkdown", "csharp\mmarkdown\MMarkdown.csproj", "{99562AE9-E4D3-452C-9F36-712464CBEBD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseReport", "csharp\exercise-report\ExerciseReport.csproj", "{BDA55F37-BBBF-4357-AC98-EBDBDC4B2FC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseReportTests", "csharp\exercise-report\ExerciseReportTests.csproj", "{BDA55F37-BBBF-4357-AC98-EBDBDC4B2FC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "csharp\interfaces\Interfaces.csproj", "{D6546765-1B1E-4DA2-B2D3-F33300908BDE}"
 EndProject
