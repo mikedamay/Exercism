@@ -9,7 +9,7 @@ namespace ExerciseReport.Tests
         public void ParseDesignDoc_WithBrokenConcepts_ReportsErrors()
         {
             var ddp = new DesignDocParser();
-            var markdown = ExerciseReportTests.GetResourceAsString(
+            var markdown = Utils.GetResourceAsString(
                 Constants.DesignBrokenConceptsResource);
             var results = ddp.ParseDesignDoc(Constants.DesignBrokenConceptsResource,
                 markdown).ToList(); 
@@ -21,7 +21,7 @@ namespace ExerciseReport.Tests
         {
             const string resourceName = Constants.DesignConceptsWithoutBulletsResource;
             var ddp = new DesignDocParser();
-            var markdown = ExerciseReportTests.GetResourceAsString(resourceName);
+            var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
             Assert.False(results[0].success);
             Assert.Contains("no learning objectives", results[0].error);
@@ -32,7 +32,7 @@ namespace ExerciseReport.Tests
         {
             const string resourceName = Constants.DesignConceptsWithoutQuotesResource;
             var ddp = new DesignDocParser();
-            var markdown = ExerciseReportTests.GetResourceAsString(resourceName);
+            var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
             Assert.False(results[0].success);
             Assert.Contains("invalid format", results[0].error);
@@ -43,7 +43,7 @@ namespace ExerciseReport.Tests
         {
             const string resourceName = Constants.DesignJustConceptsResource;
             var ddp = new DesignDocParser();
-            var markdown = ExerciseReportTests.GetResourceAsString(resourceName);
+            var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
             Assert.True(results[0].success);
         }
@@ -53,7 +53,7 @@ namespace ExerciseReport.Tests
         {
             const string resourceName = Constants.DesignMultipleHashesResource;
             var ddp = new DesignDocParser();
-            var markdown = ExerciseReportTests.GetResourceAsString(resourceName);
+            var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
             Assert.True(results[0].success);
         }
@@ -63,7 +63,7 @@ namespace ExerciseReport.Tests
         {
             const string resourceName = Constants.DesignNoConceptSectionResource;
             var ddp = new DesignDocParser();
-            var markdown = ExerciseReportTests.GetResourceAsString(resourceName);
+            var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
             Assert.False(results[0].success);
             Assert.Contains("no learning objectives", results[0].error);
@@ -74,7 +74,7 @@ namespace ExerciseReport.Tests
         {
             const string resourceName = Constants.DesignNoConceptsResource;
             var ddp = new DesignDocParser();
-            var markdown = ExerciseReportTests.GetResourceAsString(resourceName);
+            var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
             Assert.False(results[0].success);
             Assert.Contains("no learning objectives", results[0].error);
@@ -85,7 +85,7 @@ namespace ExerciseReport.Tests
         {
             const string resourceName = Constants.DesignNoConceptsTrailingResource;
             var ddp = new DesignDocParser();
-            var markdown = ExerciseReportTests.GetResourceAsString(resourceName);
+            var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
             Assert.False(results[0].success);
             Assert.Contains("no learning objectives", results[0].error);

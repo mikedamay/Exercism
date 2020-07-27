@@ -17,7 +17,7 @@ namespace ExerciseReport.Tests
         
         public string ReadFile()
         {
-            return ExerciseReportTests.GetResourceAsString(resourceName);
+            return Utils.GetResourceAsString(resourceName);
         }
 
         public void WriteFile(string exerciseJson)

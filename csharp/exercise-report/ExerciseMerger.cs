@@ -10,22 +10,6 @@ namespace ExerciseReport
         private readonly DesignDocCollator designDocCollator;
         private readonly string track;
 
-        private const string TestRoot = Constants.TestUserRoot;
-        private const string CSharpTrack = Constants.CSharpTrack;
-
-        public static ExerciseMerger TestMergerWithResources { get; } =
-            new ExerciseMerger(CSharpTrack, new ExerciseFileCollator(new ExerciseResourceHandler(), 
-                    new ExerciseJsonParser())
-                , new DesignDocCollator(TestRoot, new DesignDocParser()
-                    , new DesignDocResourceHandler()));
-
-        public static ExerciseMerger TestMergerWithFileSystem { get; } =
-            new ExerciseMerger(CSharpTrack, new ExerciseFileCollator(
-                    new ExerciseFileHandler(PathNames.Test.Root, Constants.CSharpTrack), 
-                    new ExerciseJsonParser())
-                , new DesignDocCollator(TestRoot, new DesignDocParser()
-                    , new DesignDocFileHandler(TestRoot, Constants.CSharpTrack)));
-
         public ExerciseMerger(string track,
             ExerciseFileCollator exerciseFileHandler, DesignDocCollator designDocCollator)
         {
@@ -33,6 +17,15 @@ namespace ExerciseReport
             this.designDocCollator = designDocCollator;
             this.track = track;
         }
+
+        public static ExerciseMerger CSharpMerger { get; } =
+            new ExerciseMerger(Constants.CSharpTrack, 
+                new ExerciseFileCollator(
+                    new ExerciseFileHandler(PathNames.Test.Root, Constants.CSharpTrack), 
+                    new ExerciseJsonParser())
+                , new DesignDocCollator(Constants.Root, 
+                    new DesignDocParser(),
+                    new DesignDocFileHandler(Constants.Root, Constants.CSharpTrack)));
 
         public void Merge()
         {

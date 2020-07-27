@@ -13,7 +13,7 @@ namespace ExerciseReport.Tests
         public void Parse_ExerciseFileMissingFields_ThrowsException()
         {
             var ejp = new ExerciseJsonParser();
-            ejp.FromString(GetResourceAsString(Constants.ExercisesMissingFieldsResource));
+            ejp.FromString(Utils.GetResourceAsString(Constants.ExercisesMissingFieldsResource));
         }
         
         [Fact]
@@ -22,7 +22,7 @@ namespace ExerciseReport.Tests
             const string SampleDesignDoc = Constants.SampleDesignResource;
 
             var ddp = new DesignDocParser();
-            string markdownText = GetResourceAsString(SampleDesignDoc);
+            string markdownText = Utils.GetResourceAsString(SampleDesignDoc);
 
             var lo = ddp.ParseDesignDoc("embedded-resource.md", markdownText).ToList();
             Assert.NotEmpty(lo);
@@ -53,7 +53,7 @@ namespace ExerciseReport.Tests
         public void Report_OnExerciseFileTree_ProducesWellFormedReport()
         {
             var rr = new Reporter("https://github.com/mikedamay/v3/tree/csharp/exercise-report");
-            var merger = ExerciseMerger.TestMergerWithResources;
+            var merger = Utils.TestMergerWithResources;
             // var merger = ExerciseMerger.TestMergerWithFileSystem;
             var exerciseFile = merger.MergeLearningObjectives();
             var output = rr.CreateReport(exerciseFile.exerciseObjectTree);
@@ -68,24 +68,6 @@ namespace ExerciseReport.Tests
             var designs = ddfh.GetExerciseDesignsForTrack().ToList();
             var designResource = string.Join(Separator, designs);
             var output = Regex.Split(designResource, Separator);
-        }
-
-        public static string GetResourceAsString(string resourceName)
-        {
-            string resourcePath = $"ExerciseReport.Tests.Data.{resourceName}";
-            string markdownText = string.Empty;
-            Stream? stream = typeof(ExerciseReportTests).Assembly.GetManifestResourceStream(resourcePath);
-            if (stream != null)
-            {
-                using (stream)
-                using (var reader = new StreamReader(stream))
-                    markdownText = reader.ReadToEnd();
-                return markdownText;
-            }
-            else
-            {
-                throw new NullReferenceException($"{nameof(stream)} is null - missing resource {resourcePath}");
-            }
         }
     }
 }

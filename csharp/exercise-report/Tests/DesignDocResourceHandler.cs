@@ -8,7 +8,7 @@ namespace ExerciseReport.Tests
     {
         public IEnumerable<(string, string)> GetExerciseDesignsForTrack()
         {
-            var resource = ExerciseReportTests.GetResourceAsString(Constants.ManyDesignsResource);
+            var resource = Utils.GetResourceAsString(Constants.ManyDesignsResource);
             var texts = Regex.Split(resource, Constants.DesignDocSeparator);
             return texts.Select(t => (Constants.ManyDesignsResource, t));
         }
