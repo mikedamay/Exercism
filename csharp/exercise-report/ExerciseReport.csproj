@@ -65,6 +65,10 @@
       <EmbeddedResource Include="Tests\Data\design_no_concept_section.md" />
       <None Remove="Tests\Data\errors.json" />
       <EmbeddedResource Include="Tests\Data\errors.json" />
+      <None Remove="Tests\Data\exercises_good.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_good.json" />
+      <None Remove="Tests\Data\exercises_mixed.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_mixed.json" />
     </ItemGroup>
 
     <ItemGroup>

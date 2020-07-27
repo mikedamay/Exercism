@@ -48,7 +48,7 @@ namespace ExerciseReport.Tests
         }
 
         [Fact]
-        public void Merge_BadJsonSyntaxFile_ReportsFatalError()
+        public void Merge_DataWithFatalError_WritesNoExercises()
         {
             var exerciseResourceHandler = new ExerciseResourceHandler(
                 Constants.DesignBrokenConceptsResource);
@@ -57,7 +57,40 @@ namespace ExerciseReport.Tests
                 Constants.ExercisesResource,
                 exerciseResourceHandler);
             merger.Merge();
+            Assert.Empty(exerciseResourceHandler.ExerciseResultJson);
+            Assert.NotEmpty(exerciseResourceHandler.ErrorResultJson);
+            Assert.NotEqual("{\n  \"Errors\": []\n}",exerciseResourceHandler.ErrorResultJson);
         }
+
+        [Fact]
+        public void Merge_ValidExerciseFile_ReportsNoErrors()
+        {
+            var exerciseResourceHandler = new ExerciseResourceHandler(
+                Constants.ExercisesGoodResource);
+            var merger = Utils.GetMergerFromResources(
+                Constants.ExercisesGoodResource,
+                Constants.SampleDesignResource,
+                exerciseResourceHandler);
+            merger.Merge();
+            Assert.NotEmpty(exerciseResourceHandler.ExerciseResultJson);
+            Assert.Equal("{\n  \"Errors\": []\n}",exerciseResourceHandler.ErrorResultJson);
+        }
+
+        [Fact]
+        public void Merge_MixedExerciseFile_ReportsErrorsAndWritesExercises()
+        {
+            var exerciseResourceHandler = new ExerciseResourceHandler(
+                Constants.ExercisesMixedResource);
+            var merger = Utils.GetMergerFromResources(
+                Constants.ExercisesMixedResource,
+                Constants.SampleDesignResource,
+                exerciseResourceHandler);
+            merger.Merge();
+            Assert.NotEmpty(exerciseResourceHandler.ExerciseResultJson);
+            Assert.NotEmpty(exerciseResourceHandler.ErrorResultJson);
+            Assert.NotEqual("{\n  \"Errors\": []\n}",exerciseResourceHandler.ErrorResultJson);
+        }
+
         [Fact]
         public void Report_OnExerciseFileTree_ProducesWellFormedReport()
         {

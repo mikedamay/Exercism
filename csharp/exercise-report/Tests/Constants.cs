@@ -18,6 +18,7 @@ namespace ExerciseReport.Tests
         public const string ExercisesBadDocTypeResource = "exercises_bad_doctype.json";
         public const string ExercisesBadLevelResource = "exercises_bad_level.json";
         public const string ExercisesEmptyResource = "exercises_empty.json";
+        public const string ExercisesGoodResource = "exercises_good.json";
         public const string ExercisesMinimalValidResource = "exercises_minimal_valid.json";
         public const string ExercisesMissingLevelResource = "exercises_missing_level.json";
         public const string ExercisesMissingConceptsResource = "exercises_missing_concepts.json";
@@ -26,6 +27,7 @@ namespace ExerciseReport.Tests
         public const string ExercisesMissingDocumentTypeResource = "exercises_missing_document_type.json";
         public const string ExercisesMissingFieldsResource = "exercises_missing_fields.json";
         public const string ExercisesMissingSlugResource = "exercises_missing_slug.json";
+        public const string ExercisesMixedResource = "exercises_mixed.json";
         public const string ExercisesResource = "exercises.json";
         public const string ExercisesSlightlyWrongResource = "exercises_slightly_wrong.json";
         public const string ExercisesWrongStructureResource = "exercises_bad_format.json";

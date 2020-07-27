@@ -1,7 +1,3 @@
-using System;
-using System.IO;
-using FSharp.Compiler;
-
 namespace ExerciseReport.Tests
 {
     internal class ExerciseResourceHandler : IExerciseFileHandler
