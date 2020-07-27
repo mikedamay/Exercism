@@ -11,7 +11,7 @@ namespace ExerciseReport
 {
     internal class ExerciseJsonParser
     {
-        public string ToString(ExerciseObjectTree exerciseObjectTree, IList<Error> errors)
+        public string ToString(ExerciseObjectTree exerciseObjectTree)
         {
             var options = new JsonSerializerOptions
             {
@@ -22,7 +22,7 @@ namespace ExerciseReport
             return JsonSerializer.Serialize(exerciseObjectTree, options);
         }
 
-        public (Result result, ExerciseObjectTree, List<Error> errors) 
+        public (Result result, ExerciseObjectTree, List<Error> errors)
             FromString(string jsonText)
         {
             var options = new JsonSerializerOptions
@@ -40,13 +40,16 @@ namespace ExerciseReport
                     return (
                         Result.FatalError,
                         exerciseObjectTree,
-                        new List<Error>{new Error(ErrorSource.Exercise, Severity.Fatal, message)}
+                        new List<Error> {new Error(ErrorSource.Exercise, Severity.Fatal, message)}
                     );
                 }
+
                 return (
-                    errors.Count == 0 
-                        ? Result.Success : errors.Count > Constants.MaxErrors 
-                            ? Result.FatalError : Result.Errors,
+                    errors.Count == 0
+                        ? Result.Success
+                        : errors.Count > Constants.MaxErrors
+                            ? Result.FatalError
+                            : Result.Errors,
                     exerciseObjectTree,
                     errors
                 );
@@ -83,30 +86,50 @@ namespace ExerciseReport
             StringBuilder sb = new StringBuilder();
             if (string.IsNullOrWhiteSpace(exercise.Slug)) sb.AppendLine("slug: missing for an exercise");
             if (exercise.Level == Level.Invalid) sb.AppendLine($"level: missing for {exercise.Slug}");
-            if (exercise.DocumentType == DocumentType.Invalid) sb.AppendLine($"document-type: missing for {exercise.Slug}");
+            if (exercise.DocumentType == DocumentType.Invalid)
+                sb.AppendLine($"document-type: missing for {exercise.Slug}");
             if ((exercise.DocumentType == DocumentType.Design
                  || exercise.DocumentType == DocumentType.Issue)
-                && string.IsNullOrWhiteSpace(exercise.DocumentLink)) sb.AppendLine($"document-link: missing for {exercise.Slug}");
+                && string.IsNullOrWhiteSpace(exercise.DocumentLink))
+                sb.AppendLine($"document-link: missing for {exercise.Slug}");
             if (exercise.Concepts.Count == 0) sb.AppendLine($"concepts: missing for {exercise.Slug}");
             for (int ii = 0; ii < exercise.Concepts.Count; ii++)
             {
-                if (string.IsNullOrWhiteSpace(exercise.Concepts[ii].Name)) sb.AppendLine($"concept.name: missing for {exercise.Slug}");
+                if (string.IsNullOrWhiteSpace(exercise.Concepts[ii].Name))
+                    sb.AppendLine($"concept.name: missing for {exercise.Slug}");
             }
+
             return sb.ToString();
         }
-    }
-    
-    internal class CombinedReport
-    {
-        [JsonPropertyName("exercises")]
-        public IList<Exercise> Exercises { get; }
-        
-        [JsonPropertyName("errors")]
-        public IList<Error> Errors { get; }
 
-        public CombinedReport(IList<Exercise> exercises, IList<Error> errors)
+        public string ErrorsToString(IList<Error> errors)
         {
-            Exercises = exercises;
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                WriteIndented = true,
+            };
+            options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+            return JsonSerializer.Serialize(new ErrorReport(errors), options);
+        }
+
+        public ErrorReport ErrorsFromString(string errorsJson) {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                WriteIndented = true,
+            };
+            options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+            return JsonSerializer.Deserialize<ErrorReport>(errorsJson, options);
+        }
+}
+    
+    internal class ErrorReport
+    {
+        public IList<Error> Errors { get; set; } = new List<Error>();
+
+        public ErrorReport(IList<Error> errors)
+        {
             Errors = errors;
         }
     }

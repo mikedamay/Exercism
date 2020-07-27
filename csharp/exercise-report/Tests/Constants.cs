@@ -38,5 +38,7 @@ namespace ExerciseReport.Tests
         public const string CSharpTrack = "csharp";
 
         public const int MaxErrors = 20;
+
+        public const string ErrorsResource = "errors.json";
     }
 }

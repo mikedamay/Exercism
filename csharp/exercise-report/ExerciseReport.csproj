@@ -63,6 +63,8 @@
       <EmbeddedResource Include="Tests\Data\design_concepts_without_quotes.md" />
       <None Remove="Tests\Data\design_no_concept_section.md" />
       <EmbeddedResource Include="Tests\Data\design_no_concept_section.md" />
+      <None Remove="Tests\Data\errors.json" />
+      <EmbeddedResource Include="Tests\Data\errors.json" />
     </ItemGroup>
 
     <ItemGroup>

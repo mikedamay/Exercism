@@ -20,7 +20,7 @@ namespace ExerciseReport
         {
             try
             {
-                var text = exerciseFileHandler.ReadFile();
+                var text = exerciseFileHandler.ReadExerciseFile();
                 return exerciseJsonParser.FromString(text);
             }
             catch (Exception e)
@@ -33,21 +33,21 @@ namespace ExerciseReport
             }
         }
 
-        public (Result result, List<Error> errors)
-            WriteExercises(ExerciseObjectTree exerciseObjectTree, IList<Error> errors)
+        public void WriteExercises(Result result, ExerciseObjectTree exerciseObjectTree, IList<Error> errors)
         {
             try
             {
-                var text = exerciseJsonParser.ToString(exerciseObjectTree, errors);
-                exerciseFileHandler.WriteFile(text);
-                return (Result.Success, new List<Error>());
+                if (result != Result.FatalError)
+                {
+                    var exerciseJson = exerciseJsonParser.ToString(exerciseObjectTree);
+                    exerciseFileHandler.WriteExerciseFile(exerciseJson);
+                }
+                var errorsJson = exerciseJsonParser.ErrorsToString(errors);
+                exerciseFileHandler.WriteErrorFile(errorsJson);
             }
             catch (Exception e)
             {
-                return (
-                    Result.FatalError,
-                    new List<Error>{new Error(ErrorSource.Process, Severity.Fatal, "writing exercise.json file: " + e.Message)}
-                );
+                throw;
             }
         }
     }

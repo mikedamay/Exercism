@@ -32,7 +32,8 @@ namespace ExerciseReport
         public void Merge()
         {
             var outputs = MergeLearningObjectives();
-            exerciseFileHandler.WriteExercises(outputs.exerciseObjectTree, outputs.errors);
+            exerciseFileHandler.WriteExercises(outputs.result,
+                outputs.exerciseObjectTree, outputs.errors);
         }
 
         public (Result result, ExerciseObjectTree exerciseObjectTree, List<Error> errors) 

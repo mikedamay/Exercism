@@ -6,23 +6,34 @@ namespace ExerciseReport.Tests
 {
     internal class ExerciseResourceHandler : IExerciseFileHandler
     {
-        public string ResultJson { get; private set; } = string.Empty;
+        public string ExerciseResultJson { get; private set; } = string.Empty;
+        public string ErrorResultJson { get; private set; } = string.Empty;
 
-        private readonly string resourceName;
+        private readonly string exerciseResourceName;
 
-        public ExerciseResourceHandler(string resourceName = Constants.ExercisesResource)
+        public ExerciseResourceHandler(string exerciseResourceName = Constants.ExercisesResource)
         {
-            this.resourceName = resourceName;
+            this.exerciseResourceName = exerciseResourceName;
         }
         
-        public string ReadFile()
+        public string ReadExerciseFile()
         {
-            return Utils.GetResourceAsString(resourceName);
+            return Utils.GetResourceAsString(exerciseResourceName);
         }
 
-        public void WriteFile(string exerciseJson)
+        public void WriteExerciseFile(string exerciseJson)
         {
-            ResultJson = exerciseJson;
+            ExerciseResultJson = exerciseJson;
+        }
+
+        public string ReadErrorFile()
+        {
+            return Utils.GetResourceAsString(Constants.ErrorsResource);
+        }
+
+        public void WriteErrorFile(string errorJson)
+        {
+            ErrorResultJson = errorJson;
         }
     }
 }

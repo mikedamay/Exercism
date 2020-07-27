@@ -13,7 +13,7 @@ namespace ExerciseReport.Creation
         public void Serialize_ExerciseFile_ProducesWellFormedJson()
         {
             var erh = new ExerciseJsonParser();
-            var actual = erh.ToString(ObjectHierarchy.Sample1, new List<Error>());
+            var actual = erh.ToString(ObjectHierarchy.Sample1);
             Stream? resourceStream = this.GetType().Assembly.GetManifestResourceStream(JsonSample1);
             if (resourceStream == null)
             {
@@ -41,7 +41,7 @@ namespace ExerciseReport.Creation
             using (var reader = new StreamReader(resourceStream))
                 sampleJson = reader.ReadToEnd();
             var actual = erh.FromString(sampleJson);
-            var actualString = erh.ToString(actual.Item2, actual.errors);
+            var actualString = erh.ToString(actual.Item2);
             Assert.Equal(sampleJson, actualString);
             // Assert.Equal(expected, actual);
                 // xunit says they don't match.  I wonder if it's checking attributes.
@@ -63,7 +63,7 @@ namespace ExerciseReport.Creation
             var efc = new ExerciseFileCreator(cdi, tnci);
             var exerciseFile = efc.CreateExerciseFileFromConceptsDoc();
             var efh = new ExerciseJsonParser();
-            string result = efh.ToString(exerciseFile, new List<Error>());
+            string result = efh.ToString(exerciseFile);
             Assert.NotNull(exerciseFile);
         }
 
