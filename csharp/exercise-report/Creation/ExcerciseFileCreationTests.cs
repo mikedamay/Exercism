@@ -5,7 +5,7 @@ using Xunit.Sdk;
 
 namespace ExerciseReport.Creation
 {
-    public class ExcerciseReportCreationTests
+    public class ExcerciseFileCreationTests
     {
         private const string JsonSample1 = "ExerciseReport.Creation.sample.json";
 
@@ -60,7 +60,7 @@ namespace ExerciseReport.Creation
         {
             var cdi = new ConceptsDocImporter();
             var tnci = new TrackNeutralConceptsImporter();
-            var efc = new ExerciseFileCreator(cdi, tnci);
+            var efc = new ExerciseFileWriter(cdi, tnci);
             var exerciseFile = efc.CreateExerciseFileFromConceptsDoc();
             var efh = new ExerciseJsonParser();
             string result = efh.ToString(exerciseFile);
@@ -74,28 +74,6 @@ namespace ExerciseReport.Creation
             var map = tnci.ImportTrackNeutralConcepts();
             Assert.Equal(40, map.Count);
         }
-
-    //     [Fact]
-    //     public void Parse_WellFormedDesignDoc_ProducesConceptLearningObjectives()
-    //     {
-    //         const string SampleDesignDoc = "ExerciseReport.Creation.sample_design.md";
-    //     
-    //         var ddp = new DesignDocParser();
-    //         string markdownText = string.Empty;
-    //         Stream? stream = this.GetType().Assembly.GetManifestResourceStream(SampleDesignDoc);
-    //         if (stream != null)
-    //         {
-    //             using (stream)
-    //             using (var reader = new StreamReader(stream))
-    //                 markdownText = reader.ReadToEnd();
-    //         }
-    //         else
-    //         {
-    //             Assert.False(true);
-    //         }
-    //         var lo = ddp.ParseDesignDoc(markdownText, "test-track");
-    //         
-    //     }
     }
     
     public static class ObjectHierarchy
@@ -108,7 +86,6 @@ namespace ExerciseReport.Creation
                 {
                     Slug = "sample1-slug",
                     Level = Level.Introductory,
-                    TrackNeutralStory = "sample1-track-neutral-story",
                     DocumentType = DocumentType.Design,
                     DocumentLink = "http://sample1-doclink",
                     Concepts = new List<Concept>

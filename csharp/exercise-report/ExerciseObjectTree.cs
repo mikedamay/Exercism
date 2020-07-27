@@ -26,8 +26,7 @@ namespace ExerciseReport
         public string Slug { get; set; } = string.Empty;
         [JsonPropertyName("level")]
         public Level Level { get; set; } = Level.Invalid;
-        [JsonPropertyName("track-neutral-story")]
-        public string TrackNeutralStory { get; set; } = string.Empty;
+
         [JsonPropertyName("document-type")]
         public DocumentType DocumentType { get; set; } = DocumentType.Invalid;
         [JsonPropertyName("document-link")]

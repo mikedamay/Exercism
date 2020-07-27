@@ -5,14 +5,14 @@ using System.Text.RegularExpressions;
 
 namespace ExerciseReport.Creation
 {
-    internal class ExerciseFileCreator
+    internal class ExerciseFileWriter
     {
         private readonly ConceptsDocImporter importer;
         private readonly TrackNeutralConceptsImporter tncImporter;
         private const string LINK_NAME = "linkName"; 
         private readonly Regex regex = new Regex(@$"\[.+\]\[(?<{LINK_NAME}>.+)\].*");
 
-        public ExerciseFileCreator(ConceptsDocImporter importer, TrackNeutralConceptsImporter tncImporter)
+        public ExerciseFileWriter(ConceptsDocImporter importer, TrackNeutralConceptsImporter tncImporter)
         {
             this.importer = importer;
             this.tncImporter = tncImporter;
@@ -47,8 +47,12 @@ namespace ExerciseReport.Creation
                             "C" => Level.Advanced,
                             _ => Level.None
                         },
-                        DocumentType = ic.DocType == "I" ? DocumentType.Issue :
-                            ic.DocType == "E" ? DocumentType.Design : DocumentType.None,
+                        DocumentType = ic.DocType switch
+                        {
+                            "I" => DocumentType.Issue,
+                            "E" => DocumentType.Design,
+                            _ => DocumentType.None
+                        },
                         DocumentLink = ic.Link,
                         Concepts = new List<Concept>
                         {
