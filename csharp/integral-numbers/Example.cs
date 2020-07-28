@@ -46,15 +46,15 @@ public static class TelemetryBuffer
         switch ((sbyte)buffer[0])
         {
             case -8:
-                return BitConverter.ToInt64(buffer);
+                return BitConverter.ToInt64(buffer, 1);
             case 4:
-                return BitConverter.ToUInt32(buffer);
+                return BitConverter.ToUInt32(buffer, 1);
             case -4:
-                return BitConverter.ToUInt32(buffer);
+                return BitConverter.ToInt32(buffer, 1);
             case 2:
-                return BitConverter.ToUInt16(buffer);
+                return BitConverter.ToUInt16(buffer, 1);
             case -2:
-                return BitConverter.ToInt16(buffer);
+                return BitConverter.ToInt16(buffer, 1);
             default:
                 return 0;
         }
