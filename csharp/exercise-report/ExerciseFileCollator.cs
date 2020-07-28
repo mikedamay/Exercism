@@ -5,7 +5,7 @@ namespace ExerciseReport
 {
     internal class ExerciseFileCollator
     {
-        private static ExerciseFileCollator CSharpExerciseFileCollator =
+        public static ExerciseFileCollator CSharpExerciseFileCollator =
             new ExerciseFileCollator(
                 new ExerciseFileHandler(PathNames.Default.Root, Constants.CSharpTrack),
                 new ExerciseJsonParser());
