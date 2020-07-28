@@ -2,14 +2,14 @@ using System;
 
 public static class TelemetryBuffer
 {
-    public static sbyte[] ToBuffer(long reading)
+    public static byte[] ToBuffer(long reading)
     {
-        sbyte[] allBytes = new sbyte[9];
+        byte[] allBytes = new byte[9];
 
         byte[] bytes;
         if (reading > UInt32.MaxValue || reading < Int32.MinValue)
         {
-            allBytes[0] = -8;
+            allBytes[0] = unchecked((byte)-8);
             bytes = BitConverter.GetBytes(reading);
             bytes.CopyTo(allBytes, 1);
         }
@@ -21,7 +21,7 @@ public static class TelemetryBuffer
         }
         else if (reading > UInt16.MaxValue || reading < Int16.MinValue)
         {
-            allBytes[0] = -4;
+            allBytes[0] = unchecked((byte)-4);
             bytes = BitConverter.GetBytes((int) reading);
             bytes.CopyTo(allBytes, 1);
         }
@@ -33,7 +33,7 @@ public static class TelemetryBuffer
         }
         else
         {
-            allBytes[0] = -2;
+            allBytes[0] = unchecked((byte)-2);
             bytes = BitConverter.GetBytes((short) reading);
             bytes.CopyTo(allBytes, 1);
         }
