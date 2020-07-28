@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -66,7 +65,9 @@ namespace ExerciseReport
                 .Where(c => c.LearningObjectives.Count > 0)
                 .OrderBy(c => c.Name)
                 .Select(c => new
-                    {name = "`" + c.Name + "`", learningObjectives = string.Join(';', c.LearningObjectives)})
+                    {name = "`" + c.Name + "`",
+                        learningObjectives = "<ul><li>" + string.Join("<li>", c.LearningObjectives)
+                            })
                 .ToList();
             if (conceptList.Count == 0)
             {
@@ -106,7 +107,7 @@ namespace ExerciseReport
             var exerciseLocations = exerciseObjectTree.Exercises
                 .Where(ex => ex.DocumentType == DocumentType.Design)
                 .OrderBy(ex => ex.Slug)
-                .Select(ex => $"[exercise-{ex.Slug}]: {GetExerciseLocation(ex.Slug)}");
+                .Select(ex => $"[exercise-{ex.Slug}]: {GetExerciseLocationLink(ex.Slug)}");
  
             sb.AppendLine();
             foreach (string exerciseLocation in exerciseLocations)
@@ -128,7 +129,7 @@ namespace ExerciseReport
             return sb.ToString();
         }
 
-        private string GetExerciseLocation(string exerciseSlug)
+        private string GetExerciseLocationLink(string exerciseSlug)
         {
             return Path.Combine(
                 "..",
@@ -144,14 +145,15 @@ namespace ExerciseReport
                     c) => new {Exercise = ex, Concept = c})
                 .Where(p => p.Exercise.Level == level)
                 .OrderBy(p => p.Concept.Name)
-                .Select(p => FormatOutput(p.Exercise, p.Concept)).DefaultIfEmpty("None");
+                .Select(p => FormatConceptReportLine(p.Exercise, p.Concept)).DefaultIfEmpty("None");
             foreach (string output in outputs)
             {
                 sb.AppendLine(output);
             }
         }
 
-        private string FormatOutput(Exercise exercise, Concept concept)
+        // e.g. "arrays (arrays) - Design, Background" 
+        private string FormatConceptReportLine(Exercise exercise, Concept concept)
         {
             var link = (exercise.DocumentType, concept.TrackNeutralConcept) switch
             {

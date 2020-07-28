@@ -51,7 +51,7 @@ namespace ExerciseReport.Tests
         }
 
         [Fact]
-        public void Report_OnExerciseFileTree_ProducesWellFormedReport()
+        public void Report_OnExerciseTree_ProducesWellFormedReport()
         {
             var rr = new ReportFormatter(PathNames.Default.Root);
             var merger = Utils.TestMergerWithResources;
@@ -61,6 +61,15 @@ namespace ExerciseReport.Tests
             var output = rr.CreateReport(exerciseFile.exerciseObjectTree);
             
             Assert.NotEmpty(output);
+        }
+
+        [Fact]
+        public void Report_OnSimpleExerciseTree_ProducesWellFormedReportK()
+        {
+            var rr = new ReportFormatter(PathNames.Default.Root);
+            string actual = rr.CreateReport(ExerciseTestData.Exercises["simple"]);
+            string expected = Utils.GetResourceAsString("report_simple.md");
+            Assert.Equal(expected, actual);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace ExerciseReport
                 .Skip(1)
                 .TakeWhile(line => !MatchesHeading(line))
                 .Where(line => line.Length > 1 && line[0] == '-' && char.IsWhiteSpace(line[1]))
-                .Select(line => LineToConceptAndObjective(docId, line))
+                .SelectMany(line => LineToConceptAndObjective(docId, line))
                 .DefaultIfEmpty((false, $"{docId}: no learning objectives found", string.Empty, String.Empty));
             return conceptsAndObjectives;
         }
@@ -52,18 +52,27 @@ namespace ExerciseReport
             return parts.Length > 2 ? parts[^2] : designDocPath;
         }
 
-        // line: e.g. "- `basics`: basic stuff"
-        private (bool success, string error, string concept, string objective)
+        // line: e.g. "- `basics`: basic-stuff; other-stuff"
+        // => (true, "", basics, basic-stuff)
+        // => (true, "", basics, other-stuff)
+        private List<(bool success, string error, string concept, string objective)>
             LineToConceptAndObjective(string docId, string line)
         {
             var match = learningObjectiveRegex.Match(line);
             if (match.Success && match.Groups.ContainsKey(CONCEPT) && match.Groups.ContainsKey(LEARNING_OBJECTIVE))
             {
-                return (true, string.Empty, match.Groups[CONCEPT].Value, match.Groups[LEARNING_OBJECTIVE].Value);
+                var results = new List<(bool success, string error, string concept, string objective)>();
+                string conceptName = match.Groups[CONCEPT].Value;
+                foreach (var learningObjective in match.Groups[LEARNING_OBJECTIVE].Value.Split(';'))
+                {
+                    results.Add((true, string.Empty, conceptName.Trim(), learningObjective.Trim()));
+                }
+
+                return results;
             }
             else
             {
-                return (false, $"{docId}: invalid format: {line}", string.Empty, string.Empty);
+                return new List<(bool success, string error, string concept, string objective)>{(false, $"{docId}: invalid format: {line}", string.Empty, string.Empty)};
             }
         }
 

@@ -70,6 +70,8 @@
       <EmbeddedResource Include="Tests\Data\exercises_good.json" />
       <None Remove="Tests\Data\exercises_mixed.json" />
       <EmbeddedResource Include="Tests\Data\exercises_mixed.json" />
+      <None Remove="Tests\Data\report_simple.md" />
+      <EmbeddedResource Include="Tests\Data\report_simple.md" />
     </ItemGroup>
 
     <ItemGroup>
