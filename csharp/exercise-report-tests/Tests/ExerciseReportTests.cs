@@ -53,11 +53,13 @@ namespace ExerciseReport.Tests
         [Fact]
         public void Report_OnExerciseFileTree_ProducesWellFormedReport()
         {
-            var rr = new Reporter("https://github.com/mikedamay/v3/tree/csharp/exercise-report");
+            var rr = new ReportFormatter(PathNames.Default.Root);
             var merger = Utils.TestMergerWithResources;
+            // var reportCollator = ReportCollator.CSharpReportCollator;
             // var merger = ExerciseMerger.TestMergerWithFileSystem;
             var exerciseFile = merger.MergeLearningObjectives();
             var output = rr.CreateReport(exerciseFile.exerciseObjectTree);
+            
             Assert.NotEmpty(output);
         }
     }

@@ -1,15 +1,19 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace ExerciseReport
 {
-    internal class Reporter
+    internal class ReportFormatter
     {
-        private string root;
+        private readonly string root;
+        private const string Relativity = "../../..";
+                // distance from v3/languages/csharp/reference to v3/reference
+                // for location of track neutral concepts README.md
 
-        public Reporter(string root)
+        public ReportFormatter(string root)
         {
             this.root = root;
         }
@@ -99,16 +103,38 @@ namespace ExerciseReport
                 sb.AppendLine(issueOrDesign);
             }
 
+            var exerciseLocations = exerciseObjectTree.Exercises
+                .Where(ex => ex.DocumentType == DocumentType.Design)
+                .OrderBy(ex => ex.Slug)
+                .Select(ex => $"[exercise-{ex.Slug}]: {GetExerciseLocation(ex.Slug)}");
+ 
+            sb.AppendLine();
+            foreach (string exerciseLocation in exerciseLocations)
+            {
+                sb.AppendLine(exerciseLocation);
+            }
+
             var trackNeutralConcepts = exerciseObjectTree.Exercises
                 .SelectMany(ex => ex.Concepts)
                 .Where(c => !string.IsNullOrWhiteSpace(c.TrackNeutralConcept))
                 .OrderBy(c => c.Name)
-                .Select(c => $"[tnc-{c.Name}]: {Path.Combine(root,c.TrackNeutralConcept)}");
+                .Select(c => $"[tnc-{c.Name}]: {Path.Combine(root, Relativity, c.TrackNeutralConcept)}");
+
+            sb.AppendLine();
             foreach (string trackNeutralConcept in trackNeutralConcepts)
             {
                 sb.AppendLine(trackNeutralConcept);
             }
             return sb.ToString();
+        }
+
+        private string GetExerciseLocation(string exerciseSlug)
+        {
+            return Path.Combine(
+                "..",
+                PathNames.Default.Exercises,
+                exerciseSlug
+            );
         }
 
         private void GetConcepts(StringBuilder sb, ExerciseObjectTree exerciseObjectTree, Level level)
@@ -134,9 +160,9 @@ namespace ExerciseReport
                 (DocumentType.Issue, _) => $" - [Issue][issue-{exercise.Slug}], [Background][tnc-{concept.Name}]",
                 (DocumentType.Design, _) => $" - [Design][design-{exercise.Slug}], [Background][tnc-{concept.Name}]",
                 (DocumentType.None, "") => string.Empty,
-                _ => $" - [background][tnc-{concept.Name}]"
+                _ => $" - [Background][tnc-{concept.Name}]"
             };
-            return $"- {concept.Name} _({exercise.Slug})_{link}";
+            return $"- {concept.Name} [_({exercise.Slug})_][exercise-{exercise.Slug}]{link}";
         }
     }
 }
