@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 
 namespace ExerciseReport
@@ -12,6 +13,14 @@ namespace ExerciseReport
             }
             var merger = ExerciseMerger.CSharpMerger;
             merger.Merge();
+            var reporter = ReportCollator.CSharpReportCollator;
+            var efc = ExerciseFileCollator.CSharpExerciseFileCollator;
+            var result = efc.ReadExercises();
+            if (result.result == Result.FatalError)
+            {
+                throw new Exception("Failed to produce report");
+            }
+            reporter.WriteReport(result.exerciseObjectTree);
         }
     }
 }

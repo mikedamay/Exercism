@@ -164,7 +164,12 @@ namespace ExerciseReport
                 (DocumentType.None, "") => string.Empty,
                 _ => $" - [Background][tnc-{concept.Name}]"
             };
-            return $"- {concept.Name} [_({exercise.Slug})_][exercise-{exercise.Slug}]{link}";
+            string exerciseText = $"_({exercise.Slug})_";
+            if (exercise.DocumentType == DocumentType.Design)
+            {
+                exerciseText = $"[_({exercise.Slug})_][exercise-{exercise.Slug}]";
+            }
+            return $"- {concept.Name} {exerciseText}{link}";
         }
     }
 }
