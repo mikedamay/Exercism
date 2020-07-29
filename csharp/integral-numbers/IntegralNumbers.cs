@@ -1,4 +1,4 @@
-/*using System;
+using System;
 
 public static class TelemetryBuffer
 {
@@ -11,4 +11,4 @@ public static class TelemetryBuffer
     {
         throw new NotImplementedException("Please implement the static TelemetryBuffer.FromBuffer() method");
     }
-}*/
+}
