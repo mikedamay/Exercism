@@ -15,7 +15,7 @@ public class InterfacesTests
         Assert.Equal(20, experimentalCar.DistanceTravelled - productionCar.DistanceTravelled);
     }
 
-    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    [Fact(Skip = "Remove this Skip property to run this test")]
     public void RankCars()
     {
         var prc1 = new ProductionRemoteControlCar();
@@ -26,7 +26,7 @@ public class InterfacesTests
         Assert.Same(prc1, rankings[1]);
     }
 
-    [Fact/*(Skip = "Remove this Skip property to run this test")*/]
+    [Fact(Skip = "Remove this Skip property to run this test")]
     public void EnsureCarsAreComparable()
     {
         var fast = new ProductionRemoteControlCar();
