@@ -12,7 +12,7 @@ public class ObjectInitializationTests
         Assert.Equal(admin, authenticator.GetAdmin());
     }
 
-    [Fact /*(Skip = "Remove this Skip property to run this test")*/]
+    [Fact]
     public void GetDevelopers()
     {
         var authenticator = new Authenticator(new Identity {EyeColor = "green", Email = "admin@ex.ism"});
