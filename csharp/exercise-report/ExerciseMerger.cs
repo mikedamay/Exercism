@@ -28,7 +28,7 @@ namespace ExerciseReport
                     new DesignDocParser())
                 );
 
-        public void Merge()
+        public void MergeInLearningObjectives()
         {
             var outputs = MergeLearningObjectives();
             exerciseFileHandler.WriteExercises(outputs.result,

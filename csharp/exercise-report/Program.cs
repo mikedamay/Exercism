@@ -12,7 +12,7 @@ namespace ExerciseReport
                 Directory.SetCurrentDirectory(args[0]);
             }
             var merger = ExerciseMerger.CSharpMerger;
-            merger.Merge();
+            merger.MergeInLearningObjectives();
             var reporter = ReportCollator.CSharpReportCollator;
             var efc = ExerciseFileCollator.CSharpExerciseFileCollator;
             var result = efc.ReadExercises();

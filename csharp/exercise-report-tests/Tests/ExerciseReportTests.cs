@@ -15,7 +15,7 @@ namespace ExerciseReport.Tests
                 Constants.DesignBrokenConceptsResource,
                 Constants.ExercisesResource,
                 exerciseResourceHandler);
-            merger.Merge();
+            merger.MergeInLearningObjectives();
             Assert.Empty(exerciseResourceHandler.ExerciseResultJson);
             Assert.NotEmpty(exerciseResourceHandler.ErrorResultJson);
             Assert.NotEqual("{\n  \"Errors\": []\n}",exerciseResourceHandler.ErrorResultJson);
@@ -30,7 +30,7 @@ namespace ExerciseReport.Tests
                 Constants.ExercisesGoodResource,
                 Constants.SampleDesignResource,
                 exerciseResourceHandler);
-            merger.Merge();
+            merger.MergeInLearningObjectives();
             Assert.NotEmpty(exerciseResourceHandler.ExerciseResultJson);
             Assert.Equal("{\n  \"Errors\": []\n}",exerciseResourceHandler.ErrorResultJson);
         }
@@ -44,7 +44,7 @@ namespace ExerciseReport.Tests
                 Constants.ExercisesMixedResource,
                 Constants.SampleDesignResource,
                 exerciseResourceHandler);
-            merger.Merge();
+            merger.MergeInLearningObjectives();
             Assert.NotEmpty(exerciseResourceHandler.ExerciseResultJson);
             Assert.NotEmpty(exerciseResourceHandler.ErrorResultJson);
             Assert.NotEqual("{\n  \"Errors\": []\n}",exerciseResourceHandler.ErrorResultJson);
