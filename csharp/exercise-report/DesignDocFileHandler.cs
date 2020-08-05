@@ -6,7 +6,7 @@ namespace ExerciseReport
 {
     internal interface IDesignDocFileHandler
     {
-        IEnumerable<(string, string)> GetExerciseDesignsForTrack();
+        IEnumerable<(string ExerciseName, string ConceptName)> GetExerciseDesignsForTrack();
     }
     internal class DesignDocFileHandler : IDesignDocFileHandler
     {
@@ -28,9 +28,9 @@ namespace ExerciseReport
                 PathNames.Default.Exercises
                 ));    // ./languages/csharp/exercises/concept
             var designs = exercisePaths
-                .Select(exp => Path.Combine(exp, PathNames.Default.Design))
+                .Select(exp => Path.Combine(exp, PathNames.Default.DesignDocName))
                 .Where(path => File.Exists(path))
-                .Select(path => (path, text :File.ReadAllText(path)));
+                .Select(path => (path, text: File.ReadAllText(path)));
             return designs;
         }
     }

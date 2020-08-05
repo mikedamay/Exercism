@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,22 +16,24 @@ namespace ExerciseReport
         }
 
         public (LearningObjectives learningObjectives, List<Error> errors) 
-            GetLearningObjectives(string track)
+            GetAllLearningObjectivesForTrack(string track)
         {
             var errors = new List<Error>();
             var learningObjectives = new LearningObjectives();
             var conceptsAndObjectives = designDocFileHandler.GetExerciseDesignsForTrack()
-                .SelectMany(d => designDocParser.ParseDesignDoc(d.Item1, d.Item2));
+                .SelectMany(e_and_c => designDocParser.ParseDesignDoc(e_and_c.ExerciseName, e_and_c.ConceptName));
             foreach (var conceptAndObjective in conceptsAndObjectives)
             {
                 switch (conceptAndObjective)
                 {
-                    case (true, _, string concept, string objective):
+                    case (Result.Success, _, string concept, string objective):
                         learningObjectives.Builder.Add(concept, objective);
                         break;
-                    case (false, string error, _, _):
+                    case (Result.Errors, string error, _, _):
                         errors.Add(new Error(ErrorSource.Design, Severity.Error, error));
                         break;
+                    case (_, _, _, _):
+                        throw new ArgumentException();
                 }
             }
 

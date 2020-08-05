@@ -43,7 +43,7 @@ namespace ExerciseReport
             {
                 return outputs;
             }
-            var learningObjectives = designDocCollator.GetLearningObjectives(track);
+            var learningObjectives = designDocCollator.GetAllLearningObjectivesForTrack(track);
             MergeLearningObjectives(outputs.exerciseObjectTree, learningObjectives.learningObjectives);
             var combinedErrors = outputs.errors.Concat(learningObjectives.errors).ToList();
             var maxSeverity = combinedErrors.Select(e => e.Severity).DefaultIfEmpty(Severity.None).Max();

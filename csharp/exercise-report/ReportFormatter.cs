@@ -152,7 +152,7 @@ namespace ExerciseReport
             }
         }
 
-        // e.g. "arrays (arrays) - Design, Background" 
+        // e.g. "arrays (arrays) - DesignDocName, Background" 
         private string FormatConceptReportLine(Exercise exercise, Concept concept)
         {
             var link = (exercise.DocumentType, concept.TrackNeutralConcept) switch
