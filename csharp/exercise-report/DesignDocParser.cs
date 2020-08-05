@@ -31,7 +31,7 @@ namespace ExerciseReport
                 .Skip(1)
                 .TakeWhile(line => !line.MatchesAnyHeading())
                 .Where(line => line.Length > 1 && line[0] == '-' && char.IsWhiteSpace(line[1]))
-                .SelectMany(line => LineToConceptAndObjective(exerciseName, line))
+                .SelectMany(line => LineToConceptAndObjectives(exerciseName, line))
                 .DefaultIfEmpty((Result.Errors, $"{exerciseName}: no learning objectives found", string.Empty, String.Empty));
             return conceptsAndObjectives;
         }
@@ -49,7 +49,7 @@ namespace ExerciseReport
         // => (true, "", basics, basic-stuff)
         // => (true, "", basics, other-stuff)
         private List<(Result result, string error, string concept, string objective)>
-            LineToConceptAndObjective(string docId, string line)
+            LineToConceptAndObjectives(string docId, string line)
         {
             var match = learningObjectiveRegex.Match(line);
             if (match.Success && match.Groups.ContainsKey(CONCEPT) && match.Groups.ContainsKey(LEARNING_OBJECTIVE))

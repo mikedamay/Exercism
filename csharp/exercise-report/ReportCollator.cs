@@ -5,7 +5,7 @@ namespace ExerciseReport
         private readonly IReportFileHandler reportFileHandler;
         private readonly ReportFormatter reportFormatter;
 
-        public static ReportCollator CSharpReportCollator =
+        public static ReportCollator CSharpReportCollator { get; } =
             new ReportCollator(new ReportFileHandler(PathNames.Default.Root, Constants.CSharpTrack),
                 new ReportFormatter(PathNames.Default.Root));
         public ReportCollator(IReportFileHandler reportFileHandler,

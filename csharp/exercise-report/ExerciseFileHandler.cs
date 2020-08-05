@@ -30,7 +30,6 @@ namespace ExerciseReport
                 PathNames.Default.Languages,
                 track,
                 PathNames.Default.ErrorsFile);
-            errorPathAndFileName = Path.Combine(root, "languages", track, "reference/exercise-errors.json");
         }
 
         public string ReadExerciseFile()
