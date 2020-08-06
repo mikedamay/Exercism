@@ -7,20 +7,28 @@ namespace ExerciseReport
     {
         public static void Main(string[] args)
         {
-            if (args.Length > 0)
+            try
             {
-                Directory.SetCurrentDirectory(args[0]);
+                if (args.Length > 0)
+                {
+                    Directory.SetCurrentDirectory(args[0]);
+                        // e.g. /Users/mikedamay/projects/exercism/v3
+                }
+                var merger = ExerciseMerger.CSharpMerger;
+                merger.MergeInLearningObjectives();
+                var reporter = ReportCollator.CSharpReportCollator;
+                var efc = ExerciseFileCollator.CSharpExerciseFileCollator;
+                var result = efc.ReadExercises();
+                if (result.result == Result.FatalError)
+                {
+                    throw new Exception("Failed to produce report: " + result.errors[^1].Message);
+                }
+                reporter.WriteReport(result.exerciseObjectTree);
             }
-            var merger = ExerciseMerger.CSharpMerger;
-            merger.MergeInLearningObjectives();
-            var reporter = ReportCollator.CSharpReportCollator;
-            var efc = ExerciseFileCollator.CSharpExerciseFileCollator;
-            var result = efc.ReadExercises();
-            if (result.result == Result.FatalError)
+            catch (Exception e)
             {
-                throw new Exception("Failed to produce report");
+                Console.Out.WriteLine(e.Message);
             }
-            reporter.WriteReport(result.exerciseObjectTree);
         }
     }
 }

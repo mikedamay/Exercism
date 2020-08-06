@@ -42,6 +42,12 @@ namespace ExerciseReport
                     );
                 }
 
+                if (errors.Count > Constants.MaxErrors)
+                {
+                    errors.Add(new Error(ErrorSource.Exercise,
+                        Severity.Error,
+                        "Too many errors reading exercises.json - see exercise-errors.json"));
+                }
                 return (
                     errors.Count == 0
                         ? Result.Success
