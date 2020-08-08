@@ -8,7 +8,7 @@
       "document-link": "http://sample1-doclink",
       "concepts": [
         {
-          "name": "string-formatting",
+          "name": "sample1.1-name",
           "track-neutral-concept": "sample1.1-track-neutral-concept",
           "learning-objectives": [
             "sample1.1.1-learning-objective"
@@ -16,19 +16,6 @@
           "original-concepts": [
             {
               "name": "sample1.1.1-name",
-              "line-number": 1729
-            }
-          ]
-        },
-        {
-          "name": "verbatim-strings",
-          "track-neutral-concept": "sample1.1-track-neutral-concept",
-          "learning-objectives": [
-            "sample1.1.1-learning-objective"
-          ],
-          "original-concepts": [
-            {
-              "name": "sample1.1.2-name",
               "line-number": 1729
             }
           ]

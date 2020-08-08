@@ -14,6 +14,8 @@ namespace ExerciseReport.Tests
         public const string DesignNoConceptsResource = "design_no_concepts.md";
         public const string DesignNoConceptsTrailingResource = "design_no_concepts_trailing.md";
         public const string DesignNoConceptSectionResource = "design_no_concept_section.md";
+        public const string DesignOrphanedConceptsResource = "design_orphaned_concepts.md";
+        public const string DesignUnorphanedConceptsResource = "design_unorphaned_concepts.md";
 
         public const string ExercisesBadDocTypeResource = "exercises_bad_doctype.json";
         public const string ExercisesBadLevelResource = "exercises_bad_level.json";
@@ -28,8 +30,10 @@ namespace ExerciseReport.Tests
         public const string ExercisesMissingFieldsResource = "exercises_missing_fields.json";
         public const string ExercisesMissingSlugResource = "exercises_missing_slug.json";
         public const string ExercisesMixedResource = "exercises_mixed.json";
+        public const string ExercisesOrphanedConceptsResource = "exercises_orphaned_concepts.json";
         public const string ExercisesResource = "exercises.json";
         public const string ExercisesSlightlyWrongResource = "exercises_slightly_wrong.json";
+        public const string ExercisesUnorphanedConceptsResource = "exercises_unorphaned_concepts.json";
         public const string ExercisesWrongStructureResource = "exercises_bad_format.json";
 
         public static readonly string DesignDocSeparator = Environment.NewLine + "separator-1729" + Environment.NewLine;

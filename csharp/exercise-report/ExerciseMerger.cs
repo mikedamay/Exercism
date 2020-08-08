@@ -46,7 +46,7 @@ namespace ExerciseReport
             var learningObjectives = designDocCollator.GetAllLearningObjectivesForTrack(track);
             MergeLearningObjectives(outputs.exerciseObjectTree, learningObjectives.learningObjectives);
             var unmatchedConcepts = ReportUnmatchedConcepts(outputs.exerciseObjectTree, learningObjectives.learningObjectives);
-            var combinedErrors = outputs.errors.Concat(learningObjectives.errors).ToList();
+            var combinedErrors = outputs.errors.Concat(learningObjectives.errors).Concat(unmatchedConcepts).ToList();
             var maxSeverity = combinedErrors.Select(e => e.Severity).DefaultIfEmpty(Severity.None).Max();
             Result result = SeverityToResult(maxSeverity);
             return (result, outputs.exerciseObjectTree, combinedErrors);

@@ -16,6 +16,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="Tests\Data\design_orphaned_concepts.md" />
+      <EmbeddedResource Include="Tests\Data\design_unorphaned_concepts.md" />
+      <EmbeddedResource Include="Tests\Data\exercises_orphaned_concepts.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_unorphaned_concepts.json" />
       <EmbeddedResource Include="Tests\Data\sample_design.md" />
       <None Remove="sample.json" />
       <None Remove="orig.csv" />
