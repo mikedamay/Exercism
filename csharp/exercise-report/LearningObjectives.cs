@@ -7,7 +7,7 @@ namespace ExerciseReport
     {
         public IBuilder Builder { get; }
 
-        private Dictionary<string, List<string>> concepts = new Dictionary<string, List<string>>();
+        private readonly Dictionary<string, List<string>> concepts = new Dictionary<string, List<string>>();
 
         public interface IBuilder
         {
@@ -39,7 +39,7 @@ namespace ExerciseReport
             Builder = new BuilderImpl(this);
         }
 
-        public IEnumerable<string>? GetList(string conceptName)
+        public IEnumerable<string>? GetObjectivesForConcept(string conceptName)
         {
             if (!concepts.ContainsKey(conceptName))
             {
@@ -48,5 +48,6 @@ namespace ExerciseReport
 
             return new ReadOnlyCollection<string>(concepts[conceptName]);
         }
+        public IEnumerable<string> Concepts => concepts.Keys;
     }
 }
