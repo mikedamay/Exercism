@@ -26,8 +26,8 @@ namespace ExerciseReport
             {
                 switch (conceptAndObjective)
                 {
-                    case (Result.Success, _, string concept, string objective):
-                        learningObjectives.Builder.Add(("bob", concept), objective);
+                    case (Result.Success, _, (string DocId, string ConceptName) conceptDetails, string objective):
+                        learningObjectives.Builder.Add(conceptDetails, objective);
                         break;
                     case (Result.Errors, string error, _, _):
                         errors.Add(new Error(ErrorSource.Design, Severity.Error, error));

@@ -50,6 +50,6 @@ namespace ExerciseReport
             return new ReadOnlyCollection<string>(concepts[("bob", conceptName)]);
         }
         public IEnumerable<string> Concepts => concepts.Keys.Select(k => k.Item2);
-        public IEnumerable<(string, string)> ConceptsInclDoc => concepts.Keys;
+        public IEnumerable<(string, string)> ConceptsInclDocId => concepts.Keys;
     }
 }
