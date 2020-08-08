@@ -30,13 +30,13 @@ namespace ExerciseReport
 
         public void MergeInLearningObjectives()
         {
-            var outputs = MergeLearningObjectives();
+            var outputs = Merge();
             exerciseFileHandler.WriteExercises(outputs.result,
                 outputs.exerciseObjectTree, outputs.errors);
         }
 
         public (Result result, ExerciseObjectTree exerciseObjectTree, List<Error> errors) 
-            MergeLearningObjectives()
+            Merge()
         {
             var outputs = exerciseFileHandler.ReadExercises();
             if (outputs.result == Result.FatalError)
@@ -61,11 +61,12 @@ namespace ExerciseReport
                 .ToHashSet();
             
             List<Error> errors = new List<Error>();
-            foreach (string conceptName in learningObjectives.Concepts)
+            foreach ((string DocId, string ConceptName) conceptDetails in learningObjectives.ConceptsInclDoc)
             {
-                if (!exerciseMap.Contains(conceptName))
+                if (!exerciseMap.Contains(conceptDetails.ConceptName))
                 {
-                    errors.Add(new Error(ErrorSource.Design, Severity.Error, $"Failed to find concept {conceptName} in exercises"));
+                    errors.Add(new Error(ErrorSource.Merge, Severity.Error,
+                        $"Failed to find concept {conceptDetails.ConceptName} from {conceptDetails.DocId} design in exercises.json file"));
                 }
             }
 

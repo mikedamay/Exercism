@@ -18,7 +18,8 @@ namespace ExerciseReport
     {
         Process,
         Design,
-        Exercise
+        Exercise,
+        Merge
     }
 
     internal class Error
