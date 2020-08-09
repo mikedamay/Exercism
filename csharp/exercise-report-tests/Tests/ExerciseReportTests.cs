@@ -68,7 +68,7 @@ namespace ExerciseReport.Tests
         {
             var rr = new ReportFormatter(PathNames.Default.Root);
             string actual = rr.CreateReport(ExerciseTestData.Exercises["simple"]);
-            string expected = Utils.GetResourceAsString("report_simple.md");
+            string expected = Utils.GetResourceAsString(Constants.ReportSimpleResource);
             Assert.Equal(expected, actual);
         }
     }

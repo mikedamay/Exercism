@@ -36,6 +36,8 @@ namespace ExerciseReport.Tests
         public const string ExercisesUnorphanedConceptsResource = "exercises_unorphaned_concepts.json";
         public const string ExercisesWrongStructureResource = "exercises_bad_format.json";
 
+        public const string ReportSimpleResource = "report_simple.md";
+
         public static readonly string DesignDocSeparator = Environment.NewLine + "separator-1729" + Environment.NewLine;
 
         public const string TestUserRoot = "/Users/mikedamay/projects/exercism/v3";
