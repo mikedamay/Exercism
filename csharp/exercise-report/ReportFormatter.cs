@@ -98,7 +98,7 @@ namespace ExerciseReport
             var designRefs = exerciseObjectTree.Exercises
                 .Where(ex => ex.DocumentType == DocumentType.Design)
                 .OrderBy(ex => ex.Slug)
-                .Select(ex => $"[design-{ex.Slug}]: {ex.DocumentLink}");
+                .Select(ex => $"[design-{ex.Slug}]: {GetExerciseLocationLink(ex.Slug)}");
  
             sb.AppendLine();
             foreach (string designRef in designRefs)
@@ -109,7 +109,7 @@ namespace ExerciseReport
             var exerciseLocations = exerciseObjectTree.Exercises
                 .Where(ex => ex.DocumentType == DocumentType.Design)
                 .OrderBy(ex => ex.Slug)
-                .Select(ex => $"[exercise-{ex.Slug}]: {GetExerciseLocationLink(ex.Slug)}");
+                .Select(ex => $"[exercise-{ex.Slug}]: {Path.Combine(GetExerciseLocationLink(ex.Slug), PathNames.Default.DesignDocName)}");
  
             sb.AppendLine();
             foreach (string exerciseLocation in exerciseLocations)

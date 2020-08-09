@@ -31,8 +31,8 @@ None
 | `sample1.1-name` | <ul><li>sample1.1.1-learning-objective |
 
 
-[design-sample1-slug]: http://sample1-doclink
+[design-sample1-slug]: ../exercises/concept/sample1-slug
 
-[exercise-sample1-slug]: ../exercises/concept/sample1-slug
+[exercise-sample1-slug]: ../exercises/concept/sample1-slug/.meta/design.md
 
 [tnc-sample1.1-name]: ./../../../sample1.1-track-neutral-concept
