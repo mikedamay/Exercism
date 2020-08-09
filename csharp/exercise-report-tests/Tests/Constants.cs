@@ -31,6 +31,7 @@ namespace ExerciseReport.Tests
         public const string ExercisesMissingSlugResource = "exercises_missing_slug.json";
         public const string ExercisesMixedResource = "exercises_mixed.json";
         public const string ExercisesOrphanedConceptsResource = "exercises_orphaned_concepts.json";
+        public const string ExercisesOtioseDocumentLinkResource = "exercises_otiose_document_link.json";
         public const string ExercisesResource = "exercises.json";
         public const string ExercisesSlightlyWrongResource = "exercises_slightly_wrong.json";
         public const string ExercisesUnorphanedConceptsResource = "exercises_unorphaned_concepts.json";

@@ -76,6 +76,8 @@
       <EmbeddedResource Include="Tests\Data\exercises_mixed.json" />
       <None Remove="Tests\Data\report_simple.md" />
       <EmbeddedResource Include="Tests\Data\report_simple.md" />
+      <None Remove="Tests\Data\exercises_otiose_document_link.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_otiose_document_link.json" />
     </ItemGroup>
 
     <ItemGroup>

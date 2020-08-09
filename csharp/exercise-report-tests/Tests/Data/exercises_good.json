@@ -5,7 +5,7 @@
       "level": "introductory",
       "track-neutral-story": "sample1-track-neutral-story",
       "document-type": "design",
-      "document-link": "http://sample1-doclink",
+      "document-link": "",
       "concepts": [
         {
           "name": "string-formatting",

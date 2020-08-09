@@ -5,7 +5,8 @@
       "slug": "classes2a",
       "level": "introductory",
       "track-neutral-story": "sample1-track-neutral-story",
-      "document-type": "issue",
+      "document-type": "design",
+      "document-link": "http://sample.com",
       "concepts": [
         {
           "name": "sample1.1-name",

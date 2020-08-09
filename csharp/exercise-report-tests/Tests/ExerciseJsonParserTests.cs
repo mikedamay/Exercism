@@ -155,6 +155,18 @@ namespace ExerciseReport.Tests
         }
 
         [Fact]
+        public void ParseExerciseJson_WithOtioseDocLink_ReportsErrors()
+        {
+            var ejp = new ExerciseJsonParser();
+            var json = Utils.GetResourceAsString(
+                Constants.ExercisesOtioseDocumentLinkResource);
+            var results = ejp.FromString(json); 
+            Assert.Equal(Result.Errors, results.result);
+            Assert.Single(results.errors);
+            Assert.Contains("document-link: present", results.errors[0].Message);
+        }
+
+        [Fact]
         public void ParseExerciseJson_WithMissingInessentialFields_ReportsNoErrors()
         {
             var ejp = new ExerciseJsonParser();
