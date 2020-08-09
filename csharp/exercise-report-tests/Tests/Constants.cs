@@ -11,6 +11,7 @@ namespace ExerciseReport.Tests
         public const string DesignConceptsWithoutQuotesResource = "design_concepts_without_quotes.md";
         public const string DesignJustConceptsResource = "design_just_concepts.md";
         public const string DesignMultipleHashesResource = "design_multiple_hashes.md";
+        public const string DesignMultipleObjectivesResource = "design_multiple_objectives.md";
         public const string DesignNoConceptsResource = "design_no_concepts.md";
         public const string DesignNoConceptsTrailingResource = "design_no_concepts_trailing.md";
         public const string DesignNoConceptSectionResource = "design_no_concept_section.md";
@@ -30,6 +31,7 @@ namespace ExerciseReport.Tests
         public const string ExercisesMissingFieldsResource = "exercises_missing_fields.json";
         public const string ExercisesMissingSlugResource = "exercises_missing_slug.json";
         public const string ExercisesMixedResource = "exercises_mixed.json";
+        public const string ExercisesMultipleObjectivesResource = "exercises_multiple_objectives.json";
         public const string ExercisesOrphanedConceptsResource = "exercises_orphaned_concepts.json";
         public const string ExercisesOtioseDocumentLinkResource = "exercises_otiose_document_link.json";
         public const string ExercisesResource = "exercises.json";

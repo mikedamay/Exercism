@@ -1,9 +1,24 @@
+using System.Linq;
 using Xunit;
 
 namespace ExerciseReport.Tests
 {
     public class ExerciseMergerTests
     {
+
+        [Fact]
+        public void ParseDesignDoc_WithMultipleHashes_ReportsNoErrors()
+        {
+            var exerciseResourceHandler = new ExerciseResourceHandler(
+                Constants.ExercisesMultipleObjectivesResource);
+            var merger = Utils.GetMergerFromResources(
+                Constants.ExercisesMultipleObjectivesResource,
+                Constants.DesignMultipleHashesResource
+                ,exerciseResourceHandler);
+            merger.MergeInLearningObjectives();
+            Assert.Contains("\"know how to use string interpolation on values of any type\"", exerciseResourceHandler.ExerciseResultJson);
+        }
+
         [Fact]
         public void Merge_LearningObjectivesWithNoMatchingConcepts_ReportsErrors()
         {

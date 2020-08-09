@@ -49,13 +49,13 @@ namespace ExerciseReport.Tests
         }
 
         [Fact]
-        public void ParseDesignDoc_WithMultipleHashes_ReportsNoErrors()
+        public void ParseDesignDoc_WithMultipleLearningObjectives_ProducesList()
         {
-            const string resourceName = Constants.DesignMultipleHashesResource;
+            const string resourceName = Constants.DesignMultipleObjectivesResource;
             var ddp = new DesignDocParser();
             var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
-            Assert.Equal(Result.Success, results[0].result);
+            Assert.Equal(8, results.Count);
         }
 
         [Fact]
