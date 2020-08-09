@@ -4,7 +4,7 @@
       "slug": "classes",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/classes/.meta/design.md",
       "concepts": [
         {
@@ -92,7 +92,7 @@
       "slug": "inheritance",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/inheritance/.meta/design.md",
       "concepts": [
         {
@@ -125,7 +125,7 @@
       "slug": "basics",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/basics/.meta/design.md",
       "concepts": [
         {
@@ -224,7 +224,7 @@
       "slug": "constructors",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/constructors/.meta/design.md",
       "concepts": [
         {
@@ -246,7 +246,7 @@
       "slug": "method-overloading",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/method-overloading/.meta/design.md",
       "concepts": [
         {
@@ -268,7 +268,7 @@
       "slug": "properties",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/properties/.meta/design.md",
       "concepts": [
         {
@@ -290,7 +290,7 @@
       "slug": "null",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/nullability/.meta/design.md",
       "concepts": [
         {
@@ -354,7 +354,7 @@
       "slug": "numbers",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/numbers/.meta/design.md",
       "concepts": [
         {
@@ -424,7 +424,7 @@
       "slug": "booleans",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/booleans/.meta/design.md",
       "concepts": [
         {
@@ -459,7 +459,7 @@
       "slug": "chars",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/chars/.meta/design.md",
       "concepts": [
         {
@@ -481,7 +481,7 @@
       "slug": "arrays",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/arrays/.meta/design.md",
       "concepts": [
         {
@@ -529,7 +529,7 @@
       "slug": "dictionaries",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/dictionaries/.meta/design.md",
       "concepts": [
         {
@@ -562,7 +562,7 @@
       "slug": "dates",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/datetimes/.meta/design.md",
       "concepts": [
         {
@@ -582,7 +582,7 @@
       "slug": "enums",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/enums/.meta/design.md",
       "concepts": [
         {
@@ -604,7 +604,7 @@
       "slug": "floating-point-numbers",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/floating-point-numbers/.meta/design.md",
       "concepts": [
         {
@@ -637,7 +637,7 @@
       "slug": "strings",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/strings/.meta/design.md",
       "concepts": [
         {
@@ -659,7 +659,7 @@
       "slug": "flag-enums",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/flag-enums/.meta/design.md",
       "concepts": [
         {
@@ -681,7 +681,7 @@
       "slug": "user-defined-exceptions",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/user-defined-exceptions/.meta/design.md",
       "concepts": [
         {
@@ -703,7 +703,7 @@
       "slug": "user-defined-exceptions2",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/user-defined-exceptions/.meta/design.md",
       "concepts": [
         {
@@ -723,7 +723,7 @@
       "slug": "equality",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/equality/.meta/design.md",
       "concepts": [
         {
@@ -769,7 +769,7 @@
       "slug": "tuples",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/tuples/.meta/design.md",
       "concepts": [
         {
@@ -791,7 +791,7 @@
       "slug": "randomness",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/randomness/.meta/design.md",
       "concepts": [
         {
@@ -813,7 +813,7 @@
       "slug": "parameters",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/parameters/.meta/design.md",
       "concepts": [
         {
@@ -870,7 +870,7 @@
       "slug": "conditionals-switch",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/switch-statements/.meta/design.md",
       "concepts": [
         {
@@ -890,7 +890,7 @@
       "slug": "object-initializers",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/object-initializers/.meta/design.md",
       "concepts": [
         {
@@ -912,7 +912,7 @@
       "slug": "resource-cleanup",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/resource-cleanup/.meta/design.md",
       "concepts": [
         {
@@ -934,7 +934,7 @@
       "slug": "time",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/time/.meta/design.md",
       "concepts": [
         {
@@ -969,7 +969,7 @@
       "slug": "interfaces",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1225",
       "concepts": [
         {
@@ -1002,7 +1002,7 @@
       "slug": "signed-integers",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/780",
       "concepts": [
         {
@@ -1033,7 +1033,7 @@
       "slug": "constants",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1044",
       "concepts": [
         {
@@ -1053,7 +1053,7 @@
       "slug": "conditionals-ternary",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1635",
       "concepts": [
         {
@@ -1073,7 +1073,7 @@
       "slug": "exceptions",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/966",
       "concepts": [
         {
@@ -1093,7 +1093,7 @@
       "slug": "lists",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/958",
       "concepts": [
         {
@@ -1126,7 +1126,7 @@
       "slug": "structs",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1017",
       "concepts": [
         {
@@ -1148,7 +1148,7 @@
       "slug": "expression-bodied-members",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1145",
       "concepts": [
         {
@@ -1168,7 +1168,7 @@
       "slug": "namespaces",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1127",
       "concepts": [
         {
@@ -1201,7 +1201,7 @@
       "slug": "string-formatting",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/962",
       "concepts": [
         {
@@ -1269,7 +1269,7 @@
       "slug": "regular-expressions",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1638",
       "concepts": [
         {
@@ -1289,7 +1289,7 @@
       "slug": "resource-lifetime",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1640",
       "concepts": [
         {
@@ -1309,7 +1309,7 @@
       "slug": "overflow",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1138",
       "concepts": [
         {
@@ -1329,7 +1329,7 @@
       "slug": "nested-types",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1643",
       "concepts": [
         {
@@ -1349,7 +1349,7 @@
       "slug": "casting",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1142",
       "concepts": [
         {
@@ -1382,7 +1382,7 @@
       "slug": "operator-overload",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1712",
       "concepts": [
         {
@@ -1422,7 +1422,7 @@
       "slug": "attributes-advanced",
       "level": "essential",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1176",
       "concepts": [
         {
@@ -1542,7 +1542,7 @@
       "slug": "pattern-matching-types",
       "level": "essential",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/546",
       "concepts": [
         {
@@ -1562,7 +1562,7 @@
       "slug": "pattern-matching-tuples",
       "level": "essential",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/964",
       "concepts": [
         {
@@ -1742,7 +1742,7 @@
       "slug": "extension-methods",
       "level": "essential",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1070",
       "concepts": [
         {
@@ -2057,7 +2057,7 @@
       "slug": "memory-allocation",
       "level": "advanced",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1018",
       "concepts": [
         {
@@ -2137,7 +2137,7 @@
       "slug": "resource-pooling",
       "level": "advanced",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1146",
       "concepts": [
         {
@@ -2277,7 +2277,7 @@
       "slug": "pointsers",
       "level": "advanced",
       "track-neutral-story": "",
-      "completion-status": "issue",
+      "completion-status": "newexerciseissueraised",
       "document-link": "https://github.com/exercism/v3/issues/1147",
       "concepts": [
         {

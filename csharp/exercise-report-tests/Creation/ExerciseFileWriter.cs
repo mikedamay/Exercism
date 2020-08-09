@@ -47,11 +47,11 @@ namespace ExerciseReport.Creation
                             "C" => Level.Advanced,
                             _ => Level.None
                         },
-                        DocumentType = ic.DocType switch
+                        CompletionStatus = ic.DocType switch
                         {
-                            "I" => DocumentType.Issue,
-                            "E" => DocumentType.Design,
-                            _ => DocumentType.None
+                            "I" => CompletionStatus.NewExerciseIssueRaised,
+                            "E" => CompletionStatus.Complete,
+                            _ => CompletionStatus.None
                         },
                         DocumentLink = ic.Link,
                         Concepts = new List<Concept>

@@ -12,7 +12,7 @@ namespace ExerciseReport.Tests
                 Constants.ExercisesBadDocTypeResource);
             var results = ejp.FromString(json); 
             Assert.Equal(Result.FatalError, results.result);
-            Assert.Contains(nameof(Exercise.DocumentType), results.errors[0].Message);
+            Assert.Contains(nameof(Exercise.CompletionStatus), results.errors[0].Message);
         }
 
         [Fact]

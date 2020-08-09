@@ -4,7 +4,7 @@
       "test-of" : "missing slug",
       "level": "introductory",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/classes/.meta/design.md",
       "concepts": [
         {
@@ -26,7 +26,7 @@
       "test-of" : "missing level",
       "slug": "classes2",
       "track-neutral-story": "",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/classes/.meta/design.md",
       "concepts": [
         {
@@ -98,7 +98,7 @@
       "slug": "sample1-slug",
       "level": "introductory",
       "track-neutral-story": "sample1-track-neutral-story",
-      "completion-status": "design",
+      "completion-status": "complete",
       "document-link": "http://sample1-doclink",
       "concepts": [
         {

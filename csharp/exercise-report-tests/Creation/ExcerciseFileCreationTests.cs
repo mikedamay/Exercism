@@ -86,7 +86,7 @@ namespace ExerciseReport.Creation
                 {
                     Slug = "sample1-slug",
                     Level = Level.Introductory,
-                    DocumentType = DocumentType.Design,
+                    CompletionStatus = CompletionStatus.Complete,
                     DocumentLink = "http://sample1-doclink",
                     Concepts = new List<Concept>
                     {

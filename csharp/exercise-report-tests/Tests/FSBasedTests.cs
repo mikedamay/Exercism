@@ -18,7 +18,7 @@ namespace ExerciseReport.Tests
             File.WriteAllText(path, exercisesJson);
         }
 
-        [Fact]
+        [Fact(Skip = "this will hit the 'production' file system - so be careful")]
         public void Merge_WellFormedExerciseFile_ShowsNoErrors()
         {
             var merger = ExerciseMerger.CSharpMerger;
