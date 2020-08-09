@@ -10,7 +10,7 @@
     {
       "slug": "sample1-slug",
       "level": "introductory",
-      "document-type": "design",
+      "completion-status": "design",
       "document-link": "http://sample1-doclink",
       "concepts": [
         {

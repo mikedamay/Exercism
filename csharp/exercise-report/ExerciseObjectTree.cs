@@ -27,7 +27,7 @@ namespace ExerciseReport
         [JsonPropertyName("level")]
         public Level Level { get; set; } = Level.Invalid;
 
-        [JsonPropertyName("document-type")]
+        [JsonPropertyName("completion-status")]
         public DocumentType DocumentType { get; set; } = DocumentType.Invalid;
         [JsonPropertyName("document-link")]
         public string DocumentLink { get; set; } = string.Empty;

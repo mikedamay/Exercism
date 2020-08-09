@@ -4,7 +4,7 @@
       "test-of" : "missing slug",
       "level": "introductory",
       "track-neutral-story": "",
-      "document-type": "design",
+      "completion-status": "design",
       "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/classes/.meta/design.md",
       "concepts": [
         {

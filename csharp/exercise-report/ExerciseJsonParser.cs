@@ -91,7 +91,7 @@ namespace ExerciseReport
             if (string.IsNullOrWhiteSpace(exercise.Slug)) sb.AppendLine("slug: missing for an exercise");
             if (exercise.Level == Level.Invalid) sb.AppendLine($"level: missing for {exercise.Slug}");
             if (exercise.DocumentType == DocumentType.Invalid)
-                sb.AppendLine($"document-type: missing for {exercise.Slug}");
+                sb.AppendLine($"completion-status: missing for {exercise.Slug}");
             if (exercise.DocumentType == DocumentType.Issue
                 && string.IsNullOrWhiteSpace(exercise.DocumentLink))
                 sb.AppendLine($"document-link: missing for {exercise.Slug}");

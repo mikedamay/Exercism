@@ -1,7 +1,7 @@
 {
   "exercises": [
     {
-      "test-of" : "missing document-type",
+      "test-of" : "missing completion-status",
       "slug": "classes3",
       "level": "introductory",
       "track-neutral-story": "sample1-track-neutral-story",

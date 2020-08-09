@@ -103,7 +103,7 @@ namespace ExerciseReport.Tests
             var results = ejp.FromString(json); 
             Assert.Equal(Result.Errors, results.result);
             Assert.Single(results.errors);
-            Assert.Contains("document-type", results.errors[0].Message);
+            Assert.Contains("completion-status", results.errors[0].Message);
         }
 
         [Fact]
