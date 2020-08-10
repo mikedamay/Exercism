@@ -19,20 +19,26 @@ namespace ExerciseReport
         Process,
         Design,
         Exercise,
-        Merge
+        Merge,
+        None
     }
 
     internal class Error
     {
-        public Severity Severity { get; }
-        public string Message { get; }
-        public ErrorSource Source { get; }
+        public Severity Severity { get; set; } = Severity.None;
+        public string Message { get; set; } = string.Empty;
+        public ErrorSource Source { get; set; } = ErrorSource.None;
 
         public Error(ErrorSource source, Severity severity, string message)
         {
             Source = source;
             Severity = severity;
             Message = message;
+        }
+
+        public Error()
+        {
+            
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace ExerciseReport
@@ -21,8 +22,10 @@ namespace ExerciseReport
             var errors = new List<Error>();
             var learningObjectives = new LearningObjectives();
             var conceptsAndObjectives = designDocFileHandler.GetExerciseDesignsForTrack()
-                .SelectMany(designDetails => designDocParser
-                    .ParseDesignDoc(designDetails.DesignDocPath, designDetails.DesignDocText));
+                .SelectMany(
+                    designDetails => designDocParser.ParseDesignDoc(
+                        GetExerciseNameFromPath(designDetails.DesignDocPath),
+                        designDetails.DesignDocContents));
             foreach (var conceptAndObjective in conceptsAndObjectives)
             {
                 switch (conceptAndObjective)
@@ -40,5 +43,14 @@ namespace ExerciseReport
 
             return (learningObjectives, errors);
         }
+        // designDocPath: typically "./languages/<language>/exercises/concept/<exercise-name>/.meta/design.md"
+        // returns: <exercise-name
+        private static string GetExerciseNameFromPath(string designDocPath)
+        {
+            var path = Path.GetDirectoryName(designDocPath);
+            var parts = path?.Split("/") ?? new string[0];
+            return parts.Length > 2 ? parts[^2] : designDocPath;
+        }
+
     }
 }

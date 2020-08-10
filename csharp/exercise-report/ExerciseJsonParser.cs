@@ -76,7 +76,7 @@ namespace ExerciseReport
             }
         }
 
-        private List<Error> Validate(ExerciseObjectTree exerciseObjectTree)
+        private static List<Error> Validate(ExerciseObjectTree exerciseObjectTree)
         {
             var output = exerciseObjectTree.Exercises.Select(ex => ValidateExercise(ex))
                 .Where(exo => !string.IsNullOrWhiteSpace(exo))
@@ -85,7 +85,7 @@ namespace ExerciseReport
             return output;
         }
 
-        private string ValidateExercise(Exercise exercise)
+        private static string ValidateExercise(Exercise exercise)
         {
             StringBuilder sb = new StringBuilder();
             if (string.IsNullOrWhiteSpace(exercise.Slug)) sb.AppendLine("slug: missing for an exercise");
@@ -137,6 +137,11 @@ namespace ExerciseReport
         public ErrorReport(IList<Error> errors)
         {
             Errors = errors;
+        }
+
+        public ErrorReport()
+        {
+            
         }
     }
 }

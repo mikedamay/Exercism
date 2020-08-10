@@ -25,8 +25,8 @@ namespace ExerciseReport
         {
             try
             {
-                var text = exerciseFileHandler.ReadExerciseFile();
-                return exerciseJsonParser.FromString(text);
+                var exerciseJson = exerciseFileHandler.ReadExerciseFile();
+                return exerciseJsonParser.FromString(exerciseJson);
             }
             catch (Exception e)
             {
