@@ -5,7 +5,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/classes/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "classes",
@@ -93,7 +93,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/inheritance/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "inheritance",
@@ -126,7 +126,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/basics/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "basics",
@@ -225,7 +225,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/constructors/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "constructors",
@@ -247,7 +247,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/method-overloading/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "method-overloading",
@@ -269,7 +269,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/properties/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "properties",
@@ -291,7 +291,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/nullability/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "null",
@@ -355,7 +355,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/numbers/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "numbers",
@@ -425,7 +425,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/booleans/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "booleans",
@@ -460,7 +460,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/chars/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "chars",
@@ -482,7 +482,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/arrays/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "arrays",
@@ -530,7 +530,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/dictionaries/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "dictionaries",
@@ -563,7 +563,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/datetimes/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "dates",
@@ -583,7 +583,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/enums/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "enums",
@@ -605,7 +605,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/floating-point-numbers/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "floating-point-numbers",
@@ -638,7 +638,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/strings/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "strings",
@@ -660,7 +660,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/flag-enums/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "flag-enums",
@@ -682,7 +682,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/user-defined-exceptions/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "user-defined-exceptions",
@@ -704,7 +704,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/user-defined-exceptions/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "user-defined-exceptions2",
@@ -724,7 +724,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/equality/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "equality",
@@ -770,7 +770,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/tuples/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "tuples",
@@ -792,7 +792,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/randomness/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "randomness",
@@ -814,7 +814,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/parameters/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "parameters",
@@ -871,7 +871,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/switch-statements/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "conditionals-switch",
@@ -891,7 +891,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/object-initializers/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "object-initializers",
@@ -913,7 +913,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/resource-cleanup/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "resource-cleanup",
@@ -935,7 +935,7 @@
       "level": "introductory",
       "track-neutral-story": "",
       "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/time/.meta/design.md",
+      "document-link": "",
       "concepts": [
         {
           "name": "time",

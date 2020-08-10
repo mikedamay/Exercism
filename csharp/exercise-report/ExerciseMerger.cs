@@ -31,25 +31,25 @@ namespace ExerciseReport
         public void MergeInLearningObjectives()
         {
             var mergeResults = Merge();
-            exerciseFileHandler.WriteExercises(mergeResults.result,
-                mergeResults.exerciseObjectTree, mergeResults.errors);
+            exerciseFileHandler.WriteExercises(mergeResults.Result,
+                mergeResults.ExerciseObjectTree, mergeResults.Errors);
         }
 
-        public (Result result, ExerciseObjectTree exerciseObjectTree, List<Error> errors) 
+        public (Result Result, ExerciseObjectTree ExerciseObjectTree, List<Error> Errors) 
             Merge()
         {
             var outputs = exerciseFileHandler.ReadExercises();
-            if (outputs.result == Result.FatalError)
+            if (outputs.Result == Result.FatalError)
             {
                 return outputs;
             }
             var learningObjectives = designDocCollator.GetAllLearningObjectivesForTrack(track);
-            MergeLearningObjectives(outputs.exerciseObjectTree, learningObjectives.learningObjectives);
-            var unmatchedConcepts = ReportUnmatchedConcepts(outputs.exerciseObjectTree, learningObjectives.learningObjectives);
-            var combinedErrors = outputs.errors.Concat(learningObjectives.errors).Concat(unmatchedConcepts).ToList();
+            MergeLearningObjectives(outputs.ExerciseObjectTree, learningObjectives.learningObjectives);
+            var unmatchedConcepts = ReportUnmatchedConcepts(outputs.ExerciseObjectTree, learningObjectives.learningObjectives);
+            var combinedErrors = outputs.Errors.Concat(learningObjectives.errors).Concat(unmatchedConcepts).ToList();
             var maxSeverity = combinedErrors.Select(e => e.Severity).DefaultIfEmpty(Severity.None).Max();
             Result result = SeverityToResult(maxSeverity);
-            return (result, outputs.exerciseObjectTree, combinedErrors);
+            return (result, outputs.ExerciseObjectTree, combinedErrors);
         }
 
         private List<Error> ReportUnmatchedConcepts(ExerciseObjectTree exerciseObjectTree,

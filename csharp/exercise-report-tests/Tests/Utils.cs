@@ -41,14 +41,5 @@ namespace ExerciseReport.Tests
         public static ExerciseMerger TestMergerWithResources { get; } =
             GetMergerFromResources(Constants.ExercisesResource,
                 Constants.ManyDesignsResource);
-
-        public static ExerciseMerger TestMergerWithFileSystem { get; } =
-            new ExerciseMerger(Constants.CSharpTrack,
-                new ExerciseFileCollator(
-                    new ExerciseFileHandler(PathNames.Test.Root, Constants.CSharpTrack), 
-                    new ExerciseJsonParser()),
-                new DesignDocCollator(
-                    new DesignDocFileHandler(PathNames.Test.Root, Constants.CSharpTrack),
-                    new DesignDocParser()));
     }
 }

@@ -9,6 +9,8 @@
     <ItemGroup>
       <None Remove="Data\exercise_report_intro.md" />
       <EmbeddedResource Include="Data\exercise_report_intro.md-ish" />
+      <None Remove="Data\exercises_json_header.txt" />
+      <EmbeddedResource Include="Data\exercises_json_header.txt" />
     </ItemGroup>
 
 </Project>

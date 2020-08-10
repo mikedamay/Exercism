@@ -10,8 +10,8 @@ namespace ExerciseReport.Tests
             var efc = new ExerciseFileCollator(new ExerciseFileHandler("./", "bad-track"),
                 new ExerciseJsonParser());
             var outputs = efc.ReadExercises();
-            Assert.Equal(Result.FatalError, outputs.result);
-            Assert.NotNull(outputs.errors[0].Message);
+            Assert.Equal(Result.FatalError, outputs.Result);
+            Assert.NotNull(outputs.Errors[0].Message);
         }
     }
 }

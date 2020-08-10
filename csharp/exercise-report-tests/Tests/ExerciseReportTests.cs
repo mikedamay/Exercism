@@ -58,7 +58,7 @@ namespace ExerciseReport.Tests
             // var reportCollator = ReportCollator.CSharpReportCollator;
             // var merger = ExerciseMerger.TestMergerWithFileSystem;
             var exerciseFile = merger.Merge();
-            var output = rr.CreateReport(exerciseFile.exerciseObjectTree);
+            var output = rr.CreateReport(exerciseFile.ExerciseObjectTree);
             
             Assert.NotEmpty(output);
         }
