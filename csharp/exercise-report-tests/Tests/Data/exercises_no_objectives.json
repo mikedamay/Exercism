@@ -1,0 +1,35 @@
+{
+  "exercises": [
+    {
+      "slug": "sample1-slug",
+      "level": "introductory",
+      "track-neutral-story": "sample1-track-neutral-story",
+      "completion-status": "complete",
+      "document-link": "",
+      "concepts": [
+        {
+          "name": "string-formatting",
+          "track-neutral-concept": "sample1.1-track-neutral-concept",
+          "learning-objectives": [],
+          "original-concepts": [
+            {
+              "name": "sample1.1.1-name",
+              "line-number": 1729
+            }
+          ]
+        },
+        {
+          "name": "verbatim-strings",
+          "track-neutral-concept": "sample1.1-track-neutral-concept",
+          "learning-objectives": [],
+          "original-concepts": [
+            {
+              "name": "sample1.1.2-name",
+              "line-number": 1729
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

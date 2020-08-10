@@ -10,6 +10,7 @@ namespace ExerciseReport.Tests
         public const string DesignConceptsWithoutBulletsResource = "design_concepts_without_bullets.md";
         public const string DesignConceptsWithoutQuotesResource = "design_concepts_without_quotes.md";
         public const string DesignJustConceptsResource = "design_just_concepts.md";
+        public const string DesignEmptyResource = "design_empty.md";
         public const string DesignMultipleHashesResource = "design_multiple_hashes.md";
         public const string DesignMultipleObjectivesResource = "design_multiple_objectives.md";
         public const string DesignNoConceptsResource = "design_no_concepts.md";
@@ -32,6 +33,7 @@ namespace ExerciseReport.Tests
         public const string ExercisesMissingSlugResource = "exercises_missing_slug.json";
         public const string ExercisesMixedResource = "exercises_mixed.json";
         public const string ExercisesMultipleObjectivesResource = "exercises_multiple_objectives.json";
+        public const string ExercisesNoObjectivesResource = "exercises_no_objectives.json";
         public const string ExercisesOrphanedConceptsResource = "exercises_orphaned_concepts.json";
         public const string ExercisesOtioseDocumentLinkResource = "exercises_otiose_document_link.json";
         public const string ExercisesResource = "exercises.json";
@@ -44,11 +46,8 @@ namespace ExerciseReport.Tests
         public static readonly string DesignDocSeparator = Environment.NewLine + "separator-1729" + Environment.NewLine;
 
         public const string TestUserRoot = "/Users/mikedamay/projects/exercism/v3";
-        public const string Root = ".";
 
         public const string CSharpTrack = "csharp";
-
-        public const int MaxErrors = 20;
 
         public const string ErrorsResource = "errors.json";
         public const string ErrorsSimpleResource = "errors_simple.json";

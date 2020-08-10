@@ -21,6 +21,7 @@
       <EmbeddedResource Include="Tests\Data\design_orphaned_concepts.md" />
       <EmbeddedResource Include="Tests\Data\design_unorphaned_concepts.md" />
       <EmbeddedResource Include="Tests\Data\exercises_multiple_objectives.json" />
+      <EmbeddedResource Include="Tests\Data\exercises_no_objectives.json" />
       <EmbeddedResource Include="Tests\Data\exercises_orphaned_concepts.json" />
       <EmbeddedResource Include="Tests\Data\exercises_unorphaned_concepts.json" />
       <EmbeddedResource Include="Tests\Data\sample_design.md" />
@@ -83,6 +84,9 @@
       <EmbeddedResource Include="Tests\Data\exercises_otiose_document_link.json" />
       <None Remove="Tests\Data\errors_simple.json" />
       <EmbeddedResource Include="Tests\Data\errors_simple.json" />
+      <None Remove="Tests\exercises_no_objectives.json" />
+      <None Remove="Tests\Data\design_empty.md" />
+      <EmbeddedResource Include="Tests\Data\design_empty.md" />
     </ItemGroup>
 
     <ItemGroup>
