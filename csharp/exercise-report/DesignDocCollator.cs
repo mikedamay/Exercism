@@ -16,18 +16,18 @@ namespace ExerciseReport
         }
 
         public (LearningObjectives learningObjectives, List<Error> errors) 
-            GetAllLearningObjectivesForTrack(string track)
+            GetAllLearningObjectives()
         {
             var errors = new List<Error>();
             var learningObjectives = new LearningObjectives();
             var conceptsAndObjectives = designDocFileHandler.GetExerciseDesignsForTrack()
-                .SelectMany(e_and_c => designDocParser
-                    .ParseDesignDoc(e_and_c.ExerciseName, e_and_c.ConceptName));
+                .SelectMany(designDetails => designDocParser
+                    .ParseDesignDoc(designDetails.DesignDocPath, designDetails.DesignDocText));
             foreach (var conceptAndObjective in conceptsAndObjectives)
             {
                 switch (conceptAndObjective)
                 {
-                    case (Result.Success, _, (string docId, string conceptName) conceptDetails, string objective):
+                    case (Result.Success, _, (string designDocId, string conceptName) conceptDetails, string objective):
                         learningObjectives.Builder.Add(conceptDetails, objective);
                         break;
                     case (Result.Errors, string error, _, _):

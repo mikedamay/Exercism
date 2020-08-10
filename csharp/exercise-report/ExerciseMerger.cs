@@ -43,7 +43,7 @@ namespace ExerciseReport
             {
                 return outputs;
             }
-            var learningObjectives = designDocCollator.GetAllLearningObjectivesForTrack(track);
+            var learningObjectives = designDocCollator.GetAllLearningObjectives();
             MergeLearningObjectives(outputs.ExerciseObjectTree, learningObjectives.learningObjectives);
             var unmatchedConcepts = ReportUnmatchedConcepts(outputs.ExerciseObjectTree, learningObjectives.learningObjectives);
             var combinedErrors = outputs.Errors.Concat(learningObjectives.errors).Concat(unmatchedConcepts).ToList();
