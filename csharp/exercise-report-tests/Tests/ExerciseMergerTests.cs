@@ -9,12 +9,10 @@ namespace ExerciseReport.Tests
         [Fact]
         public void ParseDesignDoc_WithMultipleHashes_ReportsNoErrors()
         {
-            var exerciseResourceHandler = new ExerciseResourceHandler(
-                Constants.ExercisesMultipleObjectivesResource);
-            var merger = Utils.GetMergerFromResources(
+            (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
                 Constants.ExercisesMultipleObjectivesResource,
                 Constants.DesignMultipleHashesResource
-                ,exerciseResourceHandler);
+                );
             merger.MergeInLearningObjectives();
             Assert.Contains("\"know how to use string interpolation on values of any type\"", exerciseResourceHandler.ExerciseResultJson);
         }
@@ -22,12 +20,9 @@ namespace ExerciseReport.Tests
         [Fact]
         public void Merge_LearningObjectivesWithNoMatchingConcepts_ReportsErrors()
         {
-            var exerciseResourceHandler = new ExerciseResourceHandler(
-                Constants.ExercisesOrphanedConceptsResource);
-            var merger = Utils.GetMergerFromResources(
+            (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
                 Constants.ExercisesOrphanedConceptsResource,
-                Constants.DesignOrphanedConceptsResource,
-                exerciseResourceHandler
+                Constants.DesignOrphanedConceptsResource
             );
             merger.MergeInLearningObjectives();
             Assert.NotEmpty(exerciseResourceHandler.ErrorResultJson);
@@ -37,12 +32,9 @@ namespace ExerciseReport.Tests
         [Fact]
         public void Merge_LearningObjectivesWithMatchingConcepts_ReportsNoErrors()
         {
-            var exerciseResourceHandler = new ExerciseResourceHandler(
-                Constants.ExercisesUnorphanedConceptsResource);
-            var merger = Utils.GetMergerFromResources(
+            (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
                 Constants.ExercisesUnorphanedConceptsResource,
-                Constants.DesignUnorphanedConceptsResource,
-                exerciseResourceHandler
+                Constants.DesignUnorphanedConceptsResource
             );
             merger.MergeInLearningObjectives();
             Assert.Equal("{\n  \"Errors\": []\n}",exerciseResourceHandler.ErrorResultJson);

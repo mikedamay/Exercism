@@ -10,9 +10,9 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesBadDocTypeResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.FatalError, results.result);
-            Assert.Contains(nameof(Exercise.CompletionStatus), results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.FatalError, outputs.Result);
+            Assert.Contains(nameof(Exercise.CompletionStatus), outputs.Errors[0].Message);
         }
 
         [Fact]
@@ -21,9 +21,9 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesBadLevelResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.FatalError, results.result);
-            Assert.Contains(nameof(Exercise.Level), results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.FatalError, outputs.Result);
+            Assert.Contains(nameof(Exercise.Level), outputs.Errors[0].Message);
         }
         
         [Fact]
@@ -32,9 +32,9 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesWrongStructureResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.FatalError, results.result);
-            Assert.Contains(nameof(ExerciseObjectTree), results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.FatalError, outputs.Result);
+            Assert.Contains(nameof(ExerciseObjectTree), outputs.Errors[0].Message);
         }
         
         [Fact]
@@ -43,9 +43,9 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ManyDesignsResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.FatalError, results.result);
-            Assert.Contains("'#' is an invalid start", results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.FatalError, outputs.Result);
+            Assert.Contains("'#' is an invalid start", outputs.Errors[0].Message);
         }
 
         [Fact]
@@ -54,9 +54,9 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesSlightlyWrongResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.FatalError, results.result);
-            Assert.Contains("Json parser failed", results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.FatalError, outputs.Result);
+            Assert.Contains("Json parser failed", outputs.Errors[0].Message);
         }
 
         [Fact]
@@ -65,9 +65,9 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesMissingFieldsResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.Errors, results.result);
-            Assert.Equal(5, results.errors.Count);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.Errors, outputs.Result);
+            Assert.Equal(5, outputs.Errors.Count);
         }
 
         [Fact]
@@ -76,10 +76,10 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesMissingSlugResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.Errors, results.result);
-            Assert.Single(results.errors);
-            Assert.Contains("slug", results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.Errors, outputs.Result);
+            Assert.Single(outputs.Errors);
+            Assert.Contains("slug", outputs.Errors[0].Message);
         }
 
         [Fact]
@@ -88,10 +88,10 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesMissingLevelResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.Errors, results.result);
-            Assert.Single(results.errors);
-            Assert.Contains("level", results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.Errors, outputs.Result);
+            Assert.Single(outputs.Errors);
+            Assert.Contains("level", outputs.Errors[0].Message);
         }
 
         [Fact]
@@ -100,10 +100,10 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesMissingDocumentTypeResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.Errors, results.result);
-            Assert.Single(results.errors);
-            Assert.Contains("completion-status", results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.Errors, outputs.Result);
+            Assert.Single(outputs.Errors);
+            Assert.Contains("completion-status", outputs.Errors[0].Message);
         }
 
         [Fact]
@@ -112,10 +112,10 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesMissingDocumentLinkResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.Errors, results.result);
-            Assert.Single(results.errors);
-            Assert.Contains("document-link", results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.Errors, outputs.Result);
+            Assert.Single(outputs.Errors);
+            Assert.Contains("document-link", outputs.Errors[0].Message);
         }
 
         [Fact]
@@ -124,10 +124,10 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesMissingConceptsResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.Errors, results.result);
-            Assert.Single(results.errors);
-            Assert.Contains("concepts", results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.Errors, outputs.Result);
+            Assert.Single(outputs.Errors);
+            Assert.Contains("concepts", outputs.Errors[0].Message);
         }
 
         [Fact]
@@ -136,10 +136,10 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesMissingConceptNameResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.Errors, results.result);
-            Assert.Single(results.errors);
-            Assert.Contains("concept.name", results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.Errors, outputs.Result);
+            Assert.Single(outputs.Errors);
+            Assert.Contains("concept.name", outputs.Errors[0].Message);
         }
 
         [Fact]
@@ -148,10 +148,10 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesEmptyResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.FatalError, results.result);
-            Assert.Single(results.errors);
-            Assert.Contains("does not contain any JSON tokens", results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.FatalError, outputs.Result);
+            Assert.Single(outputs.Errors);
+            Assert.Contains("does not contain any JSON tokens", outputs.Errors[0].Message);
         }
 
         [Fact]
@@ -160,10 +160,10 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesOtioseDocumentLinkResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.Errors, results.result);
-            Assert.Single(results.errors);
-            Assert.Contains("document-link: present", results.errors[0].Message);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.Errors, outputs.Result);
+            Assert.Single(outputs.Errors);
+            Assert.Contains("document-link: present", outputs.Errors[0].Message);
         }
 
         [Fact]
@@ -172,8 +172,8 @@ namespace ExerciseReport.Tests
             var ejp = new ExerciseJsonParser();
             var json = Utils.GetResourceAsString(
                 Constants.ExercisesMinimalValidResource);
-            var results = ejp.FromString(json); 
-            Assert.Equal(Result.Success, results.result);
+            var outputs = ejp.FromString(json); 
+            Assert.Equal(Result.Success, outputs.Result);
         }
     }
 }

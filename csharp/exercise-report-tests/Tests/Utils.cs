@@ -23,23 +23,22 @@ namespace ExerciseReport.Tests
             }
         }
 
-        public static ExerciseMerger GetMergerFromResources(
-            string exercisesResourceName, string designsResourceName,
-            IExerciseFileHandler? exerciseFileHandler = null)
+        public static (ExerciseMerger ExerciseMerger, ExerciseResourceHandler ExerciseResourceHandler)
+            GetMergerFromResourcesPlusHandler(string exercisesResourceName, string designsResourceName)
         {
-            return 
-                new ExerciseMerger(Constants.CSharpTrack, 
-                    new ExerciseFileCollator(
-                        exerciseFileHandler ?? new ExerciseResourceHandler(exercisesResourceName), 
+            var erh = new ExerciseResourceHandler(exercisesResourceName);
+            return (
+                new ExerciseMerger(new ExerciseFileCollator(
+                        erh,
                         new ExerciseJsonParser()),
                     new DesignDocCollator(
                         new DesignDocResourceHandler(designsResourceName),
-                        new DesignDocParser()));
-           
+                        new DesignDocParser())),
+                erh);
         }
 
         public static ExerciseMerger TestMergerWithResources { get; } =
-            GetMergerFromResources(Constants.ExercisesResource,
-                Constants.ManyDesignsResource);
+            GetMergerFromResourcesPlusHandler(Constants.ExercisesResource,
+                Constants.ManyDesignsResource).ExerciseMerger;
     }
 }
