@@ -1,0 +1,19 @@
+{
+  "Errors": [
+    {
+      "Severity": "error",
+      "Message": "Some design text",
+      "Source": "design"
+    },
+    {
+      "Severity": "fatal",
+      "Message": "Some exercise text 2",
+      "Source": "exercise"
+    },
+    {
+      "Severity": "error",
+      "Message": "Some merge text 2",
+      "Source": "merge"
+    }
+  ]
+}

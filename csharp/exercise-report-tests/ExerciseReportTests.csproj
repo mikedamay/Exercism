@@ -5,6 +5,7 @@
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <RootNamespace>ExerciseReport</RootNamespace>
+      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
@@ -80,6 +81,8 @@
       <EmbeddedResource Include="Tests\Data\report_simple.md" />
       <None Remove="Tests\Data\exercises_otiose_document_link.json" />
       <EmbeddedResource Include="Tests\Data\exercises_otiose_document_link.json" />
+      <None Remove="Tests\Data\errors_simple.json" />
+      <EmbeddedResource Include="Tests\Data\errors_simple.json" />
     </ItemGroup>
 
     <ItemGroup>

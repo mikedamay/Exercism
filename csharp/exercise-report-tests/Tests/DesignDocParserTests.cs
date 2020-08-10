@@ -13,7 +13,7 @@ namespace ExerciseReport.Tests
                 Constants.DesignBrokenConceptsResource);
             var results = ddp.ParseDesignDoc(Constants.DesignBrokenConceptsResource,
                 markdown).ToList(); 
-            Assert.Equal(Result.Errors, results[0].result);
+            Assert.Equal(Result.Errors, results[0].Result);
         }
 
         [Fact]
@@ -23,8 +23,8 @@ namespace ExerciseReport.Tests
             var ddp = new DesignDocParser();
             var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
-            Assert.Equal(Result.Errors, results[0].result);
-            Assert.Contains("no learning objectives", results[0].error);
+            Assert.Equal(Result.Errors, results[0].Result);
+            Assert.Contains("no learning objectives", results[0].Error);
         }
 
         [Fact]
@@ -34,8 +34,8 @@ namespace ExerciseReport.Tests
             var ddp = new DesignDocParser();
             var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
-            Assert.Equal(Result.Errors, results[0].result);
-            Assert.Contains("invalid format", results[0].error);
+            Assert.Equal(Result.Errors, results[0].Result);
+            Assert.Contains("invalid format", results[0].Error);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace ExerciseReport.Tests
             var ddp = new DesignDocParser();
             var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
-            Assert.Equal(Result.Success, results[0].result);
+            Assert.Equal(Result.Success, results[0].Result);
         }
 
         [Fact]
@@ -65,8 +65,8 @@ namespace ExerciseReport.Tests
             var ddp = new DesignDocParser();
             var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
-            Assert.Equal(Result.Errors, results[0].result);
-            Assert.Contains("no learning objectives", results[0].error);
+            Assert.Equal(Result.Errors, results[0].Result);
+            Assert.Contains("no learning objectives", results[0].Error);
         }
 
         [Fact]
@@ -76,8 +76,8 @@ namespace ExerciseReport.Tests
             var ddp = new DesignDocParser();
             var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
-            Assert.Equal(Result.Errors, results[0].result);
-            Assert.Contains("no learning objectives", results[0].error);
+            Assert.Equal(Result.Errors, results[0].Result);
+            Assert.Contains("no learning objectives", results[0].Error);
         }
 
         [Fact]
@@ -87,8 +87,8 @@ namespace ExerciseReport.Tests
             var ddp = new DesignDocParser();
             var markdown = Utils.GetResourceAsString(resourceName);
             var results = ddp.ParseDesignDoc(resourceName, markdown).ToList(); 
-            Assert.Equal(Result.Errors, results[0].result);
-            Assert.Contains("no learning objectives", results[0].error);
+            Assert.Equal(Result.Errors, results[0].Result);
+            Assert.Contains("no learning objectives", results[0].Error);
         }
     }
 }
