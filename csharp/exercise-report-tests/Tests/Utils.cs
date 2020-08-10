@@ -36,9 +36,5 @@ namespace ExerciseReport.Tests
                         new DesignDocParser())),
                 erh);
         }
-
-        public static ExerciseMerger TestMergerWithResources { get; } =
-            GetMergerFromResourcesPlusHandler(Constants.ExercisesResource,
-                Constants.ManyDesignsResource).ExerciseMerger;
     }
 }
