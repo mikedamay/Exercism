@@ -10,7 +10,6 @@
         {
           "name": "string-formatting",
           "track-neutral-concept": "sample1.1-track-neutral-concept",
-          "learning-objectives": [],
           "original-concepts": [
             {
               "name": "sample1.1.1-name",
@@ -21,7 +20,6 @@
         {
           "name": "verbatim-strings",
           "track-neutral-concept": "sample1.1-track-neutral-concept",
-          "learning-objectives": [],
           "original-concepts": [
             {
               "name": "sample1.1.2-name",

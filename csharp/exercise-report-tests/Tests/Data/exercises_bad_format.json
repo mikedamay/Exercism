@@ -9,9 +9,6 @@
       {
         "name": "constructors",
         "track-neutral-concept": "",
-        "learning-objectives": [
-          "know what constructors are; know how to define parameterless constructors; know how to define parameterized constructors; know how to use constructor overloading; know how to define private constructors."
-        ],
         "original-concepts": [
           {
             "name": "  - Constructors",

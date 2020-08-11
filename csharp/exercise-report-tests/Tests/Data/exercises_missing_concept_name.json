@@ -9,9 +9,6 @@
       "concepts": [
         {
           "track-neutral-concept": "sample1.1-track-neutral-concept",
-          "learning-objectives": [
-            "sample1.1.1-learning-objective"
-          ],
           "original-concepts": [
             {
               "name": "sample1.1.1-name",

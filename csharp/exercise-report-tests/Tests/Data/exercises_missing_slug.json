@@ -10,9 +10,6 @@
         {
           "name": "classes",
           "track-neutral-concept": "reference/concepts/classes.md",
-          "learning-objectives": [
-            "know what classes are; know what encapsulation is; know what fields are; know how to create an object; know how to update state through methods; know about the \u0060void\u0060 type."
-          ],
           "original-concepts": [
             {
               "name": "- [Classes][classes]",

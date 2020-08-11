@@ -10,9 +10,6 @@
         {
           "name": "classes",
           "track-neutral-concept": "reference/concepts/classes.md",
-          "learning-objectives": [
-            "know what classes are; know what encapsulation is; know what fields are; know how to create an object; know how to update state through methods; know about the \u0060void\u0060 type."
-          ],
           "original-concepts": [
             {
               "name": "- [Classes][classes]",
@@ -32,9 +29,6 @@
         {
           "name": "classes",
           "track-neutral-concept": "reference/concepts/classes.md",
-          "learning-objectives": [
-            "know what classes are; know what encapsulation is; know what fields are; know how to create an object; know how to update state through methods; know about the \u0060void\u0060 type."
-          ],
           "original-concepts": [
             {
               "name": "- [Classes][classes]",
@@ -54,9 +48,6 @@
         {
           "name": "sample1.1-name",
           "track-neutral-concept": "sample1.1-track-neutral-concept",
-          "learning-objectives": [
-            "sample1.1.1-learning-objective"
-          ],
           "original-concepts": [
             {
               "name": "sample1.1.1-name",
@@ -75,9 +66,6 @@
       "concepts": [
         {
           "track-neutral-concept": "sample1.1-track-neutral-concept",
-          "learning-objectives": [
-            "sample1.1.1-learning-objective"
-          ],
           "original-concepts": [
             {
               "name": "sample1.1.1-name",
