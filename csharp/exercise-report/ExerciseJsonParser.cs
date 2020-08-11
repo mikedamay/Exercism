@@ -141,20 +141,5 @@ namespace ExerciseReport
             options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
             return JsonSerializer.Deserialize<ErrorReport>(errorsJson, options);
         }
-}
-    
-    internal class ErrorReport
-    {
-        public IList<Error> Errors { get; set; } = new List<Error>();
-
-        public ErrorReport(IList<Error> errors)
-        {
-            Errors = errors;
-        }
-
-        public ErrorReport()
-        {
-            
-        }
     }
 }
