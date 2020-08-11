@@ -24,6 +24,7 @@ namespace ExerciseReport.Tests
             Assert.Equal(GetResourceAsString(Constants.ErrorsSimpleResource), erh.ResultJson);
         }
 
+        // Error json is never read in production but we may as well keep this 
         [Fact]
         public void Parse_WellFormedErrorsJson_ProducesValidErrorList()
         {

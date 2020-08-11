@@ -87,6 +87,8 @@
       <None Remove="Tests\exercises_no_objectives.json" />
       <None Remove="Tests\Data\design_empty.md" />
       <EmbeddedResource Include="Tests\Data\design_empty.md" />
+      <None Remove="Tests\Data\design_no_relevant_objectives.md" />
+      <EmbeddedResource Include="Tests\Data\design_missing_objective.md" />
     </ItemGroup>
 
     <ItemGroup>

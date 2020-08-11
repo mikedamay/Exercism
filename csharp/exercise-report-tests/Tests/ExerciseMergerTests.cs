@@ -1,73 +1,67 @@
-using System.Collections.Generic;
 using Xunit;
 
 namespace ExerciseReport.Tests
 {
     public class ExerciseMergerTests
     {
-        private static ErrorResourceHandler testErrorResourceHandler
-          = new ErrorResourceHandler();
-        private static ErrorWriter CSharpTestErrorWriter { get; } =
-            new ErrorWriter(
-                testErrorResourceHandler, 
-                new ErrorJsonParser());
-
-        [Fact(Skip = "learni objectives are no longer written to json")]
+        [Fact]
         public void ParseDesignDoc_WithMultipleHashes_ReportsNoErrors()
         {
-            (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
+           var merger = Utils.GetMergerFromResources(
                 Constants.ExercisesMultipleObjectivesResource,
                 Constants.DesignMultipleHashesResource
             );
-            WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
-            Assert.Contains("\"know how to use string interpolation on values of any type\"",
-                exerciseResourceHandler.ExerciseResultJson);
+            var mergeResults = merger.MergeExercisesAndLearningObjectives();
+            Assert.Contains("know how to use string interpolation on values of any type",
+                mergeResults.ExerciseObjectTree
+                    .Exercises[0]
+                    .Concepts[0]
+                    .LearningObjectives[1]);
         }
 
         [Fact]
         public void Merge_LearningObjectivesWithNoMatchingConcepts_ReportsErrors()
         {
-            (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
+            var merger = Utils.GetMergerFromResources(
                 Constants.ExercisesOrphanedConceptsResource,
                 Constants.DesignOrphanedConceptsResource
             );
-            WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
-            Assert.NotEmpty(testErrorResourceHandler.ResultJson);
-            Assert.NotEqual("{\n  \"Errors\": []\n}", testErrorResourceHandler.ResultJson);
+            var mergeResults = merger.MergeExercisesAndLearningObjectives();
+            Assert.Equal(2, mergeResults.Errors.Count);
         }
 
         [Fact]
         public void Merge_LearningObjectivesWithMatchingConcepts_ReportsNoErrors()
         {
-            (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
+            var merger = Utils.GetMergerFromResources(
                 Constants.ExercisesUnorphanedConceptsResource,
                 Constants.DesignUnorphanedConceptsResource
             );
-            WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
-            Assert.Equal("{\n  \"Errors\": []\n}", testErrorResourceHandler.ResultJson);
+            var mergeResults = merger.MergeExercisesAndLearningObjectives();
+            Assert.Empty(mergeResults.Errors);
         }
 
         [Fact]
         public void Merge_ConceptsWithNoObjectives_ReportsErrors()
         {
-            (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
+            var merger = Utils.GetMergerFromResources(
                 Constants.ExercisesNoObjectivesResource,
-                Constants.DesignEmptyResource
+                Constants.DesignMissingObjectiveResource
             );
-            WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
+            var mergeResults = merger.MergeExercisesAndLearningObjectives();
             Assert.Contains("The string-formatting concept has no learning objectives",
-                testErrorResourceHandler.ResultJson);
+                mergeResults.Errors[0].Message);
         }
 
         [Fact]
         public void Merge_ConceptsWithObjectives_ReportsNoErrors()
         {
-            (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
+            var merger = Utils.GetMergerFromResources(
                 Constants.ExercisesNoObjectivesResource,
                 Constants.DesignJustConceptsResource
             );
-            WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
-            Assert.Equal("{\n  \"Errors\": []\n}", testErrorResourceHandler.ResultJson);
+            var mergeResults = merger.MergeExercisesAndLearningObjectives();
+            Assert.Empty(mergeResults.Errors);
         }
 
         [Fact]
@@ -85,23 +79,8 @@ namespace ExerciseReport.Tests
                     maxErrors: 1
                 );
 
-            WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
-            Assert.Empty(exerciseResourceHandler.ExerciseResultJson);
-            Assert.Contains("Too many", testErrorResourceHandler.ResultJson);
-        }
-
-        private void WriteMergeResults(
-            (Result Result, ExerciseObjectTree ExerciseObjectTree, IList<Error> Errors) mergeResults,
-            ExerciseResourceHandler exerciseResourceHandler)
-        {
-            var errorWriter = CSharpTestErrorWriter;
-            errorWriter.Write(mergeResults.Errors);
-            if (mergeResults.Result != Result.FatalError)
-            {
-                var exerciseJsonParser = new ExerciseJsonParser();
-                var json = exerciseJsonParser.ToString(mergeResults.ExerciseObjectTree);
-                exerciseResourceHandler.WriteFile(json);
-            }
+            var mergeResults = merger.MergeExercisesAndLearningObjectives();
+            Assert.Equal(Result.FatalError, mergeResults.Result);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace ExerciseReport.Tests
         public const string DesignConceptsWithoutQuotesResource = "design_concepts_without_quotes.md";
         public const string DesignJustConceptsResource = "design_just_concepts.md";
         public const string DesignEmptyResource = "design_empty.md";
+        public const string DesignMissingObjectiveResource = "design_missing_objective.md";
         public const string DesignMultipleHashesResource = "design_multiple_hashes.md";
         public const string DesignMultipleObjectivesResource = "design_multiple_objectives.md";
         public const string DesignNoConceptsResource = "design_no_concepts.md";

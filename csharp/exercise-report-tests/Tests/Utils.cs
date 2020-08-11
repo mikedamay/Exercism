@@ -36,5 +36,17 @@ namespace ExerciseReport.Tests
                         new DesignDocParser())),
                 erh);
         }
+        public static ExerciseMerger
+            GetMergerFromResources(string exercisesResourceName, string designsResourceName)
+        {
+            return (
+                new ExerciseMerger(new ExerciseReader(
+                        new ExerciseResourceHandler(exercisesResourceName),
+                        new ExerciseJsonParser()),
+                    new DesignDocReader(
+                        new DesignDocResourceHandler(designsResourceName),
+                        new DesignDocParser()))
+                );
+        }
     }
 }
