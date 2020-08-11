@@ -100,7 +100,7 @@ namespace ExerciseReport.Tests
             {
                 var exerciseJsonParser = new ExerciseJsonParser();
                 var json = exerciseJsonParser.ToString(mergeResults.ExerciseObjectTree);
-                exerciseResourceHandler.WriteExerciseFile(json);
+                exerciseResourceHandler.WriteFile(json);
             }
         }
     }

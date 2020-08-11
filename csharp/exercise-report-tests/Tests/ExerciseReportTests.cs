@@ -55,7 +55,7 @@ namespace ExerciseReport.Tests
             var rr = new ReportFormatter(PathNames.Default.Root);
             (var merger, var exerciseResourceHandler) =  Utils.GetMergerFromResourcesPlusHandler(Constants.ExercisesResource,
                 Constants.ManyDesignsResource);
-            // var reportCollator = ReportReader.CSharpReportReader;
+            // var reportCollator = ReportWriter.CSharpReportWriter;
             // var merger = ExerciseMerger.TestMergerWithFileSystem;
             WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
             var efc = new ExerciseReader(
@@ -86,7 +86,7 @@ namespace ExerciseReport.Tests
             {
                 var exerciseJsonParser = new ExerciseJsonParser();
                 var json = exerciseJsonParser.ToString(mergeResults.ExerciseObjectTree);
-                exerciseResourceHandler.WriteExerciseFile(json);
+                exerciseResourceHandler.WriteFile(json);
             }
         }
     }

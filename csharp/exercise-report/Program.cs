@@ -20,7 +20,7 @@ namespace ExerciseReport
                 var mergeResults = merger.MergeExercisesAndLearningObjectives();
                 var errorWriter = ErrorWriter.CSharpErrorWriter;
                 errorWriter.Write(mergeResults.Errors);
-                var reporter = ReportReader.CSharpReportReader;
+                var reporter = ReportWriter.CSharpReportWriter;
                 if (mergeResults.Result == Result.FatalError)
                 {
                     throw new Exception("Failed to produce report: " + mergeResults.Errors[^1].Message);

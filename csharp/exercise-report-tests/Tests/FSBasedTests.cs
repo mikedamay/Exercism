@@ -30,7 +30,10 @@ namespace ExerciseReport.Tests
         {
             var reader = ExerciseReader.CSharpExerciseReader;
             var outputs = reader.ReadExercises();
-            reader.WriteExercises(outputs.Result, outputs.ExerciseObjectTree, outputs.Errors);
+            var efh = new ExerciseFileHandler(PathNames.Default.Root, Constants.CSharpTrack);
+            var ejp = new ExerciseJsonParser();
+            var json = ejp.ToString(outputs.ExerciseObjectTree);
+            efh.WriteFile(json);
         }
     }
 }

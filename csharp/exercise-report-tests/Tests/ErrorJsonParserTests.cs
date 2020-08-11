@@ -17,13 +17,11 @@ namespace ExerciseReport.Tests
         [Fact]
         public void Serialize_ErrorsList_ProducesWellFormedJson()
         {
-            var erh = new ExerciseResourceHandler();
-            var efc = new ExerciseReader(
-                erh, new ExerciseJsonParser());
-            efc.WriteExercises(Result.FatalError,
-                new ExerciseObjectTree{Exercises = new List<Exercise>()},
-                errors);
-            Assert.Equal(GetResourceAsString(Constants.ErrorsSimpleResource), erh.ErrorResultJson);
+            var erh = new ErrorResourceHandler();
+            var ejp = new ErrorJsonParser();
+            var json = ejp.ToString(errors);
+            erh.WriteFile(json);
+            Assert.Equal(GetResourceAsString(Constants.ErrorsSimpleResource), erh.ResultJson);
         }
 
         [Fact]
@@ -31,8 +29,8 @@ namespace ExerciseReport.Tests
         {
             var errorsJson = GetResourceAsString(Constants.ErrorsSimpleResource);
         
-            var ejp = new ExerciseJsonParser();
-            Assert.Equal(errors, ejp.ErrorsFromString(errorsJson).Errors,
+            var ejp = new ErrorJsonParser();
+            Assert.Equal(errors, ejp.FromString(errorsJson).Errors,
                 new ErrorComparer());
         }
     }
