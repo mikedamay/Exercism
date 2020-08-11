@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xunit;
@@ -6,16 +7,23 @@ namespace ExerciseReport.Tests
 {
     public class ExerciseReportTests
     {
+        private static ErrorResourceHandler testErrorResourceHandler
+            = new ErrorResourceHandler();
+        private static ErrorWriter CSharpTestErrorWriter { get; } =
+            new ErrorWriter(
+                testErrorResourceHandler, 
+                new ErrorJsonParser());
+
         [Fact]
         public void Merge_DataWithFatalError_WritesNoExercises()
         {
             (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
                 Constants.DesignBrokenConceptsResource,
                 Constants.ExercisesResource);
-            merger.MergeInLearningObjectives();
+            WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
             Assert.Empty(exerciseResourceHandler.ExerciseResultJson);
-            Assert.NotEmpty(exerciseResourceHandler.ErrorResultJson);
-            Assert.NotEqual("{\n  \"Errors\": []\n}",exerciseResourceHandler.ErrorResultJson);
+            Assert.NotEmpty(testErrorResourceHandler.ResultJson);
+            Assert.NotEqual("{\n  \"Errors\": []\n}", testErrorResourceHandler.ResultJson);
         }
 
         [Fact]
@@ -24,9 +32,9 @@ namespace ExerciseReport.Tests
             (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
                 Constants.ExercisesGoodResource,
                 Constants.SampleDesignResource);
-            merger.MergeInLearningObjectives();
+            WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
             Assert.NotEmpty(exerciseResourceHandler.ExerciseResultJson);
-            Assert.Equal("{\n  \"Errors\": []\n}",exerciseResourceHandler.ErrorResultJson);
+            Assert.Equal("{\n  \"Errors\": []\n}", testErrorResourceHandler.ResultJson);
         }
 
         [Fact]
@@ -35,10 +43,10 @@ namespace ExerciseReport.Tests
             (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
                 Constants.ExercisesMixedResource,
                 Constants.SampleDesignResource);
-            merger.MergeInLearningObjectives();
+            WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
             Assert.NotEmpty(exerciseResourceHandler.ExerciseResultJson);
-            Assert.NotEmpty(exerciseResourceHandler.ErrorResultJson);
-            Assert.NotEqual("{\n  \"Errors\": []\n}",exerciseResourceHandler.ErrorResultJson);
+            Assert.NotEmpty(testErrorResourceHandler.ResultJson);
+            Assert.NotEqual("{\n  \"Errors\": []\n}", testErrorResourceHandler.ResultJson);
         }
 
         [Fact]
@@ -49,7 +57,7 @@ namespace ExerciseReport.Tests
                 Constants.ManyDesignsResource);
             // var reportCollator = ReportCollator.CSharpReportCollator;
             // var merger = ExerciseMerger.TestMergerWithFileSystem;
-            merger.MergeInLearningObjectives();
+            WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
             var efc = new ExerciseReader(
                 new ExerciseResourceHandler(), new ExerciseJsonParser());
             var outputs = efc.ReadExercises();
@@ -65,6 +73,21 @@ namespace ExerciseReport.Tests
             string actual = rr.CreateReport(ExerciseTestData.Exercises["simple"]);
             string expected = Utils.GetResourceAsString(Constants.ReportSimpleResource);
             Assert.Equal(expected, actual);
+        }
+
+
+        private void WriteMergeResults(
+            (Result Result, ExerciseObjectTree ExerciseObjectTree, IList<Error> Errors) mergeResults,
+            ExerciseResourceHandler exerciseResourceHandler)
+        {
+            var errorWriter = CSharpTestErrorWriter;
+            errorWriter.Write(mergeResults.Errors);
+            if (mergeResults.Result != Result.FatalError)
+            {
+                var exerciseJsonParser = new ExerciseJsonParser();
+                var json = exerciseJsonParser.ToString(mergeResults.ExerciseObjectTree);
+                exerciseResourceHandler.WriteExerciseFile(json);
+            }
         }
     }
 }

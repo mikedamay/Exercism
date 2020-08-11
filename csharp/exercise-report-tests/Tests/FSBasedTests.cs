@@ -22,7 +22,7 @@ namespace ExerciseReport.Tests
         public void Merge_WellFormedExerciseFile_ShowsNoErrors()
         {
             var merger = ExerciseMerger.CSharpMerger;
-            merger.MergeInLearningObjectives();
+            merger.MergeExercisesAndLearningObjectives();
         }
     }
 }

@@ -17,10 +17,10 @@ namespace ExerciseReport
                         // e.g. /Users/mikedamay/projects/exercism/v3
                 }
                 var merger = ExerciseMerger.CSharpMerger;
-                merger.MergeInLearningObjectives();
+                var outputs = merger.MergeExercisesAndLearningObjectives();
+                var errorWriter = ErrorWriter.CSharpErrorWriter;
+                errorWriter.Write(outputs.Errors);
                 var reporter = ReportCollator.CSharpReportCollator;
-                var efc = ExerciseReader.CSharpExerciseReader;
-                var outputs = efc.ReadExercises();
                 if (outputs.Result == Result.FatalError)
                 {
                     throw new Exception("Failed to produce report: " + outputs.Errors[^1].Message);

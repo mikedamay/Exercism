@@ -28,15 +28,15 @@ namespace ExerciseReport
                     new DesignDocParser())
                 );
 
-        public void MergeInLearningObjectives()
-        {
-            var mergeResults = Merge();
-            exerciseFileHandler.WriteExercises(mergeResults.Result,
-                mergeResults.ExerciseObjectTree, mergeResults.Errors);
-        }
-
-        private (Result Result, ExerciseObjectTree ExerciseObjectTree, List<Error> Errors) 
-            Merge()
+        // public void MergeInLearningObjectives()
+        // {
+        //     var mergeResults = MergeExercisesAndLearningObjectives();
+        //     exerciseFileHandler.WriteExercises(mergeResults.Result,
+        //         mergeResults.ExerciseObjectTree, mergeResults.Errors);
+        // }
+        //
+        public (Result Result, ExerciseObjectTree ExerciseObjectTree, List<Error> Errors) 
+            MergeExercisesAndLearningObjectives()
         {
             var outputs = exerciseFileHandler.ReadExercises();
             if (outputs.Result == Result.FatalError)

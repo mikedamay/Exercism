@@ -20,7 +20,7 @@ namespace ExerciseReport
             this.jsonParser = jsonParser;
         }
 
-        public void Write(Result result, ExerciseObjectTree exerciseObjectTree, IList<Error> errors)
+        public void Write(IList<Error> errors)
         {
             try
             {
