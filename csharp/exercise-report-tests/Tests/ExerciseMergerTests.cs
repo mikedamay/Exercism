@@ -12,7 +12,7 @@ namespace ExerciseReport.Tests
                 testErrorResourceHandler, 
                 new ErrorJsonParser());
 
-        [Fact]
+        [Fact(Skip = "learni objectives are no longer written to json")]
         public void ParseDesignDoc_WithMultipleHashes_ReportsNoErrors()
         {
             (var merger, var exerciseResourceHandler) = Utils.GetMergerFromResourcesPlusHandler(
