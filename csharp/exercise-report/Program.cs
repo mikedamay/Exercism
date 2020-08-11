@@ -17,15 +17,15 @@ namespace ExerciseReport
                         // e.g. /Users/mikedamay/projects/exercism/v3
                 }
                 var merger = ExerciseMerger.CSharpMerger;
-                var outputs = merger.MergeExercisesAndLearningObjectives();
+                var mergeResults = merger.MergeExercisesAndLearningObjectives();
                 var errorWriter = ErrorWriter.CSharpErrorWriter;
-                errorWriter.Write(outputs.Errors);
-                var reporter = ReportCollator.CSharpReportCollator;
-                if (outputs.Result == Result.FatalError)
+                errorWriter.Write(mergeResults.Errors);
+                var reporter = ReportReader.CSharpReportReader;
+                if (mergeResults.Result == Result.FatalError)
                 {
-                    throw new Exception("Failed to produce report: " + outputs.Errors[^1].Message);
+                    throw new Exception("Failed to produce report: " + mergeResults.Errors[^1].Message);
                 }
-                reporter.WriteReport(outputs.ExerciseObjectTree);
+                reporter.WriteReport(mergeResults.ExerciseObjectTree);
                 return 0;
             }
             catch (Exception e)

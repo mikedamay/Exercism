@@ -55,7 +55,7 @@ namespace ExerciseReport.Tests
             var rr = new ReportFormatter(PathNames.Default.Root);
             (var merger, var exerciseResourceHandler) =  Utils.GetMergerFromResourcesPlusHandler(Constants.ExercisesResource,
                 Constants.ManyDesignsResource);
-            // var reportCollator = ReportCollator.CSharpReportCollator;
+            // var reportCollator = ReportReader.CSharpReportReader;
             // var merger = ExerciseMerger.TestMergerWithFileSystem;
             WriteMergeResults(merger.MergeExercisesAndLearningObjectives(), exerciseResourceHandler);
             var efc = new ExerciseReader(
