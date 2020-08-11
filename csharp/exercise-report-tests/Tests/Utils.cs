@@ -28,10 +28,10 @@ namespace ExerciseReport.Tests
         {
             var erh = new ExerciseResourceHandler(exercisesResourceName);
             return (
-                new ExerciseMerger(new ExerciseFileCollator(
+                new ExerciseMerger(new ExerciseReader(
                         erh,
                         new ExerciseJsonParser()),
-                    new DesignDocCollator(
+                    new DesignDocReader(
                         new DesignDocResourceHandler(designsResourceName),
                         new DesignDocParser())),
                 erh);

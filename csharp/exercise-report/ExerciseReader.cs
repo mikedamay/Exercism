@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace ExerciseReport
 {
-    internal class ExerciseFileCollator
+    internal class ExerciseReader
     {
-        public static ExerciseFileCollator CSharpExerciseFileCollator { get; }=
-            new ExerciseFileCollator(
+        public static ExerciseReader CSharpExerciseReader { get; }=
+            new ExerciseReader(
                 new ExerciseFileHandler(PathNames.Default.Root, Constants.CSharpTrack),
                 new ExerciseJsonParser());
 
         private readonly IExerciseFileHandler exerciseFileHandler;
         private readonly ExerciseJsonParser exerciseJsonParser;
 
-        public ExerciseFileCollator(IExerciseFileHandler exerciseFileHandler,
+        public ExerciseReader(IExerciseFileHandler exerciseFileHandler,
             ExerciseJsonParser exerciseJsonParser)
         {
             this.exerciseFileHandler = exerciseFileHandler;

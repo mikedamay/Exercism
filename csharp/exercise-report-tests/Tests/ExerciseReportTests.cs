@@ -50,7 +50,7 @@ namespace ExerciseReport.Tests
             // var reportCollator = ReportCollator.CSharpReportCollator;
             // var merger = ExerciseMerger.TestMergerWithFileSystem;
             merger.MergeInLearningObjectives();
-            var efc = new ExerciseFileCollator(
+            var efc = new ExerciseReader(
                 new ExerciseResourceHandler(), new ExerciseJsonParser());
             var outputs = efc.ReadExercises();
             var output = rr.CreateReport(outputs.ExerciseObjectTree);

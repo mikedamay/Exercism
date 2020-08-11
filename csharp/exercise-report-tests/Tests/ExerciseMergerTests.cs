@@ -69,10 +69,10 @@ namespace ExerciseReport.Tests
             var exerciseResourceHandler
                 = new ExerciseResourceHandler(Constants.ExercisesNoObjectivesResource);
             var merger =
-                new ExerciseMerger(new ExerciseFileCollator(
+                new ExerciseMerger(new ExerciseReader(
                         exerciseResourceHandler,
                         new ExerciseJsonParser())
-                    , new DesignDocCollator(
+                    , new DesignDocReader(
                         new DesignDocResourceHandler(Constants.DesignEmptyResource),
                         new DesignDocParser()),
                     maxErrors: 1

@@ -18,7 +18,7 @@ namespace ExerciseReport.Tests
         public void Serialize_ErrorsList_ProducesWellFormedJson()
         {
             var erh = new ExerciseResourceHandler();
-            var efc = new ExerciseFileCollator(
+            var efc = new ExerciseReader(
                 erh, new ExerciseJsonParser());
             efc.WriteExercises(Result.FatalError,
                 new ExerciseObjectTree{Exercises = new List<Exercise>()},

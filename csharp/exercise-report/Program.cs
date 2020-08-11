@@ -19,7 +19,7 @@ namespace ExerciseReport
                 var merger = ExerciseMerger.CSharpMerger;
                 merger.MergeInLearningObjectives();
                 var reporter = ReportCollator.CSharpReportCollator;
-                var efc = ExerciseFileCollator.CSharpExerciseFileCollator;
+                var efc = ExerciseReader.CSharpExerciseReader;
                 var outputs = efc.ReadExercises();
                 if (outputs.Result == Result.FatalError)
                 {
