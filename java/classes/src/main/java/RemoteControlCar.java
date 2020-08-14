@@ -1,4 +1,3 @@
-/*
 public class RemoteControlCar {
     public static RemoteControlCar buy() {
         throw new UnsupportedOperationException("Please implement the (static) RemoteControlCar.buy()  method");
@@ -16,4 +15,3 @@ public class RemoteControlCar {
         throw new UnsupportedOperationException("Please implement the (static) RemoteControlCar.drive()  method");
     }
 }
-*/

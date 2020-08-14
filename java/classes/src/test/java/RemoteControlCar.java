@@ -1,3 +1,4 @@
+/*
 class RemoteControlCar
 {
     private int batteryPercentage = 100;
@@ -32,3 +33,4 @@ class RemoteControlCar
         return new RemoteControlCar();
     }
 }
+*/
