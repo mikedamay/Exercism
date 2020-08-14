@@ -1,16 +1,12 @@
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.Ignore;
-
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 public class RemoteControlCarTest
 {
     @Test
     public void Buy_new_car_returns_instance()
     {
-        RemoteControlCar car = RemoteControlCar.Buy();
+        RemoteControlCar car = RemoteControlCar.buy();
         Assert.assertNotNull(car);
     }
 
@@ -18,8 +14,8 @@ public class RemoteControlCarTest
     @Test
     public void Buy_new_car_returns_new_car_each_time()
     {
-        RemoteControlCar car1 = RemoteControlCar.Buy();
-        RemoteControlCar car2 = RemoteControlCar.Buy();
+        RemoteControlCar car1 = RemoteControlCar.buy();
+        RemoteControlCar car2 = RemoteControlCar.buy();
         Assert.assertNotSame(car2, car1);
     }
 

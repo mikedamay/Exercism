@@ -27,7 +27,7 @@ class RemoteControlCar
         return "Battery at " + batteryPercentage + "%";
     }
 
-    public static RemoteControlCar Buy()
+    public static RemoteControlCar buy()
     {
         return new RemoteControlCar();
     }
