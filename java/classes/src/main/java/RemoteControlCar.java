@@ -1,19 +1,19 @@
 /*
 public class RemoteControlCar {
-    public static RemoteControlCar Buy() {
-        throw new UnsupportedOperationException("Please implement the (static) RemoteControlCar.Buy()  method");
+    public static RemoteControlCar buy() {
+        throw new UnsupportedOperationException("Please implement the (static) RemoteControlCar.buy()  method");
     }
 
-    public String DistanceDisplay() {
-        throw new UnsupportedOperationException("Please implement the (static) RemoteControlCar.DistanceDisplay()  method");
+    public String distanceDisplay() {
+        throw new UnsupportedOperationException("Please implement the (static) RemoteControlCar.distanceDisplay()  method");
     }
 
-    public String BatteryDisplay() {
-        throw new UnsupportedOperationException("Please implement the (static) RemoteControlCar.BatteryDisplay()  method");
+    public String batteryDisplay() {
+        throw new UnsupportedOperationException("Please implement the (static) RemoteControlCar.batteryDisplay()  method");
     }
 
-    public void Drive() {
-        throw new UnsupportedOperationException("Please implement the (static) RemoteControlCar.Drive()  method");
+    public void drive() {
+        throw new UnsupportedOperationException("Please implement the (static) RemoteControlCar.drive()  method");
     }
 }
 */
