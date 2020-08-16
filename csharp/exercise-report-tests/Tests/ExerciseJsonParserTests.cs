@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Xunit;
 
 namespace ExerciseReport.Tests
@@ -174,6 +175,7 @@ namespace ExerciseReport.Tests
                 Constants.ExercisesMinimalValidResource);
             var outputs = ejp.FromString(json); 
             Assert.Equal(Result.Success, outputs.Result);
+            Assert.Empty(outputs.Errors);
         }
     }
 }
