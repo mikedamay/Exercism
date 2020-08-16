@@ -22,7 +22,7 @@ namespace ExerciseReport.Tests
             fakeReportHandler = new FakeReportFileHandler();
             reportWriter
                 = new ReportWriter(fakeReportHandler,
-                    new ReportFormatter(PathNames.Default.Root));
+                    new ReportFormatter());
         }
         [Fact]
         public void Merge_DataWithFatalError_WritesNoExercises()
@@ -74,7 +74,7 @@ namespace ExerciseReport.Tests
         [Fact]
         public void Report_OnExerciseTree_ProducesWellFormedReport()
         {
-            var rr = new ReportFormatter(PathNames.Default.Root);
+            var rr = new ReportFormatter();
             var merger = Utils.GetMergerFromResources(
                 Constants.ExercisesResource,
                 Constants.ManyDesignsResource);
@@ -86,7 +86,7 @@ namespace ExerciseReport.Tests
         [Fact]
         public void Report_OnSimpleExerciseTree_ProducesWellFormedReportK()
         {
-            var rr = new ReportFormatter(PathNames.Default.Root);
+            var rr = new ReportFormatter();
             string actual = rr.CreateReport(ExerciseTestData.Exercises["simple"]);
             string expected = Utils.GetResourceAsString(Constants.ReportSimpleResource);
             Assert.Equal(expected, actual);

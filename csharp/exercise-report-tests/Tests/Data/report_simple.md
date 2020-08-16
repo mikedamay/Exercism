@@ -35,4 +35,4 @@ None
 
 [exercise-sample1-slug]: ../exercises/concept/sample1-slug
 
-[tnc-sample1.1-name]: ./../../../sample1.1-track-neutral-concept
+[tnc-sample1.1-name]: ../../../sample1.1-track-neutral-concept
