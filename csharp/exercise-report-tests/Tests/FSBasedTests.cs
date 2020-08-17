@@ -25,7 +25,7 @@ namespace ExerciseReport.Tests
             merger.MergeExercisesAndLearningObjectives();
         }
 
-        [Fact(Skip = "This test will overwrite exercises.json")]
+        [Fact(/*Skip = "This test will overwrite exercises.json"*/)]
         public void CleanExerciseReportFile()
         {
             var reader = ExerciseReader.CSharpExerciseReader;
