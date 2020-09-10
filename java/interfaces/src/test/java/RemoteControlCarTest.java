@@ -1,20 +1,20 @@
+import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class RemoteControlCarTest {
     @Test
     public void race() {
         ProductionRemoteControlCar productionCar = new ProductionRemoteControlCar();
         ExperimentalRemoteControlCar experimentalCar = new ExperimentalRemoteControlCar();
-        TestTrack.Race(productionCar);
-        TestTrack.Race(productionCar);
-        TestTrack.Race(experimentalCar);
-        TestTrack.Race(experimentalCar);
+        TestTrack.Race((RemoteControlCar)productionCar);
+        TestTrack.Race((RemoteControlCar)productionCar);
+        TestTrack.Race((RemoteControlCar)experimentalCar);
+        TestTrack.Race((RemoteControlCar)experimentalCar);
         assertSame(20, experimentalCar.getDistanceTravelled() - productionCar.getDistanceTravelled());
     }
 
@@ -31,17 +31,7 @@ public class RemoteControlCarTest {
 
 //    @Ignore("Remove to run test")
     @Test
-    public void ensureCarsAreComparable() {
-        ProductionRemoteControlCar fast = new ProductionRemoteControlCar();
-        ProductionRemoteControlCar medium = new ProductionRemoteControlCar();
-        ProductionRemoteControlCar slow = new ProductionRemoteControlCar();
-        fast.setNumberOfVictories(3);
-        medium.setNumberOfVictories(2);
-        slow.setNumberOfVictories(1);
-        List<ProductionRemoteControlCar> cars = Arrays.asList(fast, slow, medium);
-        Collections.sort(cars);
-        assertSame(1, cars.get(0).getNumberOfVictories());
-        assertSame(2, cars.get(1).getNumberOfVictories());
-        assertSame(3, cars.get(2).getNumberOfVictories());
+    public void ensureCarsAreComparables() {
+        assertTrue(RemoteControlCar.class.isAssignableFrom(ProductionRemoteControlCar.class) );
     }
 }
