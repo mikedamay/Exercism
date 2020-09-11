@@ -11,10 +11,10 @@ public class RemoteControlCarTest {
     public void race() {
         ProductionRemoteControlCar productionCar = new ProductionRemoteControlCar();
         ExperimentalRemoteControlCar experimentalCar = new ExperimentalRemoteControlCar();
-        TestTrack.Race((RemoteControlCar)productionCar);
-        TestTrack.Race((RemoteControlCar)productionCar);
-        TestTrack.Race((RemoteControlCar)experimentalCar);
-        TestTrack.Race((RemoteControlCar)experimentalCar);
+        TestTrack.race((RemoteControlCar)productionCar);
+        TestTrack.race((RemoteControlCar)productionCar);
+        TestTrack.race((RemoteControlCar)experimentalCar);
+        TestTrack.race((RemoteControlCar)experimentalCar);
         assertSame(20, experimentalCar.getDistanceTravelled() - productionCar.getDistanceTravelled());
     }
 
@@ -25,7 +25,7 @@ public class RemoteControlCarTest {
         ProductionRemoteControlCar prc2 = new ProductionRemoteControlCar();
         prc1.setNumberOfVictories(3);
         prc2.setNumberOfVictories(2);
-        List<ProductionRemoteControlCar> rankings = TestTrack.GetRankedCars(prc1, prc2);
+        List<ProductionRemoteControlCar> rankings = TestTrack.getRankedCars(prc1, prc2);
         assertSame(prc1, rankings.get(1));
     }
 
