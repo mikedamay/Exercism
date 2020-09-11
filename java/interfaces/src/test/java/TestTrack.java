@@ -6,6 +6,7 @@ public class TestTrack {
 
     public static double Race(RemoteControlCar car) {
         car.drive();
+
         return car.getDistanceTravelled();
     }
 

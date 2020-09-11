@@ -1,5 +1,6 @@
 public class ExperimentalRemoteControlCar implements RemoteControlCar {
-    int distanceTravelled;
+
+    private int distanceTravelled;
 
     public void drive() {
         distanceTravelled += 20;

@@ -18,7 +18,7 @@ public class RemoteControlCarTest {
         assertSame(20, experimentalCar.getDistanceTravelled() - productionCar.getDistanceTravelled());
     }
 
-//    @Ignore("Remove to run test")
+    @Ignore("Remove to run test")
     @Test
     public void rankCars() {
         ProductionRemoteControlCar prc1 = new ProductionRemoteControlCar();
@@ -29,7 +29,7 @@ public class RemoteControlCarTest {
         assertSame(prc1, rankings.get(1));
     }
 
-//    @Ignore("Remove to run test")
+    @Ignore("Remove to run test")
     @Test
     public void ensureCarsAreComparables() {
         assertTrue(RemoteControlCar.class.isAssignableFrom(ProductionRemoteControlCar.class) );
