@@ -1,20 +1,20 @@
 namespace ExerciseReport
 {
-    internal enum Result 
+    public enum Result 
     {
         Success,
         Errors,
         FatalError
     }
 
-    internal enum Severity
+    public enum Severity
     {
         None = 0,
         Error = 1,
         Fatal = 2
     }
 
-    internal enum ErrorSource 
+    public enum ErrorSource 
     {
         Process,
         Design,
@@ -24,7 +24,7 @@ namespace ExerciseReport
         MissingLearningObjective
     }
 
-    internal class Error
+    public class Error
     {
         public Severity Severity { get; set; } = Severity.None;
         public string Message { get; set; } = string.Empty;

@@ -222,6 +222,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegralNumbers", "csharp\i
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strings", "csharp\strings\Strings.csproj", "{DDDFC248-139A-4ABB-97F4-07F891502613}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseValidation", "ExerciseValidation\ExerciseValidation.csproj", "{B6847160-0278-42DB-B78D-D2CA332AF620}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -668,5 +670,9 @@ Global
 		{DDDFC248-139A-4ABB-97F4-07F891502613}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDDFC248-139A-4ABB-97F4-07F891502613}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDDFC248-139A-4ABB-97F4-07F891502613}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6847160-0278-42DB-B78D-D2CA332AF620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6847160-0278-42DB-B78D-D2CA332AF620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6847160-0278-42DB-B78D-D2CA332AF620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6847160-0278-42DB-B78D-D2CA332AF620}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

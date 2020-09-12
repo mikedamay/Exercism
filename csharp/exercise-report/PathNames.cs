@@ -2,7 +2,7 @@ using System.Data;
 
 namespace ExerciseReport
 {
-    internal class PathNames
+    public class PathNames
     {
         // private const string ProductionRoot = ".";
         private const string ProductionRoot = ".";

@@ -19,4 +19,5 @@ public class TestTrack {
 
         return rankings;
     }
+    protected static double dd() {return 2.0;}
 }
