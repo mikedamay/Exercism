@@ -1,6 +1,6 @@
 namespace ExerciseReport
 {
-    internal static class Constants
+    public static class Constants
     {
         public const int MaxErrors = 20;
         public const int MaxMissingLearningObjectives = 45;

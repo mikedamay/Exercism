@@ -12,11 +12,11 @@ namespace ExerciseValidation
     {
         private readonly int maxErrors;
 
-        public TrackConfigJsonParser(int maxErrors = Constants.MaxErrors)
+        public TrackConfigJsonParser(int maxErrors = -1)
         {
             this.maxErrors = maxErrors;
         }
-        public string ToString(ExerciseObjectTree exerciseObjectTree)
+        public string ToString(TrackConfigObjectTree trackConfigObjectTree)
         {
             var options = new JsonSerializerOptions
             {
@@ -24,27 +24,26 @@ namespace ExerciseValidation
                 WriteIndented = true,
             };
             options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-            return JsonSerializer.Serialize(exerciseObjectTree, options);
+            return JsonSerializer.Serialize(trackConfigObjectTree, options);
         }
 
-        public (Result Result, ExerciseObjectTree, List<Error> Errors)
+        public (Result Result, TrackConfigObjectTree, List<Error> Errors)
             FromString(string jsonText)
         {
+            var errors = new List<Error>();
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
             try
             {
-                options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-                var exerciseObjectTree = JsonSerializer.Deserialize<ExerciseObjectTree>(jsonText, options);
-                List<Error> errors = ValidateExercises(exerciseObjectTree);
-                if (exerciseObjectTree.Exercises.Count == 0)
+                var trackConfigObjectTree = JsonSerializer.Deserialize<TrackConfigObjectTree>(jsonText, options);
+                if (trackConfigObjectTree.Exercises?.Concept.Count == 0)
                 {
                     var message = $"Json parser failed to parse input file starting {jsonText.Substring(0, 20)}";
                     return (
                         Result.FatalError,
-                        exerciseObjectTree,
+                        trackConfigObjectTree,
                         new List<Error> {new Error(ErrorSource.Exercise, Severity.Fatal, message)}
                     );
                 }
@@ -53,7 +52,7 @@ namespace ExerciseValidation
                 {
                     errors.Add(new Error(ErrorSource.Exercise,
                         Severity.Error,
-                        $"Too many errors reading {Constants.ExercisesJson} - see {Constants.ExerciseErrorsJson}"));
+                        $"Too many errors reading config.json - which should never happen"));
                 }
                 return (
                     errors.Count == 0
@@ -61,7 +60,7 @@ namespace ExerciseValidation
                         : errors.Count > maxErrors
                             ? Result.FatalError
                             : Result.Errors,
-                    exerciseObjectTree,
+                    trackConfigObjectTree,
                     errors
                 );
             }
@@ -69,7 +68,7 @@ namespace ExerciseValidation
             {
                 return (
                     Result.FatalError,
-                    new ExerciseObjectTree(),
+                    new TrackConfigObjectTree(),
                     new List<Error> {new Error(ErrorSource.Exercise, Severity.Fatal, je.Message)}
                 );
             }
@@ -77,15 +76,15 @@ namespace ExerciseValidation
             {
                 return (
                     Result.FatalError,
-                    new ExerciseObjectTree(),
+                    new TrackConfigObjectTree(),
                     new List<Error> {new Error(ErrorSource.Exercise, Severity.Fatal, "unknown error:" + e.Message)}
                 );
             }
         }
 
-        private static List<Error> ValidateExercises(ExerciseObjectTree exerciseObjectTree)
+        private static List<Error> ValidateExercises(TrackConfigObjectTree trackConfigObjectTree)
         {
-            var errors = exerciseObjectTree.Exercises.Select(ex => ValidateExercise(ex))
+            var errors = trackConfigObjectTree.Exercises.Concept.Select(ex => ValidateExercise(ex))
                 .Where(exo => !string.IsNullOrWhiteSpace(exo))
                 .Select(exo => new Error(ErrorSource.Exercise, Severity.Error, exo))
                 .ToList();
@@ -98,25 +97,14 @@ namespace ExerciseValidation
             
             if (string.IsNullOrWhiteSpace(exercise.Slug)) sb.AppendLine("slug: missing for an exercise");
             
-            if (exercise.Level == Level.Invalid) sb.AppendLine($"level: missing for {exercise.Slug}");
-            
-            if (exercise.CompletionStatus == CompletionStatus.Invalid)
-                sb.AppendLine($"completion-status: missing for {exercise.Slug}");
-            
-            if (exercise.CompletionStatus == CompletionStatus.NewExerciseIssueRaised
-                && string.IsNullOrWhiteSpace(exercise.DocumentLink))
-                sb.AppendLine($"document-link: missing for {exercise.Slug}");
-            
-            if (exercise.CompletionStatus == CompletionStatus.Complete
-                && !string.IsNullOrWhiteSpace(exercise.DocumentLink))
-                sb.AppendLine($"document-link: present for {exercise.Slug}. This will be ignored when generating the report");
+            if (string.IsNullOrWhiteSpace(exercise.Uuid)) sb.AppendLine($"uuid: missing for {exercise.Slug}");
             
             if (exercise.Concepts.Count == 0) sb.AppendLine($"concepts: missing for {exercise.Slug}");
 
             for (int ii = 0; ii < exercise.Concepts.Count; ii++)
             {
-                if (string.IsNullOrWhiteSpace(exercise.Concepts[ii].Name))
-                    sb.AppendLine($"concept.name: missing for {exercise.Slug}");
+                if (string.IsNullOrWhiteSpace(exercise.Concepts[ii]))
+                    sb.AppendLine($"blank concept found for {exercise.Slug}");
             }
 
             return sb.ToString();

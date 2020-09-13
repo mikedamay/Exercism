@@ -10,25 +10,25 @@ namespace ExerciseValidation
 
     internal class TrackConfigFileHandler : ITrackConfigFileHandler
     {
-        private readonly string exercisePathAndFileName;
+        private readonly string trackConfigPathAndFileName;
 
         public TrackConfigFileHandler(string root, string track)
         {
-            exercisePathAndFileName = Path.Combine(
+            trackConfigPathAndFileName = Path.Combine(
                 root,
                 PathNames.Default.Languages,
                 track,
-                PathNames.Default.ExerciseFile);
+                Constants.TrackConfigFileName);
         }
 
         public string ReadFile()
         {
-            return File.ReadAllText(exercisePathAndFileName);
+            return File.ReadAllText(trackConfigPathAndFileName);
         }
 
         public void WriteFile(string exerciseJson)
         {
-            File.WriteAllText(exercisePathAndFileName, exerciseJson);
+            File.WriteAllText(trackConfigPathAndFileName, exerciseJson);
         }
 
     }

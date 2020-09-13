@@ -8,7 +8,7 @@ namespace ExerciseValidation
     {
         public static TrackConfigReader CSharpTrackConfigReader { get; } =
             new TrackConfigReader(
-                new TrackConfigFileHandler("./", string.Empty),
+                new TrackConfigFileHandler(PathNames.Default.Root, Constants.CSharpTrack),
                 new TrackConfigJsonParser());
 
         private readonly ITrackConfigFileHandler trackConfigFileHandler;
@@ -21,7 +21,7 @@ namespace ExerciseValidation
             this.trackConfigJsonParser = trackConfigJsonParser;
         }
 
-        public (Result Result, ExerciseObjectTree ExerciseObjectTree, List<Error> Errors)
+        public (Result Result, TrackConfigObjectTree TrackConfigObjectTree, List<Error> Errors)
             ReadExercises()
         {
             try
@@ -33,7 +33,7 @@ namespace ExerciseValidation
             {
                 return (
                     Result.FatalError,
-                    new ExerciseObjectTree(),
+                    new TrackConfigObjectTree(),
                     new List<Error>
                         {new Error(ErrorSource.Process, Severity.Fatal, "reading exercise.json file: " + e.Message)}
                 );

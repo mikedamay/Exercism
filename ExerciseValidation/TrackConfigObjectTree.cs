@@ -16,6 +16,12 @@ namespace ExerciseValidation
     {
         [JsonPropertyName("slug")]
         public string Slug { get; set; } = string.Empty;
+        [JsonPropertyName("uuid")]
+        public string Uuid { get; set; } = string.Empty;
+        [JsonPropertyName("concepts")] 
+        public IList<string> Concepts { get; set; } = new List<string>();
+        [JsonPropertyName("prerequisites")] 
+        public IList<string> PreRequisites { get; set; } = new List<string>();
     }
     
     public class Exercises
@@ -39,6 +45,8 @@ namespace ExerciseValidation
         [JsonPropertyName("version")]
         public decimal Version { get; set; } = decimal.Zero;
         [JsonPropertyName("online_editor")] 
-        public OnlineEditor OnlineEditor { get; set; } = null;
+        public OnlineEditor OnlineEditor { get; set; } = new OnlineEditor();
+        [JsonPropertyName("exercises")] 
+        public Exercises Exercises { get; set; } = new Exercises();
     }
 }
