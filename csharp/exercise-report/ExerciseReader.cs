@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ExerciseReport
 {
-    internal class ExerciseReader
+    public class ExerciseReader
     {
         public static ExerciseReader CSharpExerciseReader { get; } =
             new ExerciseReader(

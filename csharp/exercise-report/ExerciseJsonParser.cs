@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace ExerciseReport
 {
-    internal class ExerciseJsonParser
+    public class ExerciseJsonParser
     {
         private readonly int maxErrors;
 

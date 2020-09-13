@@ -1,23 +1,28 @@
 {
-  "exercises": [
-    {
-      "test-of" : "missing slug",
-      "level": "introductory",
-      "track-neutral-story": "",
-      "completion-status": "complete",
-      "document-link": "https://github.com/exercism/v3/blob/master/languages/csharp/exercises/concept/classes/.meta/design.md",
-      "concepts": [
-        {
-          "name": "classes",
-          "track-neutral-concept": "reference/concepts/classes.md",
-          "original-concepts": [
-            {
-              "name": "- [Classes][classes]",
-              "line-number": 11
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "language": "C#",
+  "slug": "csharp",
+  "active": true,
+  "blurb": "C# is a modern, object-oriented language with lots of great features, such as type-inference and async/await. The tooling is excellent, and there is extensive, well-written documentation.",
+  "version": 3,
+  "online_editor": {
+    "indent_style": "space",
+    "indent_size": 4
+  },
+  "exercises": {
+    "concept": [
+      {
+        "uuid": "b6c532c9-1e89-4fbf-8f08-27f5befb5bb8",
+        "concepts": [
+          "arrays",
+          "for-loops",
+          "foreach-loops"
+        ],
+        "prerequisites": [
+          "booleans",
+          "classes",
+          "if-statements"
+        ]
+      }
+    ]
+  }
 }

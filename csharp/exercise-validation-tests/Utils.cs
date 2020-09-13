@@ -7,7 +7,7 @@ namespace ExerciseValidation.Tests
     {
         public static string GetResourceAsString(string resourceName)
         {
-            string resourcePath = $"ExerciseReport.Tests.Data.{resourceName}";
+            string resourcePath = $"ExerciseValidation.Data.{resourceName}";
             string markdownText = String.Empty;
             Stream? stream = typeof(Utils).Assembly.GetManifestResourceStream(resourcePath);
             if (stream != null)

@@ -8,11 +8,11 @@ using ExerciseReport;
 
 namespace ExerciseValidation
 {
-    internal class TrackConfigJsonParser
+    public class TrackConfigJsonParser
     {
         private readonly int maxErrors;
 
-        public TrackConfigJsonParser(int maxErrors = -1)
+        public TrackConfigJsonParser(int maxErrors = Constants.MaxErrors)
         {
             this.maxErrors = maxErrors;
         }
@@ -30,7 +30,6 @@ namespace ExerciseValidation
         public (Result Result, TrackConfigObjectTree, List<Error> Errors)
             FromString(string jsonText)
         {
-            var errors = new List<Error>();
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
@@ -38,6 +37,7 @@ namespace ExerciseValidation
             try
             {
                 var trackConfigObjectTree = JsonSerializer.Deserialize<TrackConfigObjectTree>(jsonText, options);
+                List<Error> errors = ValidateExercises(trackConfigObjectTree);
                 if (trackConfigObjectTree.Exercises?.Concept.Count == 0)
                 {
                     var message = $"Json parser failed to parse input file starting {jsonText.Substring(0, 20)}";

@@ -7,7 +7,7 @@ namespace ExerciseReport
         string ReadFile();
     }
 
-    internal class ExerciseFileHandler : IExerciseFileHandler
+    public class ExerciseFileHandler : IExerciseFileHandler
     {
         private readonly string exercisePathAndFileName;
 

@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace ExerciseReport
 {
-    internal class ErrorJsonParser
+    public class ErrorJsonParser
     {
         public string ToString(IList<Error> errors)
         {
@@ -28,7 +28,7 @@ namespace ExerciseReport
         }
     }
     
-    internal class ErrorReport
+    public class ErrorReport
     {
         public IList<Error> Errors { get; set; } = new List<Error>();
 

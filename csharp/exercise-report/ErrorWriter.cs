@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ExerciseReport
 {
-    internal class ErrorWriter
+    public class ErrorWriter
     {
         public static ErrorWriter CSharpErrorWriter { get; }=
             new ErrorWriter(

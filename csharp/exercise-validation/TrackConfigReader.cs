@@ -4,7 +4,7 @@ using ExerciseReport;
 
 namespace ExerciseValidation
 {
-    internal class TrackConfigReader
+    public class TrackConfigReader
     {
         public static TrackConfigReader CSharpTrackConfigReader { get; } =
             new TrackConfigReader(
