@@ -224,6 +224,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strings", "csharp\strings\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseValidation", "csharp\exercise-validation\ExerciseValidation.csproj", "{7F755409-758C-47D6-B9D1-75854647FE96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseValidationTests", "csharp\exercise-validation-tests\ExerciseValidationTests.csproj", "{45F4BE0D-0CB8-4245-8D7F-6BBD38AE3E51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -674,5 +676,9 @@ Global
 		{7F755409-758C-47D6-B9D1-75854647FE96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F755409-758C-47D6-B9D1-75854647FE96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F755409-758C-47D6-B9D1-75854647FE96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45F4BE0D-0CB8-4245-8D7F-6BBD38AE3E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45F4BE0D-0CB8-4245-8D7F-6BBD38AE3E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45F4BE0D-0CB8-4245-8D7F-6BBD38AE3E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45F4BE0D-0CB8-4245-8D7F-6BBD38AE3E51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
