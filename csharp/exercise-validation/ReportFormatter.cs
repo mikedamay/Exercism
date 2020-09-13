@@ -18,12 +18,10 @@ namespace ExerciseReport
             sb.AppendLine();
             sb.AppendLine("### Concepts in csharp/config.json not in csharp/reference/exercises.json");
             sb.AppendLine(); 
-            AddHeadings(sb);
             ReportMissingExercisesAndConcepts(sb, notInExerciseReport);
             sb.AppendLine();
             sb.AppendLine("### Concepts in csharp/reference/exercises.json not in csharp/config.json");
             sb.AppendLine(); 
-            AddHeadings(sb);
             ReportMissingExercisesAndConcepts(sb, notInTrackConfig);
             return sb.ToString();
         }
@@ -37,13 +35,18 @@ namespace ExerciseReport
         private void ReportMissingExercisesAndConcepts(StringBuilder sb,
             IEnumerable<ExerciseAndConcept> notInReport)
         {
-            StringBuilder sbNotInReport = new StringBuilder();
-            foreach (var exerciseAndConcept in notInReport)
+            if (notInReport.Any())
             {
-                sb.AppendFormat($"| {exerciseAndConcept.Exercise} | {exerciseAndConcept.Concept} |");
+                AddHeadings(sb);
+                foreach (var exerciseAndConcept in notInReport)
+                {
+                    sb.AppendFormat($"| {exerciseAndConcept.Exercise} | {exerciseAndConcept.Concept} |{Environment.NewLine}");
+                }
             }
-
-            sb.Append(sb.Length == 0 ? "None" : sbNotInReport.ToString());
+            else
+            {
+                sb.AppendLine("None");
+            }
         }
     }
 }

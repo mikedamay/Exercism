@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace ExerciseValidation.Tests
+namespace ExerciseValidationTests
 {
     internal static class Utils
     {

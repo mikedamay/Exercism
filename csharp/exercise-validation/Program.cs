@@ -18,17 +18,19 @@ namespace ExerciseValidation
                     // e.g. /Users/mikedamay/projects/exercism/v3
                 }
                 var comparer = ExerciseComparer.CSharpComparer;
-                var errorWriter = ErrorWriter.CSharpErrorWriter;
+                var errorWriter = new ErrorWriter(
+                    new ValidationErrorFileHandler(PathNames.Default.Root, Constants.CSharpTrack), 
+                    new ErrorJsonParser());;
                 var reporter = ReportWriter.CSharpReportWriter;
-                var mergeResults = comparer.CompareExercises();
-                errorWriter.Write(mergeResults.Errors);
+                var compareResults = comparer.CompareExercises();
+                errorWriter.Write(compareResults.Errors);
             
-                if (mergeResults.Result == Result.FatalError)
+                if (compareResults.Result == Result.FatalError)
                 {
-                    throw new Exception("Failed to produce report: " + mergeResults.Errors[^1].Message);
+                    throw new Exception("Failed to produce report: " + compareResults.Errors[^1].Message);
                 }
 
-                reporter.WriteReport(mergeResults.NotInExerciseReport, mergeResults.NotInTrackConfig);
+                reporter.WriteReport(compareResults.NotInExerciseReport, compareResults.NotInTrackConfig);
                 return 0;
             }
             catch (Exception e)

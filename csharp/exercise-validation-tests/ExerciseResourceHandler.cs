@@ -1,6 +1,6 @@
 using ExerciseValidation;
 
-namespace ExerciseValidation.Tests
+namespace ExerciseValidationTests
 {
     internal class ExerciseResourceHandler : ITrackConfigFileHandler
     {

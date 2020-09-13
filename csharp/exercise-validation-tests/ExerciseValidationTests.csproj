@@ -20,6 +20,8 @@
     </ItemGroup>
   
     <ItemGroup>
+      <EmbeddedResource Include="Data\not-in-track-config.md" />
+      <EmbeddedResource Include="Data\errors.json" />
       <EmbeddedResource Include="Data\exercises_missing_slug.json" />
     </ItemGroup>
 

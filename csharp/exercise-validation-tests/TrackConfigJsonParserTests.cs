@@ -1,7 +1,8 @@
 using Xunit;
 using ExerciseReport;
+using ExerciseValidation;
 
-namespace ExerciseValidation.Tests
+namespace ExerciseValidationTests
 {
     public class ExerciseJsonParserTests
     {
