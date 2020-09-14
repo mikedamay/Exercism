@@ -13,7 +13,7 @@ namespace ExerciseValidationTests
         private ErrorWriter testErrorWriter;
         private FakeReportFileHandler fakeReportHandler;
         private ReportWriter reportWriter;
-        
+
         public ValidationReportTests()
         {
             testErrorResourceHandler
@@ -30,7 +30,7 @@ namespace ExerciseValidationTests
         }
 
         [Fact]
-        public void Report_ItemsNotInTrackConfig_ProducesReport()
+        public void Report_ItemsNotInTrackConfig_ReportsItemsNotInTrackConfigOnly()
         {
             reportWriter.WriteReport(
                 new List<ExerciseAndConcept>(),
@@ -39,17 +39,65 @@ namespace ExerciseValidationTests
                     new ExerciseAndConcept("exercise1", "concept1"),
                     new ExerciseAndConcept("exercise2", "concept2"),
                 }
-                );
+            );
             Assert.Equal(GetResourceAsString(
-                Constants.NotInTrackConfigResource)
-            , fakeReportHandler.Report);
+                    Constants.NotInTrackConfigResource)
+                , fakeReportHandler.Report);
+        }
+
+        [Fact]
+        public void Report_ItemsNotInExerciseReport_ReportsItemsNotInExerciseReportOnly()
+        {
+            reportWriter.WriteReport(
+                new List<ExerciseAndConcept>
+                {
+                    new ExerciseAndConcept("exercise1", "concept1"),
+                    new ExerciseAndConcept("exercise2", "concept2"),
+                },
+                new List<ExerciseAndConcept>()
+            );
+            Assert.Equal(GetResourceAsString(
+                    Constants.NotInExerciseReportResource)
+                , fakeReportHandler.Report);
+        }
+
+        [Fact]
+        public void Report_ItemsNotInBoth_ReportsItemsNotInBoth()
+        {
+            reportWriter.WriteReport(
+                new List<ExerciseAndConcept>
+                {
+                    new ExerciseAndConcept("exercise1", "concept1"),
+                    new ExerciseAndConcept("exercise2", "concept2"),
+                },
+                new List<ExerciseAndConcept>
+                {
+                    new ExerciseAndConcept("exercise3", "concept3"),
+                    new ExerciseAndConcept("exercise4", "concept4"),
+                }
+            );
+            Assert.Equal(GetResourceAsString(
+                    Constants.NotInBothResource)
+                , fakeReportHandler.Report);
+        }
+
+        [Fact]
+        public void Report_ItemsNotInEither_ReportsItemsNotInEither()
+        {
+            reportWriter.WriteReport(
+                new List<ExerciseAndConcept>(),
+                new List<ExerciseAndConcept>()
+            );
+            Assert.Equal(GetResourceAsString(
+                    Constants.NotInEitherResource)
+                , fakeReportHandler.Report);
         }
     }
 
     internal class FakeReportFileHandler : IReportFileHandler
     {
         public string Report { get; private set; } = string.Empty;
-        
+
         public void WriteFile(string reportMarkdown)
         {
             Report = reportMarkdown;
