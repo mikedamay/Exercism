@@ -3,12 +3,6 @@ using ExerciseReport;
 
 namespace ExerciseValidation
 {
-    public interface IReportFileHandler
-    {
-        void WriteFile(string reportMarkdown);
-
-    }
-
     public class ReportFileHandler : IReportFileHandler
     {
         private readonly string reportPathAndFileName;

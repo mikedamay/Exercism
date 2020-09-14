@@ -1,3 +1,4 @@
+using ExerciseValidation;
 using Xunit;
 
 namespace ExerciseValidationTests
@@ -11,8 +12,12 @@ namespace ExerciseValidationTests
                 Constants.ExerciseNotInTrackResource,
                 Constants.TrackNotInTrackResource
             );
-            var mergeResults = comparer.CompareExercises();
-            
+            var expected = new ExerciseAndConcept[]
+            {
+                new ExerciseAndConcept("arrays", "for-loops")
+            };
+            var compareResults = comparer.CompareExercises();
+            Assert.Equal(expected, compareResults.NotInTrackConfig);
         }
     }
 }

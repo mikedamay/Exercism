@@ -5,7 +5,7 @@ using ExerciseReport;
 
 namespace ExerciseValidation
 {
-        public struct ExerciseAndConcept
+        public readonly struct ExerciseAndConcept
         {
             public string Exercise { get; }
             public string Concept { get; }
@@ -61,7 +61,7 @@ namespace ExerciseValidation
             var trackConfigResults = trackConfigReader.ReadExercises();
 
             var exerciseReport = exerciseReportResults
-                .ExerciseObjectTree.Exercises
+                .ExerciseObjectTree.Exercises.Where(ex => ex.CompletionStatus == CompletionStatus.Complete)
                 .SelectMany(ex => ex.Concepts, (ex, con) => new ExerciseAndConcept(ex.Slug, con.Name));
             var trackConfig = trackConfigResults
                 .TrackConfigObjectTree.Exercises.Concept

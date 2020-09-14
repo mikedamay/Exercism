@@ -21,7 +21,8 @@ namespace ExerciseValidation
                 var errorWriter = new ErrorWriter(
                     new ValidationErrorFileHandler(PathNames.Default.Root, Constants.CSharpTrack), 
                     new ErrorJsonParser());;
-                var reporter = ReportWriter.CSharpReportWriter;
+                var reporter = new ReportWriter(new ReportFileHandler(PathNames.Default.Root, Constants.CSharpTrack),
+                    new ReportFormatter());
                 var compareResults = comparer.CompareExercises();
                 errorWriter.Write(compareResults.Errors);
             

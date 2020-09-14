@@ -15,7 +15,6 @@
         "uuid": "b6c532c9-1e89-4fbf-8f08-27f5befb5bb8",
         "concepts": [
           "arrays",
-          "for-loops",
           "foreach-loops"
         ],
         "prerequisites": [
