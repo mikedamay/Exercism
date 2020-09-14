@@ -20,12 +20,14 @@
     </ItemGroup>
   
     <ItemGroup>
+      <EmbeddedResource Include="Data\exercise-not-in-track.json" />
       <EmbeddedResource Include="Data\not-in-both.md" />
       <EmbeddedResource Include="Data\not-in-either.md" />
       <EmbeddedResource Include="Data\not-in-exercise-report.md" />
       <EmbeddedResource Include="Data\not-in-track-config.md" />
       <EmbeddedResource Include="Data\errors.json" />
       <EmbeddedResource Include="Data\exercises_missing_slug.json" />
+      <EmbeddedResource Include="Data\track-not-in-track.json" />
     </ItemGroup>
 
 </Project>

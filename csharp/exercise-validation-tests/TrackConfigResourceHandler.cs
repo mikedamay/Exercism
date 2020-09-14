@@ -1,14 +1,14 @@
-using ExerciseReport;
+using ExerciseValidation;
 
 namespace ExerciseValidationTests
 {
-    internal class ExerciseResourceHandler : IExerciseFileHandler
+    internal class TrackConfigResourceHandler : ITrackConfigFileHandler
     {
         public string ExerciseResultJson { get; private set; } = string.Empty;
 
         private readonly string exerciseResourceName;
 
-        public ExerciseResourceHandler(string exerciseResourceName)
+        public TrackConfigResourceHandler(string exerciseResourceName)
         {
             this.exerciseResourceName = exerciseResourceName;
         }

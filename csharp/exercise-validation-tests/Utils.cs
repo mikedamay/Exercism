@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using ExerciseValidation;
+using ExerciseReport;
 
 namespace ExerciseValidationTests
 {
@@ -23,11 +25,24 @@ namespace ExerciseValidationTests
             }
         }
 
+        public static ExerciseComparer
+            GetComparerFromResources(string exercisesResourceName, string designsResourceName)
+        {
+            return (
+                new ExerciseComparer(new ExerciseReader(
+                        new ExerciseResourceHandler(exercisesResourceName),
+                        new ExerciseJsonParser()),
+                    new TrackConfigReader(
+                        new TrackConfigResourceHandler(designsResourceName),
+                        new TrackConfigJsonParser()))
+            );
+        }
+
         /*
-        public static (ExerciseMerger ExerciseMerger, ExerciseResourceHandler ExerciseResourceHandler)
+        public static (ExerciseMerger ExerciseMerger, TrackConfigResourceHandler TrackConfigResourceHandler)
             GetMergerFromResourcesPlusHandler(string exercisesResourceName, string designsResourceName)
         {
-            var erh = new ExerciseResourceHandler(exercisesResourceName);
+            var erh = new TrackConfigResourceHandler(exercisesResourceName);
             return (
                 new ExerciseMerger(new ExerciseReader(
                         erh,
@@ -42,7 +57,7 @@ namespace ExerciseValidationTests
         {
             return (
                 new ExerciseMerger(new ExerciseReader(
-                        new ExerciseResourceHandler(exercisesResourceName),
+                        new TrackConfigResourceHandler(exercisesResourceName),
                         new ExerciseJsonParser()),
                     new DesignDocReader(
                         new DesignDocResourceHandler(designsResourceName),

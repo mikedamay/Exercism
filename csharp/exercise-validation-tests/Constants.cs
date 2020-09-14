@@ -9,5 +9,7 @@ namespace ExerciseValidationTests
         public const string NotInExerciseReportResource = "not-in-exercise-report.md";
         public const string NotInBothResource = "not-in-both.md";
         public const string NotInEitherResource = "not-in-either.md";
+        public const string ExerciseNotInTrackResource = "exercise-not-in-track.json";
+        public const string TrackNotInTrackResource = "track-not-in-track.json";
     }
 }

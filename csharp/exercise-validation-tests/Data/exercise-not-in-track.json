@@ -1,0 +1,141 @@
+{
+  "documentation": [
+    "This file is the original source of the concept report in csharp/reference/README.md.",
+    "",
+    "You can:",
+    "    Add new exercises, concepts and original concepts",
+    "    Add or modify track neutral concepts",
+    "    Change CompletionStatus on an existing exercise",
+    "    Add or modify document link if the CompletionStatus is NewExerciseIssueRaised",
+    "You must:",
+    "    Have a non-blank document link if and only if the CompletionStatus is NewExerciseIssueRaised"
+  ],
+  "exercises": [
+    {
+      "slug": "arrays",
+      "level": "introductory",
+      "completion-status": "complete",
+      "document-link": "",
+      "concepts": [
+        {
+          "name": "arrays",
+          "track-neutral-concept": "reference/types/array.md",
+          "original-concepts": [
+            {
+              "name": "  - [Arrays][array]",
+              "line-number": 141
+            }
+          ]
+        },
+        {
+          "name": "for-loops",
+          "track-neutral-concept": "reference/concepts/enumeration.md",
+          "original-concepts": [
+            {
+              "name": "  - [Enumeration: for loop][enumeration]",
+              "line-number": 98
+            }
+          ]
+        },
+        {
+          "name": "foreach-loops",
+          "track-neutral-concept": "reference/concepts/enumeration.md",
+          "original-concepts": [
+            {
+              "name": "  - [Enumeration: foreach loop][enumeration]",
+              "line-number": 99
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "basics",
+      "level": "introductory",
+      "completion-status": "complete",
+      "document-link": "",
+      "concepts": [
+        {
+          "name": "basics",
+          "track-neutral-concept": "",
+          "original-concepts": [
+            {
+              "name": " basics (including methods)",
+              "line-number": 20
+            }
+          ]
+        },
+        {
+          "name": "return-values",
+          "track-neutral-concept": "",
+          "original-concepts": [
+            {
+              "name": "  - Return values",
+              "line-number": 30
+            }
+          ]
+        },
+        {
+          "name": "mutation",
+          "track-neutral-concept": "reference/concepts/mutation.md",
+          "original-concepts": [
+            {
+              "name": "- [Mutation][mutation]",
+              "line-number": 31
+            }
+          ]
+        },
+        {
+          "name": "functions",
+          "track-neutral-concept": "reference/types/function.md",
+          "original-concepts": [
+            {
+              "name": "- [Functions][functions]",
+              "line-number": 46
+            }
+          ]
+        },
+        {
+          "name": "type-inference",
+          "track-neutral-concept": "reference/concepts/type_inference.md",
+          "original-concepts": [
+            {
+              "name": "- [Type inference][type_inference]",
+              "line-number": 61
+            }
+          ]
+        },
+        {
+          "name": "comments",
+          "track-neutral-concept": "",
+          "original-concepts": [
+            {
+              "name": "- Comments",
+              "line-number": 78
+            }
+          ]
+        },
+        {
+          "name": "scoping",
+          "track-neutral-concept": "",
+          "original-concepts": [
+            {
+              "name": "- Scoping",
+              "line-number": 120
+            }
+          ]
+        },
+        {
+          "name": "variables",
+          "track-neutral-concept": "reference/concepts/variables.md",
+          "original-concepts": [
+            {
+              "name": "- [Variables][variables]",
+              "line-number": 131
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
