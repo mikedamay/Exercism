@@ -8,7 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\csharp\exercise-report\ExerciseReport.csproj" />
       <ProjectReference Include="..\exercise-report\ExerciseReport.csproj" />
     </ItemGroup>
 
