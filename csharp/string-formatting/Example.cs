@@ -1,7 +1,7 @@
-using System;
+/*using System;
 using System.Globalization;
 
-public static class HighSchoolSweetheart
+public static class HighSchoolSweethearts
 {
     private const string banner =
         @"
@@ -40,4 +40,4 @@ public static class HighSchoolSweetheart
             $"{studentA} and {studentB} have been dating since {start:d} - that's {hours:n2} hours";
         return fs.ToString(CultureInfo.CreateSpecificCulture("de-DE"));
     }
-}
+}*/
